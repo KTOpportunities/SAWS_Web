@@ -277,7 +277,7 @@
 .user_input {
   width: 328px;
   height: 35px;
-  color: #fbf7f4;
+  /* color: #fbf7f4; */
   background-color: #fff;
   border: 1px #d3d4d8;
   border-radius: 8px;

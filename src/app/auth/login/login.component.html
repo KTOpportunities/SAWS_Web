@@ -13,7 +13,7 @@
                     <form id="email-form" name="email-form"
                         data-name="Email Form" method="get" data-ms-form="login"
                         class="form" data-wf-page-id="658d2cbe61f9907c2d7e8dc2"
-                        data-wf-element-id="305a7b9e-0059-be08-ca9f-cceb7ed71472">
+                        data-wf-element-id="305a7b9e-0059-be08-ca9f-cceb7ed71472" [formGroup]="loginform">
                         <h1 class="heading">Login</h1>
                         <p class="paragraph-2">Login by entering the
                             information&#x27;s below</p>
@@ -21,13 +21,13 @@
                                 class="label_f_username">User Name</label><input
                                 type="email" class="user_input w-input"
                                 maxlength="256" name="Email" data-name="Email"
-                                placeholder id="Email" data-ms-member="email"
+                                placeholder id="Email" data-ms-member="email" formControlName="Username"
                                 required></div>
                         <div class="field-wrapper"><label for="Password"
                                 class="label_f_password">Password</label><input
                                 type="password" class="password_field w-input"
                                 maxlength="256" name="Password"
-                                data-name="Password" placeholder id="Password"
+                                data-name="Password" placeholder id="Password" formControlName="Password"
                                 data-ms-member="password" required></div>
                         <div class="form-flex"><label
                                 class="w-checkbox checkbox-wrap">
@@ -42,16 +42,16 @@
                             <a (click)="forgotPassword()"
                                 class="forgot-password">Forgot password</a>
                         </div>
-                        <a href="#" class="loginbutton w-button">Login</a>
+                        <a (click)="login()" class="loginbutton w-button">Login</a>
                         <!-- <h5 class="heading-2">Need an account? Create account</h5> -->
                     </form>
-                    <div class="w-form-done">
-                        <div>Thank you! Your submission has been received!</div>
+                    <div class="w-form-done" *ngIf="this.message">
+                        <div>{{this.message}}</div>
                     </div>
-                    <div class="w-form-fail">
+                    <!-- <div class="w-form-fail">
                         <div>Oops! Something went wrong while submitting the
                             form.</div>
-                    </div>
+                    </div> -->
                 </div>
             </div>
         </div>
