@@ -40,12 +40,11 @@ export class loginComponent implements OnInit {
     if (this.loginform.status == "VALID") {
       this.authApi.login(this.loginform.value).subscribe(
         (data:any) => {
-          debugger;
           if (
             data.Status == "200" &&
             data.Message == "Successfully Signed In"
           ) {
-            this.router.navigate(["admin"]);
+            this.router.navigate(['/admin']);
             this.message = data.Message;
           } else {
             debugger;
