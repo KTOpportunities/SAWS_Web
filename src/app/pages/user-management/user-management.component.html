@@ -1,0 +1,563 @@
+<section class="section-3">
+  <div class="container">
+    <div class="content">
+      <div class="content-wrap">
+        <div class="user-managemnt-group">
+          <div class="group-hero">
+            <div class="group-hero_l">
+              <div class="group-hero_text">Filter by</div>
+              <div data-hover="false" data-delay="0" class="w-dropdown">
+                <div class="dropdown-toggle w-dropdown-toggle">
+                  <div class="icon w-icon-dropdown-toggle"></div>
+                  <div class="text-block">Name</div>
+                </div>
+                <nav class="w-dropdown-list">
+                  <a href="#" class="w-dropdown-link">Link 1</a>
+                  <a href="#" class="w-dropdown-link">Link 2</a>
+                  <a href="#" class="w-dropdown-link">Link 3</a>
+                </nav>
+              </div>
+              <div data-hover="false" data-delay="0" class="w-dropdown">
+                <div class="dropdown-toggle w-dropdown-toggle">
+                  <div class="icon w-icon-dropdown-toggle"></div>
+                  <div class="text-block">Status</div>
+                </div>
+                <nav class="w-dropdown-list">
+                  <a href="#" class="w-dropdown-link">Link 1</a>
+                  <a href="#" class="w-dropdown-link">Link 2</a>
+                  <a href="#" class="w-dropdown-link">Link 3</a>
+                </nav>
+              </div>
+              <div data-hover="false" data-delay="0" class="w-dropdown">
+                <div class="dropdown-toggle w-dropdown-toggle">
+                  <div class="icon w-icon-dropdown-toggle"></div>
+                  <div class="text-block">Date</div>
+                </div>
+                <nav class="w-dropdown-list">
+                  <a href="#" class="w-dropdown-link">Link 1</a>
+                  <a href="#" class="w-dropdown-link">Link 2</a>
+                  <a href="#" class="w-dropdown-link">Link 3</a>
+                </nav>
+              </div>
+            </div>
+            <a href="#" class="button w-inline-block">
+              <div class="embed-icon w-embed">
+                <svg
+                  width="16"
+                  height="16"
+                  viewbox="0 0 16 16"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <g clip-path="url(#clip0_1695_120)">
+                    <path
+                      d="M8.00021 14.9623C11.8453 14.9623 14.9623 11.8453 14.9623 8.00021C14.9623 4.15514 11.8453 1.03809 8.00021 1.03809C4.15514 1.03809 1.03809 4.15514 1.03809 8.00021C1.03809 11.8453 4.15514 14.9623 8.00021 14.9623Z"
+                      stroke="currentColor"
+                      stroke-width="1.5"
+                      stroke-miterlimit="10"
+                    ></path>
+                    <path
+                      d="M5.09961 8H10.9014"
+                      stroke="currentColor"
+                      stroke-width="1.5"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    ></path>
+                    <path
+                      d="M8 5.09961V10.9014"
+                      stroke="currentColor"
+                      stroke-width="1.5"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    ></path>
+                  </g>
+                  <defs>
+                    <clippath id="clip0_1695_120">
+                      <rect width="16" height="16" fill="white"></rect>
+                    </clippath>
+                  </defs>
+                </svg>
+              </div>
+              <div class="button-text">New User</div>
+            </a>
+          </div>
+        </div>
+
+        <mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+          <!-- Full Name Column -->
+          <ng-container matColumnDef="fullname">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>
+              Full Name
+            </mat-header-cell>
+            <mat-cell *matCellDef="let user"> {{ user.fullname }} </mat-cell>
+          </ng-container>
+
+          <!-- Email Column -->
+          <ng-container matColumnDef="email">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>
+              Email
+            </mat-header-cell>
+            <mat-cell *matCellDef="let user"> {{ user.email }} </mat-cell>
+          </ng-container>
+
+          <!-- contact number Column -->
+          <ng-container matColumnDef="userrole">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>
+              Role
+            </mat-header-cell>
+            <mat-cell *matCellDef="let user">
+              {{ user.userrole }}
+            </mat-cell>
+          </ng-container>
+
+          <!-- Created Date Column -->
+          <ng-container matColumnDef="created_at">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>
+              Created Date
+            </mat-header-cell>
+            <mat-cell *matCellDef="let user"> {{ user.created_at }} </mat-cell>
+          </ng-container>
+
+          <!-- Status Column -->
+          <ng-container matColumnDef="status">
+            <mat-header-cell *matHeaderCellDef> Status </mat-header-cell>
+            <mat-cell *matCellDef="let user">
+              <!-- Add your status logic here -->
+              <mat-icon style="color: green">toggle_on</mat-icon>
+              <!-- <mat-icon style="color: green">toggle_off</mat-icon> -->
+            </mat-cell>
+          </ng-container>
+
+          <!-- Action Column -->
+          <ng-container matColumnDef="action">
+            <mat-header-cell *matHeaderCellDef> Action </mat-header-cell>
+            <mat-cell *matCellDef="let user">
+              <!-- Add your action buttons/icons here -->
+
+              <button
+                mat-icon-button
+                (click)="editUser(user)"
+                class="mat-button"
+              >
+                <mat-icon>edit</mat-icon>
+              </button>
+              <button
+                mat-icon-button
+                (click)="deleteUser(user)"
+                class="mat-button"
+              >
+                <mat-icon style="color: red">clear</mat-icon>
+              </button>
+              <!-- <button
+                mat-icon-button
+                (click)="toggleUser(user)"
+                class="mat-button"
+              >
+                <mat-icon>toggle_button</mat-icon>
+              </button> -->
+            </mat-cell>
+          </ng-container>
+
+          <!-- Table Header Row -->
+          <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+          <!-- Table Rows -->
+          <mat-row *matRowDef="let user; columns: displayedColumns"></mat-row>
+        </mat-table>
+
+        <mat-paginator
+          [pageSizeOptions]="[5, 10, 25, 100]"
+          showFirstLastButtons
+        ></mat-paginator>
+      </div>
+    </div>
+    <div
+      data-w-id="717ec873-5bdf-1582-6da6-888fecad4a6e"
+      class="nav-shadow"
+    ></div>
+  </div>
+  <div class="custom-css w-embed">
+    <style>
+      /*width*/
+      .scroll::-webkit-scrollbar {
+        height: 4px;
+      }
+      /*track*/
+      .scroll::-webkit-scrollbar-track {
+        background: rgba(255, 255, 255, 0);
+      }
+      /*thumb*/
+      .scroll::-webkit-scrollbar-thumb {
+        background: rgb(233, 229, 221);
+        border-radius: 1000px;
+      }
+    </style>
+  </div>
+</section>
+<!-- <section class="section-3">
+  <div class="container">
+    <div class="mobile-nav">
+      <div class="user-wrap small-gap">
+        <div class="user-copy">
+          <img
+            src="images/Group-4465.svg"
+            loading="lazy"
+            alt=""
+            class="user-icon"
+          />
+          <div class="user-info res-hide">
+            <div class="user-name">Jane Doe</div>
+            <div class="user-description">Super Admin</div>
+          </div>
+        </div>
+      </div>
+      <div data-w-id="bee8f17e-99cc-0f55-571f-7e62129d85d0" class="hamburger">
+        <div
+          data-w-id="bee8f17e-99cc-0f55-571f-7e62129d85d1"
+          class="hamburger-line top"
+        ></div>
+        <div
+          data-w-id="bee8f17e-99cc-0f55-571f-7e62129d85d2"
+          class="hamburger-line middle"
+        ></div>
+        <div
+          data-w-id="bee8f17e-99cc-0f55-571f-7e62129d85d3"
+          class="hamburger-line bot"
+        ></div>
+      </div>
+    </div>
+    <div data-w-id="bee8f17e-99cc-0f55-571f-7e62129d85d4" class="nav">
+      <div class="nav-top">
+        <a href="#" class="logo-link w-inline-block"
+          ><img
+            src="images/Group-4465.svg"
+            loading="lazy"
+            width="121"
+            alt=""
+            class="image-9"
+        /></a>
+        <div class="nav-separator"></div>
+        <div class="nav-menu">
+          <a href="#" class="nav-link w-inline-block">
+            <div class="embed-icon w-embed">
+              <svg
+                width="18"
+                height="18
+"
+                viewbox="0 0 16 16"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <g clip-path="url(#clip0_1692_35)">
+                  <path
+                    d="M6.56113 0.805664H0.805664V6.56113H6.56113V0.805664Z"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  ></path>
+                  <path
+                    d="M15.1949 0.805664H9.43945V6.56113H15.1949V0.805664Z"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  ></path>
+                  <path
+                    d="M6.56113 9.43945H0.805664V15.1949H6.56113V9.43945Z"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  ></path>
+                  <path
+                    d="M15.1949 9.43945H9.43945V15.1949H15.1949V9.43945Z"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  ></path>
+                </g>
+                <defs>
+                  <clippath id="clip0_1692_35">
+                    <rect width="18" height="18" fill="white"></rect>
+                  </clippath>
+                </defs>
+              </svg>
+            </div>
+            <div class="nav-link_text">Dashboard</div>
+          </a>
+          <div data-hover="false" data-delay="0" class="w-dropdown">
+            <div class="dropdown-toggle-2 w-dropdown-toggle">
+              <div class="icon-2 w-icon-dropdown-toggle"></div>
+              <div class="html-embed w-embed">
+                <svg
+                  width="18"
+                  height="19"
+                  viewbox="0 0 16 17"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <g clip-path="url(#clip0_1692_52)">
+                    <path
+                      d="M1.07715 11.9648L8.00023 16.0033L14.9233 11.9648"
+                      stroke="currentColor"
+                      stroke-width="1.5"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    ></path>
+                    <path
+                      d="M1.07715 8.50391L8.00023 12.5424L14.9233 8.50391"
+                      stroke="currentColor"
+                      stroke-width="1.5"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    ></path>
+                    <path
+                      d="M1.07715 5.04237L8.00023 9.08083L14.9233 5.04237L8.00023 1.00391L1.07715 5.04237Z"
+                      stroke="currentColor"
+                      stroke-width="1.5"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    ></path>
+                  </g>
+                  <defs>
+                    <clippath id="clip0_1692_52">
+                      <rect width="18" height="18.7273" fill="white"></rect>
+                    </clippath>
+                  </defs>
+                </svg>
+              </div>
+              <div class="nav-link_text">User Management</div>
+            </div>
+            <nav class="dropdown-list w-dropdown-list">
+              <a href="#" class="dropdown-link w-dropdown-link">Admin user</a>
+              <a href="#" class="dropdown-link-2 w-dropdown-link"
+                >Subscribe User</a
+              >
+            </nav>
+          </div>
+          <a href="#" class="nav-link w-inline-block">
+            <div class="embed-icon w-embed">
+              <svg
+                width="16"
+                height="16"
+                viewbox="0 0 16 16"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <g clip-path="url(#clip0_1692_46)">
+                  <path
+                    d="M1.77734 14.0374V8.7041H5.92549"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  ></path>
+                  <path
+                    d="M15.4076 14.0371H0.592773"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  ></path>
+                  <path
+                    d="M5.92578 14.0373V5.14844H10.0739"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  ></path>
+                  <path
+                    d="M14.2224 1.59277H10.0742V14.0372H14.2224V1.59277Z"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  ></path>
+                </g>
+                <defs>
+                  <clippath id="clip0_1692_46">
+                    <rect width="16" height="16" fill="white"></rect>
+                  </clippath>
+                </defs>
+              </svg>
+            </div>
+            <div class="nav-link_text">Products</div>
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="content">
+      <div class="content-wrap">
+        <div class="group">
+          <div class="w-form">
+            <form
+              id="email-form"
+              name="email-form"
+              data-name="Email Form"
+              method="get"
+              data-wf-page-id="65a13365de81b401ac205186"
+              data-wf-element-id="bbd9dab3-04e9-18b9-f6b4-9b312de32dc7"
+            >
+              <div class="w-layout-grid grid-8">
+                <div
+                  id="w-node-_6893efaf-f5d2-e004-7217-6e934a6c6167-ac205186"
+                  class="add-user-admin-div"
+                >
+                  <label for="field" class="add-label">User Role</label
+                  ><select
+                    id="field"
+                    name="field"
+                    data-name="Field"
+                    class="add-user-input w-select"
+                  >
+                    <option value="">Select user role</option>
+                    <option value="First">Admin user</option>
+                    <option value="Second">Subscribe user</option>
+                  </select>
+                </div>
+                <div
+                  id="w-node-_459b960d-ce15-c6e4-2d77-8c8da4e753be-ac205186"
+                  class="add-user-admin-div"
+                >
+                  <label for="field-2" class="add-label">First Name</label
+                  ><input
+                    class="add-user-input w-input"
+                    maxlength="256"
+                    name="field-2"
+                    data-name="Field 2"
+                    placeholder="Enter your First name"
+                    type="text"
+                    id="field-2"
+                    required=""
+                  />
+                </div>
+                <div
+                  id="w-node-_02ef87fc-7f4c-21df-4208-311cd379fcaf-ac205186"
+                  class="add-user-admin-div"
+                >
+                  <label for="field-2" class="add-label">Second Name</label
+                  ><input
+                    class="add-user-input w-input"
+                    maxlength="256"
+                    name="field-2"
+                    data-name="Field 2"
+                    placeholder="Enter your Second Name"
+                    type="text"
+                    id="field-2"
+                    required=""
+                  />
+                </div>
+                <div
+                  id="w-node-ab03b8d4-e0ed-31b3-68a0-eda284d58ae2-ac205186"
+                  class="add-user-admin-div"
+                >
+                  <label for="field-2" class="add-label">User Name</label
+                  ><input
+                    class="add-user-input w-input"
+                    maxlength="256"
+                    name="field-2"
+                    data-name="Field 2"
+                    placeholder="Enter your User name"
+                    type="text"
+                    id="field-2"
+                    required=""
+                  />
+                </div>
+                <div
+                  id="w-node-_4cd953d6-568c-454e-fa45-d438d47d0757-ac205186"
+                  class="add-user-admin-div"
+                >
+                  <label for="field-3" class="add-label">Email Address</label
+                  ><input
+                    class="add-user-input w-input"
+                    maxlength="256"
+                    name="field-2"
+                    data-name="Field 2"
+                    placeholder="Enter your User name"
+                    type="text"
+                    id="field-2"
+                    required=""
+                  />
+                </div>
+                <div
+                  id="w-node-_699a36c7-0b04-cd39-a219-a4022b828597-ac205186"
+                  class="add-user-admin-div"
+                >
+                  <label for="field-2" class="add-label"
+                    >Residential Address</label
+                  ><input
+                    class="add-user-input w-input"
+                    maxlength="256"
+                    name="field-2"
+                    data-name="Field 2"
+                    placeholder="Enter your address"
+                    type="text"
+                    id="field-2"
+                    required=""
+                  />
+                </div>
+                <div
+                  id="w-node-dd4f0d99-f1e9-678e-8353-dee0b9049da9-ac205186"
+                  class="add-user-admin-div"
+                >
+                  <label for="field-3" class="add-label">Contact Number</label
+                  ><input
+                    class="add-user-input w-input"
+                    maxlength="256"
+                    name="field-2"
+                    data-name="Field 2"
+                    placeholder="Enter your User name"
+                    type="text"
+                    id="field-2"
+                    required=""
+                  />
+                </div>
+              </div>
+              <div class="div-block-435">
+                <input
+                  type="submit"
+                  data-wait="Please wait..."
+                  class="cancel-button w-button"
+                  value="Cancel"
+                /><input
+                  type="submit"
+                  data-wait="Please wait..."
+                  class="submit-button w-button"
+                  value="Submit"
+                />
+              </div>
+            </form>
+            <div class="w-form-done">
+              <div>Thank you! Your submission has been received!</div>
+            </div>
+            <div class="w-form-fail">
+              <div>Oops! Something went wrong while submitting the form.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      data-w-id="bee8f17e-99cc-0f55-571f-7e62129d86d9"
+      class="nav-shadow"
+    ></div>
+  </div>
+  <div class="custom-css w-embed">
+    <style>
+      /*width*/
+      .scroll::-webkit-scrollbar {
+        height: 4px;
+      }
+      /*track*/
+      .scroll::-webkit-scrollbar-track {
+        background: rgba(255, 255, 255, 0);
+      }
+      /*thumb*/
+      .scroll::-webkit-scrollbar-thumb {
+        background: rgb(233, 229, 221);
+        border-radius: 1000px;
+      }
+    </style>
+  </div>
+</section> -->
