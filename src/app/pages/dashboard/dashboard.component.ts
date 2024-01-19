@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { NgxSpinnerService } from "ngx-spinner";
 
 
 @Component({
@@ -8,8 +9,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DashboardComponent implements OnInit {
 
-  constructor(){}
+  constructor(private spinner: NgxSpinnerService){}
   ngOnInit(): void {
+    this.spinner.hide();
     debugger
   }
 }

@@ -9,7 +9,7 @@
                 <div class="div-block-2"><img
                         src="./../../../assets/img/Mask-Group-12.svg"
                         loading="lazy" width="181" alt class="login_logo"></div>
-                <div class="form-block w-form">
+                <div class="form-block w-form" style="flex-direction: column;">
                     <form id="email-form" name="email-form"
                         data-name="Email Form" method="get" data-ms-form="login"
                         class="form" data-wf-page-id="658d2cbe61f9907c2d7e8dc2"
@@ -45,8 +45,8 @@
                         <a (click)="login()" class="loginbutton w-button">Login</a>
                         <!-- <h5 class="heading-2">Need an account? Create account</h5> -->
                     </form>
-                    <div class="w-form-done" *ngIf="this.message != ''">
-                        <div>{{this.message}}</div>
+                    <div class="w-form-done" *ngIf="this.errMessage != null" id="message" style="margin-top: 5%;">
+                        <div>{{this.errMessage}}</div>
                     </div>
                     <!-- <div class="w-form-fail">
                         <div>Oops! Something went wrong while submitting the
@@ -57,3 +57,5 @@
         </div>
     </div>
 </section>
+
+<ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "medium" color = "#fff" type = "ball-circus"><p style="color: white" > Loading... </p></ngx-spinner>

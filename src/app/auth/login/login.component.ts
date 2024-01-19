@@ -2,6 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
 import { AuthService } from "src/app/services/auth.service";
+import { NgxSpinnerService } from "ngx-spinner";
 
 @Component({
   selector: "app-login",
@@ -10,11 +11,12 @@ import { AuthService } from "src/app/services/auth.service";
 })
 export class loginComponent implements OnInit {
   loginform: FormGroup;
-  message: string = "";
+  errMessage: string = "";
   constructor(
     private router: Router,
     private formBuilder: FormBuilder,
-    private authApi: AuthService
+    private authApi: AuthService,
+    private spinner: NgxSpinnerService
   ) {
     this.loginform = this.formBuilder.group({
       Username: [null, Validators.required, this.emailValidator],
@@ -35,30 +37,41 @@ export class loginComponent implements OnInit {
     }
   }
   login() {
-    debugger;
-
+    this.spinner.show();
+    let elem:any = document.getElementById("message");
     if (this.loginform.status == "VALID") {
       this.authApi.login(this.loginform.value).subscribe(
-        (data:any) => {
+        (data: any) => {
           if (
             data.Status == "200" &&
             data.Message == "Successfully Signed In"
+            
           ) {
-            this.router.navigate(['/admin']);
-            this.message = data.Message;
-          } else {
-            debugger;
-            if (data.Message == "Bad request was made") {
-              this.message = "User does not exist";
-            } else {
-              this.message = data.Message;
-            }
+            this.router.navigate(["/admin"]);
+            this.errMessage = data.Message;
+            elem.style.display="block";
+            // this.spinner.hide();
           }
-      },
-      (err) => {
-        console.log(err);
-        debugger
-      });
+        },
+        (err) => {
+          console.log(err);
+          if (
+            err.error.Status == "401" &&
+            err.error.Message == "Please check your password and username"
+          ) {
+            this.errMessage = err.error.Message;
+          } else {
+            this.errMessage = err.error.Message;
+          }
+          elem.style.display="block";
+          setTimeout(() => {
+            this.spinner.hide();
+          }, 5000);
+          
+          debugger;
+
+        }
+      );
     }
   }
 

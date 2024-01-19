@@ -8,6 +8,8 @@ import { resetPasswordComponent } from './auth/reset-password/reset-password.com
 import { AdminLayoutComponent } from './layout/admin-layout/admin-layout.component';
 import { AuthService } from './services/auth.service';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { NgxSpinnerModule } from 'ngx-spinner';
 
 @NgModule({
   declarations: [
@@ -15,12 +17,15 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
     AuthLayoutComponent,
     forgotPasswordComponent,
     resetPasswordComponent,
-    AdminLayoutComponent
+    AdminLayoutComponent,
+    
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
+    BrowserAnimationsModule,
+    NgxSpinnerModule
   ],
   providers: [
     AuthService
