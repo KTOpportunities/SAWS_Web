@@ -8,12 +8,19 @@ import { Router } from '@angular/router';
   })
 
   export class forgotPasswordComponent implements OnInit{
-    constructor(private router: Router){}
+
+
+    constructor(private router:Router,
+      ){
+      }
 
     ngOnInit(): void {
         
     }
-    ResetPassword(){
+
+  
+    
+    Resetpassword(){
         this.router.navigate(['reset-password']);
     }
   }

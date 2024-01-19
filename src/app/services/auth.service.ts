@@ -31,4 +31,24 @@ export class AuthService {
       form
     );
   }
+  requestPasswordReset(form: any){
+    this.body.email = form.username;
+    debugger
+    return this.http.post<any>(environment.serverAPI + `Authenticate/RequestPasswordReset?email=${this.body.email}`, this.body.email);
+  }
+  
+
+  RequestPasswordReset(form: any) {
+    return this.http.post<any>(
+      environment.serverAPI + `Authenticate/RequestPasswordReset?email=${form.Email}`,
+      form
+    ).pipe(
+      catchError((error) => {
+        console.error('API Error:', error);
+        throw error;
+      })
+    );
+  }
+
+
 }
