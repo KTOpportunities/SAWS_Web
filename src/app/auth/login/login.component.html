@@ -45,7 +45,7 @@
                         <a (click)="login()" class="loginbutton w-button">Login</a>
                         <!-- <h5 class="heading-2">Need an account? Create account</h5> -->
                     </form>
-                    <div class="w-form-done" *ngIf="this.message">
+                    <div class="w-form-done" *ngIf="this.message != ''">
                         <div>{{this.message}}</div>
                     </div>
                     <!-- <div class="w-form-fail">

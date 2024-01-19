@@ -1,10 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
+import { Component, OnInit } from "@angular/core";
+import { ActivatedRoute, Router, NavigationEnd } from "@angular/router";
 
 @Component({
-  selector: 'app-admin-layout',
-  templateUrl: './admin-layout.component.html',
-  styleUrls: ['./admin-layout.component.css'],
+  selector: "app-admin-layout",
+  templateUrl: "./admin-layout.component.html",
+  styleUrls: ["./admin-layout.component.css"],
 })
 export class AdminLayoutComponent implements OnInit {
   opened: boolean = true;
@@ -12,7 +12,7 @@ export class AdminLayoutComponent implements OnInit {
   User: any = null;
 
   constructor(public router: Router) {
-    var stringUser = sessionStorage.getItem('User');
+    var stringUser = sessionStorage.getItem("User");
     if (stringUser) {
       this.User = JSON.parse(stringUser);
     }
@@ -24,7 +24,7 @@ export class AdminLayoutComponent implements OnInit {
     this.showLogout = !this.showLogout;
   }
   async logout() {
-    await sessionStorage.removeItem('User');
-    this.router.navigate(['auth/login']);
+    await sessionStorage.removeItem("User");
+    // this.router.navigate(['auth/login']);
   }
 }

@@ -21,9 +21,7 @@ export class loginComponent implements OnInit {
       Password: [null, [Validators.required]],
     });
   }
-  ngOnInit(): void {
-    debugger;
-  }
+  ngOnInit(): void {}
   async emailValidator(control: any) {
     if (control.value) {
       const matches = control.value.match(
@@ -35,31 +33,27 @@ export class loginComponent implements OnInit {
     }
   }
   login() {
-    debugger;
-
     if (this.loginform.status == "VALID") {
       this.authApi.login(this.loginform.value).subscribe(
-        (data:any) => {
-          debugger;
+        (data: any) => {
           if (
             data.Status == "200" &&
             data.Message == "Successfully Signed In"
           ) {
-            this.router.navigate(["admin"]);
+            this.router.navigate(["/admin"]);
             this.message = data.Message;
           } else {
-            debugger;
             if (data.Message == "Bad request was made") {
               this.message = "User does not exist";
             } else {
               this.message = data.Message;
             }
           }
-      },
-      (err) => {
-        console.log(err);
-        debugger
-      });
+        },
+        (err) => {
+          console.log(err);
+        }
+      );
     }
   }
 

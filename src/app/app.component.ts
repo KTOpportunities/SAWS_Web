@@ -1,16 +1,15 @@
-import { Component } from '@angular/core';
-import { NavigationEnd, Router, RouterLink } from '@angular/router';
+import { Component } from "@angular/core";
+import { NavigationEnd, Router, RouterLink } from "@angular/router";
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  selector: "app-root",
+  templateUrl: "./app.component.html",
+  styleUrls: ["./app.component.css"],
 })
 export class AppComponent {
-  title = 'Saws';
+  title = "Saws";
 
-  constructor(private router: Router){
-    debugger
-    this.router.navigate(['auth/login']);
+  constructor(private router: Router) {
+    this.router.navigate(["auth/login"]);
   }
 }
