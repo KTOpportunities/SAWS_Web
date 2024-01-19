@@ -12,6 +12,10 @@ import { SideBarComponent } from "./shared/side-bar/side-bar.component";
 import { NavBarComponent } from "./shared/nav-bar/nav-bar.component";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatPaginatorModule } from "@angular/material/paginator";
+import { AddUserComponent } from './pages/user-management/add-user/add-user.component';
+import { AdminUserComponent } from './pages/user-management/admin-user/admin-user.component';
+import { SubscriberUserComponent } from './pages/user-management/subscriber-user/subscriber-user.component';
+import { ReactiveFormsModule } from "@angular/forms";
 
 @NgModule({
   declarations: [
@@ -22,8 +26,11 @@ import { MatPaginatorModule } from "@angular/material/paginator";
     AdminLayoutComponent,
     SideBarComponent,
     NavBarComponent,
+    AddUserComponent,
+    AdminUserComponent,
+    SubscriberUserComponent,
   ],
-  imports: [BrowserModule, AppRoutingModule, HttpClientModule, BrowserAnimationsModule,MatPaginatorModule],
+  imports: [BrowserModule, AppRoutingModule, HttpClientModule, BrowserAnimationsModule,MatPaginatorModule,ReactiveFormsModule],
   providers: [AuthService],
   bootstrap: [AppComponent],
 })

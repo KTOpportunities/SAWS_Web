@@ -25,4 +25,10 @@ export class SubscriberService {
       environment.serverAPI + "Subscriber/GetPagedAllSubscribers"
     );
   }
+  createNewUser(body: {}) {
+    return this.http.post<any>(
+      environment.serverAPI + 'Authenticate/RegisterSubscriber',
+      body
+    );
+  }
 }

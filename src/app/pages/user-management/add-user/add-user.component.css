@@ -128,7 +128,7 @@
   
   .left {
     width: 50%;
-    background-image: url('../../../assets/img/Group-4469.png');
+    background-image: url('../../../../assets/img/Group-4469.png');
     background-position: 50%;
     background-size: cover;
     border-top-right-radius: 10px;
@@ -145,12 +145,13 @@
     min-height: auto;
     flex-direction: row-reverse;
     display: flex;
+    width:100;
   }
   
   .right {
     width: 50%;
     background-color: #f3f4f8;
-    background-image: url('../../../assets/img/Mask-Group-15.png');
+    background-image: url('../../../../assets/img/Mask-Group-15.png');
     background-position: 50%;
     background-size: cover;
     border-top-left-radius: 10px;
@@ -465,7 +466,7 @@
   
   .left-login {
     width: 50%;
-    background-image: url('../../../assets/img/Group-4468.svg');
+    background-image: url('../../../../assets/img/Group-4468.svg');
     background-position: 50%;
     background-size: cover;
     border-top-right-radius: 10px;
@@ -592,17 +593,14 @@
   .content-wrap {
     padding-top: 20px;
     padding-left: 15px;
-    margin-top: -43%;
     padding-right: 15px;
-    margin-left: 297px;
-    
   }
   
   .search {
     height: 48px;
     min-width: 300px;
     background-color: #f8f8f8;
-    background-image: url('../../../assets/img/search.svg');
+    background-image: url('../../../../assets/img/search.svg');
     background-position: 23px;
     background-repeat: no-repeat;
     background-size: auto;
@@ -680,7 +678,6 @@
     position: -webkit-sticky;
     position: sticky;
     top: 0;
-    margin-left: 302px;
   }
   
   .user {
@@ -702,6 +699,7 @@
   .container {
     align-items: flex-start;
     display: flex;
+    width:100%;
   }
   
   .nav-link_text {
@@ -733,10 +731,11 @@
   }
   
   .section-3 {
-    width: 100%;
-    max-width: 1920px;
-    margin-left: auto;
+    width: 85%;
+    max-width: 80%;
+    margin-left: 293px;
     margin-right: auto;
+    margin-top: -840px;
   }
   
   .navigation-right {
@@ -1482,7 +1481,7 @@
     .section-2 {
       width: auto;
       max-width: none;
-      /* background-image: url('../images/Mask-Group-15.png'); */
+      background-image: url('../../../../assets/img/Mask-Group-15.png');
       background-position: 0 0;
       background-size: auto;
       justify-content: center;
@@ -1763,7 +1762,7 @@
       width: auto;
       max-height: none;
       max-width: none;
-      /* background-image: url('../images/Mask-Group-15.png'); */
+      background-image: url('../../../../assets/img/Mask-Group-15.png');
       background-position: 50%;
       background-size: cover;
     }
@@ -1791,7 +1790,7 @@
     }
   
     .left-wrap {
-      /* background-image: url('../images/Group-4469.png'); */
+      background-image: url('../../../../assets/img/Group-4469.png');
       background-position: 82%;
       background-size: cover;
     }
@@ -2059,21 +2058,4 @@
   #w-node-_6893efaf-f5d2-e004-7217-6e934a6c6167-ac205186, #w-node-_459b960d-ce15-c6e4-2d77-8c8da4e753be-ac205186, #w-node-_02ef87fc-7f4c-21df-4208-311cd379fcaf-ac205186, #w-node-ab03b8d4-e0ed-31b3-68a0-eda284d58ae2-ac205186, #w-node-_4cd953d6-568c-454e-fa45-d438d47d0757-ac205186, #w-node-_699a36c7-0b04-cd39-a219-a4022b828597-ac205186, #w-node-dd4f0d99-f1e9-678e-8353-dee0b9049da9-ac205186 {
     grid-area: span 1 / span 1 / span 1 / span 1;
   }
-  .active-icon {
-    color: green;  /* Set the color for the active icon */
-  }
   
-  .inactive-icon {
-    color: red;  /* Set the color for the inactive icon */
-  }
-  mat-header-row{
-    background-color: #00386c;
-     color: #fff;
-     border-radius: 12px 12px 0px 0px;
-     top: 209px;
-    left: 296px;
-    height: 45px;
-    background: transparent linear-gradient(180deg, #00386C 0%, #080815 100%) 0% 0% no-repeat padding-box;
-    border-radius: 12px;
-
-  }

@@ -40,7 +40,7 @@
                 </nav>
               </div>
             </div>
-            <a href="#" class="button w-inline-block">
+            <a routerLink="/admin/addUser" class="button w-inline-block">
               <div class="embed-icon w-embed">
                 <svg
                   width="16"
@@ -133,28 +133,29 @@
             <mat-header-cell *matHeaderCellDef> Action </mat-header-cell>
             <mat-cell *matCellDef="let user">
               <!-- Add your action buttons/icons here -->
+              <button
+                mat-icon-button
+                [matMenuTriggerFor]="actionMenu"
+                class="mat-button mat-horizontal-menu"
+              >
+                <mat-icon style="color: #323259">
+                  <img
+                    src="../../../assets/img/metro-more-horiz.svg"
+                    class="searchIcon"
+                /></mat-icon>
+              </button>
 
-              <button
-                mat-icon-button
-                (click)="editUser(user)"
-                class="mat-button"
-              >
-                <mat-icon>edit</mat-icon>
-              </button>
-              <button
-                mat-icon-button
-                (click)="deleteUser(user)"
-                class="mat-button"
-              >
-                <mat-icon style="color: red">clear</mat-icon>
-              </button>
-              <!-- <button
-                mat-icon-button
-                (click)="toggleUser(user)"
-                class="mat-button"
-              >
-                <mat-icon>toggle_button</mat-icon>
-              </button> -->
+              <mat-menu #actionMenu="matMenu" class="mat-horizontal-menu">
+                <button mat-menu-item (click)="editUser(user)">
+                  <mat-icon>edit</mat-icon> Edit
+                </button>
+                <button mat-menu-item (click)="toggleUser(user)">
+                  <mat-icon>visibility</mat-icon> View
+                </button>
+                <button mat-menu-item (click)="deleteUser(user)">
+                  <mat-icon style="color: red">clear</mat-icon> Delete
+                </button>
+              </mat-menu>
             </mat-cell>
           </ng-container>
 
@@ -163,7 +164,6 @@
           <!-- Table Rows -->
           <mat-row *matRowDef="let user; columns: displayedColumns"></mat-row>
         </mat-table>
-
         <mat-paginator
           [pageSizeOptions]="[5, 10, 25, 100]"
           showFirstLastButtons

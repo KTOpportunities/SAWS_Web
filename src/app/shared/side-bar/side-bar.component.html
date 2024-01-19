@@ -166,7 +166,7 @@
         /></a>
         <div class="nav-separator"></div>
         <div class="nav-menu">
-          <a href="#" class="nav-link w-inline-block">
+          <a (click)="navigateToDashboard()" class="nav-link w-inline-block">
             <div class="embed-icon w-embed">
               <svg
                 width="16"
@@ -215,7 +215,10 @@
             <div class="nav-link_text">Dashboard</div>
           </a>
           <div data-hover="false" data-delay="0" class="w-dropdown">
-            <div class="dropdown-toggle-2 w-dropdown-toggle">
+            <div
+              class="dropdown-toggle-2 w-dropdown-toggle"
+              (click)="navigateToUsermanagement()"
+            >
               <div class="icon-2 w-icon-dropdown-toggle"></div>
               <div class="html-embed w-embed">
                 <svg
@@ -255,14 +258,54 @@
                   </defs>
                 </svg>
               </div>
-              <div class="nav-link_text">User Management</div>
+              <!-- <div class="nav-link_text">User Management</div> -->
+              <!-- <select>
+                <option>
+                  <div disabled selected class="nav-link_text">
+                    User Management
+                  </div>
+                </option>
+                <option
+                  (click)="navigateToAdminUser()"
+                  class="dropdown-link w-dropdown-link"
+                >
+                  Admin user
+                </option>
+                <option
+                  (click)="navigateToSubscriberUser()"
+                  class="dropdown-link-2 w-dropdown-link"
+                >
+                  Subscribe User
+                </option>
+              </select> -->
+
+              <select (change)="onOptionSelected($event)">
+                <option disabled selected class="nav-link_text">
+                  User Management
+                </option>
+                <option
+                  value="adminUser"
+                  class="dropdown-link-2 w-dropdown-link"
+                >
+                  Admin user
+                </option>
+                <option
+                  value="subscriberUser"
+                  class="dropdown-link-2 w-dropdown-link"
+                >
+                  Subscribe User
+                </option>
+              </select>
             </div>
-            <nav class="dropdown-list w-dropdown-list">
-              <a href="#" class="dropdown-link w-dropdown-link">Admin user</a>
-              <a href="#" class="dropdown-link-2 w-dropdown-link"
-                >Subscribe User</a
-              >
-            </nav>
+
+            <!-- <select class="dropdown-list w-dropdown-list">
+              <option href="#" class="dropdown-link w-dropdown-link">
+                Admin user
+              </option>
+              <option href="#" class="dropdown-link-2 w-dropdown-link">
+                Subscribe User
+              </option>
+            </select> -->
           </div>
           <a href="#" class="nav-link w-inline-block">
             <div class="embed-icon w-embed">

@@ -11,14 +11,11 @@ import { AddUserComponent } from "src/app/pages/user-management/add-user/add-use
 import { Router, ActivatedRoute } from "@angular/router";
 
 @Component({
-  selector: "app-user-management",
-  templateUrl: "./user-management.component.html",
-  styleUrls: ["./user-management.component.css"],
+  selector: "app-subscriber-user",
+  templateUrl: "./subscriber-user.component.html",
+  styleUrls: ["./subscriber-user.component.css"],
 })
-export class UserManagementComponent implements OnInit {
-  @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
-  @ViewChild(MatSort, { static: true }) sort!: MatSort;
-
+export class SubscriberUserComponent implements OnInit {
   constructor(
     private apiService: SubscriberService,
     public dialog: MatDialog,
@@ -29,28 +26,12 @@ export class UserManagementComponent implements OnInit {
     this.apiService.getPagedAllSubscribers().subscribe(
       (data) => {
         console.log("DATA:::", data);
-        this.dataSource.data = data.Data; // Assuming the API returns an array of objects
-        console.log("DATA:::", this.dataSource.data);
-        this.dataSource.paginator = this.paginator;
-        this.dataSource.sort = this.sort;
       },
       (error) => {
         console.error("Error fetching data from API:", error);
       }
     );
   }
-
-  // Define the displayed columns
-  displayedColumns: string[] = [
-    "fullname",
-    "email",
-    "userrole",
-    "created_at",
-    "status",
-    "action",
-  ];
-
-  dataSource = new MatTableDataSource<any>([]);
 
   // Add your toggle/edit/delete methods here
   toggleUser(user: any) {
