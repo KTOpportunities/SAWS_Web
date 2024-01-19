@@ -13,7 +13,6 @@ import {
 } from '@angular/forms';
 import { AuthService} from '././../../services/auth.service' 
 import Swal from 'sweetalert2';
-
 interface ResetPassword{
   email: string;
   token: string;
