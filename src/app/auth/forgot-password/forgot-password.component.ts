@@ -87,7 +87,7 @@ interface ResetPassword{
       Swal.fire({
         icon: 'success',
         title: 'Success!',
-        text: 'You added new user successfully.',
+        text: 'Thank you! Check Your Email For Password Reset!.',
       });
     }
     showUnsuccessfulAlert() {

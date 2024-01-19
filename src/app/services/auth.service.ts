@@ -23,6 +23,7 @@ export class AuthService {
     Username: "",
     Password: "",
   };
+  body: any;
 
   constructor(private http: HttpClient) {}
 
