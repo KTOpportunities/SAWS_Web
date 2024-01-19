@@ -1,4 +1,4 @@
 export const environment = {
     production: false,
-    serverAPI: 'http://qa.j-cred.co.za/aviationappapi/api/',
+    serverAPI: 'https://localhost:44379/api/',
 }
