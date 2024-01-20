@@ -2,7 +2,11 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AuthLayoutComponent } from './layout/auth-layout/auth-layout.component';
 import { AdminLayoutComponent } from './layout/admin-layout/admin-layout.component'; 
-
+import { NgxSpinnerModule } from 'ngx-spinner';
+// Available options
+interface NgxSpinnerConfig {
+  type?: string;
+}
 const routes: Routes = [
 {
   path:'',
@@ -34,7 +38,8 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes, {useHash: true})],
+  imports: [RouterModule.forRoot(routes, {useHash: true}),
+    NgxSpinnerModule.forRoot({ type: 'ball-scale-multiple' })],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }
