@@ -13,7 +13,7 @@ import { MatDialogModule } from "@angular/material/dialog"; // Import MatDialogM
 import { ReactiveFormsModule } from "@angular/forms";
 import { HttpClientModule } from "@angular/common/http";
 import { AddUserComponent } from "src/app/pages/user-management/add-user/add-user.component";
-
+import { NgxSpinnerModule } from "ngx-spinner";
 @NgModule({
   imports: [
     AdminLayoutRoutingModule,

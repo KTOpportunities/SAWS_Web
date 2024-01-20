@@ -1,4 +1,4 @@
-import { NgModule } from "@angular/core";
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from "@angular/core";
 import { BrowserModule } from "@angular/platform-browser";
 import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
@@ -10,12 +10,13 @@ import { AuthService } from "./services/auth.service";
 import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
 import { SideBarComponent } from "./shared/side-bar/side-bar.component";
 import { NavBarComponent } from "./shared/nav-bar/nav-bar.component";
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { MatPaginatorModule } from "@angular/material/paginator";
-import { AddUserComponent } from './pages/user-management/add-user/add-user.component';
-import { AdminUserComponent } from './pages/user-management/admin-user/admin-user.component';
-import { SubscriberUserComponent } from './pages/user-management/subscriber-user/subscriber-user.component';
+import { AddUserComponent } from "./pages/user-management/add-user/add-user.component";
+import { AdminUserComponent } from "./pages/user-management/admin-user/admin-user.component";
+import { SubscriberUserComponent } from "./pages/user-management/subscriber-user/subscriber-user.component";
 import { ReactiveFormsModule } from "@angular/forms";
+import { NgxSpinnerModule } from "ngx-spinner";
 
 @NgModule({
   declarations: [
@@ -30,8 +31,18 @@ import { ReactiveFormsModule } from "@angular/forms";
     AdminUserComponent,
     SubscriberUserComponent,
   ],
-  imports: [BrowserModule, AppRoutingModule, HttpClientModule, BrowserAnimationsModule,MatPaginatorModule,ReactiveFormsModule],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    HttpClientModule,
+    BrowserAnimationsModule,
+    MatPaginatorModule,
+    ReactiveFormsModule,
+    NgxSpinnerModule
+    
+  ],
   providers: [AuthService],
   bootstrap: [AppComponent],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class AppModule {}
