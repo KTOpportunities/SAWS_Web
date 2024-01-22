@@ -1,18 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import Swal from 'sweetalert2';
 import { AuthService } from './../../services/auth.service';
-import { FormBuilder, Validators, AbstractControl, FormGroup, ValidatorFn, ValidationErrors } from '@angular/forms';
-import { ResetConfirmPassword } from 'src/app/models/resetPassword';
-import { DataService } from 'src/app/services/data.service';
+import { FormBuilder, Validators, AbstractControl, FormGroup } from '@angular/forms';
 
 
-// interface ResetPassword{
-//   email: string;
-//   token: string;
-//   newPassword: string;
-//   confirmPassword: string;
-// }
+
+
+interface ResetPassword{
+  email: string;
+  token: string;
+  newPassword: string;
+  confirmPassword: string;
+}
 
 @Component({
     selector: 'app-reset-password',
@@ -21,107 +20,90 @@ import { DataService } from 'src/app/services/data.service';
   })
 
 export class resetPasswordComponent implements OnInit {
+
+
   errorMessage: string | null = null;
   successMessage: string | null = null;
   loading = false;
+  // blurEffect: boolean;
   resetPasswordForm :FormGroup;
   email: string | null = null;
   token: string| null = null;
-  sharedObject: any;
-  submitted: boolean = false;
-
-  resetPassword : ResetConfirmPassword = {
+  ResetPassword : ResetPassword = {
     email: '',
     token: '',
     newPassword: '',
     confirmPassword: '',
   };
+
   
     constructor(private router:Router,
-      private api: AuthService,
-      private formBuilder: FormBuilder,
-      private dataService: DataService
+      private authAPI: AuthService,
+      private formBuilder: FormBuilder
     ){
       this.resetPasswordForm = this.formBuilder.group({
-        email: ['', Validators.required],
-        newPassword: ['', Validators.required],
-        confirmPassword:['', Validators.required],
+        newPassword: [null,Validators.required],
+        confirmPassword:[null,Validators.required],
       });
     }
-
     ngOnInit(): void {
-
-      this.submitted = true;
-      this.sharedObject = this.dataService.getSharedObject();
-
-      if (this.sharedObject && this.sharedObject.resetUrl) {
-        const urlSegments = this.sharedObject.resetUrl.split('=');
-
-        this.email = urlSegments[1].split('&')[0];
-        console.log('this.email', this.email)
-
-        this.resetPasswordForm.patchValue({
-          email: this.email,
-        });
-      }
+     
     }
-
-    onResetPasswordSubmit() {
-
-      if(this.resetPasswordForm.valid){
-        
-        this.resetPassword = {
-          email: this.resetPasswordForm?.value.email,
-          token: this.sharedObject.resetToken,
+    
+    resetPassword() {
+      this.successMessage = '';
+      
+      // show loading indicator
+      this.loading = true;
+    
+      const urlSegments = this.router.url.split('=');
+      if (urlSegments.length >= 2) {
+        this.email = urlSegments[1].split('&')[0];
+        this.token = this.router.url.split('token=')[1];
+    
+        this.ResetPassword  = {
+          email: this.email,
+          token: this.token,
           newPassword: this.resetPasswordForm?.value.newPassword,
           confirmPassword: this.resetPasswordForm?.value.confirmPassword,
+        };
+    
+        // Check if form is valid including custom validator
+        if (this.resetPasswordForm.valid) {
+          this.authAPI.RequestPasswordReset(this.ResetPassword ).subscribe({
+            next: (data) => {
+              this.loading = false;
+              this.errorMessage = '';
+              this.successMessage = 'Your password has been successfully updated!';
+              this.resetPasswordForm.reset();
+              setTimeout(() => {
+                this.successMessage = '';
+                this.router.navigate(['/login']);
+              }, 4000);
+            },
+            error: (error) => {
+              this.errorMessage = 'Error: Invalid credentials provided!';
+              this.loading = false;
+              setTimeout(() => {
+                this.errorMessage = '';
+              }, 3000);
+            },
+          });
+        } else {
+          this.loading = false;
+          this.errorMessage = 'Please provide a password!';
+          setTimeout(() => {
+            this.errorMessage = '';
+          }, 3000);
         }
-
-        this.api.resetPassword(this.resetPassword).subscribe({
-          next:(response) => {
-          this.showSuccessAlert();
-            this.navigateto('/Login');
-          },
-          error:(err) => {
-            console.log(err)
-            this.alertMessage("Error with provided credentials")
-          },
-        })
       } else {
-          this.showFormErrorsAlert()
+        // Handle the case where the URL structure is unexpected
+        console.error('Invalid URL structure:', this.router.url);
       }
     }
-
-    navigateto(page: string) {
-      this.router.navigate([page]);
-    }
-
-    back() {
-      this.router.navigate(['/forgot-password']);
-    }
-
-    alertMessage(message: string) {
-      Swal.fire({
-        icon: "error",
-        title: message,
-        showConfirmButton: false,
-        timer: 2000,
-      });
-    }
-
-    showSuccessAlert() {
-      Swal.fire({
-        icon: 'success',
-        title: 'Password Reset!',
-        text: "Password reset successful",
-      });
-    }
-
-    showFormErrorsAlert() {
-      Swal.fire({
-        icon: 'error',
-        title: 'Validation errors!',
-        text: 'Form has errors!',
-      });
+    
+    
+    Resetpassword(){
+        this.router.navigate(['reset-password']);
     }
   }

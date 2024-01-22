@@ -13,9 +13,6 @@ import {
 } from '@angular/forms';
 import { AuthService} from '././../../services/auth.service' 
 import Swal from 'sweetalert2';
-import { Router } from '@angular/router';
-import { DataService } from 'src/app/services/data.service';
-
 interface ResetPassword{
   email: string;
   token: string;
@@ -47,88 +44,52 @@ interface ResetPassword{
     scrollContent(): void {
       this.content.nativeElement.scrollIntoView();
     }
-    constructor(
-      private formBuilder: FormBuilder, 
-      private api: AuthService,
-      private router: Router,
-      private dataService: DataService
-      
-      ) {
+    constructor(private formBuilder: FormBuilder, private api: AuthService) {
       this.userForm = this.formBuilder.group({
-        email: ['', [Validators.required, Validators.email]],
+        Email: ['', [Validators.required, this.emailValidator]],
       });
     }
-
-    // emailValidator(control: any) {
-    //   if (control.value) {
-    //     const matches = control.value.match(
-    //       /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/
-    //     );
-    //     return matches ? null : { invalidEmail: true };
-    //   } else {
-    //     return null;
-    //   }
-    // }
-
-    onSubmit() {
-      this.submitted = true;
-
-      //  Check if the form is valid before submitting
-      if (this.userForm.valid) {
-        this.api.requestPasswordReset(this.userForm.value).subscribe({
-          next:(response) => {
-            const resetObj = {
-              resetToken: response.resetToken,
-              resetUrl: response.resetUrl,
-            };
-
-            this.dataService.setSharedObject(resetObj);            
-
-            this.navigateto('/reset-password');
-          },
-          error:(err) => {
-            console.log(err)
-            this.alertMessage(err.error.response)
-          },
-        })
+    emailValidator(control: any) {
+      if (control.value) {
+        const matches = control.value.match(
+          /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/
+        );
+        return matches ? null : { invalidEmail: true };
       } else {
-        this.showFormErrorsAlert();
+        return null;
       }
     }
-
-    onBack(){
-      this.router.navigate(['/Login']);
+    onSubmit() {
+      this.submitted = true;
+      debugger;
+      var body = {
+        Email: this.userForm.controls['Email'].value,
+      };
+      debugger;
+      console.log('BODY:', body);
+      if (this.userForm.invalid) {
+        debugger;
+        return;
+      } else {
+        this.api.RequestPasswordReset(body).subscribe((data: any) => {
+          debugger;
+          console.log('SAVED:', data);
+          // this.nextStep();
+         
+            
+            this.showSuccessAlert();
+            this.statusMessage = true;
+          
+        });
+      }
     }
-
-    navigateto(page: string) {
-      this.router.navigate([page]);
-    }
-
     showSuccessAlert() {
       Swal.fire({
         icon: 'success',
         title: 'Success!',
-        text: 'Thank you! Check Your Email For Password Reset!',
+        text: 'Thank you! Check Your Email For Password Reset!.',
       });
     }
-
-    alertMessage(message: string) {
-      Swal.fire({
-        icon: "warning",
-        title: message,
-        showConfirmButton: false,
-        timer: 2000,
-      });
-    }
-
-    showFormErrorsAlert() {
-      Swal.fire({
-        icon: 'error',
-        title: 'Validation errors!',
-        text: 'Form has errors!',
-      });
-    }
-
     showUnsuccessfulAlert() {
       Swal.fire({
         icon: 'error',
@@ -136,24 +97,26 @@ interface ResetPassword{
         text: 'Something went wrong. Please try again.',
       });
     }
-
     onReset() {
       this.submitted = false;
       this.userForm.reset();
     }
-
     ngOnInit() {}
-
     nextStep() {
       this.currentStep++;
     }
-
     prevStep() {
       this.currentStep--;
     }
-
     submitForm() {
       this.showSuccessAlert();
       console.log('Form submitted!');
-    } 
+    }
+  
+  
+  
+  
+  
+  
+  
   }

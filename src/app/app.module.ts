@@ -17,7 +17,6 @@ import { AdminUserComponent } from "./pages/user-management/admin-user/admin-use
 import { SubscriberUserComponent } from "./pages/user-management/subscriber-user/subscriber-user.component";
 import { ReactiveFormsModule } from "@angular/forms";
 import { NgxSpinnerModule } from "ngx-spinner";
-import { DataService } from "./services/data.service";
 
 @NgModule({
   declarations: [
@@ -42,10 +41,7 @@ import { DataService } from "./services/data.service";
     NgxSpinnerModule
     
   ],
-  providers: [
-    AuthService, 
-    DataService,
-  ],
+  providers: [AuthService],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
