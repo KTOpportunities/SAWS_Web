@@ -11,6 +11,7 @@ import { NgxSpinnerService } from "ngx-spinner";
 export class loginComponent implements OnInit {
   loginform: FormGroup;
   errMessage: string = "";
+
   constructor(
     private router: Router,
     private formBuilder: FormBuilder,
@@ -21,6 +22,16 @@ export class loginComponent implements OnInit {
       Username: [null, Validators.required, this.emailValidator],
       Password: [null, [Validators.required]],
     });
+
+    var username: any = sessionStorage.getItem('email');
+
+    if(username){
+      this.loginform.patchValue({
+        Username: username,
+      });
+      
+      sessionStorage.removeItem('email')
+    }
   }
   ngOnInit(): void {}
   async emailValidator(control: any) {
@@ -38,7 +49,6 @@ export class loginComponent implements OnInit {
       this.spinner.show();
       this.authApi.login(this.loginform.value).subscribe(
         (data: any) => {
-          debugger
           if (
             data.Status == "200" &&
             data.Message == "Successfully Signed In"

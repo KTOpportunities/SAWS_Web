@@ -54,6 +54,7 @@ export class resetPasswordComponent implements OnInit {
 
       if (urlSegments.length >= 2) {
         this.email = urlSegments[1].split('&')[0];
+        sessionStorage.setItem('email', `${this.email}`);
         this.resetPasswordForm.patchValue({
           email: this.email,
         });
