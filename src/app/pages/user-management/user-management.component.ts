@@ -10,6 +10,8 @@ import { MatDialog } from "@angular/material/dialog";
 import { AddUserComponent } from "src/app/pages/user-management/add-user/add-user.component";
 import { Router, ActivatedRoute } from "@angular/router";
 import { NgxSpinnerService } from "ngx-spinner";
+import { EditUserComponent } from "./edit-user/edit-user.component";
+import { Subscriber } from "src/app/Models/subscriber.model";
 @Component({
   selector: "app-user-management",
   templateUrl: "./user-management.component.html",
@@ -24,7 +26,7 @@ export class UserManagementComponent implements OnInit {
     public dialog: MatDialog,
     private router: Router,
     private route: ActivatedRoute,
-    private spinner:NgxSpinnerService
+    private spinner: NgxSpinnerService
   ) {}
   ngOnInit() {
     this.apiService.getPagedAllSubscribers().subscribe(
@@ -67,8 +69,9 @@ export class UserManagementComponent implements OnInit {
     // Implement delete logic
   }
   openPopup() {
-    this.dialog.open(AddUserComponent, {
-      width: "100%", // adjust width as needed
+    this.dialog.open(EditUserComponent, {
+      width: "49%",
+      height: "52%", // adjust width as needed
 
       // Add more configuration options as needed
     });
@@ -76,5 +79,11 @@ export class UserManagementComponent implements OnInit {
 
   navigateToAddUser() {
     this.router.navigate(["/admin/addUser"]);
+  }
+
+
+  navigateToEditUser(user:Subscriber) {
+    sessionStorage.setItem('SubscriberDetails', JSON.stringify(user));
+    this.router.navigate(["/admin/editUser"]);
   }
 }

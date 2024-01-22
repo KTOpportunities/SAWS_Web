@@ -31,4 +31,11 @@ export class SubscriberService {
       body
     );
   }
+
+  InsertUpdateUserProfile(body: {}) {
+    return this.http.post<any>(
+      environment.serverAPI + 'Authenticate/InsertUpdateUserProfile',
+      body
+    );
+  }
 }

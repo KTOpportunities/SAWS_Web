@@ -17,6 +17,7 @@ import { AdminUserComponent } from "./pages/user-management/admin-user/admin-use
 import { SubscriberUserComponent } from "./pages/user-management/subscriber-user/subscriber-user.component";
 import { ReactiveFormsModule } from "@angular/forms";
 import { NgxSpinnerModule } from "ngx-spinner";
+import { EditUserComponent } from './pages/user-management/edit-user/edit-user.component';
 
 @NgModule({
   declarations: [
@@ -30,6 +31,7 @@ import { NgxSpinnerModule } from "ngx-spinner";
     AddUserComponent,
     AdminUserComponent,
     SubscriberUserComponent,
+    EditUserComponent,
   ],
   imports: [
     BrowserModule,
