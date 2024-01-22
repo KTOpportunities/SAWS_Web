@@ -24,7 +24,6 @@ import { DataService } from "./services/data.service";
     AppComponent,
     AuthLayoutComponent,
     forgotPasswordComponent,
-    resetPasswordComponent,
     AdminLayoutComponent,
     SideBarComponent,
     NavBarComponent,
