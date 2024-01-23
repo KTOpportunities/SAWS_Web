@@ -9,7 +9,7 @@ import { SubscriberService } from "src/app/services/subscriber.service";
 import { MatDialog } from "@angular/material/dialog";
 import { AddUserComponent } from "src/app/pages/user-management/add-user/add-user.component";
 import { Router, ActivatedRoute } from "@angular/router";
-
+import { NgxSpinnerService } from "ngx-spinner";
 @Component({
   selector: "app-user-management",
   templateUrl: "./user-management.component.html",
@@ -23,7 +23,8 @@ export class UserManagementComponent implements OnInit {
     private apiService: SubscriberService,
     public dialog: MatDialog,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private spinner:NgxSpinnerService
   ) {}
   ngOnInit() {
     this.apiService.getPagedAllSubscribers().subscribe(
@@ -33,6 +34,7 @@ export class UserManagementComponent implements OnInit {
         console.log("DATA:::", this.dataSource.data);
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
+        this.spinner.hide();
       },
       (error) => {
         console.error("Error fetching data from API:", error);
