@@ -25,7 +25,9 @@ export class loginComponent implements OnInit {
       Password: [null, [Validators.required]],
     });
   }
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    debugger;
+  }
   async emailValidator(control: any) {
     if (control.value) {
       const matches = control.value.match(
@@ -37,6 +39,8 @@ export class loginComponent implements OnInit {
     }
   }
   login() {
+    debugger;
+
     if (this.loginform.status == "VALID") {
       this.spinner.show();
       this.authApi.login(this.loginform.value).subscribe(
