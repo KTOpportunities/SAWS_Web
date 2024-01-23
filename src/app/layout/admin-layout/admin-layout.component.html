@@ -1,1 +1,15 @@
-<router-outlet>Hello World</router-outlet>
+<app-nav-bar></app-nav-bar>
+
+<!-- <div class="main-content"> -->
+
+<div class="demo-grid-ruler mdl-grid">
+  <!-- Bring back below code -->
+  <div class="mdl-cell mdl-cell--2-col side-bar">
+    <app-side-bar></app-side-bar>
+  </div>
+
+  <!-- <div class="mdl-cell mdl-cell--10-col dash-content mat-elevation-z8"> -->
+  <div class="mdl-cell mdl-cell--10-col dash-content">
+    <router-outlet></router-outlet>
+  </div>
+</div>

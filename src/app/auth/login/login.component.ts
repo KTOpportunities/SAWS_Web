@@ -64,11 +64,11 @@ export class loginComponent implements OnInit {
           // ) {
 
           this.tokenStorage.saveToken(data.token);
-          this.router.navigate(["/admin"]);
+          this.router.navigate(['/admin']);
           this.errMessage = "Successfully logged in";
           this.userData = data;
 
-          data.saveCurrentUser(data);
+          // data.saveCurrentUser(data);
           // }
         },
         (err) => {
