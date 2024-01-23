@@ -17,6 +17,11 @@ import { AdminUserComponent } from "./pages/user-management/admin-user/admin-use
 import { SubscriberUserComponent } from "./pages/user-management/subscriber-user/subscriber-user.component";
 import { ReactiveFormsModule } from "@angular/forms";
 import { NgxSpinnerModule } from "ngx-spinner";
+import { EditUserComponent } from "./pages/user-management/edit-user/edit-user.component";
+import { TokeninterceptorService } from "./services/token.interceptor";
+import { SubscriberService } from "./services/subscriber.service";
+import { Dataservice } from "./services/data.service";
+import { MatTableModule } from "@angular/material/table";
 
 @NgModule({
   declarations: [
@@ -29,6 +34,7 @@ import { NgxSpinnerModule } from "ngx-spinner";
     AddUserComponent,
     AdminUserComponent,
     SubscriberUserComponent,
+    EditUserComponent,
   ],
   imports: [
     BrowserModule,
@@ -37,10 +43,20 @@ import { NgxSpinnerModule } from "ngx-spinner";
     BrowserAnimationsModule,
     MatPaginatorModule,
     ReactiveFormsModule,
-    NgxSpinnerModule
-    
+    NgxSpinnerModule,
+    MatTableModule,
   ],
-  providers: [AuthService],
+  providers: [
+    AuthService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokeninterceptorService,
+      multi: true,
+    },
+    SubscriberService,
+    Dataservice,
+    AuthService,
+  ],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })

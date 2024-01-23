@@ -3,12 +3,14 @@ import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
 import { AuthService } from "src/app/services/auth.service";
 import { NgxSpinnerService } from "ngx-spinner";
+import { TokeStorageService } from "src/app/services/token-storage.service";
 @Component({
   selector: "app-login",
   templateUrl: "./login.component.html",
   styleUrls: ["./login.component.css"],
 })
 export class loginComponent implements OnInit {
+  userData: any = null;
   loginform: FormGroup;
   errMessage: string = "";
 
@@ -16,7 +18,8 @@ export class loginComponent implements OnInit {
     private router: Router,
     private formBuilder: FormBuilder,
     private authApi: AuthService,
-    private spinner: NgxSpinnerService
+    private spinner: NgxSpinnerService,
+    private tokenStorage: TokeStorageService
   ) {
     this.loginform = this.formBuilder.group({
       Username: [null, Validators.required, this.emailValidator],
@@ -52,14 +55,21 @@ export class loginComponent implements OnInit {
     if (this.loginform.status == "VALID") {
       this.spinner.show();
       this.authApi.login(this.loginform.value).subscribe(
-        (data:any) => {
-          if (
-            data.Status == "200" &&
-            data.Message == "Successfully Signed In"
-          ) {
-            this.router.navigate(["/admin"]);
-            this.errMessage = "Successfully logged in";
-          }
+        (data: any) => {
+          debugger;
+          console.log("LOGINS", data);
+          // if (
+          //   data.Status == "200" &&
+          //   data.Message == "Successfully Signed In"
+          // ) {
+
+          this.tokenStorage.saveToken(data.token);
+          this.router.navigate(["/admin"]);
+          this.errMessage = "Successfully logged in";
+          this.userData = data;
+
+          data.saveCurrentUser(data);
+          // }
         },
         (err) => {
           console.log(err);
