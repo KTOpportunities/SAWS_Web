@@ -21,6 +21,7 @@ import { EditUserComponent } from "./pages/user-management/edit-user/edit-user.c
 import { TokeninterceptorService } from "./services/token.interceptor";
 import { SubscriberService } from "./services/subscriber.service";
 import { Dataservice } from "./services/data.service";
+import { MatTableModule } from "@angular/material/table";
 
 @NgModule({
   declarations: [
@@ -44,6 +45,7 @@ import { Dataservice } from "./services/data.service";
     MatPaginatorModule,
     ReactiveFormsModule,
     NgxSpinnerModule,
+    MatTableModule,
   ],
   providers: [
     AuthService,
