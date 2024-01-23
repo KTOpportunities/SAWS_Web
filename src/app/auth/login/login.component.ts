@@ -39,13 +39,14 @@ export class loginComponent implements OnInit {
       this.authApi.login(this.loginform.value).subscribe(
         (data: any) => {
           debugger
-          if (
-            data.Status == "200" &&
-            data.Message == "Successfully Signed In"
-          ) {
+          // if (
+          //   data.Status == "200" &&
+          //   data.Message == "Successfully Signed In"
+          // )
+          //  {
             this.router.navigate(["/admin"]);
             this.errMessage = "Successfully logged in";
-          }
+          // }
         },
         (err) => {
           console.log(err);

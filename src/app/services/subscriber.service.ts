@@ -31,4 +31,19 @@ export class SubscriberService {
       body
     );
   }
+
+  deleteUserProfileById(Id: any) {
+    return this.http.delete<any>(
+environment.serverAPI + `Authenticate/deleteUserProfileById?Id=${Id}`,
+      {}
+    );
+  }
+
+  // deleteUserProfileById(Id: any) {
+  //   const url = `${environment.serverAPI}/Authenticate/DeleteUserProfileById`;
+  //   const params = { Id };
+  //   return this.http.delete<any>(url, { params });
+  // }
+
+
 }
