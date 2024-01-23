@@ -36,16 +36,6 @@ const routes: Routes = [ {
   // canActivate: [AuthGuard]
 },
 {
-  path: 'auth', component:AuthLayoutComponent,
-  children: [
-    {
-      path: '',
-      loadChildren: () => import('./layout/auth-layout/auth-layout.module').then(m => m.AuthLayoutModule)
-    }
-  ],
-  // canActivate: [AuthGuard]
-},
-{
   path: '**',
   redirectTo: 'login'
 }

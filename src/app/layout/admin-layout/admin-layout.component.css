@@ -1,6 +1,4 @@
-router-outlet{  margin-left: 303px;
-  margin-top: -331px;
-}
+
 .main-content{
     display:flex;
    }
@@ -18,10 +16,4 @@ router-outlet{  margin-left: 303px;
    }
    .al {
      display: block ruby ;
-   }
-   @media screen and (min-device-width:1440px)and
-   (max-device-width:2560px){
-     ::ng-deep#NO-menue{
-       display: none !important;
-     }
    }

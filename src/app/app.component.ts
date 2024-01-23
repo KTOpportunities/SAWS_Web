@@ -1,5 +1,6 @@
 import { Component,OnInit } from "@angular/core";
 import { NavigationEnd, Router, RouterLink } from "@angular/router";
+import { TokeStorageService } from "./services/token-storage.service";
 
 @Component({
   selector: "app-root",
@@ -8,16 +9,15 @@ import { NavigationEnd, Router, RouterLink } from "@angular/router";
 })
 export class AppComponent implements OnInit{
   title = "Saws";
-  constructor(private router: Router) {
+  isLoggedIn = false;
+  constructor(private tokenStorage: TokeStorageService,private router: Router) {
   }
   
   ngOnInit(): void {
-    // debugger
-    // if (window.location.href.includes("reset-password")) {
-    //   debugger;
-    //   this.router.navigate(['auth/reset-password/']);
-    // } else {
-    //   this.router.navigate(['auth/login']);
-    // }
+debugger
+    this.isLoggedIn = !!this.tokenStorage.getToken();
+    if(this.isLoggedIn){
+      this.router.navigate(['/admin']);
+    }
   }
 }
