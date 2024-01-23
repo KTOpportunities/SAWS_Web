@@ -1,4 +1,4 @@
-import { Component } from "@angular/core";
+import { Component,OnInit } from "@angular/core";
 import { NavigationEnd, Router, RouterLink } from "@angular/router";
 
 @Component({
@@ -6,10 +6,18 @@ import { NavigationEnd, Router, RouterLink } from "@angular/router";
   templateUrl: "./app.component.html",
   styleUrls: ["./app.component.css"],
 })
-export class AppComponent {
+export class AppComponent implements OnInit{
   title = "Saws";
-
   constructor(private router: Router) {
-    this.router.navigate(["auth/login"]);
+  }
+  
+  ngOnInit(): void {
+    // debugger
+    // if (window.location.href.includes("reset-password")) {
+    //   debugger;
+    //   this.router.navigate(['auth/reset-password/']);
+    // } else {
+    //   this.router.navigate(['auth/login']);
+    // }
   }
 }

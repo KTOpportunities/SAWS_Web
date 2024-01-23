@@ -21,6 +21,16 @@ export class loginComponent implements OnInit {
       Username: [null, Validators.required, this.emailValidator],
       Password: [null, [Validators.required]],
     });
+
+    var username: any = sessionStorage.getItem('email');
+
+    if(username){
+      this.loginform.patchValue({
+        Username: username,
+      });
+      
+      sessionStorage.removeItem('email')
+    }
   }
   ngOnInit(): void {}
   async emailValidator(control: any) {

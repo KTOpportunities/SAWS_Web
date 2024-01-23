@@ -23,7 +23,6 @@ import { NgxSpinnerModule } from "ngx-spinner";
     AppComponent,
     AuthLayoutComponent,
     forgotPasswordComponent,
-    resetPasswordComponent,
     AdminLayoutComponent,
     SideBarComponent,
     NavBarComponent,
