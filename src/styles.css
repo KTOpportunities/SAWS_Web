@@ -1,4 +1,346 @@
 /* You can add global styles to this file, and also import other style files */
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+/* icon */
+
+/* @font-face {
+    font-family: "icomoon";
+    src: url("./assets/font/icomoon.eot?3zgrag");
+    src: url("./assets/font/icomoon.eot?3zgrag#iefix") format("embedded-opentype"),
+      url("./assets/font/icomoon.ttf?3zgrag") format("truetype"),
+      url("./assets/font/icomoon.woff?3zgrag") format("woff"),
+      url("./assets/font/icomoon.svg?3zgrag#icomoon") format("svg");
+    font-weight: normal;
+    font-style: normal;
+    font-display: block;
+  } */
+  
+  [class^="icon-"],
+  [class*=" icon-"] {
+    /* use !important to prevent issues with browser extensions that change fonts */
+    font-family: "icomoon" !important;
+    speak: never;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+  
+    font-size: 25px;
+    margin-right: 7px;
+  
+    /* Better Font Rendering =========== */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  
+  .icon-Mobile-Number-1:before {
+    content: "\e902";
+  }
+  .icon-Password-1:before {
+    content: "\e900";
+  }
+  .icon-email-1:before {
+    content: "\e901";
+  }
+  
+  /* =========== */
+  
+  html,
+  body {
+    height: 100%;
+  }
+  body {
+    margin: 0;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+  }
+  
+  html,
+  body {
+    height: 100%;
+  }
+  body {
+    margin: 0;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+    min-height: 100vh;
+    background: #F0F0F0;
+  }
+  .app-header {
+    justify-content: space-between;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 2;
+    box-shadow: 0 3px 5px -1px rgba(0, 0, 0, 0.2),
+      0 6px 10px 0 rgba(0, 0, 0, 0.14), 0 1px 18px 0 rgba(0, 0, 0, 0.12);
+  }
+  .login-wrapper {
+    height: 100%;
+  }
+  .positronx {
+    text-decoration: none;
+    color: #ffffff;
+  }
+  .box {
+    position: relative;
+    top: 0;
+    opacity: 1;
+    float: left;
+    padding: 60px 50px 40px 50px;
+    width: 100%;
+    background: #fff;
+    border-radius: 10px;
+    transform: scale(1);
+    -webkit-transform: scale(1);
+    -ms-transform: scale(1);
+    z-index: 5;
+    width: 41%;
+    height: 63%;
+    /* max-width: 330px; */
+  }
+  .box.back {
+    transform: scale(0.95);
+    -webkit-transform: scale(0.95);
+    -ms-transform: scale(0.95);
+    top: -20px;
+    opacity: 0.8;
+    z-index: -1;
+  }
+  /* .box:before {
+    content: "";
+    width: 100%;
+    height: 30px;
+    border-radius: 10px;
+    position: absolute;
+    top: -10px;
+    background: rgba(255, 255, 255, .6);
+    left: 0;
+    transform: scale(.95);
+    -webkit-transform: scale(.95);
+    -ms-transform: scale(.95);
+    z-index: -1;
+  } */
+  
+  .login-wrapper .example-form {
+    min-width: 100%;
+    max-width: 300px;
+    width: 100%;
+  
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* margin-top: 54px; */
+    margin-top: 56px;
+  }
+  .login-wrapper .example-full-width,
+  .login-wrapper .btn-block {
+    width: 100%;
+  }
+  .login-wrapper mat-card-header {
+    text-align: center;
+    width: 100%;
+    display: block;
+    font-weight: 700;
+  }
+  .login-wrapper mat-card-header mat-card-title {
+    font-size: 30px;
+    margin: 0;
+    margin-top: 35px;
+    width: 101%;
+  }
+  .login-wrapper .mat-card {
+    padding: 40px 70px 50px;
+    border-radius: 41px 0px 0px 41px;
+    background: #f7f7f7 0% 0% no-repeat padding-box;
+  }
+  
+  .strength-info .mat-card {
+    border-radius: 14px !important;
+    padding: 36px !important;
+  }
+  
+  mat-password-strength .mat-progress-bar {
+    display: block;
+    height: 4px;
+    overflow: hidden;
+    position: relative;
+    transition: opacity 250ms linear;
+    width: 391px;
+    top: -19px;
+  }
+  
+  .login-wrapper .mat-stroked-button {
+    border: 1px solid currentColor;
+    line-height: 54px;
+    background: #fff7fa;
+  }
+  .login-wrapper .mat-form-field-appearance-legacy .mat-form-field-infix {
+    padding: 0.8375em 0;
+  }
+  
+  input {
+    font-size: 22px;
+  }
+  .mat-checkbox-layout {
+    white-space: pre-line !important;
+  }
+  jw-modal .jw-modal {
+    position: fixed;
+    top: -10px !important;
+    z-index: 1000 !important;
+    overflow: auto !important;
+    align-self: center !important;
+    display: flex !important;
+    justify-content: center !important;
+    max-width: 70%  /*!important*/;
+    flex-direction: column !important;
+  
+  }
+  
+  
+  .jw-modal-body {
+    padding: 0% !important;
+    background: #efefef;
+    border-radius: 6px;
+    margin: 40px;
+  }
+  .jw-modal .modal-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    background-color: #09182f;
+    height: 60px;
+  }
+  .modal-header button {
+    background: #09182f;
+    border: none;
+  }
+  
+  .modal-header button span {
+    font-size: 40pt;
+    color: red;
+    align-self: center;
+    font-weight: bold;
+  }
+  .modal-footer {
+    border-top: 1px solid lightgray;
+    justify-content: center;
+    display: flex;
+  }
+  .mat-h5,
+  .mat-typography h5 {
+    font: 400 calc(14px * 0.83) / 20px Roboto, "Helvetica Neue", sans-serif;
+    font-size: calc(11.62px);
+    margin: 0 0 0 0 !important;
+    padding: 2.5%;
+  }
+  #proccessPersonalInfo,
+  #TermsModal {
+    color: #fff;
+    align-self: center;
+    font-size: 20pt;
+    align-self: center;
+  }
+  
+  #termsandconditionsModal p {
+    /*  font-size: 1.5em;
+    font-weight: 500; */
+  }
+  .modal-body {
+    padding: 2.5% !important;
+  }
+  
+  input[type="radio"] {
+    border: 0px;
+    width: 2%;
+    height: 1em;
+  }
+  .radioRow {
+    margin-bottom: 15pt;
+  }
+  .radioRow label {
+    font-size: 1.5em;
+    height: 1em;
+    font-weight: 500;
+  }
+  .col .mat-form-field-wrapper {
+    padding-bottom: 0px;
+    background: #e8e8e8;
+    border-radius: 5px;
+  }
+  
+  .col .mat-form-field-underline {
+    display: none;
+    width: 0%;
+    pointer-events: none;
+  }
+  .col .mat-form-field-appearance-fill .mat-form-field-flex {
+    border-radius: 4px 4px 0 0;
+    padding: 0;
+  }
+  .col .mat-form-field-infix {
+    height: 8px;
+  }
+  
+  .cdk-global-overlay-wrapper,
+  .cdk-overlay-container {
+    z-index: 10000 !important;
+  }
+  .note {
+    padding: 0px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+  }
+  .note p {
+    font-size: 18px;
+    color: white;
+    align-self: center;
+    margin: 10px 72px 0px 72px;
+  }
+  .termsText {
+    text-align: left;
+    font: normal normal medium 12px/15px Montserrat;
+    letter-spacing: 0.36px;
+    color: #555555;
+    opacity: 1;
+  }
+  .mat-list-base .mat-list-item .mat-list-item-content,
+  .mat-list-base .mat-list-option .mat-list-item-content {
+    padding: 0px !important;
+  }
+  
+  tr.mat-header-row {
+    background-color: #09182f;
+    color: white !important;
+  }
+  th.mat-header-cell {
+    color: white !important;
+  }
+  .mat-checkbox-inner-container {
+    background: white !important;
+  }
+  
+  
+  
+  
+  /* @media screen 
+    and (min-device-width:320px)
+    and (max-device-width: 600px)
+    and (orientation: portrait){
+    #proccessPersonalInfo,
+  #TermsModal {
+    text-align: left;
+    font: normal normal bold 14pt Montserrat;
+    letter-spacing: 0.42px;
+    color: #ffffff;
+    opacity: 1;
+    font-family: inherit;
+    font-weight: 500;
+    
+  }
+  } */
+  
+  
+  
+  

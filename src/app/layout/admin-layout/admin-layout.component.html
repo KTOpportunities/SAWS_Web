@@ -1,16 +1,15 @@
 <app-nav-bar></app-nav-bar>
-<div>
-  <div>
+
+<!-- <div class="main-content"> -->
+
+<div class="demo-grid-ruler mdl-grid">
+  <!-- Bring back below code -->
+  <div class="mdl-cell mdl-cell--2-col side-bar">
     <app-side-bar></app-side-bar>
-    <router-outlet
-      style="margin-left: 303px; margin-top: -331px"
-    ></router-outlet>
+  </div>
+
+  <!-- <div class="mdl-cell mdl-cell--10-col dash-content mat-elevation-z8"> -->
+  <div class="mdl-cell mdl-cell--10-col dash-content">
+    <router-outlet></router-outlet>
   </div>
 </div>
-<div></div>
-<!-- <app-nav-bar></app-nav-bar>
-
-<div style="display: flex">
-  <app-side-bar></app-side-bar>
-  <router-outlet></router-outlet>
-</div> -->

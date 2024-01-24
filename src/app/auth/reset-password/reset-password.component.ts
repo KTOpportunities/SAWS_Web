@@ -6,6 +6,19 @@ import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 // import { ResetConfirmPassword } from 'src/app/models/resetPassword';
 
 
+
+
+interface ResetPassword{
+  email: string;
+  token: string;
+  newPassword: string;
+  confirmPassword: string;
+}
+
+
+import { ResetConfirmPassword } from 'src/app/models/resetPassword';
+
+
 // interface ResetPassword{
 //   email: string;
 //   token: string;
@@ -29,12 +42,12 @@ export class resetPasswordComponent implements OnInit {
   sharedObject: any;
   submitted: boolean = false;
 
-  // resetPassword : ResetConfirmPassword = {
-  //   email: '',
-  //   token: '',
-  //   newPassword: '',
-  //   confirmPassword: '',
-  // };
+  resetPassword : ResetConfirmPassword = {
+    email: '',
+    token: '',
+    newPassword: '',
+    confirmPassword: '',
+  };
   
     constructor(private router:Router,
       private api: AuthService,
@@ -61,35 +74,35 @@ export class resetPasswordComponent implements OnInit {
       }
     }
 
-    // onResetPasswordSubmit() {
+    onResetPasswordSubmit() {
 
-    //   if(this.resetPasswordForm.valid){
+      if(this.resetPasswordForm.valid){
         
-    //     this.resetPassword = {
-    //       email: this.resetPasswordForm?.value.email,
-    //       token: this.router.url.split('token=')[1],
-    //       newPassword: this.resetPasswordForm?.value.newPassword,
-    //       confirmPassword: this.resetPasswordForm?.value.confirmPassword,
-    //     }
+        this.resetPassword = {
+          email: this.resetPasswordForm?.value.email,
+          token: this.router.url.split('token=')[1],
+          newPassword: this.resetPasswordForm?.value.newPassword,
+          confirmPassword: this.resetPasswordForm?.value.confirmPassword,
+        }
 
-    //     this.api.resetPassword(this.resetPassword).subscribe({
-    //       next:(response) => {
-    //       this.showSuccessAlert();
+        this.api.resetPassword(this.resetPassword).subscribe({
+          next:(response) => {
+          this.showSuccessAlert();
 
-    //       setTimeout(() => {
-    //         this.navigateto('/Login');
-    //       }, 2000);
+          setTimeout(() => {
+            this.navigateto('/Login');
+          }, 2000);
 
-    //     },
-    //       error:(err: any) => {
-    //         console.log(err)
-    //         this.alertMessage("Error with provided credentials")
-    //       },
-    //     })
-    //   } else {
-    //       this.showFormErrorsAlert()
-    //   }
-    // }
+        },
+          error:(err) => {
+            console.log(err)
+            this.alertMessage("Error with provided credentials")
+          },
+        })
+      } else {
+          this.showFormErrorsAlert()
+      }
+    }
 
     navigateto(page: string) {
       this.router.navigate([page]);
