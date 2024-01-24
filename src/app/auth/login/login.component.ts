@@ -13,6 +13,7 @@ export class loginComponent implements OnInit {
   userData: any = null;
   loginform: FormGroup;
   errMessage: string = "";
+
   constructor(
     private router: Router,
     private formBuilder: FormBuilder,
@@ -24,6 +25,16 @@ export class loginComponent implements OnInit {
       Username: [null, Validators.required, this.emailValidator],
       Password: [null, [Validators.required]],
     });
+
+    var username: any = sessionStorage.getItem('email');
+
+    if(username){
+      this.loginform.patchValue({
+        Username: username,
+      });
+      
+      sessionStorage.removeItem('email')
+    }
   }
   ngOnInit(): void {
     debugger;
@@ -53,11 +64,11 @@ export class loginComponent implements OnInit {
           // ) {
 
           this.tokenStorage.saveToken(data.token);
-          this.router.navigate(["/admin"]);
+          this.router.navigate(['/admin']);
           this.errMessage = "Successfully logged in";
           this.userData = data;
 
-          data.saveCurrentUser(data);
+          // data.saveCurrentUser(data);
           // }
         },
         (err) => {

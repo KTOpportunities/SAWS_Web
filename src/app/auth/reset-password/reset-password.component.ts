@@ -12,6 +12,17 @@ interface ResetPassword{
   newPassword: string;
   confirmPassword: string;
 }
+import Swal from 'sweetalert2';
+
+import { ResetConfirmPassword } from 'src/app/models/resetPassword';
+
+
+// interface ResetPassword{
+//   email: string;
+//   token: string;
+//   newPassword: string;
+//   confirmPassword: string;
+// }
 
 @Component({
     selector: 'app-reset-password',
@@ -20,90 +31,109 @@ interface ResetPassword{
   })
 
 export class resetPasswordComponent implements OnInit {
-
-
   errorMessage: string | null = null;
   successMessage: string | null = null;
   loading = false;
-  // blurEffect: boolean;
   resetPasswordForm :FormGroup;
   email: string | null = null;
   token: string| null = null;
-  ResetPassword : ResetPassword = {
+  sharedObject: any;
+  submitted: boolean = false;
+
+  resetPassword : ResetConfirmPassword = {
     email: '',
     token: '',
     newPassword: '',
     confirmPassword: '',
   };
-
   
     constructor(private router:Router,
-      private authAPI: AuthService,
-      private formBuilder: FormBuilder
+      private api: AuthService,
+      private formBuilder: FormBuilder,
     ){
       this.resetPasswordForm = this.formBuilder.group({
-        newPassword: [null,Validators.required],
-        confirmPassword:[null,Validators.required],
+        email: ['', Validators.required],
+        newPassword: ['', Validators.required],
+        confirmPassword:['', Validators.required],
       });
     }
+
     ngOnInit(): void {
-     
-    }
-    
-    resetPassword() {
-      this.successMessage = '';
-      
-      // show loading indicator
-      this.loading = true;
-    
+
+      this.submitted = true;
       const urlSegments = this.router.url.split('=');
+
       if (urlSegments.length >= 2) {
         this.email = urlSegments[1].split('&')[0];
-        this.token = this.router.url.split('token=')[1];
-    
-        this.ResetPassword  = {
+        sessionStorage.setItem('email', `${this.email}`);
+        this.resetPasswordForm.patchValue({
           email: this.email,
-          token: this.token,
-          newPassword: this.resetPasswordForm?.value.newPassword,
-          confirmPassword: this.resetPasswordForm?.value.confirmPassword,
-        };
-    
-        // Check if form is valid including custom validator
-        if (this.resetPasswordForm.valid) {
-          this.authAPI.RequestPasswordReset(this.ResetPassword ).subscribe({
-            next: (data) => {
-              this.loading = false;
-              this.errorMessage = '';
-              this.successMessage = 'Your password has been successfully updated!';
-              this.resetPasswordForm.reset();
-              setTimeout(() => {
-                this.successMessage = '';
-                this.router.navigate(['/login']);
-              }, 4000);
-            },
-            error: (error) => {
-              this.errorMessage = 'Error: Invalid credentials provided!';
-              this.loading = false;
-              setTimeout(() => {
-                this.errorMessage = '';
-              }, 3000);
-            },
-          });
-        } else {
-          this.loading = false;
-          this.errorMessage = 'Please provide a password!';
-          setTimeout(() => {
-            this.errorMessage = '';
-          }, 3000);
-        }
-      } else {
-        // Handle the case where the URL structure is unexpected
-        console.error('Invalid URL structure:', this.router.url);
+        });
       }
     }
-    
-    
-    Resetpassword(){
-        this.router.navigate(['reset-password']);
+
+    onResetPasswordSubmit() {
+
+      if(this.resetPasswordForm.valid){
+        
+        this.resetPassword = {
+          email: this.resetPasswordForm?.value.email,
+          token: this.router.url.split('token=')[1],
+          newPassword: this.resetPasswordForm?.value.newPassword,
+          confirmPassword: this.resetPasswordForm?.value.confirmPassword,
+        }
+
+        this.api.resetPassword(this.resetPassword).subscribe({
+          next:(response) => {
+          this.showSuccessAlert();
+
+          setTimeout(() => {
+            this.navigateto('/Login');
+          }, 2000);
+
+        },
+          error:(err) => {
+            console.log(err)
+            this.alertMessage("Error with provided credentials")
+          },
+        })
+      } else {
+          this.showFormErrorsAlert()
+      }
+    }
+
+    navigateto(page: string) {
+      this.router.navigate([page]);
+    }
+
+    back() {
+      this.router.navigate(['/forgot-password']);
+    }
+
+    alertMessage(message: string) {
+      Swal.fire({
+        icon: "error",
+        title: message,
+        showConfirmButton: false,
+        timer: 2000,
+      });
+    }
+
+    showSuccessAlert() {
+      Swal.fire({
+        icon: 'success',
+        title: 'Password Reset!',
+        text: "Password reset successful",
+        showConfirmButton: false,
+        timer: 2000,
+      });
+    }
+
+    showFormErrorsAlert() {
+      Swal.fire({
+        icon: 'error',
+        title: 'Validation errors!',
+        text: 'Form has errors!',
+      });
     }
   }

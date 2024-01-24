@@ -8,20 +8,21 @@ import { SubscriberUserComponent } from "src/app/pages/user-management/subscribe
 import { UserManagementComponent } from "src/app/pages/user-management/user-management.component";
 
 const routes: Routes = [
-  { path: "", pathMatch: "full", redirectTo: "user" },
+  { path: "", pathMatch: "full", redirectTo: "userManagement" },
+  { path: "userManagement", component: UserManagementComponent },
   { path: "dashboard", component: DashboardComponent },
   { path: "addUser", component: AddUserComponent },
   { path: "editUser", component: EditUserComponent },
   { path: "adminUser", component: AdminUserComponent },
   { path: "subscriberUser", component: SubscriberUserComponent },
-  {
-    path: "user",
-    component: UserManagementComponent,
-    children: [
-      { path: "", pathMatch: "full", redirectTo: "userManagement" },
-      { path: "userManagement", component: UserManagementComponent },
-    ],
-  },
+  // {
+  //   path: "user",
+  //   component: UserManagementComponent,
+  //   children: [
+  //     { path: "", pathMatch: "full", redirectTo: "userManagement" },
+  //     { path: "userManagement", component: UserManagementComponent },
+  //   ],
+  // },
 ];
 
 @NgModule({

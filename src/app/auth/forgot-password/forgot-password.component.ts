@@ -13,6 +13,9 @@ import {
 } from '@angular/forms';
 import { AuthService} from '././../../services/auth.service' 
 import Swal from 'sweetalert2';
+import { Router } from '@angular/router';
+// import { DataService } from 'src/app/services/data.service';
+
 interface ResetPassword{
   email: string;
   token: string;
@@ -32,9 +35,12 @@ interface ResetPassword{
     userForm: FormGroup;
     submitted = false;
     errorMessage: string | null = null;
+    email: string | null = null;
     successMessage: string | null = null;
     loading = false;
+    resetRequestSuccessful = false;
     statusMessage = false;
+
     @HostListener('window:resize', ['$event'])
     onResize(event: any): void {
       // Adjust your layout here based on the window size
@@ -44,52 +50,90 @@ interface ResetPassword{
     scrollContent(): void {
       this.content.nativeElement.scrollIntoView();
     }
-    constructor(private formBuilder: FormBuilder, private api: AuthService) {
+    constructor(
+      private formBuilder: FormBuilder, 
+      private api: AuthService,
+      private router: Router,
+      // private dataService: DataService
+      
+      ) {
       this.userForm = this.formBuilder.group({
-        Email: ['', [Validators.required, this.emailValidator]],
+        email: ['', [Validators.required, Validators.email]],
       });
     }
-    emailValidator(control: any) {
-      if (control.value) {
-        const matches = control.value.match(
-          /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/
-        );
-        return matches ? null : { invalidEmail: true };
-      } else {
-        return null;
-      }
-    }
+
+    // emailValidator(control: any) {
+    //   if (control.value) {
+    //     const matches = control.value.match(
+    //       /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/
+    //     );
+    //     return matches ? null : { invalidEmail: true };
+    //   } else {
+    //     return null;
+    //   }
+    // }
+
     onSubmit() {
       this.submitted = true;
-      debugger;
-      var body = {
-        Email: this.userForm.controls['Email'].value,
-      };
-      debugger;
-      console.log('BODY:', body);
-      if (this.userForm.invalid) {
-        debugger;
-        return;
-      } else {
-        this.api.RequestPasswordReset(body).subscribe((data: any) => {
-          debugger;
-          console.log('SAVED:', data);
-          // this.nextStep();
-         
-            
+
+      this.email = this.userForm.value.email;
+
+      //  Check if the form is valid before submitting
+      if (this.userForm.valid) {
+        this.api.requestPasswordReset(this.userForm.value).subscribe({
+          next:(response) => {
             this.showSuccessAlert();
-            this.statusMessage = true;
-          
-        });
+
+            setTimeout(() => {
+              this.resetRequestSuccessful = true;
+            }, 2000);
+
+          },
+          error:(err) => {
+            console.log(err)
+            this.alertMessage(err.error.response)
+          },
+        })
+      } else {
+        this.showFormErrorsAlert();
       }
     }
+
+    onBack(){
+      this.router.navigate(['/Login']);
+    }
+
+    navigateto(page: string) {
+      this.router.navigate([page]);
+    }
+
     showSuccessAlert() {
       Swal.fire({
         icon: 'success',
         title: 'Success!',
-        text: 'Thank you! Check Your Email For Password Reset!.',
+        text: 'Thank you! Check Your Email For Password Reset!',
+        showConfirmButton: false,
+        timer: 2000,
       });
     }
+
+    alertMessage(message: string) {
+      Swal.fire({
+        icon: "warning",
+        title: message,
+        showConfirmButton: false,
+        timer: 2000,
+      });
+    }
+
+    showFormErrorsAlert() {
+      Swal.fire({
+        icon: 'error',
+        title: 'Validation errors!',
+        text: 'Form has errors!',
+      });
+    }
+
     showUnsuccessfulAlert() {
       Swal.fire({
         icon: 'error',
@@ -97,26 +141,24 @@ interface ResetPassword{
         text: 'Something went wrong. Please try again.',
       });
     }
+
     onReset() {
       this.submitted = false;
       this.userForm.reset();
     }
+
     ngOnInit() {}
+
     nextStep() {
       this.currentStep++;
     }
+
     prevStep() {
       this.currentStep--;
     }
+
     submitForm() {
       this.showSuccessAlert();
       console.log('Form submitted!');
-    }
-  
-  
-  
-  
-  
-  
-  
+    } 
   }
