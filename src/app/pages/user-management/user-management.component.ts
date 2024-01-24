@@ -35,6 +35,9 @@ export class UserManagementComponent implements OnInit {
  
 
   ngOnInit() {
+ this.getPagedAllSubscribers();
+  }
+  getPagedAllSubscribers(){
     this.apiService.getPagedAllSubscribers().subscribe(
       (data) => {
         console.log("DATA:::", data);
@@ -49,7 +52,6 @@ export class UserManagementComponent implements OnInit {
       }
     );
   }
-
   // Define the displayed columns
   displayedColumns: string[] = [
     "fullname",
@@ -82,7 +84,7 @@ export class UserManagementComponent implements OnInit {
       icon: 'warning',
       showCancelButton: true,
       confirmButtonText: 'Yes',
-      cancelButtonText: 'No, cancel',
+      cancelButtonText: 'No',
     }).then((result) => {
       if (result.isConfirmed) {
         this.spinner.show(); // Show spinner while deleting
@@ -98,6 +100,7 @@ export class UserManagementComponent implements OnInit {
   
             // Hide spinner after soft deletion
             this.spinner.hide();
+            this.getPagedAllSubscribers();
           },
           (error) => {
             console.error("Error soft deleting user:", error);

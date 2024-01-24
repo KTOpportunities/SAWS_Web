@@ -50,8 +50,7 @@ export class SubscriberService {
 
   deleteUserProfileById(Id: any) {
     return this.http.delete<any>(
-environment.serverAPI + `Authenticate/deleteUserProfileById?Id=${Id}`,
-      {}
+environment.serverAPI + `Authenticate/deleteUserProfileById?Id=${Id}`,this.httpOptions
     );
   }
 
