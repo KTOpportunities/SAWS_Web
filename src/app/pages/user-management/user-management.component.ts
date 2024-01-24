@@ -12,6 +12,7 @@ import { Router, ActivatedRoute } from "@angular/router";
 import { NgxSpinnerService } from "ngx-spinner";
 import { EditUserComponent } from "./edit-user/edit-user.component";
 import { Subscriber } from "src/app/Models/subscriber.model";
+import Swal from "sweetalert2";
 @Component({
   selector: "app-user-management",
   templateUrl: "./user-management.component.html",
@@ -29,6 +30,9 @@ export class UserManagementComponent implements OnInit {
     private spinner: NgxSpinnerService
   ) {}
   ngOnInit() {
+ this.getPagedAllSubscribers();
+  }
+  getPagedAllSubscribers(){
     this.apiService.getPagedAllSubscribers().subscribe(
       (data) => {
         console.log("DATA:::", data);
@@ -43,7 +47,6 @@ export class UserManagementComponent implements OnInit {
       }
     );
   }
-
   // Define the displayed columns
   displayedColumns: string[] = [
     "fullname",
@@ -66,7 +69,46 @@ export class UserManagementComponent implements OnInit {
   }
 
   deleteUser(user: any) {
-    // Implement delete logic
+    debugger;
+    // console.log("delete user",user);
+    console.log("delete user",user.userprofileid);
+    const userId = user.userprofileid; // Assuming your user object has an 'id' property
+  
+    Swal.fire({
+      title: 'Are you sure you want to delete?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes',
+      cancelButtonText: 'No',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.spinner.show(); // Show spinner while deleting
+  
+        // Call the soft delete API
+        this.apiService.deleteUserProfileById(userId).subscribe(
+          () => {
+            // Update the status for soft delete
+            user.status = 'deleted'; // Update the status value accordingly
+  
+            // Optionally: Provide user feedback (toast, alert, etc.)
+            console.log('User soft deleted successfully.');
+  
+            // Hide spinner after soft deletion
+            this.spinner.hide();
+            this.getPagedAllSubscribers();
+          },
+          (error) => {
+            console.error("Error soft deleting user:", error);
+  
+            // Optionally: Provide user feedback on error
+            alert('Error soft deleting user. Please try again.');
+  
+            // Hide spinner on error
+            this.spinner.hide();
+          }
+        );
+      }
+    });
   }
   openPopup() {
     this.dialog.open(EditUserComponent, {
