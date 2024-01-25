@@ -8,7 +8,8 @@ import { SubscriberUserComponent } from "src/app/pages/user-management/subscribe
 import { UserManagementComponent } from "src/app/pages/user-management/user-management.component";
 
 const routes: Routes = [
-  { path: "", pathMatch: "full", redirectTo: "userManagement" },
+  // { path: "", pathMatch: "full", redirectTo: "userManagement" },
+  { path: "", pathMatch: "full", redirectTo: "dashboard" },
   { path: "userManagement", component: UserManagementComponent },
   { path: "dashboard", component: DashboardComponent },
   { path: "addUser", component: AddUserComponent },

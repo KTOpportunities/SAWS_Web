@@ -13,12 +13,16 @@ import { UserManagementComponent } from "src/app/pages/user-management/user-mana
 import { FormsModule } from "@angular/forms";
 import { EditUserComponent } from "src/app/pages/user-management/edit-user/edit-user.component";
 import { FlexLayoutModule } from "@angular/flex-layout";
+import { SubscriberUserComponent } from "src/app/pages/user-management/subscriber-user/subscriber-user.component";
+import { AdminUserComponent } from "src/app/pages/user-management/admin-user/admin-user.component";
 @NgModule({
   declarations: [
     UserManagementComponent,
     DashboardComponent,
+    SubscriberUserComponent,
     AddUserComponent,
     EditUserComponent,
+    AdminUserComponent,
   ],
   imports: [
     CommonModule,

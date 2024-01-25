@@ -26,7 +26,9 @@ const routes: Routes = [ {
   ]
 },
 {
-  path: 'admin', component: AdminLayoutComponent,
+  path: 'admin', 
+  // redirectTo: 'admin',
+  component: AdminLayoutComponent,
   children: [
     {
       path: '',

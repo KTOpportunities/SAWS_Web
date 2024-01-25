@@ -147,18 +147,18 @@
   })(window, document);
 </script>
 <link
-  href="../../../assets/img/favicon.ico"
+  href="../../../assets/images/favicon.ico"
   rel="shortcut icon"
   type="image/x-icon"
 />
-<link href="../../../assets/img/webclip.png" rel="apple-touch-icon" />
+<link href="../../../assets/images/webclip.png" rel="apple-touch-icon" />
 <section class="section-3">
   <div class="container">
     <div data-w-id="717ec873-5bdf-1582-6da6-888fecad4a32" class="nav">
       <div class="nav-top">
         <a href="#" class="logo-link w-inline-block"
           ><img
-            src="../../../assets/img/Group-4465.svg"
+            src="../../../assets/images/Group-4465.svg"
             loading="lazy"
             width="121"
             alt=""
@@ -214,12 +214,14 @@
             </div>
             <div class="nav-link_text">Dashboard</div>
           </a>
+
           <div data-hover="false" data-delay="0" class="w-dropdown">
             <div
               class="dropdown-toggle-2 w-dropdown-toggle"
-              (click)="navigateToUsermanagement()"
             >
-              <div class="icon-2 w-icon-dropdown-toggle"></div>
+            <!-- User Management -->
+              <!-- <div class="icon-3 w-icon-dropdown-toggle"></div> -->
+              <div class="icon w-icon-dropdown-toggle" ></div>
               <div class="html-embed w-embed">
                 <svg
                   width="16"
@@ -279,9 +281,16 @@
                 </option>
               </select> -->
 
+              <!-- <label for="selectOption">Select an Option:</label> -->
+
               <select (change)="onOptionSelected($event)">
-                <option disabled selected class="nav-link_text">
+                <option 
+                  selected 
+                  class="nav-link_text"
+                  hidden
+                >
                   User Management
+                  <div class="icon w-icon-dropdown-toggle"></div>
                 </option>
                 <option
                   value="adminUser"
@@ -307,6 +316,7 @@
               </option>
             </select> -->
           </div>
+          
           <a href="#" class="nav-link w-inline-block">
             <div class="embed-icon w-embed">
               <svg
@@ -388,4 +398,4 @@
   integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0="
   crossorigin="anonymous"
 ></script>
-<script src="../../../assets/js/webflow.js" type="text/javascript"></script>
+<script src="js/webflow.js" type="text/javascript"></script>

@@ -89,7 +89,9 @@
             <mat-header-cell *matHeaderCellDef mat-sort-header>
               Full Name
             </mat-header-cell>
-            <mat-cell *matCellDef="let user"> {{ user.fullname }} </mat-cell>
+            <mat-cell *matCellDef="let user">
+                {{ user.fullname }} 
+            </mat-cell>
           </ng-container>
 
           <!-- Email Column -->
@@ -136,11 +138,11 @@
               <button
                 mat-icon-button
                 [matMenuTriggerFor]="actionMenu"
-                class="mat-button mat-horizontal-menu"
+                class="mat-button mat-horizontal-menu"Status 
               >
                 <mat-icon style="color: #323259">
                   <img
-                    src="../../../assets/img/metro-more-horiz.svg"
+                    src="../../../assets/images/metro-more-horiz.svg"
                     class="searchIcon"
                 /></mat-icon>
               </button>
