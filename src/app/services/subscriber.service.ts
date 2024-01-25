@@ -48,6 +48,19 @@ export class SubscriberService {
     );
   }
 
+  deleteUserProfileById(Id: any) {
+    return this.http.delete<any>(
+environment.serverAPI + `Authenticate/deleteUserProfileById?Id=${Id}`,this.httpOptions
+    );
+  }
+
+  // deleteUserProfileById(Id: any) {
+  //   const url = `${environment.serverAPI}/Authenticate/DeleteUserProfileById`;
+  //   const params = { Id };
+  //   return this.http.delete<any>(url, { params });
+  // }
+
+
   InsertUpdateUserProfile(body: {}) {
     return this.http.post<any>(
       environment.serverAPI + "Authenticate/InsertUpdateUserProfile",
