@@ -14,9 +14,12 @@ export class SideBarComponent {
   navigateToDashboard() {
     this.router.navigate(["/admin/dashboard"]);
   }
-  navigateToUsermanagement() {
-    this.router.navigate(["/admin/user"]);
-  }
+
+  // navigateToUsermanagement() {
+  //   this.router.navigate(["/admin/user"]);
+  //   this.router.navigate(["/admin/userManagement"]);
+  // }
+
   navigateToAdminUser() {
     debugger;
     this.router.navigate(["/admin/adminUser"]);

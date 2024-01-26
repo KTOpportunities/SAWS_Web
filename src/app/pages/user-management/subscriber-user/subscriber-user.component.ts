@@ -1,5 +1,5 @@
 import { Component, ViewChild, AfterViewInit, OnInit } from "@angular/core";
-import { MatTableDataSource, MatTableModule } from "@angular/material/table";
+import { MatTableDataSource } from "@angular/material/table";
 import { MatSortModule } from "@angular/material/sort";
 import { MatPaginatorModule } from "@angular/material/paginator";
 import { MatIconModule } from "@angular/material/icon";
@@ -9,6 +9,9 @@ import { SubscriberService } from "src/app/services/subscriber.service";
 import { MatDialog } from "@angular/material/dialog";
 import { AddUserComponent } from "src/app/pages/user-management/add-user/add-user.component";
 import { Router, ActivatedRoute } from "@angular/router";
+import { NgxSpinnerService } from "ngx-spinner";
+import { EditUserComponent } from "../edit-user/edit-user.component";
+import { Subscriber } from "src/app/Models/subscriber.model";
 import Swal from "sweetalert2";
 
 @Component({
@@ -17,24 +20,47 @@ import Swal from "sweetalert2";
   styleUrls: ["./subscriber-user.component.css"],
 })
 export class SubscriberUserComponent implements OnInit {
-  spinner: any;
-  dataSource: any;
+  @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
+  @ViewChild(MatSort, { static: true }) sort!: MatSort;
+
   constructor(
     private apiService: SubscriberService,
     public dialog: MatDialog,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private spinner: NgxSpinnerService
   ) {}
+
   ngOnInit() {
-    this.apiService.getPagedAllSubscribers().subscribe(
-      (data) => {
-        console.log("DATA:::", data);
-      },
-      (error) => {
-        console.error("Error fetching data from API:", error);
-      }
-    );
-  }
+  this.getPagedAllSubscribers();
+    }
+    getPagedAllSubscribers(){
+      this.apiService.getPagedAllSubscribers().subscribe(
+        (data) => {
+          console.log("DATA:::", data);
+          this.dataSource.data = data.Data; // Assuming the API returns an array of objects
+          console.log("DATA:::", this.dataSource.data);
+          this.dataSource.paginator = this.paginator;
+          this.dataSource.sort = this.sort;
+          this.spinner.hide();
+        },
+        (error) => {
+          console.error("Error fetching data from API:", error);
+        }
+      );
+    }
+    
+  // Define the displayed columns
+  displayedColumns: string[] = [
+    "fullname",
+    "email",
+    "userrole",
+    "created_at",
+    "status",
+    "action",
+  ];
+
+  dataSource = new MatTableDataSource<any>([]);
 
   // Add your toggle/edit/delete methods here
   toggleUser(user: any) {
@@ -57,7 +83,7 @@ export class SubscriberUserComponent implements OnInit {
       icon: 'warning',
       showCancelButton: true,
       confirmButtonText: 'Yes',
-      cancelButtonText: 'No, cancel',
+      cancelButtonText: 'No',
     }).then((result) => {
       if (result.isConfirmed) {
         this.spinner.show(); // Show spinner while deleting
@@ -73,6 +99,7 @@ export class SubscriberUserComponent implements OnInit {
   
             // Hide spinner after soft deletion
             this.spinner.hide();
+            this.getPagedAllSubscribers();
           },
           (error) => {
             console.error("Error soft deleting user:", error);
@@ -87,9 +114,11 @@ export class SubscriberUserComponent implements OnInit {
       }
     });
   }
+  
   openPopup() {
-    this.dialog.open(AddUserComponent, {
-      width: "100%", // adjust width as needed
+    this.dialog.open(EditUserComponent, {
+      width: "49%",
+      height: "52%", // adjust width as needed
 
       // Add more configuration options as needed
     });
@@ -98,4 +127,54 @@ export class SubscriberUserComponent implements OnInit {
   navigateToAddUser() {
     this.router.navigate(["/admin/addUser"]);
   }
+
+
+  navigateToEditUser(user: Subscriber) {
+    sessionStorage.setItem('SubscriberDetails', JSON.stringify(user));
+    this.router.navigate(["/admin/editUser"]);
+  }
 }
+
+// export class SubscriberUserComponent implements OnInit {
+//   constructor(
+//     private apiService: SubscriberService,
+//     public dialog: MatDialog,
+//     private router: Router,
+//     private route: ActivatedRoute
+//   ) {}
+//   ngOnInit() {
+//     this.apiService.getPagedAllSubscribers().subscribe(
+//       (data) => {
+//         console.log("DATA:::", data);
+//       },
+//       (error) => {
+//         console.error("Error fetching data from API:", error);
+//       }
+//     );
+//   }
+
+//   // Add your toggle/edit/delete methods here
+//   toggleUser(user: any) {
+//     // Implement toggle logic
+//   }
+
+//   editUser(user: any) {
+//     // Implement edit logic
+//   }
+
+//   deleteUser(user: any) {
+//     // Implement delete logic
+//   }
+//   openPopup() {
+//     this.dialog.open(AddUserComponent, {
+//       width: "100%", // adjust width as needed
+
+//       // Add more configuration options as needed
+//     });
+//   }
+
+//   navigateToAddUser() {
+//     this.router.navigate(["/admin/addUser"]);
+//   }
+// }
+

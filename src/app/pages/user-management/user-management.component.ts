@@ -14,6 +14,7 @@ import Swal from "sweetalert2";
 import { Observable } from "rxjs";
 import { EditUserComponent } from "./edit-user/edit-user.component";
 import { Subscriber } from "src/app/Models/subscriber.model";
+import Swal from "sweetalert2";
 @Component({
   selector: "app-user-management",
   templateUrl: "./user-management.component.html",

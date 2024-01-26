@@ -1106,7 +1106,7 @@ textarea.w-select {
   -ms-user-select: none;
   user-select: none;
   display: inline-block;
-  cursor: pointer;
+  /* cursor: default; */
   padding-right: 40px;
 }
 .w-dropdown-toggle:focus {
