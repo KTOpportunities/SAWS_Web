@@ -11,15 +11,14 @@ import { AddUserComponent } from "src/app/pages/user-management/add-user/add-use
 import { Router, ActivatedRoute } from "@angular/router";
 import { NgxSpinnerService } from "ngx-spinner";
 import { EditUserComponent } from "../edit-user/edit-user.component";
-import { Subscriber } from "src/app/Models/subscriber.model";
+import { Subscriber } from "src/app/models/subscriber.model";
 import Swal from "sweetalert2";
 
 @Component({
   selector: "app-admin-user",
   templateUrl: "./admin-user.component.html",
-  styleUrls: ["./admin-user.component.css"]
+  styleUrls: ["./admin-user.component.css"],
 })
-
 export class AdminUserComponent implements OnInit {
   @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort!: MatSort;
@@ -33,23 +32,23 @@ export class AdminUserComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-  this.getPagedAllSubscribers();
-    }
-    getPagedAllSubscribers(){
-      this.apiService.getPagedAllSubscribers().subscribe(
-        (data) => {
-          console.log("DATA:::", data);
-          this.dataSource.data = data.Data; // Assuming the API returns an array of objects
-          console.log("DATA:::", this.dataSource.data);
-          this.dataSource.paginator = this.paginator;
-          this.dataSource.sort = this.sort;
-          this.spinner.hide();
-        },
-        (error) => {
-          console.error("Error fetching data from API:", error);
-        }
-      );
-    }
+    this.getPagedAllSubscribers();
+  }
+  getPagedAllSubscribers() {
+    this.apiService.getPagedAllSubscribers().subscribe(
+      (data) => {
+        console.log("DATA:::", data);
+        this.dataSource.data = data.Data; // Assuming the API returns an array of objects
+        console.log("DATA:::", this.dataSource.data);
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
+        this.spinner.hide();
+      },
+      (error) => {
+        console.error("Error fetching data from API:", error);
+      }
+    );
+  }
 
   // Define the displayed columns
   displayedColumns: string[] = [
@@ -75,38 +74,38 @@ export class AdminUserComponent implements OnInit {
   deleteUser(user: any) {
     debugger;
     // console.log("delete user",user);
-    console.log("delete user",user.userprofileid);
+    console.log("delete user", user.userprofileid);
     const userId = user.userprofileid; // Assuming your user object has an 'id' property
-  
+
     Swal.fire({
-      title: 'Are you sure you want to delete?',
-      icon: 'warning',
+      title: "Are you sure you want to delete?",
+      icon: "warning",
       showCancelButton: true,
-      confirmButtonText: 'Yes',
-      cancelButtonText: 'No',
+      confirmButtonText: "Yes",
+      cancelButtonText: "No",
     }).then((result) => {
       if (result.isConfirmed) {
         this.spinner.show(); // Show spinner while deleting
-  
+
         // Call the soft delete API
         this.apiService.deleteUserProfileById(userId).subscribe(
           () => {
             // Update the status for soft delete
-            user.status = 'deleted'; // Update the status value accordingly
-  
+            user.status = "deleted"; // Update the status value accordingly
+
             // Optionally: Provide user feedback (toast, alert, etc.)
-            console.log('User soft deleted successfully.');
-  
+            console.log("User soft deleted successfully.");
+
             // Hide spinner after soft deletion
             this.spinner.hide();
             this.getPagedAllSubscribers();
           },
           (error) => {
             console.error("Error soft deleting user:", error);
-  
+
             // Optionally: Provide user feedback on error
-            alert('Error soft deleting user. Please try again.');
-  
+            alert("Error soft deleting user. Please try again.");
+
             // Hide spinner on error
             this.spinner.hide();
           }
@@ -114,7 +113,7 @@ export class AdminUserComponent implements OnInit {
       }
     });
   }
-  
+
   openPopup() {
     this.dialog.open(EditUserComponent, {
       width: "49%",
@@ -128,10 +127,8 @@ export class AdminUserComponent implements OnInit {
     this.router.navigate(["/admin/addUser"]);
   }
 
-
   navigateToEditUser(user: Subscriber) {
-    sessionStorage.setItem('SubscriberDetails', JSON.stringify(user));
+    sessionStorage.setItem("SubscriberDetails", JSON.stringify(user));
     this.router.navigate(["/admin/editUser"]);
   }
-
 }
