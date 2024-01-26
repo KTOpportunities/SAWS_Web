@@ -3,7 +3,7 @@ import {HttpClient, HttpHeaders} from '@angular/common/http'
 import { environment } from '../../../environment';
 import { ReactiveFormsModule } from '@angular/forms';
 import { catchError, from } from 'rxjs';
-import { ResetConfirmPassword, ResetPassword } from 'src/app/models/resetPassword';
+import { ResetConfirmPassword, ResetPassword } from 'src/app/Models/resetPassword';
 
 
 interface loginform {

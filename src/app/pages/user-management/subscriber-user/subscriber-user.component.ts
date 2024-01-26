@@ -13,18 +13,21 @@ import { NgxSpinnerService } from "ngx-spinner";
 import { EditUserComponent } from "../edit-user/edit-user.component";
 import { Subscriber } from "src/app/Models/subscriber.model";
 import Swal from "sweetalert2";
+import { Dataservice } from "src/app/services/data.service";
 
 @Component({
   selector: "app-subscriber-user",
   templateUrl: "./subscriber-user.component.html",
   styleUrls: ["./subscriber-user.component.css"],
 })
+
 export class SubscriberUserComponent implements OnInit {
   @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort!: MatSort;
 
   constructor(
     private apiService: SubscriberService,
+    private apiData: Dataservice,
     public dialog: MatDialog,
     private router: Router,
     private route: ActivatedRoute,
@@ -129,7 +132,9 @@ export class SubscriberUserComponent implements OnInit {
 
 
   navigateToEditUser(user: Subscriber) {
-    sessionStorage.setItem('SubscriberDetails', JSON.stringify(user));
+    // sessionStorage.setItem('SubscriberDetails', JSON.stringify(user));
+    // sessionStorage.setItem('UserDetails', JSON.stringify(user));
+    this.apiData.saveUser(user)
     this.router.navigate(["/admin/editUser"]);
   }
 }

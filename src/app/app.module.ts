@@ -18,6 +18,7 @@ import { Dataservice } from "./services/data.service";
 import { MatTableModule } from "@angular/material/table";
 import { SharedModule } from "./shared/shared.module"
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { AdminService } from "./services/admin.service";
 @NgModule({
   declarations: [
     AppComponent,
@@ -44,6 +45,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
       multi: true,
     },
     SubscriberService,
+    AdminService,
     Dataservice,
     AuthService,
   ],

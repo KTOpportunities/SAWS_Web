@@ -2,6 +2,7 @@ import { Injectable } from "@angular/core";
 import { BehaviorSubject } from "rxjs";
 
 import { UserLoggedIn } from "../Models/user.model";
+import { Admin } from "../Models/admin.model";
 
 interface User {}
 @Injectable({
@@ -23,5 +24,13 @@ export class Dataservice {
   }
   getToken(): string | null {
     return window.sessionStorage.getItem("token");
+  }
+
+  saveUser(user: any) {
+    sessionStorage.setItem("UserDetails", JSON.stringify(user));
+  }
+
+  getUser() {
+    return sessionStorage.getItem("UserDetails");
   }
 }
