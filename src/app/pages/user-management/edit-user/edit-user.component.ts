@@ -73,7 +73,6 @@ export class EditUserComponent {
 
   onSubmit() {
     this.submitted = true;
-    this.router.navigate(['/admin']);
 
     // TEST TEST TSET:::: {"userprofileid":8,"fullname":"Alf Test","email":"nvtahulela@gmail.com","mobilenumber":null,"userrole":"Subscriber","aspuid":"30ce7a9a-9f22-4367-90b7-70980f088456","created_at":"2024-01-19T13:59:34.4098243","updated_at":"2024-01-19T13:59:34.4097751","isdeleted":false,"deleted_at":null}
 

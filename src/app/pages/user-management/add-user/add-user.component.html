@@ -252,6 +252,15 @@
                     required=""
                     formControlName="Fullname"
                   />
+                  <div
+                    *ngIf="
+                      submitted &&
+                      userForm.get(['Password'])?.hasError('required')
+                    "
+                    class="error-message"
+                  >
+                    Fullname is required
+                  </div>
                 </div>
                 <!-- <div
                   id="w-node-_02ef87fc-7f4c-21df-4208-311cd379fcaf-ac205186"
@@ -285,6 +294,16 @@
                     required=""
                     formControlName="Username"
                   />
+                  <div
+                    class="errormessage"
+                    *ngIf="
+                      submitted &&
+                      userForm.get(['Password'])?.hasError('required')
+                    "
+                    class="error-message"
+                  >
+                    Username is required
+                  </div>
                 </div>
                 <div
                   id="w-node-_4cd953d6-568c-454e-fa45-d438d47d0757-ac205186"
@@ -302,6 +321,33 @@
                     required=""
                     formControlName="Email"
                   />
+                  <!-- Email Error Messages -->
+                  <div
+                    *ngIf="
+                      submitted && userForm.get('Email')?.hasError('required')
+                    "
+                    class="error-message"
+                  >
+                    Email is required
+                  </div>
+                  <div
+                    *ngIf="
+                      submitted &&
+                      userForm.get('Email')?.hasError('invalidEmail')
+                    "
+                    class="error-message"
+                  >
+                    Invalid email address
+                  </div>
+                  <div
+                    *ngIf="
+                      submitted &&
+                      userForm.get('Email')?.hasError('invalidFormat')
+                    "
+                    class="error-message"
+                  >
+                    Email is not in the correct format
+                  </div>
                 </div>
 
                 <div
@@ -320,6 +366,26 @@
                     required=""
                     formControlName="Password"
                   />
+                  <div
+                    class="errormessage"
+                    *ngIf="
+                      submitted &&
+                      userForm.get(['Password'])?.hasError('required')
+                    "
+                    class="error-message"
+                  >
+                    Password is required
+                  </div>
+                  <div
+                    class="errormessage"
+                    *ngIf="
+                      submitted &&
+                      userForm.get(['Password'])?.hasError('invalidPassword')
+                    "
+                    class="error-message"
+                  >
+                    Password must be a mix of letters and numbers
+                  </div>
                 </div>
               </div>
               <div class="div-block-435">
