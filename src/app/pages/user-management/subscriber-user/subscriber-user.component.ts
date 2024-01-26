@@ -14,6 +14,8 @@ import { EditUserComponent } from "../edit-user/edit-user.component";
 import { Subscriber } from "src/app/Models/subscriber.model";
 import Swal from "sweetalert2";
 import { Dataservice } from "src/app/services/data.service";
+import { DatePipe } from "@angular/common";
+import { MatDatepicker, MatDatepickerInputEvent } from "@angular/material/datepicker";
 
 @Component({
   selector: "app-subscriber-user",
@@ -33,6 +35,7 @@ export class SubscriberUserComponent implements OnInit {
   ];
 
   @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
+  @ViewChild('picker', { static: false }) picker!: MatDatepicker<Date>;
   @ViewChild(MatSort, { static: true }) sort!: MatSort;
 
   dataSource = new MatTableDataSource<Subscriber>();
@@ -45,16 +48,23 @@ export class SubscriberUserComponent implements OnInit {
 
   TotalRecords: any = 0;
 
+  selectedDateString: any;
+  date: Date;
+
+
   constructor(
     private apiService: SubscriberService,
     private apiData: Dataservice,
     public dialog: MatDialog,
     private router: Router,
     private route: ActivatedRoute,
-    private spinner: NgxSpinnerService
+    private spinner: NgxSpinnerService,
+    public datePipe: DatePipe,
   ) {
     this.dataSource.filterPredicate = (data, filter: string) =>
     !filter || data.created_at.includes(filter);
+
+    this.date = new Date();
   }
 
   ngOnInit() {
@@ -92,8 +102,11 @@ export class SubscriberUserComponent implements OnInit {
           sessionStorage.removeItem('pageSize');
 
           this.TotalRecords = data.TotalRecords;
-          this.paginator.pageIndex = this.currentPage;
-          this.paginator.length = data.TotalRecords;
+
+          setTimeout(() => {
+            this.paginator.pageIndex = this.currentPage;
+            this.paginator.length = data.TotalRecords;
+          });
         
           this.dataSource = new MatTableDataSource(this.subsciberList);
           this.dataSource.paginator = this.paginator;         
@@ -114,6 +127,38 @@ export class SubscriberUserComponent implements OnInit {
       if (this.dataSource) {
         this.dataSource.filterPredicate = (data: any, filter: string) =>
           data.name.indexOf(filter) || data.Status.indexOf(filter) != -1;
+      }
+    }
+
+    selectDate(type: string, event: MatDatepickerInputEvent<Date>) {
+      this.date = event.value!;
+      this.filterDate();
+    }
+  
+    openPicker() {
+      console.log('picked')
+      if (this.picker) {
+        this.picker.open();
+      }
+    }
+  
+    filterDate() {
+      // this.selectedProvinceName = '';
+      // this.selectedStatusName = '';
+      // this.selectedPositionName = '';
+  
+      let newDate = this.datePipe.transform(this.date, 'yyyy-MM-dd');
+  
+      this.dataSource.filterPredicate = (data, filter: string) =>
+        !filter || data.created_at.includes(filter);
+  
+      this.dataSource.filter = newDate!.toString().trim();
+  
+      // Update the button text based on the selected date
+      const selectedDate = this.datePipe.transform(this.date, 'MMM dd, yyyy');
+  
+      if (selectedDate) {
+        this.selectedDateString = selectedDate;
       }
     }
 

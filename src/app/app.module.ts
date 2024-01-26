@@ -6,6 +6,7 @@ import { AuthLayoutComponent } from "./layout/auth-layout/auth-layout.component"
 import { AdminLayoutComponent } from "./layout/admin-layout/admin-layout.component";
 import { AuthService } from "./services/auth.service";
 import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
+import { DatePipe } from '@angular/common';
 // import { SideBarComponent } from "./shared/side-bar/side-bar.component";
 // import { NavBarComponent } from "./shared/nav-bar/nav-bar.component";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
@@ -48,6 +49,7 @@ import { AdminService } from "./services/admin.service";
     AdminService,
     Dataservice,
     AuthService,
+    DatePipe,
   ],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],

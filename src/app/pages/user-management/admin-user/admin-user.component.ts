@@ -15,6 +15,8 @@ import { Admin } from "src/app/Models/admin.model";
 import Swal from "sweetalert2";
 import { SubscriberService } from "src/app/services/subscriber.service";
 import { Dataservice } from "src/app/services/data.service";
+import { MatDatepicker, MatDatepickerInputEvent } from "@angular/material/datepicker";
+import { DatePipe } from "@angular/common";
 
 @Component({
   selector: "app-admin-user",
@@ -35,6 +37,8 @@ export class AdminUserComponent implements OnInit {
   ];
 
   @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
+  // @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild('picker', { static: false }) picker!: MatDatepicker<Date>;
   @ViewChild(MatSort, { static: true }) sort!: MatSort;
 
   dataSource = new MatTableDataSource<Admin>();
@@ -44,8 +48,11 @@ export class AdminUserComponent implements OnInit {
   pageSizeStore = 5;
   currentPage = 0;
   currentPageStore = 0;
-
+  
   TotalRecords: any = 0;
+
+  selectedDateString: any;
+  date: Date;
 
   constructor(
     private apiAdmin: AdminService,
@@ -54,15 +61,20 @@ export class AdminUserComponent implements OnInit {
     public dialog: MatDialog,
     private router: Router,
     private route: ActivatedRoute,
-    private spinner: NgxSpinnerService
+    private spinner: NgxSpinnerService,
+    public datePipe: DatePipe,
   ) {
     
     this.dataSource.filterPredicate = (data, filter: string) =>
       !filter || data.created_at.includes(filter);
+
+    this.date = new Date();
   }
 
   ngOnInit() {
     this.getAllAdmins();
+
+    
     
   }
     
@@ -86,10 +98,6 @@ export class AdminUserComponent implements OnInit {
 
     this.apiAdmin.GetPagedAllAdmins(this.currentPage + page, this.pageSize).subscribe({
       next: (data: any) => {
-          // this.dataSource.data = data.Data; // Assuming the API returns an array of objects
-          // this.dataSource.paginator = this.paginator;
-          // this.dataSource.sort = this.sort;
-
           this.spinner.hide();
           this.adminList = data.Data;
 
@@ -97,12 +105,14 @@ export class AdminUserComponent implements OnInit {
           sessionStorage.removeItem('pageSize');
 
           this.TotalRecords = data.TotalRecords;
-          this.paginator.pageIndex = this.currentPage;
-          this.paginator.length = data.TotalRecords;
+     
+          setTimeout(() => {
+            this.paginator.pageIndex = this.currentPage;
+            this.paginator.length = data.TotalRecords;
+          });
         
           this.dataSource = new MatTableDataSource(this.adminList);
-          this.dataSource.paginator = this.paginator;         
-
+          this.dataSource.paginator = this.paginator;
       },
       error: (error) => {
           console.error("Error fetching data from API:", error);
@@ -116,9 +126,43 @@ export class AdminUserComponent implements OnInit {
 
     this.getAllAdmins();
 
+
+
     if (this.dataSource) {
       this.dataSource.filterPredicate = (data: any, filter: string) =>
         data.name.indexOf(filter) || data.Status.indexOf(filter) != -1;
+    }
+  }
+
+  selectDate(type: string, event: MatDatepickerInputEvent<Date>) {
+    this.date = event.value!;
+    this.filterDate();
+  }
+
+  openPicker() {
+    console.log('picked')
+    if (this.picker) {
+      this.picker.open();
+    }
+  }
+
+  filterDate() {
+    // this.selectedProvinceName = '';
+    // this.selectedStatusName = '';
+    // this.selectedPositionName = '';
+
+    let newDate = this.datePipe.transform(this.date, 'yyyy-MM-dd');
+
+    this.dataSource.filterPredicate = (data, filter: string) =>
+      !filter || data.created_at.includes(filter);
+
+    this.dataSource.filter = newDate!.toString().trim();
+
+    // Update the button text based on the selected date
+    const selectedDate = this.datePipe.transform(this.date, 'MMM dd, yyyy');
+
+    if (selectedDate) {
+      this.selectedDateString = selectedDate;
     }
   }
 

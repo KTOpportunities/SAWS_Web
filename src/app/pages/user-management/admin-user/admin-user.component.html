@@ -28,16 +28,33 @@
                     <a href="#" class="w-dropdown-link">Link 3</a>
                   </nav>
                 </div>
-                <div data-hover="false" data-delay="0" class="w-dropdown">
+                <div
+                  (click)="openPicker()"
+                  data-hover="false" 
+                  data-delay="0" 
+                  class="w-dropdown">
                   <div class="dropdown-toggle w-dropdown-toggle">
                     <div class="icon w-icon-dropdown-toggle"></div>
-                    <div class="text-block">Date</div>
+                    <div class="text-block"
+                    >
+                    {{ selectedDateString ? selectedDateString : "Date" }}
+                  </div>
                   </div>
                   <nav class="w-dropdown-list">
                     <a href="#" class="w-dropdown-link">Link 1</a>
                     <a href="#" class="w-dropdown-link">Link 2</a>
                     <a href="#" class="w-dropdown-link">Link 3</a>
                   </nav>
+                </div>
+                <div>
+                  <input
+                  [matDatepicker]="picker"
+                  #datepickerTrigger
+                  class="filterDate"
+                  (dateInput)="selectDate('input', $event)"
+                />
+            
+                <mat-datepicker #picker class="filterDate"></mat-datepicker>
                 </div>
               </div>
               <a routerLink="/admin/addUser" class="button w-inline-block">
@@ -83,7 +100,15 @@
             </div>
           </div>
   
-          <mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+          <mat-table 
+            #adminsTable
+            id="adminsTable"
+            mat-table
+            [dataSource]="dataSource" 
+            matSort 
+            class="mat-elevation-z8"
+            #adminsSort="matSort"
+            >
             <!-- Full Name Column -->
             <ng-container matColumnDef="fullname">
               <mat-header-cell *matHeaderCellDef mat-sort-header>
@@ -164,7 +189,9 @@
             </ng-container>
   
             <!-- Table Header Row -->
-            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+            <mat-header-row 
+              *matHeaderRowDef="displayedColumns"
+            ></mat-header-row>
             <!-- Table Rows -->
             <mat-row *matRowDef="let user; columns: displayedColumns"></mat-row>
           </mat-table>
