@@ -117,7 +117,9 @@
               <mat-header-cell *matHeaderCellDef mat-sort-header>
                 Created Date
               </mat-header-cell>
-              <mat-cell *matCellDef="let user"> {{ user.created_at }} </mat-cell>
+              <mat-cell *matCellDef="let user"> 
+                {{ user.created_at | date : "mediumDate" }}
+              </mat-cell>
             </ng-container>
   
             <!-- Status Column -->
@@ -167,8 +169,15 @@
             <mat-row *matRowDef="let user; columns: displayedColumns"></mat-row>
           </mat-table>
           <mat-paginator
-            [pageSizeOptions]="[5, 10, 25, 100]"
+          #paginator
+            [length]="TotalRecords"
+            [pageIndex]="currentPage"
+            [pageSize]="pageSize"
+            [pageSizeOptions]="[5, 10, TotalRecords]"
+            (page)="pageChanged($event)"
+            aria-label="Select page"
             showFirstLastButtons
+            aria-label="'Select page of subcribers'"
           ></mat-paginator>
         </div>
       </div>

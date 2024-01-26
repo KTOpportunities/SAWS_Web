@@ -33,4 +33,18 @@ export class Dataservice {
   getUser() {
     return sessionStorage.getItem("UserDetails");
   }
+
+  removeUser() {
+    sessionStorage.removeItem('UserDetails');
+  }
+
+  saveUserRole(role: any) {
+    sessionStorage.setItem("UserRole", JSON.stringify(role));
+  }
+
+  getUserRole() {
+    return sessionStorage.getItem("UserRole");
+  }
+
+
 }

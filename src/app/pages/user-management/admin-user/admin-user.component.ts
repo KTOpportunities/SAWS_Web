@@ -46,7 +46,6 @@ export class AdminUserComponent implements OnInit {
   currentPageStore = 0;
 
   TotalRecords: any = 0;
-  // pageSizeOptions: number[] = [2, 2, 10, 60];
 
   constructor(
     private apiAdmin: AdminService,
@@ -63,7 +62,7 @@ export class AdminUserComponent implements OnInit {
   }
 
   ngOnInit() {
-  this.getAllAdmins();
+    this.getAllAdmins();
     
   }
     

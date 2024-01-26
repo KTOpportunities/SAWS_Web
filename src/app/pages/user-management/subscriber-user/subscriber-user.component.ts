@@ -1,7 +1,7 @@
 import { Component, ViewChild, AfterViewInit, OnInit } from "@angular/core";
 import { MatTableDataSource } from "@angular/material/table";
 import { MatSortModule } from "@angular/material/sort";
-import { MatPaginatorModule } from "@angular/material/paginator";
+import { MatPaginatorModule, PageEvent } from "@angular/material/paginator";
 import { MatIconModule } from "@angular/material/icon";
 import { MatPaginator } from "@angular/material/paginator";
 import { MatSort } from "@angular/material/sort";
@@ -22,37 +22,6 @@ import { Dataservice } from "src/app/services/data.service";
 })
 
 export class SubscriberUserComponent implements OnInit {
-  @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
-  @ViewChild(MatSort, { static: true }) sort!: MatSort;
-
-  constructor(
-    private apiService: SubscriberService,
-    private apiData: Dataservice,
-    public dialog: MatDialog,
-    private router: Router,
-    private route: ActivatedRoute,
-    private spinner: NgxSpinnerService
-  ) {}
-
-  ngOnInit() {
-  this.getPagedAllSubscribers();
-    }
-    getPagedAllSubscribers(){
-      this.apiService.getPagedAllSubscribers().subscribe(
-        (data) => {
-          console.log("DATA:::", data);
-          this.dataSource.data = data.Data; // Assuming the API returns an array of objects
-          console.log("DATA:::", this.dataSource.data);
-          this.dataSource.paginator = this.paginator;
-          this.dataSource.sort = this.sort;
-          this.spinner.hide();
-        },
-        (error) => {
-          console.error("Error fetching data from API:", error);
-        }
-      );
-    }
-    
   // Define the displayed columns
   displayedColumns: string[] = [
     "fullname",
@@ -63,7 +32,90 @@ export class SubscriberUserComponent implements OnInit {
     "action",
   ];
 
-  dataSource = new MatTableDataSource<any>([]);
+  @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
+  @ViewChild(MatSort, { static: true }) sort!: MatSort;
+
+  dataSource = new MatTableDataSource<Subscriber>();
+  subsciberList: Subscriber[] = [];
+
+  pageSize = 5;
+  pageSizeStore = 5;
+  currentPage = 0;
+  currentPageStore = 0;
+
+  TotalRecords: any = 0;
+
+  constructor(
+    private apiService: SubscriberService,
+    private apiData: Dataservice,
+    public dialog: MatDialog,
+    private router: Router,
+    private route: ActivatedRoute,
+    private spinner: NgxSpinnerService
+  ) {
+    this.dataSource.filterPredicate = (data, filter: string) =>
+    !filter || data.created_at.includes(filter);
+  }
+
+  ngOnInit() {
+      this.getAllSubscribers();
+    }
+       
+    getAllSubscribers(page: number = 1){
+
+    var currentPage: number = Number(sessionStorage.getItem('currentPage'));
+    var pageSize: number = Number(sessionStorage.getItem('pageSize'));
+
+    if (currentPage == 0) {
+      currentPage = this.currentPage;
+    } else {
+      this.currentPage = currentPage
+    }
+    
+    if (pageSize == 0) {
+      pageSize = this.pageSize;
+    } else {
+      this.pageSize = pageSize;
+    }
+
+
+    this.apiService.getPagedAllSubscribers(this.currentPage + page, this.pageSize).subscribe({
+      next: (data: any) => {
+          // this.dataSource.data = data.Data; // Assuming the API returns an array of objects
+          // this.dataSource.paginator = this.paginator;
+          // this.dataSource.sort = this.sort;
+
+          this.spinner.hide();
+          this.subsciberList = data.Data;
+
+          sessionStorage.removeItem('currentPage');
+          sessionStorage.removeItem('pageSize');
+
+          this.TotalRecords = data.TotalRecords;
+          this.paginator.pageIndex = this.currentPage;
+          this.paginator.length = data.TotalRecords;
+        
+          this.dataSource = new MatTableDataSource(this.subsciberList);
+          this.dataSource.paginator = this.paginator;         
+
+      },
+      error: (error) => {
+          console.error("Error fetching data from API:", error);
+      },
+    });
+ }
+
+    pageChanged(event: PageEvent) {
+      this.pageSize = event.pageSize;
+      this.currentPage = event.pageIndex;
+  
+      this.getAllSubscribers();
+  
+      if (this.dataSource) {
+        this.dataSource.filterPredicate = (data: any, filter: string) =>
+          data.name.indexOf(filter) || data.Status.indexOf(filter) != -1;
+      }
+    }
 
   // Add your toggle/edit/delete methods here
   toggleUser(user: any) {
@@ -101,7 +153,7 @@ export class SubscriberUserComponent implements OnInit {
   
             // Hide spinner after soft deletion
             this.spinner.hide();
-            this.getPagedAllSubscribers();
+            this.getAllSubscribers();
           },
           (error) => {
             console.error("Error soft deleting user:", error);
@@ -132,53 +184,10 @@ export class SubscriberUserComponent implements OnInit {
 
 
   navigateToEditUser(user: Subscriber) {
-    // sessionStorage.setItem('SubscriberDetails', JSON.stringify(user));
-    // sessionStorage.setItem('UserDetails', JSON.stringify(user));
+    sessionStorage.setItem('currentPage', `${this.currentPage}`);
+    sessionStorage.setItem('pageSize', `${this.pageSize}`);
+    
     this.apiData.saveUser(user)
     this.router.navigate(["/admin/editUser"]);
   }
 }
-
-// export class SubscriberUserComponent implements OnInit {
-//   constructor(
-//     private apiService: SubscriberService,
-//     public dialog: MatDialog,
-//     private router: Router,
-//     private route: ActivatedRoute
-//   ) {}
-//   ngOnInit() {
-//     this.apiService.getPagedAllSubscribers().subscribe(
-//       (data) => {
-//         console.log("DATA:::", data);
-//       },
-//       (error) => {
-//         console.error("Error fetching data from API:", error);
-//       }
-//     );
-//   }
-
-//   // Add your toggle/edit/delete methods here
-//   toggleUser(user: any) {
-//     // Implement toggle logic
-//   }
-
-//   editUser(user: any) {
-//     // Implement edit logic
-//   }
-
-//   deleteUser(user: any) {
-//     // Implement delete logic
-//   }
-//   openPopup() {
-//     this.dialog.open(AddUserComponent, {
-//       width: "100%", // adjust width as needed
-
-//       // Add more configuration options as needed
-//     });
-//   }
-
-//   navigateToAddUser() {
-//     this.router.navigate(["/admin/addUser"]);
-//   }
-// }
-

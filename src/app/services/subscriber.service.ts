@@ -36,9 +36,15 @@ export class SubscriberService {
     }),
   };
 
-  getPagedAllSubscribers() {
+  getPagedAllSubscribers(pageNumber: any, pageSize: any) {
     return this.http.get<any>(
-      environment.serverAPI + "Subscriber/GetPagedAllSubscribers"
+      environment.serverAPI + `Subscriber/GetPagedAllSubscribers?pageNumber=${pageNumber}&pageSize=${pageSize}`,
+      // {
+      //   headers: new HttpHeaders().append(
+      //     'Authorization',
+      //     `Bearer ${this.token}`
+      //   ),
+      // }
     );
   }
 

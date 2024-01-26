@@ -1,5 +1,6 @@
 import { Component } from "@angular/core";
 import { Router } from "@angular/router";
+import { TokeStorageService } from "src/app/services/token-storage.service";
 
 @Component({
   selector: "app-side-bar",
@@ -8,7 +9,10 @@ import { Router } from "@angular/router";
 })
 export class SideBarComponent {
   // Inject the Router in the constructor
-  constructor(private router: Router) {}
+  constructor(
+    private router: Router,
+    private apiToken: TokeStorageService,
+    ) {}
 
   // Define a method to navigate to the specified route
   navigateToDashboard() {
@@ -42,5 +46,9 @@ export class SideBarComponent {
         // Handle default case if needed
         break;
     }
+  }
+
+  logout() {
+    this.apiToken.signOut();
   }
 }

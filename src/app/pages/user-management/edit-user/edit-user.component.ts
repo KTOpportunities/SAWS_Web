@@ -15,29 +15,17 @@ import Swal from "sweetalert2";
   styleUrls: ["./edit-user.component.css"],
 })
 export class EditUserComponent {
-  // SubscriberDetails: Subscriber = {
-  //   Fullname: "Alf Test",
-  //   Username: "alf@kto.co.za",
-  //   Email: "alf@kto.co.za",
-  //   Password: "123456pP",
-  //   UserRole: "Subscriber",
-  //   userprofileid: 0,
-  //   created_at: "2024-01-19T13:59:34.4097751",
-  //   updated_at: "2024-01-19T13:59:34.4097751",
-  //   deleted: false,
-  //   deleted_at: "any",
-  // };
-
   userForm: FormGroup;
   submitted = false;
   subscriberObject: any;
   dialogRef: any;
   adminUser: Admin[] = [];
+  userRole: any = ''
 
 
   ngOnInit() {
-    // TEST TEST TSET:::: {"userprofileid":8,"fullname":"Alf Test","email":"nvtahulela@gmail.com","mobilenumber":null,"userrole":"Subscriber","aspuid":"30ce7a9a-9f22-4367-90b7-70980f088456","created_at":"2024-01-19T13:59:34.4098243","updated_at":"2024-01-19T13:59:34.4097751","isdeleted":false,"deleted_at":null}
   }
+
   emailValidator(control: any) {
     if (control.value) {
       const matches = control.value.match(
@@ -48,6 +36,7 @@ export class EditUserComponent {
       return null;
     }
   }
+
   constructor(
     private formBuilder: FormBuilder,
     private api: SubscriberService,
@@ -65,13 +54,16 @@ export class EditUserComponent {
       Email: [subscriberObject?.email || '', [Validators.required, Validators.email]],
       UserRole: [subscriberObject?.userrole || '', Validators.required],
     });
+
+    this.userRole = subscriberObject?.userrole || '';
   }
 
-  onCancel() {
+    onCancel() {
     this.submitted = false;
     this.userForm.reset();
     Swal.close();
-    this.router.navigate(['/admin']);
+    this.apiData.removeUser();
+    this.router.navigate(['/admin/adminUser']);
   }
  
 
@@ -79,16 +71,6 @@ export class EditUserComponent {
   onSubmit() {
     this.submitted = true;
 
-    // TEST TEST TSET:::: {"userprofileid":8,"fullname":"Alf Test","email":"nvtahulela@gmail.com","mobilenumber":null,"userrole":"Subscriber","aspuid":"30ce7a9a-9f22-4367-90b7-70980f088456","created_at":"2024-01-19T13:59:34.4098243","updated_at":"2024-01-19T13:59:34.4097751","isdeleted":false,"deleted_at":null}
-
-    debugger;
-    // var body = {
-    //   Fullname: this.userForm.controls["Fullname"].value,
-
-    //   Email: this.userForm.controls["Email"].value,
-    //   Password: this.userForm.controls["Password"].value,
-    //   UserRole: this.userForm.controls["UserRole"].value,
-    // };
     var body = {
       userprofileid: this.userForm.controls["userprofileid"].value,
       Fullname: this.userForm.controls["Fullname"].value,
@@ -96,28 +78,37 @@ export class EditUserComponent {
       UserRole: this.userForm.controls["UserRole"].value,
       created_at: this.userForm.controls["created_at"].value,
     };
-    debugger;
     console.log("BODY:", body);
     if (this.userForm.invalid) {
-      debugger;
       return;
     } else {
       this.api.InsertUpdateUserProfile(body).subscribe((data: any) => {
-        debugger;
         console.log("SAVED:", data);
-        // this.nextStep();
-
-        debugger;
         this.showSuccessAlert();
         
       });
     }
+   
+    setTimeout(() => {
+
+      if(this.userRole == 'Admin') {
+        this.router.navigate(['/admin/adminUser']);
+      } else {
+        this.router.navigate(['/admin/subscriberUser']);
+      }
+    }, 2000);
+
+    this.apiData.removeUser();
+
   }
+
   showSuccessAlert() {
     Swal.fire({
       icon: "success",
       title: "Success!",
-      text: "You have successfully updated the Admin/Subscriber.",
+      text: `You have successfully updated the ${this.userRole}.`,
+      showConfirmButton: false,
+      timer: 2000,
     });
   }
 

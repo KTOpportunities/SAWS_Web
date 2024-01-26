@@ -22,6 +22,11 @@ export class UserManagementComponent implements OnInit {
   @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort!: MatSort;
 
+  pageSize = 5;
+  pageSizeStore = 5;
+  currentPage = 0;
+  currentPageStore = 0;
+
   constructor(
     private apiService: SubscriberService,
     public dialog: MatDialog,
@@ -32,8 +37,8 @@ export class UserManagementComponent implements OnInit {
   ngOnInit() {
  this.getPagedAllSubscribers();
   }
-  getPagedAllSubscribers(){
-    this.apiService.getPagedAllSubscribers().subscribe(
+  getPagedAllSubscribers(page: number = 1){
+    this.apiService.getPagedAllSubscribers(this.currentPage + page, this.pageSize).subscribe(
       (data) => {
         console.log("DATA:::", data);
         this.dataSource.data = data.Data; // Assuming the API returns an array of objects
