@@ -1,7 +1,7 @@
 import { Component } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
-import { Subscriber } from "src/app/Models/subscriber.model";
+import { Subscriber } from "src/app/models/subscriber.model";
 import { SubscriberService } from "src/app/services/subscriber.service";
 import Swal from "sweetalert2";
 

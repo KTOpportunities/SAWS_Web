@@ -25,13 +25,27 @@ export class AddUserComponent implements OnInit {
   ngOnInit() {}
   emailValidator(control: any) {
     if (control.value) {
-      const matches = control.value.match(
-        /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/
-      );
-      return matches ? null : { invalidEmail: true };
+      const emailRegex =
+        /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
+
+      if (emailRegex.test(control.value)) {
+        return null; // Valid email format
+      } else {
+        return { invalidEmail: true, invalidFormat: true }; // Invalid email format
+      }
     } else {
       return null;
-    }
+    }     
+  }
+
+  passwordValidator(control: AbstractControl) {
+    const value = control.value;
+
+    // Check if the password contains at least one letter and one number
+    const containsLetter = /[a-zA-Z]/.test(value);
+    const containsNumber = /\d/.test(value);
+
+    return containsLetter && containsNumber ? null : { invalidPassword: true };
   }
   constructor(
     private formBuilder: FormBuilder,
@@ -41,7 +55,7 @@ export class AddUserComponent implements OnInit {
       Fullname: ["", Validators.required],
       Username: ["", Validators.required],
       Email: ["", [Validators.required, Validators.email]],
-      Password: ["", Validators.required],
+      Password: ["", [Validators.required, this.passwordValidator]],
       UserRole: ["", Validators.required],
     });
   }

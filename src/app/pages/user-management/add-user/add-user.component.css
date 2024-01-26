@@ -729,7 +729,9 @@
     align-items: center;
     display: flex;
   }
-  
+  .error-message {
+    color: red;
+  }
   .section-3 {
     width: 100%;
     max-width: 80%;
