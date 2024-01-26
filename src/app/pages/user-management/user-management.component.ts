@@ -11,7 +11,7 @@ import { AddUserComponent } from "src/app/pages/user-management/add-user/add-use
 import { Router, ActivatedRoute } from "@angular/router";
 import { NgxSpinnerService } from "ngx-spinner";
 import { EditUserComponent } from "./edit-user/edit-user.component";
-import { Subscriber } from "src/app/models/subscriber.model";
+import { Subscriber } from "src/app/Models/subscriber.model";
 import Swal from "sweetalert2";
 @Component({
   selector: "app-user-management",
