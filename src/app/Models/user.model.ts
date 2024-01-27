@@ -3,4 +3,5 @@ export interface UserLoggedIn {
     expiration: string
     aspUserID: string
     rolesList: string
+    aspUserName: string
   }

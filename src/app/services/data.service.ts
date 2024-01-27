@@ -14,17 +14,22 @@ export class Dataservice {
 
   constructor() {}
   saveCurrentUser(user: UserLoggedIn): string {
-    debugger;
-    sessionStorage.setItem("User", JSON.stringify(user));
-    sessionStorage.setItem("token", user.token);
+    sessionStorage.setItem("CurrentUser", JSON.stringify(user));
+    // sessionStorage.setItem("token", user.token);
     return "User Saved";
   }
+
   getCurrentUser() {
-    return sessionStorage.getItem("User");
+    return sessionStorage.getItem("CurrentUser");
   }
-  getToken(): string | null {
-    return window.sessionStorage.getItem("token");
+
+  removeCurrentUser() {
+    sessionStorage.removeItem('CurrentUser');
   }
+
+  // getToken(): string | null {
+  //   return window.sessionStorage.getItem("token");
+  // }
 
   saveUser(user: any) {
     sessionStorage.setItem("UserDetails", JSON.stringify(user));

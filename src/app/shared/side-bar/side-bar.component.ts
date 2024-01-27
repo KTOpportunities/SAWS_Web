@@ -1,5 +1,6 @@
 import { Component } from "@angular/core";
 import { Router } from "@angular/router";
+import { Dataservice } from "src/app/services/data.service";
 import { TokeStorageService } from "src/app/services/token-storage.service";
 
 @Component({
@@ -12,6 +13,7 @@ export class SideBarComponent {
   constructor(
     private router: Router,
     private apiToken: TokeStorageService,
+    private apiData: Dataservice,
     ) {}
 
   // Define a method to navigate to the specified route
@@ -47,8 +49,9 @@ export class SideBarComponent {
         break;
     }
   }
-
+  
   logout() {
     this.apiToken.signOut();
+    this.apiData.removeCurrentUser();
   }
 }
