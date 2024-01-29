@@ -13,6 +13,7 @@ import { Dataservice } from "src/app/services/data.service";
 export class loginComponent implements OnInit {
   userData: any = null;
   loginform: FormGroup;
+  submitted = false;
   errMessage: string = "";
 
   constructor(
@@ -25,8 +26,8 @@ export class loginComponent implements OnInit {
 
   ) {
     this.loginform = this.formBuilder.group({
-      Username: [null, Validators.required, this.emailValidator],
-      Password: [null, [Validators.required]],
+      Username:["", Validators.required],
+      Password: ["", Validators.required],
     });
 
     var username: any = sessionStorage.getItem('email');
@@ -53,7 +54,16 @@ export class loginComponent implements OnInit {
     }
   }
 
-  login() {
+  login()
+   {
+      this.submitted = true;
+      debugger;
+      var body = {
+        Username: this.loginform.controls['Username'].value,
+        Password: this.loginform.controls['Password'].value
+      }
+      
+
     if (this.loginform.status == "VALID") {
       this.spinner.show();
       this.authApi.login(this.loginform.value).subscribe(

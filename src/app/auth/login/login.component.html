@@ -25,6 +25,13 @@
                                 placeholder id="Email" data-ms-member="email"
                                 formControlName="Username"
                                 required></div>
+
+                                <div class="errormessage"
+                                *ngIf="submitted && loginform.get('Username')?.hasError('required')"
+                                class="error-message" style="color: red;">
+                                Username is required
+                            </div>
+                              
                         <div class="field-wrapper"><label for="Password"
                                 class="label_f_password">Password</label><input
                                 type="password" class="password_field w-input"
@@ -32,6 +39,12 @@
                                 data-name="Password" placeholder id="Password"
                                 formControlName="Password"
                                 data-ms-member="password" required></div>
+
+                                <div class="errormessage"
+                                *ngIf="submitted && loginform.get('Password')?.hasError('required')"
+                                class="error-message" style="color: red;">
+                                Password is required
+                            </div>
                         <div class="form-flex"><label
                                 class="w-checkbox checkbox-wrap">
                                 <div
