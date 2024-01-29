@@ -1878,6 +1878,11 @@
       position: relative;
       overflow: hidden;
     }
+
+    #subcribersTable {
+      overflow-y: auto;
+      max-height: 50vh;
+    }
   
     .table-wrapper {
       overflow: hidden;

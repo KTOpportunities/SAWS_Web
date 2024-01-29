@@ -72,6 +72,11 @@
     max-height: 100vh;
     max-width: 100%;
   }
+
+  #adminsTable {
+    overflow-y: auto;
+    max-height: 50vh;
+  }
   
   .heading {
     color: #00386c;

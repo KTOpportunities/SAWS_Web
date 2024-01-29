@@ -98,7 +98,11 @@
             </div>
           </div>
   
-          <mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+          <mat-table
+            id="subcribersTable"
+            [dataSource]="dataSource"
+            matSort 
+            class="mat-elevation-z8">
             <!-- Full Name Column -->
             <ng-container matColumnDef="fullname">
               <mat-header-cell *matHeaderCellDef mat-sort-header>

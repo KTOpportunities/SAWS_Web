@@ -79,7 +79,6 @@ export class loginComponent implements OnInit {
   login()
    {
       this.submitted = true;
-      debugger;
       var body = {
         Username: this.loginform.controls['Username'].value,
         Password: this.loginform.controls['Password'].value
