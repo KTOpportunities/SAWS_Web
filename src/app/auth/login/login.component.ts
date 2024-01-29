@@ -77,7 +77,7 @@ export class loginComponent implements OnInit {
           this.router.navigate(['/admin']);
 
 
-          this.errMessage = "Successfully logged in";
+          // this.errMessage = "Successfully logged in";
           this.userData = data;
           this.spinner.hide();
         },
@@ -89,7 +89,7 @@ export class loginComponent implements OnInit {
           ) {
             this.errMessage = err.error.Message;
           } else {
-            this.errMessage = "Server Error. please try again later!";
+            this.errMessage = "Please check your password and username";
           }
           this.spinner.hide();
         }

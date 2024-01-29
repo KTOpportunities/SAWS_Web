@@ -312,7 +312,7 @@ button,
   display: none;
   padding: 20px;
   text-align: center;
-  background-color: #dddddd;
+  /* background-color: #dddddd; */
   color: red;
 }
 .w-form-fail {
