@@ -93,7 +93,7 @@ export class loginComponent implements OnInit {
 
           console.log("data", data)
 
-          if(data.userrole === 'Admin'){
+          if(data.rolesList == 'Admin'){
 
             this.tokenStorage.saveToken(data.token);
             this.apiData.saveCurrentUser(data);    
