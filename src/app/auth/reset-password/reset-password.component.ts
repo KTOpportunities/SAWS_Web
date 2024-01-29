@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import Swal from 'sweetalert2';
 import { AuthService } from './../../services/auth.service';
-import { FormBuilder, Validators, AbstractControl, FormGroup } from '@angular/forms';
+import { FormBuilder, Validators, FormGroup } from '@angular/forms';
+// import { ResetConfirmPassword } from 'src/app/models/resetPassword';
 
 
 
@@ -12,7 +14,7 @@ interface ResetPassword{
   newPassword: string;
   confirmPassword: string;
 }
-import Swal from 'sweetalert2';
+
 
 import { ResetConfirmPassword } from 'src/app/Models/resetPassword';
 

@@ -171,6 +171,7 @@ export class SubscriberUserComponent implements OnInit {
     // Implement edit logic
   }
 
+ 
   deleteUser(user: any) {
     // console.log("delete user",user);
     console.log("delete user",user.userprofileid);

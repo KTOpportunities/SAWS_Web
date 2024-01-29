@@ -10,9 +10,11 @@ import { MatDialog } from "@angular/material/dialog";
 import { AddUserComponent } from "src/app/pages/user-management/add-user/add-user.component";
 import { Router, ActivatedRoute } from "@angular/router";
 import { NgxSpinnerService } from "ngx-spinner";
+import Swal from "sweetalert2";
+import { Observable } from "rxjs";
 import { EditUserComponent } from "./edit-user/edit-user.component";
 import { Subscriber } from "src/app/Models/subscriber.model";
-import Swal from "sweetalert2";
+
 @Component({
   selector: "app-user-management",
   templateUrl: "./user-management.component.html",
@@ -21,6 +23,8 @@ import Swal from "sweetalert2";
 export class UserManagementComponent implements OnInit {
   @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort!: MatSort;
+  apiUrl: any;
+  http: any;
 
   pageSize = 5;
   pageSizeStore = 5;
@@ -34,6 +38,8 @@ export class UserManagementComponent implements OnInit {
     private route: ActivatedRoute,
     private spinner: NgxSpinnerService
   ) {}
+ 
+
   ngOnInit() {
  this.getPagedAllSubscribers();
   }
@@ -114,6 +120,8 @@ export class UserManagementComponent implements OnInit {
       }
     });
   }
+  
+  
   openPopup() {
     this.dialog.open(EditUserComponent, {
       width: "49%",
