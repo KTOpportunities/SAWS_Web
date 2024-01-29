@@ -19,7 +19,7 @@
                         <p class="paragraph-2">Login by entering the
                             information&#x27;s below</p>
                         <div class="field-wrapper top"><label for="Email"
-                                class="label_f_username">User Name</label><input
+                                class="label_f_username">Username</label><input
                                 type="email" class="user_input w-input"
                                 maxlength="256" name="Email" data-name="Email"
                                 placeholder id="Email" data-ms-member="email"
@@ -36,13 +36,24 @@
                             </div>
 
                               
-                        <div class="field-wrapper"><label for="Password"
-                                class="label_f_password">Password</label><input
-                                type="password" class="password_field w-input"
-                                maxlength="256" name="Password"
-                                data-name="Password" placeholder id="Password"
-                                formControlName="Password"
-                                data-ms-member="password" required></div>
+                            <div class="field-wrapper">
+                                <label for="Password" class="label_f_password">Password</label>
+                                <div class="password-input-wrapper">
+                                    <input
+                                        type="password"
+                                        class="password_field w-input"
+                                        maxlength="256"
+                                        name="Password"
+                                        data-name="Password"
+                                        placeholder="Enter your password"
+                                        formControlName="Password"
+                                        data-ms-member="password"
+                                        required
+                                    />
+                                    <span class="password-toggle" (click)="togglePasswordVisibility()">👁️</span>
+                                </div>
+                            </div>
+                            
 
                                 <div class="errormessage"
                                 *ngIf="submitted && loginform.get('Password')?.hasError('required')"

@@ -5,6 +5,7 @@ import { AuthService } from "src/app/services/auth.service";
 import { NgxSpinnerService } from "ngx-spinner";
 import { TokeStorageService } from "src/app/services/token-storage.service";
 import { Dataservice } from "src/app/services/data.service";
+import { ElementRef } from '@angular/core';
 @Component({
   selector: "app-login",
   templateUrl: "./login.component.html",
@@ -15,6 +16,7 @@ export class loginComponent implements OnInit {
   loginform: FormGroup;
   submitted = false;
   errMessage: string = "";
+  passwordVisibility: boolean = false;
 
   constructor(
     private router: Router,
@@ -23,6 +25,8 @@ export class loginComponent implements OnInit {
     private spinner: NgxSpinnerService,
     private tokenStorage: TokeStorageService,
     private apiData: Dataservice,
+    private el: ElementRef
+    
 
   ) {
     this.loginform = this.formBuilder.group({
@@ -42,6 +46,18 @@ export class loginComponent implements OnInit {
   }
   ngOnInit(): void {
   }
+  togglePasswordVisibility() {
+    const passwordInput = this.el.nativeElement.querySelector('.password_field');
+    const passwordToggle = this.el.nativeElement.querySelector('.password-toggle');
+
+    if (passwordInput.type === 'password') {
+        passwordInput.type = 'text';
+        passwordToggle.innerText = '👁️';
+    } else {
+        passwordInput.type = 'password';
+        passwordToggle.innerText = '👁️';
+    }
+}
   
   async emailValidator(control: any) {
     if (control.value) {
