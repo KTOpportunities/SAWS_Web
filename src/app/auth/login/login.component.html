@@ -35,15 +35,15 @@
                                         required
                                     >
 
-                                    <div class="errormessage"
+                                </div>
+                                <div class="errormessage"
                                     *ngIf="submitted && loginform.get('Username')?.hasError('required')"
                                     class="error-message" style="color: red;
                                     margin-top: -13px;
                                     width: 100%;
                                     display: flex;">
                                     Username is required
-                                    </div>
-                            </div>
+                                </div>
                             <div class="field-wrapper">
                                 <label for="Password"
                                     class="label_f_password">Password</label>
@@ -63,12 +63,12 @@
                                         />
                                         <span class="password-toggle" (click)="togglePasswordVisibility()"></span>
                                     </div>
-                                    <div class="errormessage"
-                                    *ngIf="submitted && loginform.get('Password')?.hasError('required')"
-                                    class="error-message" style="color: red;position: relative;
-                                     width: 100%;top: -13px;">
-                                    Password is required
                                 </div>
+                                <div class="errormessage"
+                                *ngIf="submitted && loginform.get('Password')?.hasError('required')"
+                                class="error-message" style="color: red;position: relative;
+                                 width: 100%;top: -13px;">
+                                Password is required
                             </div>
                             <div class="form-flex">
                                 <label class="w-checkbox checkbox-wrap" (click)="toggleCheckbox()">
