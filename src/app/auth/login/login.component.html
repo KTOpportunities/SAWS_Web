@@ -60,9 +60,8 @@
                                         formControlName="Password"
                                         data-ms-member="password" 
                                         required
-                                        />
-                                        <span class="password-toggle" (click)="togglePasswordVisibility()"></span>
-                                    </div>
+                                    />
+                                    <span class="password-toggle" (click)="togglePasswordVisibility()">👁️</span>
                                 </div>
                                 <div class="errormessage"
                                 *ngIf="submitted && loginform.get('Password')?.hasError('required')"
