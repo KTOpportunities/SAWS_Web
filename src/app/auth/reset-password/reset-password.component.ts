@@ -16,7 +16,7 @@ interface ResetPassword{
 }
 
 
-import { ResetConfirmPassword } from 'src/app/models/resetPassword';
+import { ResetConfirmPassword } from 'src/app/Models/resetPassword';
 
 
 // interface ResetPassword{

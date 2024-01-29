@@ -3,16 +3,20 @@ import { MatTableDataSource } from "@angular/material/table";
 import { MatSortModule } from "@angular/material/sort";
 import { MatPaginatorModule } from "@angular/material/paginator";
 import { MatIconModule } from "@angular/material/icon";
-import { MatPaginator } from "@angular/material/paginator";
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatSort } from "@angular/material/sort";
-import { SubscriberService } from "src/app/services/subscriber.service";
+import { AdminService } from "src/app/services/admin.service";
 import { MatDialog } from "@angular/material/dialog";
 import { AddUserComponent } from "src/app/pages/user-management/add-user/add-user.component";
 import { Router, ActivatedRoute } from "@angular/router";
 import { NgxSpinnerService } from "ngx-spinner";
 import { EditUserComponent } from "../edit-user/edit-user.component";
-import { Subscriber } from "src/app/Models/subscriber.model";
+import { Admin } from "src/app/Models/admin.model";
 import Swal from "sweetalert2";
+import { SubscriberService } from "src/app/services/subscriber.service";
+import { Dataservice } from "src/app/services/data.service";
+import { MatDatepicker, MatDatepickerInputEvent } from "@angular/material/datepicker";
+import { DatePipe } from "@angular/common";
 
 @Component({
   selector: "app-admin-user",
@@ -21,35 +25,6 @@ import Swal from "sweetalert2";
 })
 
 export class AdminUserComponent implements OnInit {
-  @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
-  @ViewChild(MatSort, { static: true }) sort!: MatSort;
-
-  constructor(
-    private apiService: SubscriberService,
-    public dialog: MatDialog,
-    private router: Router,
-    private route: ActivatedRoute,
-    private spinner: NgxSpinnerService
-  ) {}
-
-  ngOnInit() {
-  this.getPagedAllSubscribers();
-    }
-    getPagedAllSubscribers(){
-      this.apiService.getPagedAllSubscribers().subscribe(
-        (data) => {
-          console.log("DATA:::", data);
-          this.dataSource.data = data.Data; // Assuming the API returns an array of objects
-          console.log("DATA:::", this.dataSource.data);
-          this.dataSource.paginator = this.paginator;
-          this.dataSource.sort = this.sort;
-          this.spinner.hide();
-        },
-        (error) => {
-          console.error("Error fetching data from API:", error);
-        }
-      );
-    }
 
   // Define the displayed columns
   displayedColumns: string[] = [
@@ -61,7 +36,135 @@ export class AdminUserComponent implements OnInit {
     "action",
   ];
 
-  dataSource = new MatTableDataSource<any>([]);
+  @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
+  // @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild('picker', { static: false }) picker!: MatDatepicker<Date>;
+  @ViewChild(MatSort, { static: true }) sort!: MatSort;
+
+  dataSource = new MatTableDataSource<Admin>();
+  adminList: Admin[] = [];
+
+  pageSize = 5;
+  pageSizeStore = 5;
+  currentPage = 0;
+  currentPageStore = 0;
+  
+  TotalRecords: any = 0;
+
+  selectedDateString: any;
+  date: Date;
+
+  constructor(
+    private apiAdmin: AdminService,
+    private apiService: SubscriberService,
+    private apiData: Dataservice,
+    public dialog: MatDialog,
+    private router: Router,
+    private route: ActivatedRoute,
+    private spinner: NgxSpinnerService,
+    public datePipe: DatePipe,
+  ) {
+    
+    this.dataSource.filterPredicate = (data, filter: string) =>
+      !filter || data.created_at.includes(filter);
+
+    this.date = new Date();
+  }
+
+  ngOnInit() {
+    this.getAllAdmins();
+
+    
+    
+  }
+    
+  getAllAdmins(page: number = 1){
+
+    var currentPage: number = Number(sessionStorage.getItem('currentPage'));
+    var pageSize: number = Number(sessionStorage.getItem('pageSize'));
+
+    if (currentPage == 0) {
+      currentPage = this.currentPage;
+    } else {
+      this.currentPage = currentPage
+    }
+    
+    if (pageSize == 0) {
+      pageSize = this.pageSize;
+    } else {
+      this.pageSize = pageSize;
+    }
+
+
+    this.apiAdmin.GetPagedAllAdmins(this.currentPage + page, this.pageSize).subscribe({
+      next: (data: any) => {
+          this.spinner.hide();
+          this.adminList = data.Data;
+
+          sessionStorage.removeItem('currentPage');
+          sessionStorage.removeItem('pageSize');
+
+          this.TotalRecords = data.TotalRecords;
+     
+          setTimeout(() => {
+            this.paginator.pageIndex = this.currentPage;
+            this.paginator.length = data.TotalRecords;
+          });
+        
+          this.dataSource = new MatTableDataSource(this.adminList);
+          this.dataSource.paginator = this.paginator;
+      },
+      error: (error) => {
+          console.error("Error fetching data from API:", error);
+      },
+    });
+ }
+
+  pageChanged(event: PageEvent) {
+    this.pageSize = event.pageSize;
+    this.currentPage = event.pageIndex;
+
+    this.getAllAdmins();
+
+
+
+    if (this.dataSource) {
+      this.dataSource.filterPredicate = (data: any, filter: string) =>
+        data.name.indexOf(filter) || data.Status.indexOf(filter) != -1;
+    }
+  }
+
+  selectDate(type: string, event: MatDatepickerInputEvent<Date>) {
+    this.date = event.value!;
+    this.filterDate();
+  }
+
+  openPicker() {
+    console.log('picked')
+    if (this.picker) {
+      this.picker.open();
+    }
+  }
+
+  filterDate() {
+    // this.selectedProvinceName = '';
+    // this.selectedStatusName = '';
+    // this.selectedPositionName = '';
+
+    let newDate = this.datePipe.transform(this.date, 'yyyy-MM-dd');
+
+    this.dataSource.filterPredicate = (data, filter: string) =>
+      !filter || data.created_at.includes(filter);
+
+    this.dataSource.filter = newDate!.toString().trim();
+
+    // Update the button text based on the selected date
+    const selectedDate = this.datePipe.transform(this.date, 'MMM dd, yyyy');
+
+    if (selectedDate) {
+      this.selectedDateString = selectedDate;
+    }
+  }
 
   // Add your toggle/edit/delete methods here
   toggleUser(user: any) {
@@ -99,7 +202,7 @@ export class AdminUserComponent implements OnInit {
   
             // Hide spinner after soft deletion
             this.spinner.hide();
-            this.getPagedAllSubscribers();
+            this.getAllAdmins();
           },
           (error) => {
             console.error("Error soft deleting user:", error);
@@ -129,8 +232,11 @@ export class AdminUserComponent implements OnInit {
   }
 
 
-  navigateToEditUser(user: Subscriber) {
-    sessionStorage.setItem('SubscriberDetails', JSON.stringify(user));
+  navigateToEditUser(user: Admin) {
+    sessionStorage.setItem('currentPage', `${this.currentPage}`);
+    sessionStorage.setItem('pageSize', `${this.pageSize}`);
+
+    this.apiData.saveUser(user);
     this.router.navigate(["/admin/editUser"]);
   }
 

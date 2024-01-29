@@ -33,6 +33,16 @@
     border: 1px solid #ccc;
     border-radius: 2px;
   }
+
+  .filterDate {
+    background-color: transparent;
+    border-color: transparent;
+  }
+
+  .mat-datepicker-input {
+    visibility: hidden;
+    width: 0;
+  }
   
   .w-checkbox-input--inputType-custom.w--redirected-checked {
     background-color: #3898ec;

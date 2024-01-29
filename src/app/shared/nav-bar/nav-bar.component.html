@@ -164,7 +164,7 @@
             class="user-icon"
           />
           <div class="user-info res-hide">
-            <div class="user-name">Jane Doe</div>
+            <div class="user-name">Jane Doe 23</div>
             <div class="user-description">Super Admin</div>
           </div>
         </div>
@@ -220,8 +220,10 @@
         <!-- images/user_1user.jpg -->
         <div class="user">
           <div class="user-info">
-            <div class="user-name">Jane Doe</div>
-            <div class="user-description">Super Admin</div>
+            <div class="user-name">
+              {{ userName }}
+            </div>
+            <div class="user-description">{{ userRole }}</div>
           </div>
           <img
             src="assets/images/user_1user.jpg"           

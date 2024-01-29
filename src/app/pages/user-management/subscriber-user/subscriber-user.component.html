@@ -28,16 +28,29 @@
                     <a href="#" class="w-dropdown-link">Link 3</a>
                   </nav>
                 </div>
-                <div data-hover="false" data-delay="0" class="w-dropdown">
-                  <div class="dropdown-toggle w-dropdown-toggle">
-                    <div class="icon w-icon-dropdown-toggle"></div>
-                    <div class="text-block">Date</div>
+                <div
+                  (click)="openPicker()"
+                  data-hover="false" 
+                  data-delay="0" class="w-dropdown">
+                    <div class="dropdown-toggle w-dropdown-toggle">
+                      <div class="icon w-icon-dropdown-toggle"></div>
+                      <div class="text-block">Date</div>
+                    </div>
+                    <nav class="w-dropdown-list">
+                      <a href="#" class="w-dropdown-link">Link 1</a>
+                      <a href="#" class="w-dropdown-link">Link 2</a>
+                      <a href="#" class="w-dropdown-link">Link 3</a>
+                    </nav>
                   </div>
-                  <nav class="w-dropdown-list">
-                    <a href="#" class="w-dropdown-link">Link 1</a>
-                    <a href="#" class="w-dropdown-link">Link 2</a>
-                    <a href="#" class="w-dropdown-link">Link 3</a>
-                  </nav>
+                <div>
+                  <input
+                  [matDatepicker]="picker"
+                  #datepickerTrigger
+                  class="filterDate"
+                  (dateInput)="selectDate('input', $event)"
+                />
+            
+                <mat-datepicker #picker class="filterDate"></mat-datepicker>
                 </div>
               </div>
               <a routerLink="/admin/addUser" class="button w-inline-block">
@@ -117,7 +130,9 @@
               <mat-header-cell *matHeaderCellDef mat-sort-header>
                 Created Date
               </mat-header-cell>
-              <mat-cell *matCellDef="let user"> {{ user.created_at }} </mat-cell>
+              <mat-cell *matCellDef="let user"> 
+                {{ user.created_at | date : "mediumDate" }}
+              </mat-cell>
             </ng-container>
   
             <!-- Status Column -->
@@ -167,8 +182,15 @@
             <mat-row *matRowDef="let user; columns: displayedColumns"></mat-row>
           </mat-table>
           <mat-paginator
-            [pageSizeOptions]="[5, 10, 25, 100]"
+          #paginator
+            [length]="TotalRecords"
+            [pageIndex]="currentPage"
+            [pageSize]="pageSize"
+            [pageSizeOptions]="[5, 10, TotalRecords]"
+            (page)="pageChanged($event)"
+            aria-label="Select page"
             showFirstLastButtons
+            aria-label="'Select page of subcribers'"
           ></mat-paginator>
         </div>
       </div>

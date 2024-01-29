@@ -6,6 +6,7 @@ const TOKEN_KEY = "auth-token";
   providedIn: "root",
 })
 export class TokeStorageService {
+  
   signOut(): void {
     window.sessionStorage.removeItem(TOKEN_KEY);
   }
