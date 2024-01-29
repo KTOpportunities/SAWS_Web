@@ -22,8 +22,6 @@ export class AppComponent implements OnInit{
     console.log("this.isLoggedIn", this.isLoggedIn)
     if(this.isLoggedIn){
       this.router.navigate(['/admin']);
-    } else {
-      this.router.navigate(['/login']);
     }
   }
 }

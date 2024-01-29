@@ -58,9 +58,15 @@ export class loginComponent implements OnInit {
       this.spinner.show();
       this.authApi.login(this.loginform.value).subscribe(
         (data: any) => {
+
+
           this.tokenStorage.saveToken(data.token);
-          this.apiData.saveCurrentUser(data);
+          this.apiData.saveCurrentUser(data);         
+
+
           this.router.navigate(['/admin']);
+
+
           this.errMessage = "Successfully logged in";
           this.userData = data;
           this.spinner.hide();

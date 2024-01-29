@@ -27,7 +27,6 @@ export class SideBarComponent {
   // }
 
   navigateToAdminUser() {
-    debugger;
     this.router.navigate(["/admin/adminUser"]);
   }
   navigateToSubscriberUser() {
