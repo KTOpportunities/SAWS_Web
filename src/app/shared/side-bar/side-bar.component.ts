@@ -27,7 +27,6 @@ export class SideBarComponent {
   // }
 
   navigateToAdminUser() {
-    debugger;
     this.router.navigate(["/admin/adminUser"]);
   }
   navigateToSubscriberUser() {
@@ -53,5 +52,9 @@ export class SideBarComponent {
   logout() {
     this.apiToken.signOut();
     this.apiData.removeCurrentUser();
+    this.apiData.removeUser();
+    this.apiData.removeUserUrl();
+    sessionStorage.removeItem('currentPage');
+    sessionStorage.removeItem('pageSize');
   }
 }

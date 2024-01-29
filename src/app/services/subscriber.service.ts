@@ -48,7 +48,7 @@ export class SubscriberService {
     );
   }
 
-  createNewUser(body: {}) {
+  registerSubscriber(body: {}) {
     return this.http.post<any>(
       environment.serverAPI + "Authenticate/RegisterSubscriber",
       body

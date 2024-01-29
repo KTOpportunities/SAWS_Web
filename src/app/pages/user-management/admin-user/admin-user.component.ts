@@ -72,10 +72,7 @@ export class AdminUserComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.getAllAdmins();
-
-    
-    
+    this.getAllAdmins();    
   }
     
   getAllAdmins(page: number = 1){
@@ -119,6 +116,11 @@ export class AdminUserComponent implements OnInit {
       },
     });
  }
+
+ addUser() {
+  this.apiData.saveUserUrl('/admin/adminUser');
+  this.router.navigate(["/admin/addUser"]);
+}
 
   pageChanged(event: PageEvent) {
     this.pageSize = event.pageSize;

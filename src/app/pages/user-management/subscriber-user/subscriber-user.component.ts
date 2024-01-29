@@ -173,7 +173,6 @@ export class SubscriberUserComponent implements OnInit {
 
  
   deleteUser(user: any) {
-    debugger;
     // console.log("delete user",user);
     console.log("delete user",user.userprofileid);
     const userId = user.userprofileid; // Assuming your user object has an 'id' property
@@ -219,12 +218,12 @@ export class SubscriberUserComponent implements OnInit {
     this.dialog.open(EditUserComponent, {
       width: "49%",
       height: "52%", // adjust width as needed
-
       // Add more configuration options as needed
     });
   }
 
-  navigateToAddUser() {
+  addUser() {
+    this.apiData.saveUserUrl('/admin/subscriberUser');
     this.router.navigate(["/admin/addUser"]);
   }
 

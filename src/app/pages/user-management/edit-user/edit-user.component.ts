@@ -85,8 +85,11 @@ export class EditUserComponent {
       this.api.InsertUpdateUserProfile(body).subscribe((data: any) => {
         console.log("SAVED:", data);
         this.showSuccessAlert();
+        this.apiData.removeUser();
         
-      });
+      }, 
+      (err) => console.log("error", err)
+      );
     }
    
     setTimeout(() => {
