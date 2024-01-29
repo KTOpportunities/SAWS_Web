@@ -74,7 +74,6 @@ export class UserManagementComponent implements OnInit {
   }
 
   deleteUser(user: any) {
-    debugger;
     // console.log("delete user",user);
     console.log("delete user",user.userprofileid);
     const userId = user.userprofileid; // Assuming your user object has an 'id' property
@@ -124,9 +123,10 @@ export class UserManagementComponent implements OnInit {
     });
   }
 
-  navigateToAddUser() {
-    this.router.navigate(["/admin/addUser"]);
-  }
+  // addUser() {
+  //   this.apiData.saveUserUrl('/admin/adminUser');
+  //   this.router.navigate(["/admin/addUser"]);
+  // }
 
 
   navigateToEditUser(user:Subscriber) {

@@ -19,7 +19,6 @@ export class AppComponent implements OnInit{
   ngOnInit(): void {
     this.isLoggedIn = !!this.tokenStorage.getToken();
 
-    console.log("this.isLoggedIn", this.isLoggedIn)
     if(this.isLoggedIn){
       this.router.navigate(['/admin']);
     }

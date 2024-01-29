@@ -389,17 +389,23 @@
                 </div>
               </div>
               <div class="div-block-435">
-                <input
-                  type="submit"
+                <button
+                  type="button"
+                  (click)="onCancel()"
                   data-wait="Please wait..."
                   class="cancel-button w-button"
                   value="Cancel"
-                /><input
+                >
+                  Cancel
+                </button>
+                <button
                   type="submit"
                   data-wait="Please wait..."
                   class="submit-button w-button"
                   value="Submit"
-                />
+                >
+                  Submit
+                </button>
               </div>
             </form>
             <div class="w-form-done">

@@ -27,6 +27,19 @@ export class Dataservice {
     sessionStorage.removeItem('CurrentUser');
   }
 
+  saveCurrentUserLocal(user: UserLoggedIn): string {
+    localStorage.setItem("CurrentUser", JSON.stringify(user));
+    return "User Saved";
+  }
+
+  getCurrentUserLocal() {
+    return localStorage.getItem("CurrentUser");
+  }
+
+  removeCurrentUserLocal() {
+    localStorage.removeItem('CurrentUser');
+  }
+
   // getToken(): string | null {
   //   return window.sessionStorage.getItem("token");
   // }
@@ -51,5 +64,16 @@ export class Dataservice {
     return sessionStorage.getItem("UserRole");
   }
 
+  saveUserUrl(url: any) {
+    sessionStorage.setItem("UserUrl", JSON.stringify(url));
+  }
+
+  getUserUrl() {
+    return sessionStorage.getItem("UserUrl");
+  }
+
+  removeUserUrl() {
+    sessionStorage.removeItem('UserUrl');
+  }
 
 }
