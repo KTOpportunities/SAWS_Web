@@ -121,11 +121,6 @@ export class SubscriberUserComponent implements OnInit {
 
  filterData() {
   this.apiData.filterObservable$.subscribe((filter: string) => {
-    // Apply the filter to your data source
-    // Filter the data based on your requirements and assign it to this.dataSource
-
-    console.log("filter", filter)
-
     this.dataSource.filter = filter.trim().toLowerCase();
   });
  }

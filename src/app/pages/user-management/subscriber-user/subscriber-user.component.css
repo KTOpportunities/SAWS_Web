@@ -78,6 +78,10 @@
     /* overflow-y: auto; */
     max-height: 50vh;
   }
+
+  td {
+    padding: 10px;
+  }
   
   .heading {
     color: #00386c;

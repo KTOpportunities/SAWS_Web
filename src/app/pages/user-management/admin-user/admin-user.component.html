@@ -195,6 +195,12 @@
             ></mat-header-row>
             <!-- Table Rows --> 
             <mat-row *matRowDef="let user; columns: displayedColumns"></mat-row>
+
+            <tr class="mat-row" *matNoDataRow>
+              <td class="mat-cell" colspan="4">
+               No data matching the filter "{{dataSource.filter}}"
+                </td>
+            </tr>
           </mat-table>
           <mat-paginator
             #paginator

@@ -50,6 +50,7 @@ export class AdminUserComponent implements OnInit {
   currentPageStore = 0;
   
   TotalRecords: any = 0;
+  filteredData: any = '';
 
   selectedDateString: any;
   date: Date;
@@ -120,11 +121,6 @@ export class AdminUserComponent implements OnInit {
 
  filterData() {
   this.apiData.filterObservable$.subscribe((filter: string) => {
-    // Apply the filter to your data source
-    // Filter the data based on your requirements and assign it to this.dataSource
-
-    console.log("filter", filter)
-
     this.dataSource.filter = filter.trim().toLowerCase();
   });
  }
@@ -139,8 +135,6 @@ export class AdminUserComponent implements OnInit {
     this.currentPage = event.pageIndex;
 
     this.getAllAdmins();
-
-
 
     if (this.dataSource) {
       this.dataSource.filterPredicate = (data: any, filter: string) =>
