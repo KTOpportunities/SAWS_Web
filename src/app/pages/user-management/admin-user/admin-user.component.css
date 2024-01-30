@@ -74,10 +74,11 @@
   }
 
   #adminsTable {
-    overflow-y: auto;
+    overflow: auto;
+    /* overflow-y: auto; */
     max-height: 50vh;
   }
-  
+
   .heading {
     color: #00386c;
     text-align: center;

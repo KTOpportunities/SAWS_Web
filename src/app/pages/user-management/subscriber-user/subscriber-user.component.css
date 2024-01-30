@@ -72,6 +72,12 @@
     max-height: 100vh;
     max-width: 100%;
   }
+
+  #adminsTable {
+    overflow: auto;
+    /* overflow-y: auto; */
+    max-height: 50vh;
+  }
   
   .heading {
     color: #00386c;
@@ -1880,7 +1886,8 @@
     }
 
     #subcribersTable {
-      overflow-y: auto;
+      /* overflow-y: auto; */
+      overflow: auto;
       max-height: 50vh;
     }
   

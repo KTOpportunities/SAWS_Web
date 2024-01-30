@@ -35,8 +35,7 @@
                   class="w-dropdown">
                   <div class="dropdown-toggle w-dropdown-toggle">
                     <div class="icon w-icon-dropdown-toggle"></div>
-                    <div class="text-block"
-                    >
+                    <div class="text-block">
                     {{ selectedDateString ? selectedDateString : "Date" }}
                   </div>
                   </div>
@@ -111,90 +110,90 @@
             class="mat-elevation-z8"
             #adminsSort="matSort"
             >
-            <!-- Full Name Column -->
-            <ng-container matColumnDef="fullname">
-              <mat-header-cell *matHeaderCellDef mat-sort-header>
-                Full Name
-              </mat-header-cell>
-              <mat-cell *matCellDef="let user">
-                  {{ user.fullname }} 
-              </mat-cell>
-            </ng-container>
-  
-            <!-- Email Column -->
-            <ng-container matColumnDef="email">
-              <mat-header-cell *matHeaderCellDef mat-sort-header>
-                Email
-              </mat-header-cell>
-              <mat-cell *matCellDef="let user"> {{ user.email }} </mat-cell>
-            </ng-container>
-  
-            <!-- contact number Column -->
-            <ng-container matColumnDef="userrole">
-              <mat-header-cell *matHeaderCellDef mat-sort-header>
-                Role
-              </mat-header-cell>
-              <mat-cell *matCellDef="let user">
-                {{ user.userrole }}
-              </mat-cell>
-            </ng-container>
-  
-            <!-- Created Date Column -->
-            <ng-container matColumnDef="created_at">
-              <mat-header-cell *matHeaderCellDef mat-sort-header>
-                Created Date
-              </mat-header-cell>
-              <mat-cell *matCellDef="let user"> 
-                 {{ user.created_at | date : "mediumDate" }}
-              </mat-cell>
-            </ng-container>
-  
-            <!-- Status Column -->
-            <ng-container matColumnDef="status">
-              <mat-header-cell *matHeaderCellDef> Status </mat-header-cell>
-              <mat-cell *matCellDef="let user">
-                <!-- Add your status logic here -->
-                <mat-icon style="color: green">toggle_on</mat-icon>
-                <!-- <mat-icon style="color: green">toggle_off</mat-icon> -->
-              </mat-cell>
-            </ng-container>
-  
-            <!-- Action Column -->
-            <ng-container matColumnDef="action">
-              <mat-header-cell *matHeaderCellDef> Action </mat-header-cell>
-              <mat-cell *matCellDef="let user">
-                <!-- Add your action buttons/icons here -->
-                <button
-                  mat-icon-button
-                  [matMenuTriggerFor]="actionMenu"
-                  class="mat-button mat-horizontal-menu"Status 
-                >
-                  <mat-icon style="color: #323259">
-                    <img
-                      src="assets/images/metro-more-horiz.svg"
-                      class="searchIcon"
-                  /></mat-icon>
-                </button>
-  
-                <mat-menu #actionMenu="matMenu" class="mat-horizontal-menu">
-                  <button mat-menu-item (click)="navigateToEditUser(user)">
-                    <mat-icon>edit</mat-icon> Edit
+              <!-- Full Name Column -->
+              <ng-container matColumnDef="fullname">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>
+                  Full Name
+                </mat-header-cell>
+                <mat-cell *matCellDef="let user">
+                    {{ user.fullname }} 
+                </mat-cell>
+              </ng-container>
+    
+              <!-- Email Column -->
+              <ng-container matColumnDef="email">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>
+                  Email
+                </mat-header-cell>
+                <mat-cell *matCellDef="let user"> {{ user.email }} </mat-cell>
+              </ng-container>
+    
+              <!-- contact number Column -->
+              <ng-container matColumnDef="userrole">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>
+                  Role
+                </mat-header-cell>
+                <mat-cell *matCellDef="let user">
+                  {{ user.userrole }}
+                </mat-cell>
+              </ng-container>
+    
+              <!-- Created Date Column -->
+              <ng-container matColumnDef="created_at">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>
+                  Created Date
+                </mat-header-cell>
+                <mat-cell *matCellDef="let user"> 
+                   {{ user.created_at | date : "mediumDate" }}
+                </mat-cell>
+              </ng-container>
+    
+              <!-- Status Column -->
+              <ng-container matColumnDef="status">
+                <mat-header-cell *matHeaderCellDef> Status </mat-header-cell>
+                <mat-cell *matCellDef="let user">
+                  <!-- Add your status logic here -->
+                  <mat-icon style="color: green">toggle_on</mat-icon>
+                  <!-- <mat-icon style="color: green">toggle_off</mat-icon> -->
+                </mat-cell>
+              </ng-container>
+    
+              <!-- Action Column -->
+              <ng-container matColumnDef="action">
+                <mat-header-cell *matHeaderCellDef> Action </mat-header-cell>
+                <mat-cell *matCellDef="let user">
+                  <!-- Add your action buttons/icons here -->
+                  <button
+                    mat-icon-button
+                    [matMenuTriggerFor]="actionMenu"
+                    class="mat-button mat-horizontal-menu"Status 
+                  >
+                    <mat-icon style="color: #323259">
+                      <img
+                        src="assets/images/metro-more-horiz.svg"
+                        class="searchIcon"
+                    /></mat-icon>
                   </button>
-                  <button mat-menu-item (click)="toggleUser(user)">
-                    <mat-icon>visibility</mat-icon> View
-                  </button>
-                  <button mat-menu-item (click)="deleteUser(user)">
-                    <mat-icon style="color: red">clear</mat-icon> Delete
-                  </button>
-                </mat-menu>
-              </mat-cell>
-            </ng-container>
+    
+                  <mat-menu #actionMenu="matMenu" class="mat-horizontal-menu">
+                    <button mat-menu-item (click)="navigateToEditUser(user)">
+                      <mat-icon>edit</mat-icon> Edit
+                    </button>
+                    <button mat-menu-item (click)="toggleUser(user)">
+                      <mat-icon>visibility</mat-icon> View
+                    </button>
+                    <button mat-menu-item (click)="deleteUser(user)">
+                      <mat-icon style="color: red">clear</mat-icon> Delete
+                    </button>
+                  </mat-menu>
+                </mat-cell>
+              </ng-container>
   
             <!-- Table Header Row -->
             <mat-header-row 
-              *matHeaderRowDef="displayedColumns"
+              *matHeaderRowDef="displayedColumns; sticky: true"
             ></mat-header-row>
-            <!-- Table Rows -->
+            <!-- Table Rows --> 
             <mat-row *matRowDef="let user; columns: displayedColumns"></mat-row>
           </mat-table>
           <mat-paginator
@@ -219,7 +218,7 @@
       <style>
         /*width*/
         .scroll::-webkit-scrollbar {
-          height: 4px;
+          height: 2px;
         }
         /*track*/
         .scroll::-webkit-scrollbar-track {
