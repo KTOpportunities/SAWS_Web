@@ -253,6 +253,7 @@
                     formControlName="Fullname"
                   />
                   <div
+                    style="color: red;"
                     *ngIf="
                       submitted &&
                       userForm.get(['Password'])?.hasError('required')
@@ -295,6 +296,7 @@
                     formControlName="Username"
                   />
                   <div
+                    style="color: red;"
                     class="errormessage"
                     *ngIf="
                       submitted &&
@@ -323,6 +325,7 @@
                   />
                   <!-- Email Error Messages -->
                   <div
+                    style="color: red;"
                     *ngIf="
                       submitted && userForm.get('Email')?.hasError('required')
                     "
@@ -367,6 +370,7 @@
                     formControlName="Password"
                   />
                   <div
+                    style="color: red;"
                     class="errormessage"
                     *ngIf="
                       submitted &&
