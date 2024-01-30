@@ -188,7 +188,9 @@
     <div class="content">
       <div class="navigation">
         <div class="navigation-right">
-          <div class="form-block-2 w-form">
+          <div 
+          *ngIf="shouldShowSearchIcon()"
+          class="form-block-2 w-form">
             <form
               id="email-form"
               name="email-form"
