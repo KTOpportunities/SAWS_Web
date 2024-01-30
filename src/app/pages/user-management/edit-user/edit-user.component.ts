@@ -47,6 +47,8 @@ export class EditUserComponent {
     var SubscriberDetails: any = this.apiData.getUser();
     const subscriberObject = JSON.parse(SubscriberDetails);
 
+    debugger;
+
     this.userForm = this.formBuilder.group({
       userprofileid: [subscriberObject?.userprofileid ?? ''],
       created_at: [subscriberObject?.created_at ?? ''],

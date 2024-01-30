@@ -10,9 +10,15 @@ interface User {}
 })
 export class Dataservice {
   userInformation: any = "";
+  filterSubjectInformantion: any = '';
   private UserInformation = new BehaviorSubject<any>(this.userInformation);
+  private filterSubject = new BehaviorSubject<string>(this.filterSubjectInformantion);
+
+  // Observable to which components can subscribe
+  filterObservable$ = this.filterSubject.asObservable();
 
   constructor() {}
+
   saveCurrentUser(user: UserLoggedIn): string {
     sessionStorage.setItem("CurrentUser", JSON.stringify(user));
     // sessionStorage.setItem("token", user.token);
@@ -74,6 +80,10 @@ export class Dataservice {
 
   removeUserUrl() {
     sessionStorage.removeItem('UserUrl');
+  }
+
+  updateFilter(filter: string) {
+    this.filterSubject.next(filter);
   }
 
 }

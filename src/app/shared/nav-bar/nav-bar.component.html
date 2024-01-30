@@ -199,6 +199,7 @@
               data-wf-element-id="717ec873-5bdf-1582-6da6-888fecad4a48"
             >
               <input
+                matInput
                 class="search w-input"
                 maxlength="256"
                 name="Search-2"
@@ -207,6 +208,7 @@
                 type="text"
                 id="Search-2"
                 required=""
+                (keyup)="applyFilter($event)"
               />
             </form>
             <div class="w-form-done">

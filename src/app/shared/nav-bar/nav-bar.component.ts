@@ -17,6 +17,7 @@ export class NavBarComponent implements OnInit {
   userLoginDetails: UserLoggedIn[] = [];
   userName: any;
   userRole: any;
+  searchTerm: string = '';
 
   constructor(
     private apiData: Dataservice,
@@ -28,6 +29,10 @@ export class NavBarComponent implements OnInit {
 
   ngOnInit(): void {
 
+    // this.dataSource.filterPredicate = function (record,filter) {
+    //   return true;
+    // }
+
     var user: any = this.apiData.getCurrentUser();
     
     if(user){
@@ -38,4 +43,9 @@ export class NavBarComponent implements OnInit {
       this.router.navigate(['/login']);
     }    
   }
+
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.apiData.updateFilter(filterValue);
+}
 }
