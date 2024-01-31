@@ -18,7 +18,7 @@ const httpOptions = {
 @Injectable({
   providedIn: "root",
 })
-export class SubscriberService {
+export class AdminService {
   User: any;
   token: any;
   constructor(private http: HttpClient) {
@@ -36,9 +36,9 @@ export class SubscriberService {
     }),
   };
 
-  getPagedAllSubscribers(pageNumber: any, pageSize: any) {
+  GetPagedAllAdmins(pageNumber: any, pageSize: any) {
     return this.http.get<any>(
-      environment.serverAPI + `Subscriber/GetPagedAllSubscribers?pageNumber=${pageNumber}&pageSize=${pageSize}`,
+      environment.serverAPI + `Admin/GetPagedAllAdmins?pageNumber=${pageNumber}&pageSize=${pageSize}`,
       // {
       //   headers: new HttpHeaders().append(
       //     'Authorization',
@@ -48,19 +48,18 @@ export class SubscriberService {
     );
   }
 
-  registerSubscriber(body: {}) {
-    return this.http.post<any>(
-      environment.serverAPI + "Authenticate/RegisterSubscriber",
-      body
-    );
-  }
+  // createNewUser(body: {}) {
+  //   return this.http.post<any>(
+  //     environment.serverAPI + "Authenticate/RegisterSubscriber",
+  //     body
+  //   );
+  // }
 
-  deleteUserProfileById(Id: any) {
-    return this.http.delete<any>(
-      environment.serverAPI + `Authenticate/deleteUserProfileById?Id=${Id}`,
-      this.httpOptions
-    );
-  }
+//   deleteUserProfileById(Id: any) {
+//     return this.http.delete<any>(
+// environment.serverAPI + `Authenticate/deleteUserProfileById?Id=${Id}`,this.httpOptions
+//     );
+//   }
 
   // deleteUserProfileById(Id: any) {
   //   const url = `${environment.serverAPI}/Authenticate/DeleteUserProfileById`;
@@ -68,18 +67,17 @@ export class SubscriberService {
   //   return this.http.delete<any>(url, { params });
   // }
 
-
-  InsertUpdateUserProfile(body: {}) {
-    return this.http.post<any>(
-      environment.serverAPI + "Authenticate/InsertUpdateUserProfile",
-      body,
-      this.httpOptions
-      // {
-      //   headers: new HttpHeaders().append(
-      //     "Authorization",
-      //     `Bearer ${this.token}`
-      //   ),
-      // }
-    );
-  }
+  // InsertUpdateUserProfile(body: {}) {
+  //   return this.http.post<any>(
+  //     environment.serverAPI + "Authenticate/InsertUpdateUserProfile",
+  //     body,
+  //     this.httpOptions
+  //     // {
+  //     //   headers: new HttpHeaders().append(
+  //     //     "Authorization",
+  //     //     `Bearer ${this.token}`
+  //     //   ),
+  //     // }
+  //   );
+  // }
 }

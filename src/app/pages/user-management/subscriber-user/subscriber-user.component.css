@@ -55,12 +55,32 @@
     grid-auto-columns: 1fr;
     display: grid;
   }
+
+  .filterDate {
+    background-color: transparent;
+    border-color: transparent;
+  }
+
+  .mat-datepicker-input {
+    visibility: hidden;
+    width: 0;
+  }
   
   .section {
     width: 100%;
     height: 100vh;
     max-height: 100vh;
     max-width: 100%;
+  }
+
+  #adminsTable {
+    overflow: auto;
+    /* overflow-y: auto; */
+    max-height: 50vh;
+  }
+
+  td {
+    padding: 10px;
   }
   
   .heading {
@@ -733,7 +753,7 @@
   .section-3 {
     width: 100%;
     max-width: 80%;
-    margin-left: 293px;
+    margin-left: 320px;
     margin-right: auto;
     margin-top: -40%;
   }
@@ -1867,6 +1887,12 @@
     .table-container {
       position: relative;
       overflow: hidden;
+    }
+
+    #subcribersTable {
+      /* overflow-y: auto; */
+      overflow: auto;
+      max-height: 50vh;
     }
   
     .table-wrapper {

@@ -4,6 +4,9 @@ import { Router } from "@angular/router";
 import { AuthService } from "src/app/services/auth.service";
 import { NgxSpinnerService } from "ngx-spinner";
 import { TokeStorageService } from "src/app/services/token-storage.service";
+import { Dataservice } from "src/app/services/data.service";
+import Swal from "sweetalert2";
+import { ElementRef } from '@angular/core';
 @Component({
   selector: "app-login",
   templateUrl: "./login.component.html",
@@ -12,18 +15,29 @@ import { TokeStorageService } from "src/app/services/token-storage.service";
 export class loginComponent implements OnInit {
   userData: any = null;
   loginform: FormGroup;
+  submitted = false;
   errMessage: string = "";
+  passwordVisibility: boolean = false;
+  isChecked: boolean = false;
 
   constructor(
     private router: Router,
     private formBuilder: FormBuilder,
     private authApi: AuthService,
     private spinner: NgxSpinnerService,
-    private tokenStorage: TokeStorageService
+    private tokenStorage: TokeStorageService,
+    private apiData: Dataservice,
+    private el: ElementRef
+    
+
   ) {
+
     this.loginform = this.formBuilder.group({
       Username: [null, Validators.required, this.emailValidator],
       Password: [null, [Validators.required]],
+      RememberMe: [false]
+      // Username:["", Validators.required],
+      // Password: ["", Validators.required],
     });
 
     var username: any = sessionStorage.getItem('email');
@@ -37,8 +51,20 @@ export class loginComponent implements OnInit {
     }
   }
   ngOnInit(): void {
-    debugger;
   }
+  togglePasswordVisibility() {
+    const passwordInput = this.el.nativeElement.querySelector('.password_field');
+    const passwordToggle = this.el.nativeElement.querySelector('.password-toggle');
+
+    if (passwordInput.type === 'password') {
+        passwordInput.type = 'text';
+        passwordToggle.innerText = '👁️';
+    } else {
+        passwordInput.type = 'password';
+        passwordToggle.innerText = '👁️';
+    }
+}
+  
   async emailValidator(control: any) {
     if (control.value) {
       const matches = control.value.match(
@@ -49,27 +75,40 @@ export class loginComponent implements OnInit {
       return null;
     }
   }
-  login() {
-    debugger;
+
+  login()
+   {
+      this.submitted = true;
+      var body = {
+        Username: this.loginform.controls['Username'].value,
+        Password: this.loginform.controls['Password'].value
+      }
+      
 
     if (this.loginform.status == "VALID") {
       this.spinner.show();
       this.authApi.login(this.loginform.value).subscribe(
         (data: any) => {
-          debugger;
-          console.log("LOGINS", data);
-          // if (
-          //   data.Status == "200" &&
-          //   data.Message == "Successfully Signed In"
-          // ) {
 
-          this.tokenStorage.saveToken(data.token);
-          this.router.navigate(['/admin']);
-          this.errMessage = "Successfully logged in";
-          this.userData = data;
+          console.log("data", data)
 
-          // data.saveCurrentUser(data);
-          // }
+          if(data.rolesList == 'Admin'){
+
+            this.tokenStorage.saveToken(data.token);
+            this.apiData.saveCurrentUser(data);    
+  
+            this.router.navigate(['/admin']);  
+  
+            // this.errMessage = "Successfully logged in";
+            this.userData = data;
+            this.spinner.hide();
+          } else {
+            this.spinner.hide();
+            this.errMessage = "Subcriber not allowed to log in";
+            setTimeout(() => {
+              this.errMessage = "";
+            }, 3000);
+          }
         },
         (err) => {
           console.log(err);
@@ -79,15 +118,42 @@ export class loginComponent implements OnInit {
           ) {
             this.errMessage = err.error.Message;
           } else {
-            this.errMessage = "Server Error. please try again later!";
+            this.errMessage = "Please check your password and username";
           }
           this.spinner.hide();
         }
       );
+      // this.spinner.hide();
+    } else {
+      this.errMessage = "Please enter your password and username";
+      setTimeout(() => {
+        this.errMessage = "";
+      }, 3000);
     }
+  }
+
+  showErrorAlert() {
+    Swal.fire({
+      icon: "warning",
+      title: "Login error!",
+      text: "Suscriber role is not allowed to login",
+      showConfirmButton: false,
+      timer: 3000,
+    });
   }
 
   forgotPassword() {
     this.router.navigate(["forgot-password"]);
   }
+
+  toggleCheckbox() {
+    this.isChecked = !this.isChecked;
+
+    console.log("isCheck", this.isChecked)
+
+    if (this.loginform) {
+      this.loginform.get('RememberMe')?.setValue(this.isChecked); 
+    }
+  }
+  
 }

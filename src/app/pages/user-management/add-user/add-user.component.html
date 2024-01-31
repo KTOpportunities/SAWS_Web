@@ -160,13 +160,13 @@
       <div class="user-wrap small-gap">
         <div class="user-copy">
           <img
-            src="../../../../assets/images/Group-4465.svg"
+            src="assets/images/Group-4465.svg"
             loading="lazy"
             alt=""
             class="user-icon"
           />
           <div class="user-info res-hide">
-            <div class="user-name">Jane Doe</div>
+            <div class="user-name">Jane Doe 67</div>
             <div class="user-description">Super Admin</div>
           </div>
         </div>
@@ -233,7 +233,7 @@
                   >
                     <option value="">Select user role</option>
                     <option value="Admin">Admin user</option>
-                    <option value="Subscriber">Subscribe user</option>
+                    <option value="Subscriber">Subscriber user</option>
                   </select>
                 </div>
                 <div
@@ -246,13 +246,14 @@
                     maxlength="256"
                     name="field-2"
                     data-name="Field 2"
-                    placeholder="Enter your First name"
+                    placeholder="Enter your full name"
                     type="text"
                     id="field-2"
                     required=""
                     formControlName="Fullname"
                   />
                   <div
+                    style="color: red;"
                     *ngIf="
                       submitted &&
                       userForm.get(['Password'])?.hasError('required')
@@ -282,19 +283,20 @@
                   id="w-node-ab03b8d4-e0ed-31b3-68a0-eda284d58ae2-ac205186"
                   class="add-user-admin-div"
                 >
-                  <label for="field-2" class="add-label">User Name</label
+                  <label for="field-2" class="add-label">Username</label
                   ><input
                     class="add-user-input w-input"
                     maxlength="256"
                     name="field-2"
                     data-name="Field 2"
-                    placeholder="Enter your User name"
+                    placeholder="Enter your username"
                     type="text"
                     id="field-2"
                     required=""
                     formControlName="Username"
                   />
                   <div
+                    style="color: red;"
                     class="errormessage"
                     *ngIf="
                       submitted &&
@@ -315,7 +317,7 @@
                     maxlength="256"
                     name="field-2"
                     data-name="Field 2"
-                    placeholder="Enter your User name"
+                    placeholder="Enter your email address"
                     type="text"
                     id="field-2"
                     required=""
@@ -323,6 +325,7 @@
                   />
                   <!-- Email Error Messages -->
                   <div
+                    style="color: red;"
                     *ngIf="
                       submitted && userForm.get('Email')?.hasError('required')
                     "
@@ -360,13 +363,14 @@
                     maxlength="256"
                     name="field-2"
                     data-name="Field 2"
-                    placeholder="Enter your User name"
+                    placeholder="Enter your password"
                     type="password"
                     id="field-2"
                     required=""
                     formControlName="Password"
                   />
                   <div
+                    style="color: red;"
                     class="errormessage"
                     *ngIf="
                       submitted &&
@@ -389,17 +393,23 @@
                 </div>
               </div>
               <div class="div-block-435">
-                <input
-                  type="submit"
+                <button
+                  type="button"
+                  (click)="onCancel()"
                   data-wait="Please wait..."
                   class="cancel-button w-button"
                   value="Cancel"
-                /><input
+                >
+                  Cancel
+                </button>
+                <button
                   type="submit"
                   data-wait="Please wait..."
                   class="submit-button w-button"
                   value="Submit"
-                />
+                >
+                  Submit
+                </button>
               </div>
             </form>
             <div class="w-form-done">

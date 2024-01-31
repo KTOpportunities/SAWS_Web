@@ -10,12 +10,15 @@ import { TokeStorageService } from "./services/token-storage.service";
 export class AppComponent implements OnInit{
   title = "Saws";
   isLoggedIn = false;
-  constructor(private tokenStorage: TokeStorageService,private router: Router) {
+  constructor(
+    private tokenStorage: TokeStorageService,
+    private router: Router
+    ) {
   }
   
   ngOnInit(): void {
-debugger
     this.isLoggedIn = !!this.tokenStorage.getToken();
+
     if(this.isLoggedIn){
       this.router.navigate(['/admin']);
     }

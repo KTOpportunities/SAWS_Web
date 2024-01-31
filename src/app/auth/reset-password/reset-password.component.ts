@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import Swal from 'sweetalert2';
 import { AuthService } from './../../services/auth.service';
-import { FormBuilder, Validators, AbstractControl, FormGroup } from '@angular/forms';
+import { FormBuilder, Validators, FormGroup } from '@angular/forms';
+// import { ResetConfirmPassword } from 'src/app/models/resetPassword';
 
 
 
@@ -12,9 +14,9 @@ interface ResetPassword{
   newPassword: string;
   confirmPassword: string;
 }
-import Swal from 'sweetalert2';
 
-import { ResetConfirmPassword } from 'src/app/models/resetPassword';
+
+import { ResetConfirmPassword } from 'src/app/Models/resetPassword';
 
 
 // interface ResetPassword{
@@ -60,7 +62,6 @@ export class resetPasswordComponent implements OnInit {
 
     ngOnInit(): void {
 
-      this.submitted = true;
       const urlSegments = this.router.url.split('=');
 
       if (urlSegments.length >= 2) {
@@ -73,6 +74,7 @@ export class resetPasswordComponent implements OnInit {
     }
 
     onResetPasswordSubmit() {
+      this.submitted = true;
 
       if(this.resetPasswordForm.valid){
         

@@ -7,10 +7,10 @@
               <div class="group-hero_l">
                 <div class="group-hero_text">Filter by</div>
                 <div data-hover="false" data-delay="0" class="w-dropdown">
-                  <div class="dropdown-toggle w-dropdown-toggle">
+                  <!-- <div class="dropdown-toggle w-dropdown-toggle">
                     <div class="icon w-icon-dropdown-toggle"></div>
                     <div class="text-block">Name</div>
-                  </div>
+                  </div> -->
                   <nav class="w-dropdown-list">
                     <a href="#" class="w-dropdown-link">Link 1</a>
                     <a href="#" class="w-dropdown-link">Link 2</a>
@@ -28,62 +28,87 @@
                     <a href="#" class="w-dropdown-link">Link 3</a>
                   </nav>
                 </div>
-                <div data-hover="false" data-delay="0" class="w-dropdown">
-                  <div class="dropdown-toggle w-dropdown-toggle">
-                    <div class="icon w-icon-dropdown-toggle"></div>
-                    <div class="text-block">Date</div>
+                <div
+                  (click)="openPicker()"
+                  data-hover="false" 
+                  data-delay="0" class="w-dropdown">
+                    <div class="dropdown-toggle w-dropdown-toggle">
+                      <div class="icon w-icon-dropdown-toggle"></div>
+                      <div class="text-block"> 
+                        {{ selectedDateString ? selectedDateString : "Date" }}
+                      </div>
+                    </div>
+                    <nav class="w-dropdown-list">
+                      <a href="#" class="w-dropdown-link">Link 1</a>
+                      <a href="#" class="w-dropdown-link">Link 2</a>
+                      <a href="#" class="w-dropdown-link">Link 3</a>
+                    </nav>
                   </div>
-                  <nav class="w-dropdown-list">
-                    <a href="#" class="w-dropdown-link">Link 1</a>
-                    <a href="#" class="w-dropdown-link">Link 2</a>
-                    <a href="#" class="w-dropdown-link">Link 3</a>
-                  </nav>
+                <div>
+                  <input
+                  [matDatepicker]="picker"
+                  #datepickerTrigger
+                  class="filterDate"
+                  (dateInput)="selectDate('input', $event)"
+                />
+            
+                <mat-datepicker #picker class="filterDate"></mat-datepicker>
                 </div>
               </div>
-              <a routerLink="/admin/addUser" class="button w-inline-block">
-                <div class="embed-icon w-embed">
-                  <svg
-                    width="16"
-                    height="16"
-                    viewbox="0 0 16 16"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <g clip-path="url(#clip0_1695_120)">
-                      <path
-                        d="M8.00021 14.9623C11.8453 14.9623 14.9623 11.8453 14.9623 8.00021C14.9623 4.15514 11.8453 1.03809 8.00021 1.03809C4.15514 1.03809 1.03809 4.15514 1.03809 8.00021C1.03809 11.8453 4.15514 14.9623 8.00021 14.9623Z"
-                        stroke="currentColor"
-                        stroke-width="1.5"
-                        stroke-miterlimit="10"
-                      ></path>
-                      <path
-                        d="M5.09961 8H10.9014"
-                        stroke="currentColor"
-                        stroke-width="1.5"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                      ></path>
-                      <path
-                        d="M8 5.09961V10.9014"
-                        stroke="currentColor"
-                        stroke-width="1.5"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                      ></path>
-                    </g>
-                    <defs>
-                      <clippath id="clip0_1695_120">
-                        <rect width="16" height="16" fill="white"></rect>
-                      </clippath>
-                    </defs>
-                  </svg>
-                </div>
+              <a 
+                (click)="addUser()"
+                class="button w-inline-block">
+                  <div class="embed-icon w-embed">
+                    <svg
+                      width="16"
+                      height="16"
+                      viewbox="0 0 16 16"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <g clip-path="url(#clip0_1695_120)">
+                        <path
+                          d="M8.00021 14.9623C11.8453 14.9623 14.9623 11.8453 14.9623 8.00021C14.9623 4.15514 11.8453 1.03809 8.00021 1.03809C4.15514 1.03809 1.03809 4.15514 1.03809 8.00021C1.03809 11.8453 4.15514 14.9623 8.00021 14.9623Z"
+                          stroke="currentColor"
+                          stroke-width="1.5"
+                          stroke-miterlimit="10"
+                        ></path>
+                        <path
+                          d="M5.09961 8H10.9014"
+                          stroke="currentColor"
+                          stroke-width="1.5"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        ></path>
+                        <path
+                          d="M8 5.09961V10.9014"
+                          stroke="currentColor"
+                          stroke-width="1.5"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        ></path>
+                      </g>
+                      <defs>
+                        <clippath id="clip0_1695_120">
+                          <rect width="16" height="16" fill="white"></rect>
+                        </clippath>
+                      </defs>
+                    </svg>
+                  </div>
                 <div class="button-text">New User</div>
               </a>
             </div>
           </div>
   
-          <mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+          <mat-table
+            #adminsTable
+            id="adminsTable"
+            mat-table
+            [dataSource]="dataSource"
+            matSort 
+            class="mat-elevation-z8"
+            #subscibersSort="matSort"
+            >
             <!-- Full Name Column -->
             <ng-container matColumnDef="fullname">
               <mat-header-cell *matHeaderCellDef mat-sort-header>
@@ -117,7 +142,9 @@
               <mat-header-cell *matHeaderCellDef mat-sort-header>
                 Created Date
               </mat-header-cell>
-              <mat-cell *matCellDef="let user"> {{ user.created_at }} </mat-cell>
+              <mat-cell *matCellDef="let user"> 
+                {{ user.created_at | date : "mediumDate" }}
+              </mat-cell>
             </ng-container>
   
             <!-- Status Column -->
@@ -142,7 +169,7 @@
                 >
                   <mat-icon style="color: #323259">
                     <img
-                      src="../../../assets/images/metro-more-horiz.svg"
+                      src="assets/images/metro-more-horiz.svg"
                       class="searchIcon"
                   /></mat-icon>
                 </button>
@@ -151,9 +178,9 @@
                   <button mat-menu-item (click)="navigateToEditUser(user)">
                     <mat-icon>edit</mat-icon> Edit
                   </button>
-                  <button mat-menu-item (click)="toggleUser(user)">
+                  <!-- <button mat-menu-item (click)="toggleUser(user)">
                     <mat-icon>visibility</mat-icon> View
-                  </button>
+                  </button> -->
                   <button mat-menu-item (click)="deleteUser(user)">
                     <mat-icon style="color: red">clear</mat-icon> Delete
                   </button>
@@ -162,13 +189,25 @@
             </ng-container>
   
             <!-- Table Header Row -->
-            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+            <mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
+            
             <!-- Table Rows -->
             <mat-row *matRowDef="let user; columns: displayedColumns"></mat-row>
+
+            <tr class="mat-row" *matNoDataRow>
+              <td class="mat-cell" colspan="4">No data matching the filter "{{dataSource.filter}}"</td>
+            </tr>
           </mat-table>
           <mat-paginator
-            [pageSizeOptions]="[5, 10, 25, 100]"
+          #paginator
+            [length]="TotalRecords"
+            [pageIndex]="currentPage"
+            [pageSize]="pageSize"
+            [pageSizeOptions]="[5, 10, TotalRecords]"
+            (page)="pageChanged($event)"
+            aria-label="Select page"
             showFirstLastButtons
+            aria-label="'Select page of subcribers'"
           ></mat-paginator>
         </div>
       </div>
@@ -181,7 +220,7 @@
       <style>
         /*width*/
         .scroll::-webkit-scrollbar {
-          height: 4px;
+          height: 2px;
         }
         /*track*/
         .scroll::-webkit-scrollbar-track {

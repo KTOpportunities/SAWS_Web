@@ -1,13 +1,13 @@
 <section class="section-2">
     <div class="container-main-login">
         <div class="right">
-            <div><img src="../../../assets/images/Group-4465.svg" loading="lazy"
+            <div><img src="assets/images/Group-4465.svg" loading="lazy"
                     width="181" alt></div>
         </div>
         <div class="left-login">
             <div class="left-wrap">
                 <div class="div-block-2"><img
-                        src="../../../assets/images/Mask-Group-12.svg"
+                        src="assets/images/Mask-Group-12.svg"
                         loading="lazy" width="181" alt class="login_logo"></div>
                 <div class="form-block w-form" style="flex-direction: column;">
                     <form id="email-form" name="email-form"
@@ -18,33 +18,75 @@
                         <h1 class="heading">Login</h1>
                         <p class="paragraph-2">Login by entering the
                             information&#x27;s below</p>
-                        <div class="field-wrapper top"><label for="Email"
-                                class="label_f_username">User Name</label><input
-                                type="email" class="user_input w-input"
-                                maxlength="256" name="Email" data-name="Email"
-                                placeholder id="Email" data-ms-member="email"
-                                formControlName="Username"
-                                required></div>
-                        <div class="field-wrapper"><label for="Password"
-                                class="label_f_password">Password</label><input
-                                type="password" class="password_field w-input"
-                                maxlength="256" name="Password"
-                                data-name="Password" placeholder id="Password"
-                                formControlName="Password"
-                                data-ms-member="password" required></div>
-                        <div class="form-flex"><label
-                                class="w-checkbox checkbox-wrap">
-                                <div
-                                    class="w-checkbox-input w-checkbox-input--inputType-custom remember"></div><input
-                                    type="checkbox" id="checkbox"
-                                    name="checkbox" data-name="Checkbox"
-                                    style="opacity:0;position:absolute;z-index:-1"><span
-                                    class="remember_me w-form-label"
-                                    for="checkbox">Remember Me</span>
-                            </label>
-                            <a (click)="forgotPassword()"
-                                class="forgot-password">Forgot password</a>
-                        </div>
+                            <div class="field-wrapper top">
+                                <label for="Email"
+                                    class="label_f_username">User Name</label>
+                                    <input
+                                        style="color: black;"
+                                        type="email" 
+                                        class="user_input w-input"
+                                        maxlength="256" 
+                                        name="Email" 
+                                        data-name="Email"
+                                        placeholder 
+                                        id="Email" 
+                                        data-ms-member="email"
+                                        formControlName="Username"
+                                        required
+                                    >
+
+                                </div>
+                                <div class="errormessage"
+                                    *ngIf="submitted && loginform.get('Username')?.hasError('required')"
+                                    class="error-message" style="color: red;
+                                    margin-top: -13px;
+                                    width: 100%;
+                                    display: flex;">
+                                    Username is required
+                                </div>
+                            <div class="field-wrapper">
+                                <label for="Password"
+                                    class="label_f_password">Password</label>
+                                    <div class="password-input-wrapper">
+                                        <input
+                                        style="color: black;"
+                                        type="password" 
+                                        class="password_field w-input"
+                                        maxlength="256" 
+                                        name="Password"
+                                        data-name="Password"
+                                        placeholder 
+                                        id="Password"
+                                        formControlName="Password"
+                                        data-ms-member="password" 
+                                        required
+                                        />
+                                        <span class="password-toggle" (click)="togglePasswordVisibility()">👁️</span>
+                                    </div>
+                                </div>
+                                <div class="errormessage"
+                                *ngIf="submitted && loginform.get('Password')?.hasError('required')"
+                                class="error-message" style="color: red;position: relative;
+                                 width: 100%;top: -13px;">
+                                Password is required
+                            </div>
+                            <div class="form-flex">
+                                <label class="w-checkbox checkbox-wrap" (click)="toggleCheckbox()">
+                                    <div class="w-checkbox-input w-checkbox-input--inputType-custom remember" [style.background-color]="isChecked ? '#008c1d' : '#fff'"></div>
+                                    <input
+                                        type="checkbox"
+                                        id="checkbox"
+                                        name="checkbox"
+                                        data-name="Checkbox"
+                                        style="opacity:0;position:absolute;z-index:-1"
+                                        formControlName="RememberMe"
+                                        (click)="$event.stopPropagation()"
+                                    >
+                                    <span class="remember_me w-form-label" for="checkbox" (click)="toggleCheckbox()">Remember Me</span>
+                                  </label>
+                                <a (click)="forgotPassword()"
+                                    class="forgot-password">Forgot password</a>
+                            </div>
                         <a (click)="login()"
                             class="loginbutton w-button">Login</a>
                         <!-- <h5 class="heading-2">Need an account? Create account</h5> -->

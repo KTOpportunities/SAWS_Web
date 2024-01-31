@@ -1,5 +1,7 @@
 import { Component } from "@angular/core";
-import { Router } from "@angular/router";
+import { ActivatedRoute, NavigationEnd, Router } from "@angular/router";
+import { Dataservice } from "src/app/services/data.service";
+import { TokeStorageService } from "src/app/services/token-storage.service";
 
 @Component({
   selector: "app-side-bar",
@@ -7,8 +9,35 @@ import { Router } from "@angular/router";
   styleUrls: ["./side-bar.component.css"],
 })
 export class SideBarComponent {
+
+
+handleFeedbackLinkClick(event: Event): void {
+  // Prevent the default behavior of the link
+  event.preventDefault();
+}
+
+
   // Inject the Router in the constructor
-  constructor(private router: Router) {}
+  isUserManagementActive: boolean = false;
+
+  constructor(
+    private router: Router,
+    private activatedRoute: ActivatedRoute,
+    private apiToken: TokeStorageService,
+    private apiData: Dataservice,
+    ) {
+      this.router.events.subscribe(event => {
+        if (event instanceof NavigationEnd) {
+          this.updateUserManagementActive();
+        }
+      });
+    }
+
+    updateUserManagementActive() {
+      const currentUrl = this.router.url;
+      this.isUserManagementActive = currentUrl.startsWith('/admin/adminUser') || currentUrl.startsWith('/admin/subscriberUser');
+    }
+    
 
   // Define a method to navigate to the specified route
   navigateToDashboard() {
@@ -21,9 +50,9 @@ export class SideBarComponent {
   // }
 
   navigateToAdminUser() {
-    debugger;
     this.router.navigate(["/admin/adminUser"]);
   }
+
   navigateToSubscriberUser() {
     this.router.navigate(["/admin/subscriberUser"]);
   }
@@ -42,5 +71,16 @@ export class SideBarComponent {
         // Handle default case if needed
         break;
     }
+
+    this.updateUserManagementActive();
+  }
+  
+  logout() {
+    this.apiToken.signOut();
+    this.apiData.removeCurrentUser();
+    this.apiData.removeUser();
+    this.apiData.removeUserUrl();
+    sessionStorage.removeItem('currentPage');
+    sessionStorage.removeItem('pageSize');
   }
 }

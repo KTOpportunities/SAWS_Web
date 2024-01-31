@@ -10,9 +10,11 @@ import { MatDialog } from "@angular/material/dialog";
 import { AddUserComponent } from "src/app/pages/user-management/add-user/add-user.component";
 import { Router, ActivatedRoute } from "@angular/router";
 import { NgxSpinnerService } from "ngx-spinner";
-import { EditUserComponent } from "./edit-user/edit-user.component";
-import { Subscriber } from "src/app/models/subscriber.model";
 import Swal from "sweetalert2";
+import { Observable } from "rxjs";
+import { EditUserComponent } from "./edit-user/edit-user.component";
+import { Subscriber } from "src/app/Models/subscriber.model";
+
 @Component({
   selector: "app-user-management",
   templateUrl: "./user-management.component.html",
@@ -21,6 +23,13 @@ import Swal from "sweetalert2";
 export class UserManagementComponent implements OnInit {
   @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort!: MatSort;
+  apiUrl: any;
+  http: any;
+
+  pageSize = 5;
+  pageSizeStore = 5;
+  currentPage = 0;
+  currentPageStore = 0;
 
   constructor(
     private apiService: SubscriberService,
@@ -29,11 +38,13 @@ export class UserManagementComponent implements OnInit {
     private route: ActivatedRoute,
     private spinner: NgxSpinnerService
   ) {}
+ 
+
   ngOnInit() {
  this.getPagedAllSubscribers();
   }
-  getPagedAllSubscribers(){
-    this.apiService.getPagedAllSubscribers().subscribe(
+  getPagedAllSubscribers(page: number = 1){
+    this.apiService.getPagedAllSubscribers(this.currentPage + page, this.pageSize).subscribe(
       (data) => {
         console.log("DATA:::", data);
         this.dataSource.data = data.Data; // Assuming the API returns an array of objects
@@ -69,7 +80,6 @@ export class UserManagementComponent implements OnInit {
   }
 
   deleteUser(user: any) {
-    debugger;
     // console.log("delete user",user);
     console.log("delete user",user.userprofileid);
     const userId = user.userprofileid; // Assuming your user object has an 'id' property
@@ -110,6 +120,8 @@ export class UserManagementComponent implements OnInit {
       }
     });
   }
+  
+  
   openPopup() {
     this.dialog.open(EditUserComponent, {
       width: "49%",
@@ -119,13 +131,14 @@ export class UserManagementComponent implements OnInit {
     });
   }
 
-  navigateToAddUser() {
-    this.router.navigate(["/admin/addUser"]);
-  }
+  // addUser() {
+  //   this.apiData.saveUserUrl('/admin/adminUser');
+  //   this.router.navigate(["/admin/addUser"]);
+  // }
 
 
   navigateToEditUser(user:Subscriber) {
-    sessionStorage.setItem('SubscriberDetails', JSON.stringify(user));
+    sessionStorage.setItem('UserDetails', JSON.stringify(user));
     this.router.navigate(["/admin/editUser"]);
   }
 }

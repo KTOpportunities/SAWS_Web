@@ -147,24 +147,24 @@
   })(window, document);
 </script>
 <link
-  href="../../../assets/images/favicon.ico"
+  href="assets/images/favicon.ico"
   rel="shortcut icon"
   type="image/x-icon"
 />
-<link href="../../../assets/images/webclip.png" rel="apple-touch-icon" />
+<link href="assets/images/webclip.png" rel="apple-touch-icon" />
 <section class="section-3">
   <div class="container">
     <div class="mobile-nav">
       <div class="user-wrap small-gap">
         <div class="user-copy">
           <img
-            src="../../../assets/images/Group-4465.svg"
+            src="assets/images/Group-4465.svg"
             loading="lazy"
             alt=""
             class="user-icon"
           />
           <div class="user-info res-hide">
-            <div class="user-name">Jane Doe</div>
+            <div class="user-name">Jane Doe 23</div>
             <div class="user-description">Super Admin</div>
           </div>
         </div>
@@ -188,7 +188,9 @@
     <div class="content">
       <div class="navigation">
         <div class="navigation-right">
-          <div class="form-block-2 w-form">
+          <div 
+          *ngIf="shouldShowSearchIcon()"
+          class="form-block-2 w-form">
             <form
               id="email-form"
               name="email-form"
@@ -199,6 +201,7 @@
               data-wf-element-id="717ec873-5bdf-1582-6da6-888fecad4a48"
             >
               <input
+                matInput
                 class="search w-input"
                 maxlength="256"
                 name="Search-2"
@@ -207,6 +210,7 @@
                 type="text"
                 id="Search-2"
                 required=""
+                (keyup)="applyFilter($event)"
               />
             </form>
             <div class="w-form-done">
@@ -217,18 +221,13 @@
             </div>
           </div>
         </div>
-        <!-- images/user_1user.jpg -->
         <div class="user">
           <div class="user-info">
-            <div class="user-name">Jane Doe</div>
-            <div class="user-description">Super Admin</div>
+            <div class="user-name">
+              {{ userName }}
+            </div>
+            <div class="user-description">{{ userRole }}</div>
           </div>
-          <img
-            src="../../../assets/images/user_1user.jpg"           
-            loading="lazy"
-            alt=""
-            class="user-icon"
-          />
         </div>
       </div>
     </div>
