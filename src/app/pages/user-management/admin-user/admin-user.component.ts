@@ -50,6 +50,7 @@ export class AdminUserComponent implements OnInit {
   currentPageStore = 0;
   
   TotalRecords: any = 0;
+  filteredData: any = '';
 
   selectedDateString: any;
   date: Date;
@@ -72,7 +73,8 @@ export class AdminUserComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.getAllAdmins();    
+    this.getAllAdmins(); 
+    this.filterData();
   }
     
   getAllAdmins(page: number = 1){
@@ -117,6 +119,12 @@ export class AdminUserComponent implements OnInit {
     });
  }
 
+ filterData() {
+  this.apiData.filterObservable$.subscribe((filter: string) => {
+    this.dataSource.filter = filter.trim().toLowerCase();
+  });
+ }
+
  addUser() {
   this.apiData.saveUserUrl('/admin/adminUser');
   this.router.navigate(["/admin/addUser"]);
@@ -127,8 +135,6 @@ export class AdminUserComponent implements OnInit {
     this.currentPage = event.pageIndex;
 
     this.getAllAdmins();
-
-
 
     if (this.dataSource) {
       this.dataSource.filterPredicate = (data: any, filter: string) =>

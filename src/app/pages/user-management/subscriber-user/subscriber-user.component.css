@@ -72,6 +72,16 @@
     max-height: 100vh;
     max-width: 100%;
   }
+
+  #adminsTable {
+    overflow: auto;
+    /* overflow-y: auto; */
+    max-height: 50vh;
+  }
+
+  td {
+    padding: 10px;
+  }
   
   .heading {
     color: #00386c;
@@ -743,7 +753,7 @@
   .section-3 {
     width: 100%;
     max-width: 80%;
-    margin-left: 293px;
+    margin-left: 320px;
     margin-right: auto;
     margin-top: -40%;
   }
@@ -1880,7 +1890,8 @@
     }
 
     #subcribersTable {
-      overflow-y: auto;
+      /* overflow-y: auto; */
+      overflow: auto;
       max-height: 50vh;
     }
   

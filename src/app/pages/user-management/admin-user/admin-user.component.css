@@ -74,10 +74,15 @@
   }
 
   #adminsTable {
-    overflow-y: auto;
+    overflow: auto;
+    /* overflow-y: auto; */
     max-height: 50vh;
   }
-  
+
+  td {
+    padding: 10px;
+  }
+
   .heading {
     color: #00386c;
     text-align: center;
@@ -748,7 +753,7 @@
   .section-3 {
     width: 100%;
     max-width: 80%;
-    margin-left: 293px;
+    margin-left: 320px;
     margin-right: auto;
     margin-top: -40%;
   }

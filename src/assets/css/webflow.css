@@ -1084,7 +1084,7 @@ textarea.w-select {
   display: block !important;
 }
 .w-dropdown {
-  display: inline-block;
+  /* display: inline-block; */
   position: relative;
   text-align: left;
   margin-left: auto;

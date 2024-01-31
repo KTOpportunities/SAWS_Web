@@ -62,7 +62,6 @@ export class resetPasswordComponent implements OnInit {
 
     ngOnInit(): void {
 
-      this.submitted = true;
       const urlSegments = this.router.url.split('=');
 
       if (urlSegments.length >= 2) {
@@ -75,6 +74,7 @@ export class resetPasswordComponent implements OnInit {
     }
 
     onResetPasswordSubmit() {
+      this.submitted = true;
 
       if(this.resetPasswordForm.valid){
         

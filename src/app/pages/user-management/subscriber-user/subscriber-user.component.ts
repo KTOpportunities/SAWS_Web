@@ -69,8 +69,9 @@ export class SubscriberUserComponent implements OnInit {
 
   ngOnInit() {
       this.getAllSubscribers();
+      this.filterData()
     }
-       
+      
     getAllSubscribers(page: number = 1){
 
     var currentPage: number = Number(sessionStorage.getItem('currentPage'));
@@ -116,6 +117,12 @@ export class SubscriberUserComponent implements OnInit {
           console.error("Error fetching data from API:", error);
       },
     });
+ }
+
+ filterData() {
+  this.apiData.filterObservable$.subscribe((filter: string) => {
+    this.dataSource.filter = filter.trim().toLowerCase();
+  });
  }
 
     pageChanged(event: PageEvent) {
