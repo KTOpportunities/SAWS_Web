@@ -9,6 +9,14 @@ import { TokeStorageService } from "src/app/services/token-storage.service";
   styleUrls: ["./side-bar.component.css"],
 })
 export class SideBarComponent {
+
+
+handleFeedbackLinkClick(event: Event): void {
+  // Prevent the default behavior of the link
+  event.preventDefault();
+}
+
+
   // Inject the Router in the constructor
   isUserManagementActive: boolean = false;
 
