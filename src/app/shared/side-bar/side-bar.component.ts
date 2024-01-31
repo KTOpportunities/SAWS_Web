@@ -1,5 +1,5 @@
 import { Component } from "@angular/core";
-import { Router } from "@angular/router";
+import { ActivatedRoute, NavigationEnd, Router } from "@angular/router";
 import { Dataservice } from "src/app/services/data.service";
 import { TokeStorageService } from "src/app/services/token-storage.service";
 
@@ -10,11 +10,26 @@ import { TokeStorageService } from "src/app/services/token-storage.service";
 })
 export class SideBarComponent {
   // Inject the Router in the constructor
+  isUserManagementActive: boolean = false;
+
   constructor(
     private router: Router,
+    private activatedRoute: ActivatedRoute,
     private apiToken: TokeStorageService,
     private apiData: Dataservice,
-    ) {}
+    ) {
+      this.router.events.subscribe(event => {
+        if (event instanceof NavigationEnd) {
+          this.updateUserManagementActive();
+        }
+      });
+    }
+
+    updateUserManagementActive() {
+      const currentUrl = this.router.url;
+      this.isUserManagementActive = currentUrl.startsWith('/admin/adminUser') || currentUrl.startsWith('/admin/subscriberUser');
+    }
+    
 
   // Define a method to navigate to the specified route
   navigateToDashboard() {
@@ -29,6 +44,7 @@ export class SideBarComponent {
   navigateToAdminUser() {
     this.router.navigate(["/admin/adminUser"]);
   }
+
   navigateToSubscriberUser() {
     this.router.navigate(["/admin/subscriberUser"]);
   }
@@ -47,6 +63,8 @@ export class SideBarComponent {
         // Handle default case if needed
         break;
     }
+
+    this.updateUserManagementActive();
   }
   
   logout() {
