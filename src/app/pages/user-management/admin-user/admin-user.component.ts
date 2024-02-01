@@ -42,6 +42,13 @@ export class AdminUserComponent implements OnInit {
   @ViewChild(MatSort, { static: true }) sort!: MatSort;
 
   dataSource = new MatTableDataSource<Admin>();
+
+  subscriptions: any[] = [
+    { id: 1, subscription: true },
+    { id: 2, subscription: false }
+  ];
+
+  selectedSubscription: number | undefined;
   adminList: Admin[] = [];
 
   pageSize = 5;
@@ -53,6 +60,7 @@ export class AdminUserComponent implements OnInit {
   filteredData: any = '';
 
   selectedDateString: any;
+  selectedSubscriptionName: any = '';
   date: Date;
 
   constructor(
@@ -74,7 +82,7 @@ export class AdminUserComponent implements OnInit {
 
   ngOnInit() {
     this.getAllAdmins(); 
-    this.filterData();
+    this.filterData(); 
   }
     
   getAllAdmins(page: number = 1){
@@ -100,6 +108,10 @@ export class AdminUserComponent implements OnInit {
           this.spinner.hide();
           this.adminList = data.Data;
 
+          this.adminList.forEach(element => {
+            element.subscription = false;
+          });
+
           sessionStorage.removeItem('currentPage');
           sessionStorage.removeItem('pageSize');
 
@@ -119,11 +131,35 @@ export class AdminUserComponent implements OnInit {
     });
  }
 
+ selectSubscription(status: any) {
+  this.selectedSubscription = status;
+  this.filterSubscription();
+}
+
  filterData() {
   this.apiData.filterObservable$.subscribe((filter: string) => {
     this.dataSource.filter = filter.trim().toLowerCase();
   });
  }
+
+ filterSubscription() {
+  this.selectedSubscriptionName = '';
+  this.selectedDateString = '';
+
+  this.dataSource.filterPredicate = (data, filter: string) =>
+    !filter || data.subscription.toString().includes(filter);
+
+  this.dataSource.filter = this.selectedSubscription!.toString().trim();
+
+  // Update the button text based on the selected subscription status
+  const selectedSubscription = this.subscriptions.find(
+    (subscription) => subscription.subscription === this.selectedSubscription
+  );
+
+  if (selectedSubscription) {
+    this.selectedSubscriptionName = selectedSubscription.subscription;
+  }
+}
 
  addUser() {
   this.apiData.saveUserUrl('/admin/adminUser');
@@ -159,6 +195,8 @@ export class AdminUserComponent implements OnInit {
     // this.selectedStatusName = '';
     // this.selectedPositionName = '';
 
+    this.selectedSubscriptionName = '';
+
     let newDate = this.datePipe.transform(this.date, 'yyyy-MM-dd');
 
     this.dataSource.filterPredicate = (data, filter: string) =>
@@ -184,7 +222,6 @@ export class AdminUserComponent implements OnInit {
   }
 
   deleteUser(user: any) {
-    debugger;
     // console.log("delete user",user);
     console.log("delete user",user.userprofileid);
     const userId = user.userprofileid; // Assuming your user object has an 'id' property
@@ -239,6 +276,9 @@ export class AdminUserComponent implements OnInit {
     this.router.navigate(["/admin/addUser"]);
   }
 
+  toggleStatus(user: Admin) {
+    user.subscription = !user.subscription;
+  }
 
   navigateToEditUser(user: Admin) {
     sessionStorage.setItem('currentPage', `${this.currentPage}`);

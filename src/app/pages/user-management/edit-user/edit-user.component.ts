@@ -47,14 +47,13 @@ export class EditUserComponent {
     var SubscriberDetails: any = this.apiData.getUser();
     const subscriberObject = JSON.parse(SubscriberDetails);
 
-    debugger;
-
     this.userForm = this.formBuilder.group({
       userprofileid: [subscriberObject?.userprofileid ?? ''],
       created_at: [subscriberObject?.created_at ?? ''],
       Fullname: [subscriberObject?.fullname || '', Validators.required],
       Email: [subscriberObject?.email || '', [Validators.required, Validators.email]],
       UserRole: [subscriberObject?.userrole || '', Validators.required],
+      UserSubscriptionStatus: [subscriberObject?.subscription ?? false, Validators.required],
     });
 
     this.userRole = subscriberObject?.userrole || '';
@@ -79,6 +78,7 @@ export class EditUserComponent {
       Email: this.userForm.controls["Email"].value,
       UserRole: this.userForm.controls["UserRole"].value,
       created_at: this.userForm.controls["created_at"].value,
+      // UserSubscriptionStatus: this.userForm.controls["UserSubscriptionStatus"].value,
     };
     console.log("BODY:", body);
     if (this.userForm.invalid) {
