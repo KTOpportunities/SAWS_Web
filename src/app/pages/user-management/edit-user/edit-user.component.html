@@ -312,25 +312,7 @@
                 >
                   <label for="field-3" class="add-label">Subscribed</label
                   >
-                  <!-- <input
-                    class="add-user-input w-input"
-                    maxlength="256"
-                    name="field-2"
-                    data-name="Field 2"
-                    placeholder="Enter your User name"
-                    type="text"
-                    id="field-2"
-                    required=""
-                    formControlName="Email"
-                  /> -->
-
-                  <!-- <span class="status">
-                    <mat-icon style="font-size: 25px;" >
-                      toggle_on
-                    </mat-icon>
-                  </span> -->
-
-                  <select
+                  <!-- <select
                     formControlName="UserSubscriptionStatus"
                     id="field"
                     name="field"
@@ -340,8 +322,19 @@
                     <option value="">Select user subscription status</option>
                     <option value="true" >True</option>
                     <option value="false" >False</option>
-                  </select>
+                  </select> -->
 
+                  <button
+                    class="status"
+                    type="button"
+                    (click)="toggleSubscriptionStatus()"
+                    >
+                      <mat-icon 
+                        style="font-size: 24px;" 
+                        [style.color]="userForm.controls['UserSubscriptionStatus'].value ? 'green' : '#00386C'">
+                          {{ userForm.controls['UserSubscriptionStatus'].value ? 'toggle_on' : 'toggle_off' }}
+                      </mat-icon>
+                    </button>
                 </div>
               </div>
               <div class="div-block-435">

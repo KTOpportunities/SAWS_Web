@@ -78,10 +78,10 @@ export class EditUserComponent {
       Email: this.userForm.controls["Email"].value,
       UserRole: this.userForm.controls["UserRole"].value,
       created_at: this.userForm.controls["created_at"].value,
-      // UserSubscriptionStatus: this.userForm.controls["UserSubscriptionStatus"].value,
+      UserSubscriptionStatus: this.userForm.controls["UserSubscriptionStatus"].value,
     };
     console.log("BODY:", body);
-    if (this.userForm.invalid) {
+    if (!this.userForm.invalid) {
       return;
     } else {
       this.api.InsertUpdateUserProfile(body).subscribe((data: any) => {
@@ -105,6 +105,11 @@ export class EditUserComponent {
 
     this.apiData.removeUser();
 
+  }
+
+  toggleSubscriptionStatus() {
+    const currentValue = this.userForm.controls["UserSubscriptionStatus"].value;
+    this.userForm.controls["UserSubscriptionStatus"].setValue(!currentValue);
   }
 
   showSuccessAlert() {
