@@ -305,6 +305,37 @@
                     formControlName="Email"
                   />
                 </div>
+
+                <div
+                id="w-node-_4cd953d6-568c-454e-fa45-d438d47d0757-ac205186"
+                class="add-user-admin-div"
+                >
+                  <label for="field-3" class="add-label">Subscribed</label
+                  >
+                  <!-- <select
+                    formControlName="UserSubscriptionStatus"
+                    id="field"
+                    name="field"
+                    data-name="Field"
+                    class="add-user-input w-select"
+                  >
+                    <option value="">Select user subscription status</option>
+                    <option value="true" >True</option>
+                    <option value="false" >False</option>
+                  </select> -->
+
+                  <button
+                    class="status"
+                    type="button"
+                    (click)="toggleSubscriptionStatus()"
+                    >
+                      <mat-icon 
+                        style="font-size: 24px;" 
+                        [style.color]="userForm.controls['UserSubscriptionStatus'].value ? 'green' : '#00386C'">
+                          {{ userForm.controls['UserSubscriptionStatus'].value ? 'toggle_on' : 'toggle_off' }}
+                      </mat-icon>
+                    </button>
+                </div>
               </div>
               <div class="div-block-435">
                 <input (click)="onCancel();"
