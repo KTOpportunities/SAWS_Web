@@ -11,38 +11,22 @@
                     <div class="icon w-icon-dropdown-toggle"></div>
                     <div class="text-block">Name</div>
                   </div> -->
-                  <!-- <nav class="w-dropdown-list">
+                  <nav class="w-dropdown-list">
                     <a href="#" class="w-dropdown-link">Link 1</a>
                     <a href="#" class="w-dropdown-link">Link 2</a>
                     <a href="#" class="w-dropdown-link">Link 3</a>
-                  </nav> -->
+                  </nav>
                 </div>
-                <div 
-                  data-hover="false" 
-                  data-delay="0" 
-                  class="w-dropdown">
-                    <div
-                      mat-button
-                      [matMenuTriggerFor]="subscribedMenu"
-                      class="dropdown-toggle w-dropdown-toggle"
-                      >
-                      <div class="icon w-icon-dropdown-toggle"></div>
-                      <div class="text-block">
-                        {{ selectedSubscriptionName !== '' ?  "Subscribed: " + selectedSubscriptionName : "Subscribed" }}
-                      </div>
-                    </div>
-                    <mat-menu
-                      #subscribedMenu="matMenu">
-                        <button
-                          mat-menu-item
-                          *ngFor="let subscription of subscriptions"
-                          (click)="selectSubscription(subscription.subscription)"
-                        >
-                          <span class="w-dropdown-link">
-                            {{ subscription.subscription }}
-                          </span>
-                        </button>
-                    </mat-menu>
+                <div data-hover="false" data-delay="0" class="w-dropdown">
+                  <div class="dropdown-toggle w-dropdown-toggle">
+                    <div class="icon w-icon-dropdown-toggle"></div>
+                    <div class="text-block">Status</div>
+                  </div>
+                  <nav class="w-dropdown-list">
+                    <a href="#" class="w-dropdown-link">Link 1</a>
+                    <a href="#" class="w-dropdown-link">Link 2</a>
+                    <a href="#" class="w-dropdown-link">Link 3</a>
+                  </nav>
                 </div>
                 <div
                   (click)="openPicker()"
@@ -166,19 +150,11 @@
     
               <!-- Status Column -->
               <ng-container matColumnDef="status">
-                <mat-header-cell *matHeaderCellDef> Subscribed </mat-header-cell>
+                <mat-header-cell *matHeaderCellDef> Status </mat-header-cell>
                 <mat-cell *matCellDef="let user">
-                  <!-- mat-menu-item -->
-                  <button
-                    class="status"
-                    (click)="toggleStatus(user)"
-                  >
-                    <mat-icon 
-                      style="font-size: 25px;"
-                      [style.color]="user.subscription ? 'green' : '#00386C'">
-                        {{ user.subscription ? 'toggle_on' : 'toggle_off' }}
-                    </mat-icon>
-                  </button>
+                  <!-- Add your status logic here -->
+                  <mat-icon style="color: green">toggle_on</mat-icon>
+                  <!-- <mat-icon style="color: green">toggle_off</mat-icon> -->
                 </mat-cell>
               </ng-container>
     
@@ -190,7 +166,7 @@
                   <button
                     mat-icon-button
                     [matMenuTriggerFor]="actionMenu"
-                    class="mat-button mat-horizontal-menu" 
+                    class="mat-button mat-horizontal-menu"Status 
                   >
                     <mat-icon style="color: #323259">
                       <img

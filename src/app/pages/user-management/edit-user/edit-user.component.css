@@ -495,15 +495,6 @@
     font-size: 12px;
     font-weight: 700;
   }
-
-  .status {
-    background: inherit;
-   }
-
-  .status:hover {
-    border-radius: 50%;
-    background-color: #f8f8f8;
-  }
   
   .emailreset {
     color: #00386c;

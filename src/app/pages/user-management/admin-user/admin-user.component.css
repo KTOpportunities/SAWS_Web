@@ -757,15 +757,6 @@
     margin-right: auto;
     margin-top: -40%;
   }
-
-  .status {
-    background: inherit;
-  }
-
-  .status:hover {
-    border-radius: 50%;
-    background-color: #f8f8f8;
-  }
   
   .navigation-right {
     grid-column-gap: 40px;

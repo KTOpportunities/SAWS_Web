@@ -646,16 +646,6 @@
   .search::placeholder {
     font-weight: 400;
   }
-
-  .status {
-    background: inherit;
-  }
-
-  .status:hover {
-    border-radius: 50%;
-    background-color: #f8f8f8;
-  }
-  
   
   .nav-menu {
     padding-left: 25px;

@@ -20,7 +20,7 @@
                 <div data-hover="false" data-delay="0" class="w-dropdown">
                   <div class="dropdown-toggle w-dropdown-toggle">
                     <div class="icon w-icon-dropdown-toggle"></div>
-                    <div class="text-block">Subscribed</div>
+                    <div class="text-block">Status</div>
                   </div>
                   <nav class="w-dropdown-list">
                     <a href="#" class="w-dropdown-link">Link 1</a>
@@ -149,21 +149,11 @@
   
             <!-- Status Column -->
             <ng-container matColumnDef="status">
-              <mat-header-cell *matHeaderCellDef> Subscribed </mat-header-cell>
+              <mat-header-cell *matHeaderCellDef> Status </mat-header-cell>
               <mat-cell *matCellDef="let user">
                 <!-- Add your status logic here -->
-                <!-- <mat-icon style="color: green">toggle_on</mat-icon> -->
+                <mat-icon style="color: green">toggle_on</mat-icon>
                 <!-- <mat-icon style="color: green">toggle_off</mat-icon> -->
-                <button
-                    class="status"
-                    (click)="toggleStatus(user)"
-                  >
-                    <mat-icon 
-                      style="font-size: 25px;"
-                      [style.color]="user.subscription ? 'green' : '#00386C'">
-                        {{ user.subscription ? 'toggle_on' : 'toggle_off' }}
-                    </mat-icon>
-                  </button>
               </mat-cell>
             </ng-container>
   
@@ -175,7 +165,7 @@
                 <button
                   mat-icon-button
                   [matMenuTriggerFor]="actionMenu"
-                  class="mat-button mat-horizontal-menu" 
+                  class="mat-button mat-horizontal-menu"Status 
                 >
                   <mat-icon style="color: #323259">
                     <img

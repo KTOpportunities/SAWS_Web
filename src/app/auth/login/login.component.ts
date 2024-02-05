@@ -90,6 +90,8 @@ export class loginComponent implements OnInit {
       this.authApi.login(this.loginform.value).subscribe(
         (data: any) => {
 
+          console.log("data", data)
+
           if(data.rolesList == 'Admin'){
 
             this.tokenStorage.saveToken(data.token);
