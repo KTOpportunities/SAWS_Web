@@ -11,6 +11,8 @@ import { TokeStorageService } from "src/app/services/token-storage.service";
 export class SideBarComponent {
 
 
+  isUserManagementActive = false; // Assuming you have a property to track the active state
+  isDropdownOpen = false;
 handleFeedbackLinkClick(event: Event): void {
   // Prevent the default behavior of the link
   event.preventDefault();
@@ -18,7 +20,7 @@ handleFeedbackLinkClick(event: Event): void {
 
 
   // Inject the Router in the constructor
-  isUserManagementActive: boolean = false;
+  
 
   constructor(
     private router: Router,
@@ -56,23 +58,25 @@ handleFeedbackLinkClick(event: Event): void {
   navigateToSubscriberUser() {
     this.router.navigate(["/admin/subscriberUser"]);
   }
-
-  onOptionSelected(event: Event) {
-    const selectedValue = (event.target as HTMLSelectElement).value;
-
-    switch (selectedValue) {
-      case "adminUser":
-        this.navigateToAdminUser();
-        break;
-      case "subscriberUser":
-        this.navigateToSubscriberUser();
-        break;
-      default:
-        // Handle default case if needed
-        break;
-    }
-
+  
+  toggleDropdown() {
+    console.log('Toggling dropdown');
+    this.isDropdownOpen = !this.isDropdownOpen;
     this.updateUserManagementActive();
+  }
+  
+
+  onOptionSelected(option: string) {
+    // Implement navigation logic based on the selected option
+    if (option === 'adminUser') {
+      // Navigate to the Subscriber User page
+      this.router.navigate(["/admin/adminUser"]);
+    } else if (option === 'subscriberUser') {
+      // Navigate to the Admin User page
+      this.router.navigate(["/admin/subscriberUser"]);
+    }
+    // Close the dropdown if needed
+    this.isDropdownOpen = false;
   }
   
   logout() {
