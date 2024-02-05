@@ -152,7 +152,7 @@
   type="image/x-icon"
 />
 <link href="assets/images/webclip.png" rel="apple-touch-icon" />
-<section class="section-3">
+<section class="section-3" >
   <div class="container">
     <div data-w-id="717ec873-5bdf-1582-6da6-888fecad4a32" class="nav">
       <div class="nav-top">
@@ -182,87 +182,36 @@
             <div class="nav-link_text">Dashboard</div>
           </a>
 
-          <!-- [routerLink]="['/admin/adminUser', '/admin/subscriberUser']" routerLinkActive="activebutton" -->
-          <div 
-          [ngClass]="{'activebutton': isUserManagementActive}"
-          data-hover="false" data-delay="0" class="w-dropdown">
-            <div
-              class="dropdown-toggle-2 w-dropdown-toggle"
-            >
-            <!-- User Management -->
-              <!-- <div class="icon-3 w-icon-dropdown-toggle"></div> -->
+      
+
+
+          <div data-hover="true" data-delay="0" class="w-dropdown" [ngClass]="{'activebutton': isUserManagementActive}">
+            <div class="nav-link w-dropdown-toggle" (click)="toggleDropdown()">
               <div class="icon w-icon-dropdown-toggle" ></div>
-              <div class="html-embed w-embed">
+              <div class="embed-icon w-embed">
                 <svg xmlns="http://www.w3.org/2000/svg" width="30.772" height="21.541" viewBox="0 0 30.772 21.541">
                   <path id="Icon_awesome-users" data-name="Icon awesome-users" d="M4.616,11.482A3.077,3.077,0,1,0,1.539,8.4,3.08,3.08,0,0,0,4.616,11.482Zm21.541,0A3.077,3.077,0,1,0,23.079,8.4,3.08,3.08,0,0,0,26.156,11.482Zm1.539,1.539H24.618a3.068,3.068,0,0,0-2.168.894,7.033,7.033,0,0,1,3.611,5.26h3.173a1.537,1.537,0,0,0,1.539-1.539V16.1A3.08,3.08,0,0,0,27.695,13.02Zm-12.309,0A5.385,5.385,0,1,0,10,7.635,5.382,5.382,0,0,0,15.386,13.02Zm3.693,1.539h-.4a7.435,7.435,0,0,1-6.587,0h-.4A5.54,5.54,0,0,0,6.154,20.1v1.385a2.309,2.309,0,0,0,2.308,2.308H22.31a2.309,2.309,0,0,0,2.308-2.308V20.1A5.54,5.54,0,0,0,19.079,14.559ZM8.323,13.915a3.068,3.068,0,0,0-2.168-.894H3.077A3.08,3.08,0,0,0,0,16.1v1.539a1.537,1.537,0,0,0,1.539,1.539H4.707A7.051,7.051,0,0,1,8.323,13.915Z" transform="translate(0 -2.25)" fill="#fff"/>
                 </svg>
               </div>
-              <!-- <div class="nav-link_text">User Management</div> -->
-              <!-- <select>
-                <option>
-                  <div disabled selected class="nav-link_text">
-                    User Management
-                  </div>
-                </option>
-                <option
-                  (click)="navigateToAdminUser()"
-                  class="dropdown-link w-dropdown-link"
-                >
-                  Admin user
-                </option>
-                <option
-                  (click)="navigateToSubscriberUser()"
-                  class="dropdown-link-2 w-dropdown-link"
-                >
-                  Subscribe User
-                </option>
-              </select> -->
-
-              <!-- <label for="selectOption">Select an Option:</label> -->
-
-              <select
-              (change)="onOptionSelected($event)"
-                >
-                <option 
-                  selected 
-                  class="nav-link_text"
-                  hidden
-                >
-                  User Management
-                  <div class="icon w-icon-dropdown-toggle"></div>
-                </option>
-                <option
-                  value="adminUser"
-                  class="dropdown-link-2 w-dropdown-link"                
-                >
-                  Admin user
-                </option>
-                <option
-                  value="subscriberUser"
-                  class="dropdown-link-2 w-dropdown-link"
-                 
-                >
-                  Subscriber User
-                </option>
-              </select>
-
+              <div class="nav-link_text">User Management</div>
             </div>
-
-            <!-- <select class="dropdown-list w-dropdown-list">
-              <option href="#" class="dropdown-link w-dropdown-link">
-                Admin user
-              </option>
-              <option href="#" class="dropdown-link-2 w-dropdown-link">
-                Subscribe User
-              </option>
-            </select> -->
+            
+            <nav class=""  *ngIf="isDropdownOpen" 
+            style="background-color: #8295c2;
+            border-radius: 10px;
+            position: relative;
+            bottom: 18px;">
+              <div class="dropdown-link-3 w-dropdown-link" (click)="onOptionSelected('adminUser')" style="color: white;">Subscriber User</div>
+              <div class="dropdown-link-4 w-dropdown-link" (click)="onOptionSelected('subscriberUser')" style="color: white;">Admin User</div>
+            </nav>
           </div>
+         
           
-          <a href="#" class="nav-link w-inline-block" (click)="handleFeedbackLinkClick($event)">
+          <a href="#" class="nav-link w-inline-block" (click)="handleFeedbackLinkClick($event)" style="position: fixed;">
             <div class="embed-icon w-embed">
-              <svg xmlns="http://www.w3.org/2000/svg" width="23.809" height="23.589" viewBox="0 0 27.809 28.589">
+               <svg xmlns="http://www.w3.org/2000/svg" width="23.809" height="23.589" viewBox="0 0 27.809 28.589">
                 <path id="Icon_material-settings" data-name="Icon material-settings" d="M27.935,18.7a11.14,11.14,0,0,0,.1-1.4,11.14,11.14,0,0,0-.1-1.4l3.016-2.359a.721.721,0,0,0,.172-.915L28.264,7.674a.718.718,0,0,0-.872-.314L23.832,8.789a10.444,10.444,0,0,0-2.416-1.4L20.873,3.6a.7.7,0,0,0-.7-.6H14.455a.7.7,0,0,0-.7.6l-.543,3.788a10.982,10.982,0,0,0-2.416,1.4L7.236,7.36a.7.7,0,0,0-.872.314L3.505,12.62a.7.7,0,0,0,.172.915l3.016,2.359a11.337,11.337,0,0,0-.1,1.4,11.337,11.337,0,0,0,.1,1.4L3.677,21.054a.721.721,0,0,0-.172.915l2.859,4.946a.718.718,0,0,0,.872.314L10.8,25.8a10.444,10.444,0,0,0,2.416,1.4l.543,3.788a.7.7,0,0,0,.7.6h5.718a.7.7,0,0,0,.7-.6l.543-3.788a10.983,10.983,0,0,0,2.416-1.4l3.559,1.429a.7.7,0,0,0,.872-.314l2.859-4.946a.721.721,0,0,0-.172-.915L27.935,18.7ZM17.314,22.3a5,5,0,1,1,5-5A5.009,5.009,0,0,1,17.314,22.3Z" transform="translate(-3.406 -3)" fill="#fff"/>
-              </svg>              
+               </svg>              
             </div>
             <div class="nav-link_text">Feedback / Response</div>
           </a>
