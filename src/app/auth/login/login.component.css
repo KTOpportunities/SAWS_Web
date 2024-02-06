@@ -151,7 +151,8 @@
     width: 50%;
     background-color: #f3f4f8;
     background-image: url('../../../assets/img/Mask-Group-15.png');
-    background-position: 50%;
+    /* background-position: 50%; */
+    background-position: 100%;
     background-size: cover;
     border-top-left-radius: 10px;
     border-bottom-left-radius: 10px;
@@ -348,6 +349,7 @@
     font-family: Montserrat, sans-serif;
     font-size: 13px;
     font-weight: 500;
+    margin-left: 10px;
   }
   
   .remember {
@@ -368,7 +370,8 @@
   }
   
   .forgot-password {
-    color: #0256f7;
+    /* color: #0256f7; */
+    color: #00386c;
     border-bottom: 1px solid rgba(127, 86, 218, 0);
     justify-content: center;
     margin-top: 0;
@@ -376,12 +379,15 @@
     padding-left: 0;
     font-family: Montserrat, sans-serif;
     font-weight: 500;
-    text-decoration: underline;
+    font-size: 14px;
+    text-decoration: none;
     display: flex;
+    cursor: pointer;
   }
   
   .forgot-password:hover {
-    border-bottom-color: #177fff;
+    /* border-bottom-color: #177fff; */
+    border-bottom-color: #00386c;
   }
   
   .loginbutton {
@@ -1490,9 +1496,9 @@
     .section-2 {
       width: auto;
       max-width: none;
-      /* background-image: url('../images/Mask-Group-15.png'); */
+      /* background-image: url('../../../assets/images/Mask-Group-15.png'); */
       background-position: 0 0;
-      background-size: auto;
+      /* background-size: auto; */
       justify-content: center;
       display: flex;
     }
@@ -1946,12 +1952,14 @@
     }
   
     .field-input, .user_input, .password_field {
-      width: 282px;
+      /* width: 282px; */
+      width: 268px;
       height: 30px;
     }
   
     .remember_me {
       font-size: 12px;
+      /* margin-left: 10px; */
     }
   
     .remember {
@@ -1981,7 +1989,7 @@
   
     .left-login {
       background-color: #fffefe;
-      padding: 40px 20px;
+      padding: 40px 70px;
     }
   
     .reset_p {
