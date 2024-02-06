@@ -13,6 +13,7 @@ export class SideBarComponent {
 
   isUserManagementActive = false; // Assuming you have a property to track the active state
   isDropdownOpen = false;
+  selectedUserType: string | undefined;
 handleFeedbackLinkClick(event: Event): void {
   // Prevent the default behavior of the link
   event.preventDefault();
@@ -66,12 +67,17 @@ handleFeedbackLinkClick(event: Event): void {
   }
   
 
-  onOptionSelected(option: string) {
+  onOptionSelected(userType: string) {
+    
+
+
+    this.selectedUserType = userType; // Set the selected user type
+
     // Implement navigation logic based on the selected option
-    if (option === 'adminUser') {
+    if (userType === 'adminUser') {
       // Navigate to the Subscriber User page
       this.router.navigate(["/admin/adminUser"]);
-    } else if (option === 'subscriberUser') {
+    } else if (userType === 'subscriberUser') {
       // Navigate to the Admin User page
       this.router.navigate(["/admin/subscriberUser"]);
     }
