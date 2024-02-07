@@ -1936,7 +1936,9 @@
   
     .left {
       background-color: #fffefe;
-      padding: 40px 20px;
+      /* padding: 40px 20px; */
+      padding-left: 120px;
+      padding-right: 120px;
     }
   
     .button-2 {
@@ -2009,6 +2011,7 @@
     .left-login {
       background-color: #fffefe;
       padding: 40px 20px;
+      
     }
   
     .reset_p {
