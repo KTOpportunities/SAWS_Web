@@ -309,12 +309,12 @@ button,
   margin: 0 0 15px;
 }
 .w-form-done {
-  display: none;
-  padding: 20px;
+  /* display: none; */
+  /* padding: 20px; */
   text-align: center;
-  position: relative;
-  top: -32px;
-  margin-left: -37px !important;
+  /* position: relative; */
+  /* top: -32px; */
+  /* margin-left: -37px !important; */
   /* background-color: #dddddd; */
   color: red;
 }

@@ -69,7 +69,7 @@ export class NavBarComponent implements OnInit {
     // Check the current route
     const currentRoute = this.router.url;    
 
-    if (currentRoute === '/admin/dashboard') {
+    if (currentRoute !== '/admin/subscriberUser' && currentRoute !== '/admin/adminUser' ) {
       return false;
     } else {
       return true;

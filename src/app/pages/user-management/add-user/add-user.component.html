@@ -306,6 +306,16 @@
                   >
                     Username is required
                   </div>
+                  <div
+                    class="errormessage"
+                    *ngIf="
+                      submitted &&
+                      userForm.get(['Username'])?.hasError('invalidUsername')
+                    "
+                    class="error-message"
+                  >
+                    Username should not contain spaces. You can use underscores (_) or hyphens (-) for word separation
+                  </div>
                 </div>
                 <div
                   id="w-node-_4cd953d6-568c-454e-fa45-d438d47d0757-ac205186"
@@ -412,12 +422,6 @@
                 </button>
               </div>
             </form>
-            <div class="w-form-done">
-              <div>Thank you! Your submission has been received!</div>
-            </div>
-            <div class="w-form-fail">
-              <div>Oops! Something went wrong while submitting the form.</div>
-            </div>
           </div>
         </div>
       </div>

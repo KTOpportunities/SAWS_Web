@@ -37,7 +37,7 @@ export class AddUserComponent implements OnInit {
   ) {
     this.userForm = this.formBuilder.group({
       Fullname: ["", Validators.required],
-      Username: ["", Validators.required],
+      Username: ["", [Validators.required, this.usernameValidator]],
       Email: ["", [Validators.required, Validators.email]],
       Password: ["", [Validators.required, this.passwordValidator]],
       UserRole: ["", Validators.required],
@@ -85,6 +85,16 @@ export class AddUserComponent implements OnInit {
     const containsNumber = /\d/.test(value);
 
     return containsLetter && containsNumber ? null : { invalidPassword: true };
+  }
+
+  usernameValidator(control: AbstractControl) {
+    const username = control.value;
+    // Check for spaces in the username
+    const isInvalid = /\s/.test(username);
+    // Check if the username contains only letters, numbers, underscores, or hyphens 
+    const isValid = !isInvalid && /^[a-zA-Z0-9_-]+$/.test(username);
+  
+    return isValid ? null : { 'invalidUsername': { value: username } };
   }
 
   onSubmit() {

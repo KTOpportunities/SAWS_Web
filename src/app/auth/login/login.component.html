@@ -39,7 +39,7 @@
                                 <div class="errormessage"
                                     *ngIf="submitted && loginform.get('Username')?.hasError('required')"
                                     class="error-message" style="color: red;
-                                    margin-top: -13px;
+                                    margin: -10px 0 20px 0;
                                     width: 100%;
                                     display: flex;">
                                     Username is required
@@ -67,7 +67,7 @@
                                 <div class="errormessage"
                                 *ngIf="submitted && loginform.get('Password')?.hasError('required')"
                                 class="error-message" style="color: red;position: relative;
-                                 width: 100%;top: -13px;">
+                                 width: 100%;margin: -10px 0 20px 0;">
                                 Password is required
                             </div>
                             <div class="form-flex">
@@ -90,11 +90,12 @@
                         <a (click)="login()"
                             class="loginbutton w-button">Login</a>
                         <!-- <h5 class="heading-2">Need an account? Create account</h5> -->
+
+                        <span class="w-form-done" *ngIf="this.errMessage != ''" style="margin: 8px 0 0 0; max-height: 5px;">
+                        {{this.errMessage}}
+                        </span>
                     </form>
-                    <div class="w-form-done" *ngIf="this.errMessage != ''"
-                        id="message" style="margin-top: 5%;">
-                        <div>{{this.errMessage}}</div>
-                    </div>
+                    
                     <!-- <div class="w-form-fail">
                         <div>Oops! Something went wrong while submitting the
                             form.</div>
@@ -105,8 +106,14 @@
     </div>
 </section>
 
-<ngx-spinner bdColor="rgba(51,51,51,0.8)"
+<ngx-spinner 
+    bdColor="rgba(51,51,51,0.8)"
     size="medium"
     color="#fff"
-    type="ball-scale-multiple" type="ball-scale-multiple"><p
-        style="font-size: 20px; color: white">Loading...<p></ngx-spinner>
+    type="ball-scale-multiple" 
+    type="ball-scale-multiple">
+    <p
+    style="font-size: 20px; color: white"
+    >Loading...
+    <p>
+</ngx-spinner>

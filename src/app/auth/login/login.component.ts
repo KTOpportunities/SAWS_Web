@@ -90,8 +90,6 @@ export class loginComponent implements OnInit {
       this.authApi.login(this.loginform.value).subscribe(
         (data: any) => {
 
-          console.log("data", data)
-
           if(data.rolesList == 'Admin'){
 
             this.tokenStorage.saveToken(data.token);
@@ -127,7 +125,7 @@ export class loginComponent implements OnInit {
     } else {
       this.errMessage = "Please enter your password and username";
       setTimeout(() => {
-        this.errMessage = "";
+        // this.errMessage = "";
       }, 3000);
     }
   }
