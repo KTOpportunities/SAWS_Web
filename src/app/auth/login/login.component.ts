@@ -125,7 +125,7 @@ export class loginComponent implements OnInit {
     } else {
       this.errMessage = "Please enter your password and username";
       setTimeout(() => {
-        // this.errMessage = "";
+        this.errMessage = "";
       }, 3000);
     }
   }
