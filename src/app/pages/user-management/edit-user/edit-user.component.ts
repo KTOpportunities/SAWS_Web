@@ -71,41 +71,47 @@ export class EditUserComponent {
 
   onSubmit() {
     this.submitted = true;
-
-    var body = {
-      userprofileid: this.userForm.controls["userprofileid"].value,
-      Fullname: this.userForm.controls["Fullname"].value,
-      Email: this.userForm.controls["Email"].value,
-      UserRole: this.userForm.controls["UserRole"].value,
-      created_at: this.userForm.controls["created_at"].value,
-      UserSubscriptionStatus: this.userForm.controls["UserSubscriptionStatus"].value,
-    };
-    console.log("BODY:", body);
-    if (!this.userForm.invalid) {
-      return;
-    } else {
-      this.api.InsertUpdateUserProfile(body).subscribe((data: any) => {
-        console.log("SAVED:", data);
-        this.showSuccessAlert();
-        this.apiData.removeUser();
-        
-      }, 
-      (err) => console.log("error", err)
+  
+    // Extract form values
+    const formValues = this.userForm.value;
+  
+    // Check if the form is valid
+    if (this.userForm.valid) {
+      // If the form is valid, prepare the data for the API call
+      const body = {
+        userprofileid: formValues.userprofileid,
+        Fullname: formValues.Fullname,
+        Email: formValues.Email,
+        UserRole: formValues.UserRole,
+        created_at: formValues.created_at,
+        UserSubscriptionStatus: formValues.UserSubscriptionStatus,
+      };
+  
+      // Call the API to update the user profile
+      this.api.InsertUpdateUserProfile(body).subscribe(
+        (data: any) => {
+          // If the update is successful, show success message and navigate to appropriate route
+          console.log("SAVED:", data);
+          this.showSuccessAlert();
+          this.apiData.removeUser();
+          if (this.userRole == 'Admin') {
+            this.router.navigate(['/admin/adminUser']);
+          } else {
+            this.router.navigate(['/admin/subscriberUser']);
+          }
+        },
+        (err) => {
+          // If there's an error, show an error message
+          console.log("Error:", err);
+          this.showUnsuccessfulAlert();
+        }
       );
+    } else {
+      // If the form is invalid, mark all fields as touched to trigger validation messages
+      this.userForm.markAllAsTouched();
     }
-   
-    setTimeout(() => {
-
-      if(this.userRole == 'Admin') {
-        this.router.navigate(['/admin/adminUser']);
-      } else {
-        this.router.navigate(['/admin/subscriberUser']);
-      }
-    }, 2000);
-
-    this.apiData.removeUser();
-
   }
+  
 
   toggleSubscriptionStatus() {
     const currentValue = this.userForm.controls["UserSubscriptionStatus"].value;
