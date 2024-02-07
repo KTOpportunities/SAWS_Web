@@ -55,11 +55,6 @@
                     {{ selectedDateString ? selectedDateString : "Date" }}
                   </div>
                   </div>
-                  <nav class="w-dropdown-list">
-                    <a href="#" class="w-dropdown-link">Link 1</a>
-                    <a href="#" class="w-dropdown-link">Link 2</a>
-                    <a href="#" class="w-dropdown-link">Link 3</a>
-                  </nav>
                 </div>
                 <div>
                   <input
@@ -174,7 +169,7 @@
     
               <!-- Status Column -->
               <ng-container matColumnDef="status">
-                <mat-header-cell *matHeaderCellDef> Subscribed </mat-header-cell>
+                <mat-header-cell *matHeaderCellDef> Status </mat-header-cell>
                 <mat-cell *matCellDef="let user">
                   <!-- mat-menu-item -->
                   <button

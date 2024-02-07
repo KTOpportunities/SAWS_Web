@@ -48,6 +48,9 @@
   html,
   body {
     height: 100%;
+
+    margin: 0 !important;
+    padding: 0 !important;
   }
   body {
     margin: 0;
@@ -233,7 +236,7 @@
     font: 400 calc(14px * 0.83) / 20px Roboto, "Helvetica Neue", sans-serif;
     font-size: calc(11.62px);
     margin: 0 0 0 0 !important;
-    padding: 2.5%;
+    /* padding: 2.5%; */
   }
   #proccessPersonalInfo,
   #TermsModal {

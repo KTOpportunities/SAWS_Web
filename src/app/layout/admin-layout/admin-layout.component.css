@@ -8,11 +8,11 @@
    }
    
    
-   .dash-content{
-     background-color: white;
-     border-radius: 7px;
+   .dash-content {
+     /* background-color: white; */
+     /* border-radius: 7px; */
      /* height: 200px; */
-     padding: 30px;
+     /* padding: 30px; */
    }
    .al {
      display: block ruby ;
