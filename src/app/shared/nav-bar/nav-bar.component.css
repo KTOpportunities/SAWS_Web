@@ -1305,7 +1305,7 @@
   }
   
   @media screen and (min-width: 1280px) {
-    .checkbox-2 {
+    /* .checkbox-2 {
       margin-right: 10px;
     }
   
@@ -1363,11 +1363,11 @@
       border-radius: 0;
       padding-top: 10px;
       padding-bottom: 10px;
-    }
+    } */
   }
   
   @media screen and (min-width: 1440px) {
-    .left {
+    /* .left {
       justify-content: center;
     }
   
@@ -1402,11 +1402,11 @@
   
     .add-label {
       font-size: 18px;
-    }
+    } */
   }
   
   @media screen and (min-width: 1920px) {
-    .heading {
+    /* .heading {
       font-size: 30px;
     }
   
@@ -1464,7 +1464,7 @@
   
     .resetemail-copy, .reset-new-password {
       font-size: 16px;
-    }
+    } */
   }
   
   @media screen and (max-width: 991px) {
@@ -1479,7 +1479,6 @@
     .section-2 {
       width: auto;
       max-width: none;
-      /* background-image: url('../images/Mask-Group-15.png'); */
       background-position: 0 0;
       background-size: auto;
       justify-content: center;
@@ -1625,6 +1624,7 @@
       padding-top: 16px;
       padding-bottom: 16px;
       top: 70px;
+      margin-left: 10px;
     }
   
     .logo-link {
@@ -1748,7 +1748,7 @@
   }
   
   @media screen and (max-width: 767px) {
-    .image-8 {
+    /* .image-8 {
       margin-top: 10px;
     }
   
@@ -1760,7 +1760,6 @@
       width: auto;
       max-height: none;
       max-width: none;
-      /* background-image: url('../images/Mask-Group-15.png'); */
       background-position: 50%;
       background-size: cover;
     }
@@ -1788,7 +1787,6 @@
     }
   
     .left-wrap {
-      /* background-image: url('../images/Group-4469.png'); */
       background-position: 82%;
       background-size: cover;
     }
@@ -1874,7 +1872,7 @@
     .section-4 {
       margin-left: 10px;
       margin-right: 10px;
-    }
+    } */
   }
   
   @media screen and (max-width: 479px) {
@@ -1884,7 +1882,8 @@
   
     .section-2 {
       height: 100vh;
-      max-height: 598.021vh;
+      /* max-height: 598.021vh; */
+      max-height: 100vw;
     }
   
     .chekbox-text {
