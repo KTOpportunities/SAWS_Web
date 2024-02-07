@@ -71,6 +71,14 @@
             
                 <mat-datepicker #picker class="filterDate"></mat-datepicker>
                 </div>
+
+                <div
+                  *ngIf="isFilterActive()"
+                  (click)="clearFilter()"
+                  class="dropdown-toggle-3 w-dropdown-toggle text-block"
+                  >
+                  clear filters
+                </div>
               </div>
               <a 
                 (click)="addUser()"

@@ -39,6 +39,13 @@ export class SubscriberUserComponent implements OnInit {
   @ViewChild(MatSort, { static: true }) sort!: MatSort;
 
   dataSource = new MatTableDataSource<Subscriber>();
+
+  subscriptions: any[] = [
+    { id: 1, subscription: true },
+    { id: 2, subscription: false }
+  ];
+
+  selectedSubscription: number | undefined;
   subsciberList: Subscriber[] = [];
 
   pageSize = 5;
@@ -49,6 +56,7 @@ export class SubscriberUserComponent implements OnInit {
   TotalRecords: any = 0;
 
   selectedDateString: any;
+  selectedSubscriptionName: any = '';
   date: Date;
 
 
@@ -119,23 +127,59 @@ export class SubscriberUserComponent implements OnInit {
     });
  }
 
+ selectSubscription(status: any) {
+  this.selectedSubscription = status;
+  this.filterSubscription();
+}
+
  filterData() {
   this.apiData.filterObservable$.subscribe((filter: string) => {
     this.dataSource.filter = filter.trim().toLowerCase();
   });
  }
 
-    pageChanged(event: PageEvent) {
-      this.pageSize = event.pageSize;
-      this.currentPage = event.pageIndex;
+ filterSubscription() {
+  this.selectedSubscriptionName = '';
+  this.selectedDateString = '';
+
+  this.dataSource.filterPredicate = (data, filter: string) =>
+    !filter || data.subscription.toString().includes(filter);
+
+  this.dataSource.filter = this.selectedSubscription!.toString().trim();
+
+  // Update the button text based on the selected subscription status
+  const selectedSubscription = this.subscriptions.find(
+    (subscription) => subscription.subscription === this.selectedSubscription
+  );
+
+  if (selectedSubscription) {
+    this.selectedSubscriptionName = selectedSubscription.subscription;
+  }
+
+  console.log("selectedSubscription", selectedSubscription)
+}
+
+clearFilter() {
+  this.dataSource.filter = '';
+  this.selectedSubscriptionName = '';
+  this.selectedDateString = '';
+}
+
+isFilterActive(): boolean {
+  return this.dataSource.filter.trim() !== '';
+}
+
+pageChanged(event: PageEvent) {
+  this.pageSize = event.pageSize;
+  this.currentPage = event.pageIndex;
   
-      this.getAllSubscribers();
+  this.getAllSubscribers();
   
-      if (this.dataSource) {
+  if (this.dataSource) {
         this.dataSource.filterPredicate = (data: any, filter: string) =>
           data.name.indexOf(filter) || data.Status.indexOf(filter) != -1;
-      }
-    }
+  }
+}
 
     selectDate(type: string, event: MatDatepickerInputEvent<Date>) {
       this.date = event.value!;

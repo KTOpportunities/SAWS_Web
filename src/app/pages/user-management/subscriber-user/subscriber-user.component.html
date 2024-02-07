@@ -11,22 +11,38 @@
                     <div class="icon w-icon-dropdown-toggle"></div>
                     <div class="text-block">Name</div>
                   </div> -->
-                  <nav class="w-dropdown-list">
+                  <!-- <nav class="w-dropdown-list">
                     <a href="#" class="w-dropdown-link">Link 1</a>
                     <a href="#" class="w-dropdown-link">Link 2</a>
                     <a href="#" class="w-dropdown-link">Link 3</a>
-                  </nav>
+                  </nav> -->
                 </div>
-                <div data-hover="false" data-delay="0" class="w-dropdown">
-                  <div class="dropdown-toggle w-dropdown-toggle">
-                    <div class="icon w-icon-dropdown-toggle"></div>
-                    <div class="text-block">Subscribed</div>
-                  </div>
-                  <nav class="w-dropdown-list">
-                    <a href="#" class="w-dropdown-link">Link 1</a>
-                    <a href="#" class="w-dropdown-link">Link 2</a>
-                    <a href="#" class="w-dropdown-link">Link 3</a>
-                  </nav>
+                <div 
+                data-hover="false" 
+                data-delay="0" 
+                class="w-dropdown">
+                  <div
+                    mat-button
+                    [matMenuTriggerFor]="subscribedMenu"
+                    class="dropdown-toggle w-dropdown-toggle"
+                    >
+                      <div class="icon w-icon-dropdown-toggle"></div>
+                      <div class="text-block">
+                        {{ selectedSubscriptionName !== '' ?  "Subscribed: " + selectedSubscriptionName : "Subscribed" }}
+                      </div>
+                    </div>
+                    <mat-menu
+                      #subscribedMenu="matMenu">
+                        <button
+                          mat-menu-item
+                          *ngFor="let subscription of subscriptions"
+                          (click)="selectSubscription(subscription.subscription)"
+                        >
+                          <span class="w-dropdown-link">
+                            {{ subscription.subscription }}
+                          </span>
+                        </button>
+                    </mat-menu>
                 </div>
                 <div
                   (click)="openPicker()"
@@ -53,6 +69,14 @@
                 />
             
                 <mat-datepicker #picker class="filterDate"></mat-datepicker>
+                </div>
+
+                <div
+                  *ngIf="isFilterActive()"
+                  (click)="clearFilter()"
+                  class="dropdown-toggle-3 w-dropdown-toggle text-block-2"
+                  >
+                  clear filters
                 </div>
               </div>
               <a 
