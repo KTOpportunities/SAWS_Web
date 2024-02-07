@@ -35,15 +35,15 @@
                                         required
                                     >
 
-                                </div>
-                                <div class="errormessage"
+                                <span class="errormessage"
                                     *ngIf="submitted && loginform.get('Username')?.hasError('required')"
                                     class="error-message" style="color: red;
-                                    margin: -10px 0 20px 0;
+                                    
                                     width: 100%;
                                     display: flex;">
                                     Username is required
-                                </div>
+                                </span>
+                            </div>
                             <div class="field-wrapper">
                                 <label for="Password"
                                     class="label_f_password">Password</label>
@@ -63,12 +63,12 @@
                                         />
                                         <span class="password-toggle" (click)="togglePasswordVisibility()">👁️</span>
                                     </div>
-                                </div>
-                                <div class="errormessage"
-                                *ngIf="submitted && loginform.get('Password')?.hasError('required')"
-                                class="error-message" style="color: red;position: relative;
-                                 width: 100%;margin: -10px 0 20px 0;">
-                                Password is required
+                                    <span class="errormessage"
+                                        *ngIf="submitted && loginform.get('Password')?.hasError('required')"
+                                        class="error-message" style="color: red;position: relative;
+                                    width: 100%;">
+                                    Password is required
+                                </span>
                             </div>
                             <div class="form-flex">
                                 <label class="w-checkbox checkbox-wrap" (click)="toggleCheckbox()">

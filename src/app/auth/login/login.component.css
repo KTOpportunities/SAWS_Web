@@ -108,6 +108,7 @@
     flex-direction: column;
     align-items: center;
     display: flex;
+    margin-bottom: 35px;
   }
   
   .chekbox-text {
@@ -1989,7 +1990,9 @@
   
     .left-login {
       background-color: #fffefe;
-      padding: 40px 70px;
+      /* padding: 40px 70px; */
+      padding-left: 100px;
+      padding-right: 100px;
     }
   
     .reset_p {
