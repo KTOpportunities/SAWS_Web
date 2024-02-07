@@ -1415,6 +1415,10 @@
       flex-direction: row;
       align-items: flex-start;
     }
+
+    #adminsTable {
+      max-height: 40vh;
+    }
   }
   
   #w-node-_6893efaf-f5d2-e004-7217-6e934a6c6167-ac205186, #w-node-_459b960d-ce15-c6e4-2d77-8c8da4e753be-ac205186, #w-node-_02ef87fc-7f4c-21df-4208-311cd379fcaf-ac205186, #w-node-ab03b8d4-e0ed-31b3-68a0-eda284d58ae2-ac205186, #w-node-_4cd953d6-568c-454e-fa45-d438d47d0757-ac205186, #w-node-_699a36c7-0b04-cd39-a219-a4022b828597-ac205186, #w-node-dd4f0d99-f1e9-678e-8353-dee0b9049da9-ac205186 {
