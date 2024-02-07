@@ -11,6 +11,7 @@ import { TokeStorageService } from "src/app/services/token-storage.service";
 export class SideBarComponent {
 
 
+  
   isUserManagementActive = false; // Assuming you have a property to track the active state
   isDropdownOpen = false;
   selectedOption: string | null = null; 
@@ -74,10 +75,10 @@ handleFeedbackLinkClick(event: Event): void {
     this.selectedOption = option;// Set the selected user type
 
     // Implement navigation logic based on the selected option
-    if (option === 'adminUser') {
+    if (option === 'Admin User') {
       // Navigate to the Subscriber User page
       this.router.navigate(["/admin/adminUser"]);
-    } else if (option === 'subscriberUser') {
+    } else if (option === 'Subscriber User') {
       // Navigate to the Admin User page
       this.router.navigate(["/admin/subscriberUser"]);
     }
@@ -93,4 +94,7 @@ handleFeedbackLinkClick(event: Event): void {
     sessionStorage.removeItem('currentPage');
     sessionStorage.removeItem('pageSize');
   }
+  hideDropdown() {
+   this.isDropdownOpen = false;
+    }
 }
