@@ -212,6 +212,16 @@ export class AdminUserComponent implements OnInit {
     }
   }
 
+  clearFilter() {
+    this.dataSource.filter = '';
+    this.selectedSubscriptionName = '';
+    this.selectedDateString = '';
+  }
+
+  isFilterActive(): boolean {
+    return this.dataSource.filter.trim() !== '';
+  }
+
   // Add your toggle/edit/delete methods here
   toggleUser(user: any) {
     // Implement toggle logic
