@@ -740,11 +740,14 @@
   }
   
   .section-3 {
-    width: 100%;
+    /* width: 100%;
     max-width: 80%;
     margin-left: 320px;
     margin-right: auto;
+    margin-top: -40%; */
+
     margin-top: -40%;
+    padding-left: 340px;
   }
   
   .navigation-right {
@@ -1755,6 +1758,11 @@
   
     .div-block-406._2 {
       justify-content: flex-start;
+    }
+
+    .section-3 {
+      padding: 0;
+      margin-top: 0%;
     }
   }
   

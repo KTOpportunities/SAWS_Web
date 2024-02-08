@@ -765,12 +765,12 @@
     /* width: 50vw; */
     /* max-width: 80%; */
     /* margin-left: 320px; */
-
     /* margin-right: auto; */
-    margin-top: -40%;
     /* margin-left: 320px; */
-    padding-left: 340px;
     /* margin-top: -700px; */
+    
+    margin-top: -40%;
+    padding-left: 340px;
 
   }
 
