@@ -567,7 +567,7 @@
     background-image: linear-gradient(#00386c, #00386c 75%, #000);
     flex-direction: column;
     justify-content: space-between;
-    display: flex;
+    display: none;
     position: -webkit-sticky;
     position: sticky;
     top: 0;
@@ -1582,15 +1582,12 @@
       z-index: 99999;
       min-height: auto;
       border-right: 1px solid #d7cfbd;
-      display: none;
+      display: flex;
       position: fixed;
       bottom: 0;
     }
   
-    .hamburger {
-      color: #fff;
-    }
-  
+    
     .mobile-nav {
       z-index: 9999;
       height: 70px;
@@ -1616,7 +1613,7 @@
       height: 40px;
       min-width: auto;
     }
-  
+    
     .navigation {
       height: 80px;
       border-bottom: 1px solid #d9d9d9;
@@ -1630,7 +1627,7 @@
     .logo-link {
       margin-top: 25px;
     }
-  
+    
     .container {
       flex-direction: column;
       align-items: stretch;
@@ -1646,12 +1643,16 @@
       font-weight: 600;
       display: flex;
     }
-  
+    
     .nav-separator {
       margin-top: 20px;
       margin-bottom: 30px;
     }
-  
+    
+    /* .hamburger {
+      color: #fff;
+    }
+
     .hamburger-line {
       width: 40px;
       height: 3px;
@@ -1659,7 +1660,7 @@
       padding-bottom: 0;
       padding-right: 0;
     }
-  
+    
     .hamburger-line.bot {
       background-color: #fff;
     }
@@ -1672,6 +1673,47 @@
   
     .hamburger-line.top {
       background-color: #fff;
+    } */
+
+    .hamburger {
+        width: 40px;
+        height: 20px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        cursor: pointer;
+        color: #fff; /* Retain the existing color style */
+    }
+    
+    .hamburger-line {
+        width: 40px;
+        height: 3px;
+        background-color: #292929;
+        transition: transform 0.3s, opacity 0.3s;
+    }
+    
+    .hamburger-line.bot {
+        background-color: #fff;
+    }
+    
+    .hamburger-line.middle {
+        background-color: #fff;
+    }
+    
+    .hamburger-line.top {
+        background-color: #fff;
+    }
+    
+    .hamburger.active .top {
+        transform: translateY(10px) rotate(45deg);
+    }
+    
+    .hamburger.active .middle {
+        opacity: 0;
+    }
+    
+    .hamburger.active .bot {
+        transform: translateY(-10px) rotate(-45deg);
     }
   
     .user-wrap.res-hide {
@@ -1994,9 +2036,10 @@
   
     .nav {
       width: auto;
-      min-width: 200px;
+      /* min-width: 200px; */
+      max-width: 250px;
       padding-right: 0;
-      display: none;
+      display: flex;
     }
   
     .user {
