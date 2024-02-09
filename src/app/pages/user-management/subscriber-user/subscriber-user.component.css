@@ -82,10 +82,11 @@ mat-header-row {
   max-width: 100%;
 }
 
-#adminsTable {
+#subscibersTable {
   overflow: auto;
   /* overflow-y: auto; */
   max-height: 50vh;
+  margin-top: 10px;
 }
 
 td {
@@ -1391,7 +1392,7 @@ td {
     margin-top: 0%;
   }
 
-  #adminsTable {
+  #subscibersTable {
     max-height: 40vh;
   }
 }

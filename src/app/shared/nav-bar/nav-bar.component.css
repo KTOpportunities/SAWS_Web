@@ -416,6 +416,16 @@
   .forgotpasswordimage {
     margin-top: 31px;
   }
+
+  .logout {
+    margin-top: 186px !important;
+    display: flex;
+    justify-content: center;
+    width: 150px;
+    position: relative;
+    top: -43px;
+    margin-left: 70px;
+  }
   
   .heading-copy {
     color: #00386c;
@@ -849,9 +859,9 @@
     display: flex;
     justify-content: center;
     flex-direction: column;
-    width: 150px;
+    width: 267px;
     margin-bottom: -100px;
-    margin-left: 60px; 
+    /* margin-left: 60px; */
   }
 
   .text-block {
@@ -2115,6 +2125,10 @@
 
     .nav-link {
       font-size: 12px;
+    }
+
+    .dropdown-item {
+      width: 231px;
     }
   }
   

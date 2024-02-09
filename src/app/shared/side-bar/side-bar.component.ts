@@ -86,6 +86,8 @@ export class SideBarComponent {
     this.apiData.removeUserUrl();
     sessionStorage.removeItem('currentPage');
     sessionStorage.removeItem('pageSize');
+
+    this.router.navigate(['/login']);
   }
   hideDropdown() {
    this.isDropdownOpen = false;

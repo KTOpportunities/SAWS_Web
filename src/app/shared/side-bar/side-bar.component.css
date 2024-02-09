@@ -644,6 +644,16 @@
     font-size: 12px;
     font-weight: 600;
   }
+
+  .logout {
+    margin-top: 120px !important;
+    display: flex;
+    justify-content: center;
+    width: 150px;
+    position: relative;
+    bottom: 50px;
+    margin-left: 70px;
+  }
   
   .nav-link {
     grid-column-gap: 14px;
@@ -839,9 +849,8 @@
     display: flex;
     justify-content: center;
     flex-direction: column;
-    width: 150px;
+    width: 287px;
     margin-bottom: -100px;
-    margin-left: 60px;
   }
   
   .text-block {
