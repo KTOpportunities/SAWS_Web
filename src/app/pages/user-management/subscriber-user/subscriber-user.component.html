@@ -175,10 +175,7 @@
             <ng-container matColumnDef="status">
               <mat-header-cell *matHeaderCellDef> Status </mat-header-cell>
               <mat-cell *matCellDef="let user">
-                <!-- Add your status logic here -->
-                <!-- <mat-icon style="color: green">toggle_on</mat-icon> -->
-                <!-- <mat-icon style="color: green">toggle_off</mat-icon> -->
-                <button
+               <!-- <button
                     class="status"
                     (click)="toggleStatus(user)"
                   >
@@ -187,7 +184,14 @@
                       [style.color]="user.subscription ? 'green' : '#00386C'">
                         {{ user.subscription ? 'toggle_on' : 'toggle_off' }}
                     </mat-icon>
-                  </button>
+                  </button> -->
+
+                  <mat-slide-toggle
+                    hideIcon="true"
+                    color="primary"
+                    [checked]="user.subscription" 
+                    (change)="toggleStatus(user)">
+                  </mat-slide-toggle>
               </mat-cell>
             </ng-container>
   

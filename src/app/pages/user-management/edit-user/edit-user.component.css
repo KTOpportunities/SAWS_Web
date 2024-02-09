@@ -1206,6 +1206,12 @@
     padding-left: 10px;
     padding-right: 10px;
   }
+
+  .status-div {
+    display: flex;
+    gap: 10px;
+    flex-direction: column;
+  }
   
   .add-label {
     color: #00386c;

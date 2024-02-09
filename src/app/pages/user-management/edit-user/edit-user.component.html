@@ -104,7 +104,7 @@
 
                 <div
                 id="w-node-_4cd953d6-568c-454e-fa45-d438d47d0757-ac205186"
-                class="add-user-admin-div"
+                class="add-user-admin-div status-div"
                 >
                   <label for="field-3" class="add-label">Status</label
                   >
@@ -120,7 +120,7 @@
                     <option value="false" >False</option>
                   </select> -->
 
-                  <button
+                  <!-- <button
                     class="status"
                     type="button"
                     (click)="toggleSubscriptionStatus()"
@@ -130,7 +130,14 @@
                         [style.color]="userForm.controls['UserSubscriptionStatus'].value ? 'green' : '#00386C'">
                           {{ userForm.controls['UserSubscriptionStatus'].value ? 'toggle_on' : 'toggle_off' }}
                       </mat-icon>
-                    </button>
+                    </button> -->
+
+                    <mat-slide-toggle
+                      hideIcon="true"
+                      color="primary"
+                      [checked]="userForm.controls['UserSubscriptionStatus'].value" 
+                      (change)="toggleSubscriptionStatus()">
+                  </mat-slide-toggle>
                 </div>
               </div>
               <div class="div-block-435">
