@@ -47,8 +47,14 @@ export class EditUserComponent {
     var SubscriberDetails: any = this.apiData.getUser();
     const subscriberObject = JSON.parse(SubscriberDetails);
 
+    console.log("subscriberObject", subscriberObject)
+
     this.userForm = this.formBuilder.group({
       userprofileid: [subscriberObject?.userprofileid ?? ''],
+      aspuid: [subscriberObject?.aspuid ?? ''],
+      deleted_at: [subscriberObject?.deleted_at ?? ''],
+      updated_at: [subscriberObject?.updated_at ?? ''],
+      isdeleted: [subscriberObject?.isdeleted ?? false],
       created_at: [subscriberObject?.created_at ?? ''],
       Fullname: [subscriberObject?.fullname || '', Validators.required],
       Email: [subscriberObject?.email || '', [Validators.required, Validators.email]],
@@ -67,8 +73,6 @@ export class EditUserComponent {
     this.router.navigate(['/admin/adminUser']);
   }
  
-
-
   onSubmit() {
     this.submitted = true;
   
@@ -76,10 +80,11 @@ export class EditUserComponent {
     const formValues = this.userForm.value;
   
     // Check if the form is valid
-    if (this.userForm.valid) {
+    if (!this.userForm.valid) {
       // If the form is valid, prepare the data for the API call
       const body = {
         userprofileid: formValues.userprofileid,
+        aspuid: formValues.aspuid,
         Fullname: formValues.Fullname,
         Email: formValues.Email,
         UserRole: formValues.UserRole,
