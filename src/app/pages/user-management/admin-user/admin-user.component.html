@@ -7,15 +7,7 @@
               <div class="group-hero_l">
                 <div class="group-hero_text">Filter by</div>
                 <div data-hover="false" data-delay="0" class="w-dropdown">
-                  <!-- <div class="dropdown-toggle w-dropdown-toggle">
-                    <div class="icon w-icon-dropdown-toggle"></div>
-                    <div class="text-block">Name</div>
-                  </div> -->
-                  <!-- <nav class="w-dropdown-list">
-                    <a href="#" class="w-dropdown-link">Link 1</a>
-                    <a href="#" class="w-dropdown-link">Link 2</a>
-                    <a href="#" class="w-dropdown-link">Link 3</a>
-                  </nav> -->
+
                 </div>
                 <div 
                   data-hover="false" 
@@ -171,17 +163,12 @@
               <ng-container matColumnDef="status">
                 <mat-header-cell *matHeaderCellDef> Status </mat-header-cell>
                 <mat-cell *matCellDef="let user">
-                  <!-- mat-menu-item -->
-                  <button
-                    class="status"
-                    (click)="toggleStatus(user)"
-                  >
-                    <mat-icon 
-                      style="font-size: 25px;"
-                      [style.color]="user.subscription ? 'green' : '#00386C'">
-                        {{ user.subscription ? 'toggle_on' : 'toggle_off' }}
-                    </mat-icon>
-                  </button>
+                  <mat-slide-toggle
+                    hideIcon="true"
+                    color="primary"
+                    [checked]="user.subscription" 
+                    (change)="toggleStatus(user)">
+                  </mat-slide-toggle>
                 </mat-cell>
               </ng-container>
     
