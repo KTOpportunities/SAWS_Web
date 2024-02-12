@@ -80,7 +80,7 @@ export class EditUserComponent {
     const formValues = this.userForm.value;
   
     // Check if the form is valid
-    if (!this.userForm.valid) {
+    if (this.userForm.valid) {
       // If the form is valid, prepare the data for the API call
       const body = {
         userprofileid: formValues.userprofileid,

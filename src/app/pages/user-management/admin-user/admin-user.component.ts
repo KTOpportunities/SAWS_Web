@@ -109,7 +109,7 @@ export class AdminUserComponent implements OnInit {
           this.adminList = data.Data;
 
           this.adminList.forEach(element => {
-            element.subscription = false;
+            element.subscription = true;
           });
 
           sessionStorage.removeItem('currentPage');
