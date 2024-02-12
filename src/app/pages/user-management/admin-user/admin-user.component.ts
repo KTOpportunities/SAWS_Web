@@ -286,10 +286,6 @@ export class AdminUserComponent implements OnInit {
     this.router.navigate(["/admin/addUser"]);
   }
 
-  toggleStatus(user: Admin) {
-    user.subscription = !user.subscription;
-  }
-
   navigateToEditUser(user: Admin) {
     sessionStorage.setItem('currentPage', `${this.currentPage}`);
     sessionStorage.setItem('pageSize', `${this.pageSize}`);
