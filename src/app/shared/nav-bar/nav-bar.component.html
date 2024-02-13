@@ -160,11 +160,16 @@
           </div>
         </div>
         <div class="user">
-          <div class="user-info">
+          <div 
+            *ngIf="apiData.userObservable$ | async as user"
+            class="user-info"
+            >
             <div class="user-name">
-              {{ userName }}
+              {{ user.userEmail }}
             </div>
-            <div class="user-description">{{ userRole }}</div>
+            <div class="user-description">
+              {{ user.userRole }}
+            </div>
           </div>
         </div>
       </div>

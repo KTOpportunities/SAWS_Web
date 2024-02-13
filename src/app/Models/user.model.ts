@@ -1,7 +1,7 @@
 export interface UserLoggedIn {
-    token: string
-    expiration: string
-    aspUserID: string
-    rolesList: string
-    aspUserName: string
-  }
+  userID: string
+  userName: string
+  userEmail: string
+  userRole: string
+}
+  
