@@ -163,6 +163,8 @@ export class NavBarComponent implements OnInit {
     sessionStorage.removeItem('currentPage');
     sessionStorage.removeItem('pageSize');
     this.menuOpen = false;
+
+    this.router.navigate(['/login']);
   }
 
   hideDropdown() {

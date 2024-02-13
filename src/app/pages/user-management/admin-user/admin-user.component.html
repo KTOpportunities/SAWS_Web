@@ -162,13 +162,12 @@
               <!-- Status Column -->
               <ng-container matColumnDef="status">
                 <mat-header-cell *matHeaderCellDef> Status </mat-header-cell>
-                <mat-cell *matCellDef="let user">
-                  <mat-slide-toggle
-                    hideIcon="true"
-                    color="primary"
-                    [checked]="user.subscription" 
-                    (change)="toggleStatus(user)">
-                  </mat-slide-toggle>
+                <mat-cell *matCellDef="let user" >
+                  <div class="status" [ngClass]="{ 'status-active': user.subscription }">
+                    <span class="status-text">
+                        {{ user.subscription ? 'Active' : 'InActive' }}
+                    </span>
+                  </div>
                 </mat-cell>
               </ng-container>
     

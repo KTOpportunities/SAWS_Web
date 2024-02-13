@@ -82,10 +82,11 @@ mat-header-row {
   max-width: 100%;
 }
 
-#adminsTable {
+#subscibersTable {
   overflow: auto;
   /* overflow-y: auto; */
   max-height: 50vh;
+  margin-top: 10px;
 }
 
 td {
@@ -760,18 +761,33 @@ td {
 }
 
 .section-3 {
-  margin-top: -43.5%;
+  margin-top: -41.5%;
   padding-left: 340px;
 
 }
 
 .status {
-  background: inherit;
+  width: 55px;
+  height: 18px;
+  background: #fdb913 0% 0% no-repeat padding-box;
+  border-radius: 3px;
+  opacity: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.status:hover {
-  border-radius: 50%;
-  background-color: #f8f8f8;
+.status-active {
+  background: #0b9e33 0% 0% no-repeat padding-box;
+}
+
+.status-text {
+  height: 15px;
+  text-align: left;
+  font: normal normal normal 12px/15px Verdana;
+  letter-spacing: 0px;
+  color: #fff;
+  opacity: 1;
 }
 
 .navigation-right {
@@ -1391,7 +1407,7 @@ td {
     margin-top: 0%;
   }
 
-  #adminsTable {
+  #subscibersTable {
     max-height: 40vh;
   }
 }

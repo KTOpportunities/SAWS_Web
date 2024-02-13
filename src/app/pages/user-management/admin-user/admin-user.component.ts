@@ -109,7 +109,7 @@ export class AdminUserComponent implements OnInit {
           this.adminList = data.Data;
 
           this.adminList.forEach(element => {
-            element.subscription = false;
+            element.subscription = true;
           });
 
           sessionStorage.removeItem('currentPage');
@@ -284,10 +284,6 @@ export class AdminUserComponent implements OnInit {
 
   navigateToAddUser() {
     this.router.navigate(["/admin/addUser"]);
-  }
-
-  toggleStatus(user: Admin) {
-    user.subscription = !user.subscription;
   }
 
   navigateToEditUser(user: Admin) {

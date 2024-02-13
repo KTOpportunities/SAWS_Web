@@ -25,6 +25,6 @@ export class AdminLayoutComponent implements OnInit {
   }
   async logout() {
     await sessionStorage.removeItem('User');
-    // this.router.navigate(['auth/login']);
+    this.router.navigate(['/login']);
   }
 }

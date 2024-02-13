@@ -125,8 +125,8 @@
           </div>
   
           <mat-table
-            #adminsTable
-            id="adminsTable"
+            #subscibersTable
+            id="subscibersTable"
             mat-table
             [dataSource]="dataSource"
             matSort 
@@ -175,23 +175,11 @@
             <ng-container matColumnDef="status">
               <mat-header-cell *matHeaderCellDef> Status </mat-header-cell>
               <mat-cell *matCellDef="let user">
-               <!-- <button
-                    class="status"
-                    (click)="toggleStatus(user)"
-                  >
-                    <mat-icon 
-                      style="font-size: 25px;"
-                      [style.color]="user.subscription ? 'green' : '#00386C'">
-                        {{ user.subscription ? 'toggle_on' : 'toggle_off' }}
-                    </mat-icon>
-                  </button> -->
-
-                  <mat-slide-toggle
-                    hideIcon="true"
-                    color="primary"
-                    [checked]="user.subscription" 
-                    (change)="toggleStatus(user)">
-                  </mat-slide-toggle>
+                <div class="status" [ngClass]="{ 'status-active': user.subscription }">
+                  <span class="status-text">
+                      {{ user.subscription ? 'Active' : 'InActive' }}
+                  </span>
+                </div>
               </mat-cell>
             </ng-container>
   

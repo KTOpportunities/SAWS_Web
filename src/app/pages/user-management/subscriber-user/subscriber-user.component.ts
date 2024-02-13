@@ -278,10 +278,6 @@ pageChanged(event: PageEvent) {
     this.router.navigate(["/admin/addUser"]);
   }
 
-  toggleStatus(user: Subscriber) {
-    user.subscription = !user.subscription;
-  }
-
   navigateToEditUser(user: Subscriber) {
     sessionStorage.setItem('currentPage', `${this.currentPage}`);
     sessionStorage.setItem('pageSize', `${this.pageSize}`);
