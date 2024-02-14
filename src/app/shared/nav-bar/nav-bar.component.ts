@@ -17,6 +17,7 @@ export class NavBarComponent implements OnInit {
   date: Date;
   userLoginDetails: UserLoggedIn[] = [];
   userName: any;
+  userEmail: any;
   userRole: any;
   searchTerm: string = '';
 
@@ -28,11 +29,11 @@ export class NavBarComponent implements OnInit {
   menuOpen: boolean = false;
 
   constructor(
-    private apiData: Dataservice,
+    public apiData: Dataservice,
     private router: Router,
     public datePipe: DatePipe,
     private apiToken: TokeStorageService,
-    private elementRef: ElementRef
+    private elementRef: ElementRef,
   ){
     this.date = new Date();
 
@@ -52,16 +53,13 @@ export class NavBarComponent implements OnInit {
 
   ngOnInit(): void {
 
-    // this.dataSource.filterPredicate = function (record,filter) {
-    //   return true;
-    // }
-
     var user: any = this.apiData.getCurrentUser();
     
     if(user){
       const userLoginDetails =  JSON.parse(user);
-      this.userName = userLoginDetails?.aspUserName;
-      this.userRole = userLoginDetails?.rolesList;
+      this.userName = userLoginDetails?.userName;
+      this.userEmail = userLoginDetails?.userEmail;
+      this.userRole = userLoginDetails?.userRole;
     } else {
       this.router.navigate(['/login']);
     }    
@@ -103,8 +101,7 @@ export class NavBarComponent implements OnInit {
   updateUserManagementActive() {
     const currentUrl = this.router.url;
     this.isUserManagementActive = currentUrl.startsWith('/admin/adminUser') || currentUrl.startsWith('/admin/subscriberUser');
-  }
-  
+  }  
 
   // Define a method to navigate to the specified route
   navigateToDashboard() {
@@ -139,19 +136,17 @@ export class NavBarComponent implements OnInit {
 
   onOptionSelected(option: string) {
     
-    this.selectedOption = option;// Set the selected user type
+    this.selectedOption = option;
 
-    // Implement navigation logic based on the selected option
-    if (option === 'Admin User') {
-      // Navigate to the Subscriber User page
-      this.router.navigate(["/admin/adminUser"]);
+       if (option === 'Admin User') {
+           this.router.navigate(["/admin/adminUser"]);
       this.menuOpen = false;
     } else if (option === 'Subscriber User') {
-      // Navigate to the Admin User page
+    
       this.router.navigate(["/admin/subscriberUser"]);
       this.menuOpen = false;
     }
-    // Close the dropdown if needed
+  
     this.isDropdownOpen = false;
   }
 

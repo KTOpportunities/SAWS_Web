@@ -26,8 +26,16 @@ export class AuthService {
     Password: "",
   };
   body: any;
+  token: any;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+
+    var userToken = sessionStorage.getItem("auth-token");
+
+    if (userToken) {
+      this.token = userToken;
+    }
+  }
 
   login(form: loginform) {
     return this.http.post<any>(
@@ -61,6 +69,19 @@ export class AuthService {
         throw error;
       })
     );
+  }
+
+  getLoggedInUser(userId: any) {
+    return this.http.get<any>(
+      environment.serverAPI + `Authenticate/GetLoggedInUser?Id=${userId}`,
+      {
+        headers: new HttpHeaders().append(
+          'Authorization',
+          `Bearer ${this.token}`
+        ),
+      }
+    );
+   
   }
 
 

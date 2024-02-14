@@ -17,11 +17,24 @@ export class Dataservice {
   // Observable to which components can subscribe
   filterObservable$ = this.filterSubject.asObservable();
 
-  constructor() {}
+  private userSubject = new BehaviorSubject<any | null>(null);
+
+  // Observable to which components can subscribe
+  public userObservable$ = this.userSubject.asObservable();
+
+  constructor() {
+    
+ // Initialize value from sessionStorage
+    const storedValue = this.getCurrentUser();
+    if (storedValue) {
+      const parsedValue: any = JSON.parse(storedValue);
+      this.userSubject.next(parsedValue);
+    }
+  }
 
   saveCurrentUser(user: UserLoggedIn): string {
     sessionStorage.setItem("CurrentUser", JSON.stringify(user));
-    // sessionStorage.setItem("token", user.token);
+    this.userSubject.next(user);
     return "User Saved";
   }
 
@@ -45,10 +58,6 @@ export class Dataservice {
   removeCurrentUserLocal() {
     localStorage.removeItem('CurrentUser');
   }
-
-  // getToken(): string | null {
-  //   return window.sessionStorage.getItem("token");
-  // }
 
   saveUser(user: any) {
     sessionStorage.setItem("UserDetails", JSON.stringify(user));
@@ -85,5 +94,4 @@ export class Dataservice {
   updateFilter(filter: string) {
     this.filterSubject.next(filter);
   }
-
 }

@@ -2,11 +2,10 @@ import { Component } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
 import { Admin } from "src/app/Models/admin.model";
-import { Subscriber } from "src/app/Models/subscriber.model";
+import { AuthService } from "src/app/services/auth.service";
 import { Dataservice } from "src/app/services/data.service";
 import { SubscriberService } from "src/app/services/subscriber.service";
 import Swal from "sweetalert2";
-
 
 
 @Component({
@@ -21,7 +20,6 @@ export class EditUserComponent {
   dialogRef: any;
   adminUser: Admin[] = [];
   userRole: any = ''
-
 
   ngOnInit() {
   }
@@ -39,6 +37,7 @@ export class EditUserComponent {
 
   constructor(
     private formBuilder: FormBuilder,
+    private authApi: AuthService,
     private api: SubscriberService,
     private apiData: Dataservice,
     private router: Router,
@@ -46,8 +45,6 @@ export class EditUserComponent {
     const currentDate = new Date();
     var SubscriberDetails: any = this.apiData.getUser();
     const subscriberObject = JSON.parse(SubscriberDetails);
-
-    console.log("subscriberObject", subscriberObject)
 
     this.userForm = this.formBuilder.group({
       userprofileid: [subscriberObject?.userprofileid ?? ''],
@@ -76,12 +73,9 @@ export class EditUserComponent {
   onSubmit() {
     this.submitted = true;
   
-    // Extract form values
     const formValues = this.userForm.value;
   
-    // Check if the form is valid
     if (this.userForm.valid) {
-      // If the form is valid, prepare the data for the API call
       const body = {
         userprofileid: formValues.userprofileid,
         aspuid: formValues.aspuid,
@@ -92,11 +86,18 @@ export class EditUserComponent {
         UserSubscriptionStatus: formValues.UserSubscriptionStatus,
       };
   
-      // Call the API to update the user profile
       this.api.InsertUpdateUserProfile(body).subscribe(
         (data: any) => {
-          // If the update is successful, show success message and navigate to appropriate route
-          console.log("SAVED:", data);
+         
+          var user: any = this.apiData.getCurrentUser();
+
+          if (user) {
+            const userLoginDetails =  JSON.parse(user);
+            if(userLoginDetails?.userID == data.aspuid) {
+              this.getLoggedInUser(data.aspuid);
+            } 
+          }
+
           this.showSuccessAlert();
           this.apiData.removeUser();
           if (this.userRole == 'Admin') {
@@ -106,21 +107,30 @@ export class EditUserComponent {
           }
         },
         (err) => {
-          // If there's an error, show an error message
           console.log("Error:", err);
           this.showUnsuccessfulAlert();
         }
       );
     } else {
-      // If the form is invalid, mark all fields as touched to trigger validation messages
+
       this.userForm.markAllAsTouched();
     }
-  }
-  
+  }  
 
   toggleSubscriptionStatus() {
     const currentValue = this.userForm.controls["UserSubscriptionStatus"].value;
     this.userForm.controls["UserSubscriptionStatus"].setValue(!currentValue);
+  }
+
+  getLoggedInUser(Id: string){
+    this.authApi.getLoggedInUser(Id).subscribe(
+      (data: any) => {
+       this.apiData.saveCurrentUser(data);
+      },
+      (err) => {
+        console.log(err);
+      }
+    )
   }
 
   showSuccessAlert() {
