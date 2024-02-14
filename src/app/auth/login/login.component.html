@@ -61,11 +61,17 @@
                                             data-ms-member="password" 
                                             required
                                         />
-                                        <span
+                                        <!-- <span
                                             (click)="togglePasswordVisibility()"
                                             class="material-icons password-toggle">
                                                 {{ passwordVisibility? 'visibility' : 'visibility_off'}}
-                                        </span>
+                                        </span> -->
+                                        <mat-icon 
+                                            (click)="togglePasswordVisibility()"
+                                            class="password-toggle"
+                                            >
+                                            {{ passwordVisibility? 'visibility' : 'visibility_off'}}
+                                        </mat-icon>
                                     </div>
                                     <span class="errormessage"
                                         *ngIf="submitted && loginform.get('Password')?.hasError('required')"
