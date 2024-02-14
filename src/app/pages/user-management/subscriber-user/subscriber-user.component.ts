@@ -165,6 +165,7 @@ clearFilter() {
   this.selectedDateString = '';
 
   this.apiData.clearFilter();
+  this.apiData.clearForm();
 }
 
 isFilterActive(): boolean {

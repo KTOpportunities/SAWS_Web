@@ -212,6 +212,7 @@ export class FeedbackComponent implements OnInit{
     this.selectedDateString = '';
 
     this.apiData.clearFilter();
+    this.apiData.clearForm();
   }
 
   isFilterActive(): boolean {

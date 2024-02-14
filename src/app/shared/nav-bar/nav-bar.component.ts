@@ -1,5 +1,6 @@
 import { DatePipe } from '@angular/common';
 import { Component, OnInit, HostListener, ElementRef } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router, NavigationEnd  } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { UserLoggedIn } from 'src/app/Models/user.model';
@@ -21,6 +22,8 @@ export class NavBarComponent implements OnInit {
   userRole: any;
   searchTerm: string = '';
 
+  myForm!: FormGroup;
+
   showSearchSubcription!: Subscription;
 
   isUserManagementActive = false;
@@ -34,6 +37,7 @@ export class NavBarComponent implements OnInit {
     public datePipe: DatePipe,
     private apiToken: TokeStorageService,
     private elementRef: ElementRef,
+    private fb: FormBuilder
   ){
     this.date = new Date();
 
@@ -62,8 +66,13 @@ export class NavBarComponent implements OnInit {
       this.userRole = userLoginDetails?.userRole;
     } else {
       this.router.navigate(['/login']);
-    }  
-    
+    }
+
+    this.myForm = this.fb.group({
+      search: ['']
+    });
+
+    this.apiData.setForm(this.myForm);    
   }
 
   ngOnDestroy(): void {

@@ -1,14 +1,17 @@
-import { Injectable } from "@angular/core";
+import { ElementRef, Injectable, ViewChild } from "@angular/core";
 import { BehaviorSubject } from "rxjs";
 
 import { UserLoggedIn } from "../Models/user.model";
 import { Admin } from "../Models/admin.model";
+import { FormGroup } from "@angular/forms";
 
 interface User {}
 @Injectable({
   providedIn: "root",
 })
 export class Dataservice {
+  private form!: FormGroup;
+
   userInformation: any = "";
   private UserInformation = new BehaviorSubject<any>(this.userInformation);
   filterSubjectInformantion: any = '';
@@ -97,5 +100,15 @@ export class Dataservice {
 
   clearFilter() {
     this.filterSubject.next('');
+  }
+
+  setForm(form: FormGroup) {
+    this.form = form;
+  }
+
+  clearForm() {
+    if (this.form) {
+      this.form.reset();
+    }
   }
 }

@@ -142,6 +142,7 @@
           *ngIf="shouldShowSearchIcon()"
           class="form-block-2 w-form">
             <form
+              [formGroup]="myForm"
               id="email-form"
               name="email-form"
               data-name="Email Form"
@@ -150,7 +151,8 @@
               data-wf-page-id="659fdf53d2669e38ece136bb"
               data-wf-element-id="717ec873-5bdf-1582-6da6-888fecad4a48"
             >
-              <input
+            <input
+                formControlName="search"
                 matInput
                 class="search w-input"
                 maxlength="256"
