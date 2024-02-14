@@ -107,14 +107,14 @@
                       </defs>
                     </svg>
                   </div>
-                <div class="button-text">New User</div>
+                <div class="button-text">Respond</div>
               </a>
             </div>
           </div>
   
           <mat-table 
-            #adminsTable
-            id="adminsTable"
+            #feedbackTable
+            id="feedbackTable"
             mat-table
             [dataSource]="dataSource" 
             matSort 
@@ -190,13 +190,13 @@
     
                   <mat-menu #actionMenu="matMenu" class="mat-horizontal-menu">
                     <button mat-menu-item (click)="navigateToEditUser(user)">
-                      <mat-icon>edit</mat-icon> Edit
+                      <mat-icon>visibility</mat-icon> View
                     </button>
                     <!-- <button mat-menu-item (click)="toggleUser(user)">
                       <mat-icon>visibility</mat-icon> View
                     </button> -->
                     <button mat-menu-item (click)="deleteUser(user)">
-                      <mat-icon style="color: red">clear</mat-icon> Delete
+                      <mat-icon style="color: red">delete</mat-icon> Archive
                     </button>
                   </mat-menu>
                 </mat-cell>

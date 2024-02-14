@@ -10,8 +10,8 @@ interface User {}
 })
 export class Dataservice {
   userInformation: any = "";
-  filterSubjectInformantion: any = '';
   private UserInformation = new BehaviorSubject<any>(this.userInformation);
+  filterSubjectInformantion: any = '';
   private filterSubject = new BehaviorSubject<string>(this.filterSubjectInformantion);
 
   // Observable to which components can subscribe
@@ -93,5 +93,9 @@ export class Dataservice {
 
   updateFilter(filter: string) {
     this.filterSubject.next(filter);
+  }
+
+  clearFilter() {
+    this.filterSubject.next('');
   }
 }

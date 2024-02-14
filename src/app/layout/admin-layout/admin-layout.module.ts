@@ -15,6 +15,9 @@ import { EditUserComponent } from "src/app/pages/user-management/edit-user/edit-
 import { FlexLayoutModule } from "@angular/flex-layout";
 import { SubscriberUserComponent } from "src/app/pages/user-management/subscriber-user/subscriber-user.component";
 import { AdminUserComponent } from "src/app/pages/user-management/admin-user/admin-user.component";
+import { FeedbackComponent } from "src/app/pages/feedback/feedback.component";
+import { AddResponseComponent } from "src/app/pages/feedback/add-response/add-response.component";
+import { ViewFeedbackComponent } from "src/app/pages/feedback/view-feedback/view-feedback.component";
 @NgModule({
   declarations: [
     UserManagementComponent,
@@ -23,6 +26,9 @@ import { AdminUserComponent } from "src/app/pages/user-management/admin-user/adm
     AddUserComponent,
     EditUserComponent,
     AdminUserComponent,
+    FeedbackComponent,
+    AddResponseComponent,
+    ViewFeedbackComponent
   ],
   imports: [
     CommonModule,

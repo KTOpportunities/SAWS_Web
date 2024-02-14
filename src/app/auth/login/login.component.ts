@@ -7,10 +7,11 @@ import { TokeStorageService } from "src/app/services/token-storage.service";
 import { Dataservice } from "src/app/services/data.service";
 import Swal from "sweetalert2";
 import { ElementRef } from '@angular/core';
+
 @Component({
-  selector: "app-login",
-  templateUrl: "./login.component.html",
-  styleUrls: ["./login.component.css"],
+  selector: 'app-login',
+  templateUrl: './login.component.html',
+  styleUrls: ['./login.component.css'],
 })
 export class loginComponent implements OnInit {
   userData: any = null;
@@ -52,17 +53,9 @@ export class loginComponent implements OnInit {
   }
   ngOnInit(): void {
   }
-  togglePasswordVisibility() {
-    const passwordInput = this.el.nativeElement.querySelector('.password_field');
-    const passwordToggle = this.el.nativeElement.querySelector('.password-toggle');
 
-    if (passwordInput.type === 'password') {
-        passwordInput.type = 'text';
-        passwordToggle.innerText = '👁️';
-    } else {
-        passwordInput.type = 'password';
-        passwordToggle.innerText = '👁️';
-    }
+  togglePasswordVisibility() {
+    this.passwordVisibility = !this.passwordVisibility;
 }
   
   async emailValidator(control: any) {

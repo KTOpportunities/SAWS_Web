@@ -62,7 +62,8 @@ export class NavBarComponent implements OnInit {
       this.userRole = userLoginDetails?.userRole;
     } else {
       this.router.navigate(['/login']);
-    }    
+    }  
+    
   }
 
   ngOnDestroy(): void {
@@ -91,7 +92,9 @@ export class NavBarComponent implements OnInit {
     // Check the current route
     const currentRoute = this.router.url;    
 
-    if (currentRoute !== '/admin/subscriberUser' && currentRoute !== '/admin/adminUser' ) {
+    if (currentRoute !== '/admin/subscriberUser' && currentRoute !== '/admin/adminUser' && 
+    currentRoute !== '/admin/feedback'
+    ) {
       return false;
     } else {
       return true;
@@ -109,11 +112,6 @@ export class NavBarComponent implements OnInit {
     this.menuOpen = false;
   }
 
-  // navigateToUsermanagement() {
-  //   this.router.navigate(["/admin/user"]);
-  //   this.router.navigate(["/admin/userManagement"]);
-  // }
-
   navigateToAdminUser() {
     this.router.navigate(["/admin/adminUser"]);
   }
@@ -128,10 +126,9 @@ export class NavBarComponent implements OnInit {
     this.updateUserManagementActive();
   }
 
-  handleFeedbackLinkClick(event: Event): void {
-    // Prevent the default behavior of the link
+  navigateToFeedback() {
     this.menuOpen = false;
-    event.preventDefault();
+    this.router.navigate(["/admin/feedback"]);
   }
 
   onOptionSelected(option: string) {
@@ -164,5 +161,6 @@ export class NavBarComponent implements OnInit {
 
   hideDropdown() {
   this.isDropdownOpen = false;
+  this.menuOpen = false;
   }
 }

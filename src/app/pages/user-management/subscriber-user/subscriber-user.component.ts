@@ -160,9 +160,11 @@ export class SubscriberUserComponent implements OnInit {
 }
 
 clearFilter() {
-  this.dataSource.filter = '';
+  // this.dataSource.filter = '';
   this.selectedSubscriptionName = '';
   this.selectedDateString = '';
+
+  this.apiData.clearFilter();
 }
 
 isFilterActive(): boolean {

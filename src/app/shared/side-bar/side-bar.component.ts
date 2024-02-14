@@ -34,15 +34,9 @@ export class SideBarComponent {
     }
     
 
-  // Define a method to navigate to the specified route
   navigateToDashboard() {
     this.router.navigate(["/admin/dashboard"]);
   }
-
-  // navigateToUsermanagement() {
-  //   this.router.navigate(["/admin/user"]);
-  //   this.router.navigate(["/admin/userManagement"]);
-  // }
 
   navigateToAdminUser() {
     this.router.navigate(["/admin/adminUser"]);
@@ -53,29 +47,24 @@ export class SideBarComponent {
   }
   
   toggleDropdown() {
-    console.log('Toggling dropdown');
     this.isDropdownOpen = !this.isDropdownOpen;
     this.updateUserManagementActive();
   }
 
-  handleFeedbackLinkClick(event: Event): void {
-    // Prevent the default behavior of the link
-    event.preventDefault();
+  navigateToFeedback() {
+    this.router.navigate(["/admin/feedback"]);
   }
   
   onOptionSelected(option: string) {
     
-    this.selectedOption = option;// Set the selected user type
+    this.selectedOption = option;
 
-    // Implement navigation logic based on the selected option
     if (option === 'Admin User') {
-      // Navigate to the Subscriber User page
-      this.router.navigate(["/admin/adminUser"]);
+         this.router.navigate(["/admin/adminUser"]);
     } else if (option === 'Subscriber User') {
-      // Navigate to the Admin User page
-      this.router.navigate(["/admin/subscriberUser"]);
+        this.router.navigate(["/admin/subscriberUser"]);
     }
-    // Close the dropdown if needed
+  
     this.isDropdownOpen = false;
   }
   
