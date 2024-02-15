@@ -14,7 +14,6 @@
           /></a>
         <div class="nav-separator"></div>
         <div class="nav-menu" >
-          <!-- (click)="navigateToDashboard()"  -->
           <a 
           routerLink="/admin/dashboard"
           routerLinkActive="activebutton"
@@ -83,9 +82,14 @@
             </nav>
           </div>         
                  
+          <!-- [ngClass]="{'activebutton': isUserManagementActive}" -->
+          <!-- (click)="navigateToFeedback()" -->
           <a 
-            (click)="navigateToFeedback()"
-            class="nav-link w-inline-block" 
+            routerLink="/admin/feedback"
+            class="nav-link w-inline-block"
+            routerLinkActive="activebutton"
+            ariaCurrentWhenActive="page"
+            (click)="hideDropdown()"
           >
             <div class="embed-icon w-embed">
               <svg xmlns="http://www.w3.org/2000/svg" width="22.166" height="23.615" viewBox="0 0 21.166 22.615">

@@ -115,7 +115,6 @@ export class NavBarComponent implements OnInit {
     this.isUserManagementActive = currentUrl.startsWith('/admin/adminUser') || currentUrl.startsWith('/admin/subscriberUser');
   }  
 
-  // Define a method to navigate to the specified route
   navigateToDashboard() {
     this.router.navigate(["/admin/dashboard"]);
     this.menuOpen = false;
@@ -133,11 +132,6 @@ export class NavBarComponent implements OnInit {
     console.log('Toggling dropdown');
     this.isDropdownOpen = !this.isDropdownOpen;
     this.updateUserManagementActive();
-  }
-
-  navigateToFeedback() {
-    this.menuOpen = false;
-    this.router.navigate(["/admin/feedback"]);
   }
 
   onOptionSelected(option: string) {

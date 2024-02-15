@@ -177,9 +177,10 @@
                 <mat-cell *matCellDef="let user">
                   <!-- Add your action buttons/icons here -->
                   <button
+                    (click)="checkCurrentUser(user)"
                     mat-icon-button
                     [matMenuTriggerFor]="actionMenu"
-                    class="mat-button mat-horizontal-menu" 
+                    class="mat-button mat-horizontal-menu"
                   >
                     <mat-icon style="color: #323259">
                       <img
@@ -188,16 +189,23 @@
                     /></mat-icon>
                   </button>
     
-                  <mat-menu #actionMenu="matMenu" class="mat-horizontal-menu">
-                    <button mat-menu-item (click)="navigateToEditUser(user)">
-                      <mat-icon>edit</mat-icon> Edit
-                    </button>
-                    <!-- <button mat-menu-item (click)="toggleUser(user)">
-                      <mat-icon>visibility</mat-icon> View
-                    </button> -->
-                    <button mat-menu-item (click)="deleteUser(user)">
-                      <mat-icon style="color: red">clear</mat-icon> Delete
-                    </button>
+                  <mat-menu 
+                    #actionMenu="matMenu" 
+                    class="mat-horizontal-menu"
+                    >
+                      <button mat-menu-item (click)="navigateToEditUser(user)">
+                        <mat-icon>edit</mat-icon> Edit
+                      </button>
+                      <!-- <button mat-menu-item (click)="toggleUser(user)">
+                        <mat-icon>visibility</mat-icon> View
+                      </button> -->
+                      <button
+                        *ngIf="isCurrentUser"
+                        mat-menu-item
+                        (click)="deleteUser(user)"
+                        >
+                          <mat-icon style="color: red">clear</mat-icon> Delete
+                      </button>
                   </mat-menu>
                 </mat-cell>
               </ng-container>

@@ -10,11 +10,10 @@ import { TokeStorageService } from "src/app/services/token-storage.service";
 })
 export class SideBarComponent {
 
-  isUserManagementActive = false; // Assuming you have a property to track the active state
+  isUserManagementActive = false;
   isDropdownOpen = false;
   selectedOption: string | null = null;   
 
-  // Inject the Router in the constructor
   constructor(
     private router: Router,
     private activatedRoute: ActivatedRoute,
@@ -51,10 +50,6 @@ export class SideBarComponent {
     this.updateUserManagementActive();
   }
 
-  navigateToFeedback() {
-    this.router.navigate(["/admin/feedback"]);
-  }
-  
   onOptionSelected(option: string) {
     
     this.selectedOption = option;
@@ -78,6 +73,7 @@ export class SideBarComponent {
 
     this.router.navigate(['/login']);
   }
+
   hideDropdown() {
    this.isDropdownOpen = false;
   }

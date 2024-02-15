@@ -63,6 +63,9 @@ export class AdminUserComponent implements OnInit {
   selectedSubscriptionName: any = '';
   date: Date;
 
+  isCurrentUser: boolean = false;
+  currentUser: any;
+
   constructor(
     private apiAdmin: AdminService,
     private apiService: SubscriberService,
@@ -82,7 +85,9 @@ export class AdminUserComponent implements OnInit {
 
   ngOnInit() {
     this.getAllAdmins(); 
-    this.filterData(); 
+    this.filterData();
+
+    this.currentUser = this.apiData.getCurrentUser();
   }
     
   getAllAdmins(page: number = 1){
@@ -110,7 +115,10 @@ export class AdminUserComponent implements OnInit {
 
           this.adminList.forEach(element => {
             element.subscription = true;
+            // element.isCurrentUser = false;
           });
+
+          
 
           sessionStorage.removeItem('currentPage');
           sessionStorage.removeItem('pageSize');
@@ -161,10 +169,10 @@ export class AdminUserComponent implements OnInit {
   }
 }
 
- addUser() {
-  this.apiData.saveUserUrl('/admin/adminUser');
-  this.router.navigate(["/admin/addUser"]);
-}
+  addUser() {
+    this.apiData.saveUserUrl('/admin/adminUser');
+    this.router.navigate(["/admin/addUser"]);
+  }
 
   pageChanged(event: PageEvent) {
     this.pageSize = event.pageSize;
@@ -226,8 +234,13 @@ export class AdminUserComponent implements OnInit {
   }
 
   // Add your toggle/edit/delete methods here
-  toggleUser(user: any) {
-    // Implement toggle logic
+  checkCurrentUser(user: any) {
+    if (this.currentUser) {
+      const userLoginDetails =  JSON.parse(this.currentUser);
+      if(userLoginDetails?.userID == user.aspuid) {
+          this.isCurrentUser = true;
+      }
+    }
   }
 
   editUser(user: any) {
