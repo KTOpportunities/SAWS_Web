@@ -164,17 +164,28 @@
                   class="add-user-admin-div"
                 >
                   <label for="field-3" class="add-label">Password</label
-                  ><input
-                    class="add-user-input w-input"
-                    maxlength="256"
-                    name="field-2"
-                    data-name="Field 2"
-                    placeholder="Enter your password"
-                    type="password"
-                    id="field-2"
-                    required=""
-                    formControlName="Password"
-                  />
+                  >
+                  <div
+                  class="password-input-wrapper"  
+                  >
+                    <input
+                      class="add-user-input w-input"
+                      maxlength="256"
+                      name="field-2"
+                      data-name="Field 2"
+                      placeholder="Enter your password"
+                      [type]="passwordVisibility ? 'text' : 'password'"
+                      id="field-2"
+                      required=""
+                      formControlName="Password"
+                    />
+                    <mat-icon 
+                      (click)="togglePasswordVisibility()"
+                      class="password-toggle"
+                      >
+                        {{ passwordVisibility? 'visibility' : 'visibility_off'}}
+                    </mat-icon>
+                  </div>
                   <div
                     style="color: red;"
                     class="errormessage"

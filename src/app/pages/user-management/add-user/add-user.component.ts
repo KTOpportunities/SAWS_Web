@@ -27,6 +27,7 @@ export class AddUserComponent implements OnInit {
   submitted = false;
   userRole: any;
   currentUrl: any;
+  passwordVisibility: boolean = false;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -62,6 +63,7 @@ export class AddUserComponent implements OnInit {
   }
 
   ngOnInit() {}
+
   emailValidator(control: any) {
     if (control.value) {
       const emailRegex =
@@ -75,6 +77,10 @@ export class AddUserComponent implements OnInit {
     } else {
       return null;
     }     
+  }
+
+  togglePasswordVisibility() {
+    this.passwordVisibility = !this.passwordVisibility;
   }
 
   passwordValidator(control: AbstractControl) {
