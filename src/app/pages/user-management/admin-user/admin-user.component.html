@@ -200,7 +200,7 @@
                         <mat-icon>visibility</mat-icon> View
                       </button> -->
                       <button
-                        *ngIf="isCurrentUser"
+                        *ngIf="!isCurrentUser"
                         mat-menu-item
                         (click)="deleteUser(user)"
                         >

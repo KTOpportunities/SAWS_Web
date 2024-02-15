@@ -238,7 +238,10 @@ export class AdminUserComponent implements OnInit {
     if (this.currentUser) {
       const userLoginDetails =  JSON.parse(this.currentUser);
       if(userLoginDetails?.userID == user.aspuid) {
-          this.isCurrentUser = true;
+        this.isCurrentUser = true;
+        
+      } else {
+        this.isCurrentUser = false;
       }
     }
   }
