@@ -46,9 +46,7 @@ export class UserManagementComponent implements OnInit {
   getPagedAllSubscribers(page: number = 1){
     this.apiService.getPagedAllSubscribers(this.currentPage + page, this.pageSize).subscribe(
       (data) => {
-        console.log("DATA:::", data);
-        this.dataSource.data = data.Data; // Assuming the API returns an array of objects
-        console.log("DATA:::", this.dataSource.data);
+        this.dataSource.data = data.Data;
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
         this.spinner.hide();

@@ -37,13 +37,13 @@ export class AddUserComponent implements OnInit {
   ) {
     this.userForm = this.formBuilder.group({
       Fullname: ["", Validators.required],
-      Username: ["", [Validators.required, this.usernameValidator]],
+      Username: [""],
       Email: ["", [Validators.required, Validators.email]],
       Password: ["", [Validators.required, this.passwordValidator]],
       UserRole: ["", Validators.required],
     });
 
-    var username: any = sessionStorage.getItem('email');
+    // var username: any = sessionStorage.getItem('email');
 
     var currentUrl: any = this.apiData.getUserUrl();
     const currentUrlObj = JSON.parse(currentUrl);
@@ -79,7 +79,6 @@ export class AddUserComponent implements OnInit {
 
   passwordValidator(control: AbstractControl) {
     const value = control.value;
-
     // Check if the password contains at least one letter and one number
     const containsLetter = /[a-zA-Z]/.test(value);
     const containsNumber = /\d/.test(value);
@@ -87,22 +86,22 @@ export class AddUserComponent implements OnInit {
     return containsLetter && containsNumber ? null : { invalidPassword: true };
   }
 
-  usernameValidator(control: AbstractControl) {
-    const username = control.value;
-    // Check for spaces in the username
-    const isInvalid = /\s/.test(username);
-    // Check if the username contains only letters, numbers, underscores, or hyphens 
-    const isValid = !isInvalid && /^[a-zA-Z0-9_-]+$/.test(username);
+  // usernameValidator(control: AbstractControl) {
+  //   const username = control.value;
+  //   // Check for spaces in the username
+  //   const isInvalid = /\s/.test(username);
+  //   // Check if the username contains only letters, numbers, underscores, or hyphens 
+  //   const isValid = !isInvalid && /^[a-zA-Z0-9_-]+$/.test(username);
   
-    return isValid ? null : { 'invalidUsername': { value: username } };
-  }
+  //   return isValid ? null : { 'invalidUsername': { value: username } };
+  // }
 
   onSubmit() {
     this.submitted = true;
     var body = {
       Fullname: this.userForm.controls["Fullname"].value,
-      Username: this.userForm.controls["Username"].value,
       Email: this.userForm.controls["Email"].value,
+      Username: this.userForm.controls["Email"].value,
       Password: this.userForm.controls["Password"].value,
       UserRole: this.userForm.controls["UserRole"].value,
     };
@@ -111,7 +110,27 @@ export class AddUserComponent implements OnInit {
     if (this.userForm.invalid) {
       return;
     } else {
-      this.api.registerSubscriber(body)
+      
+      this.api.loginEmailExist(body.Email).subscribe(
+        (data) => {
+
+          if(!data) {
+            this.saveUserForm(body);
+
+          } else {
+            this.showExistingEmailAlert()
+          }
+        },
+        (error) => {
+          console.error(error);
+        }
+      );    
+
+    }
+  }
+
+  saveUserForm(body: any){
+    this.api.registerSubscriber(body)
       .subscribe((data: any) => {
 
         this.showSuccessAlert();
@@ -126,7 +145,6 @@ export class AddUserComponent implements OnInit {
       }, 
       (err) => console.log("error", err)
       );
-    }
   }
 
   onCancel() {
@@ -151,6 +169,18 @@ export class AddUserComponent implements OnInit {
       text: "Something went wrong. Please try again.",
     });
   }
+
+  showExistingEmailAlert() {
+    Swal.fire({
+      icon: "warning",
+      // title: "Email exist!",
+      text: "Email already exist!",
+      showConfirmButton: false,
+      timer: 2500,
+
+    });
+  }
+  
   onReset() {
     this.submitted = false;
     this.userForm.reset();
