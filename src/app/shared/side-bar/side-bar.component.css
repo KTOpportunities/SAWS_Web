@@ -250,13 +250,7 @@
     display: flex;
   }
 
-  .activebutton {
-    color: #fff;
-    background-color: #008c1d;
-    border-radius: 10px;
-  }
-  
-  .field-input {
+ .field-input {
     width: 328px;
     height: 35px;
     color: #fbf7f4;
@@ -678,13 +672,25 @@
     text-decoration: none;
     transition: color .2s, background-color .2s;
     display: flex;
+    cursor: pointer;
   }
-  
-  .nav-link:hover {
+
+  .activebutton {
+    color: #fff;
+    background-color: #008c1d;
+    border-radius: 10px;
+  }
+
+  .nav-link:not(.activebutton):hover {
     color: #fff;
     background-color: #8295C2;
-    /* border-radius: 20px; */
   }
+
+  .nav-link:hover {
+    color: #fff;
+    background-color: #008c1d;
+  }
+
 
   .nav-link.w--current {
     color: #fff;
