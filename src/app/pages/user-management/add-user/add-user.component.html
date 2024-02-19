@@ -178,8 +178,10 @@
                       id="field-2"
                       required=""
                       formControlName="Password"
+                      (input)="onPasswordInput($event)"
                     />
-                    <mat-icon 
+                    <mat-icon
+                      *ngIf="isPasswordNotEmpty"
                       (click)="togglePasswordVisibility()"
                       class="password-toggle"
                       >

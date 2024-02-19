@@ -28,6 +28,7 @@ export class AddUserComponent implements OnInit {
   userRole: any;
   currentUrl: any;
   passwordVisibility: boolean = false;
+  isPasswordNotEmpty: boolean = false;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -81,6 +82,14 @@ export class AddUserComponent implements OnInit {
 
   togglePasswordVisibility() {
     this.passwordVisibility = !this.passwordVisibility;
+  }
+
+  onPasswordInput(event: any) {
+    this.isPasswordNotEmpty = event.target.value.trim().length > 0;
+
+    if (!this.isPasswordNotEmpty) {
+      this.passwordVisibility = false;
+    }
   }
 
   passwordValidator(control: AbstractControl) {
