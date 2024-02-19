@@ -19,6 +19,7 @@ export class loginComponent implements OnInit {
   submitted = false;
   errMessage: string = "";
   passwordVisibility: boolean = false;
+  isPasswordNotEmpty: boolean = false;
   isChecked: boolean = false;
 
   constructor(
@@ -56,7 +57,15 @@ export class loginComponent implements OnInit {
 
   togglePasswordVisibility() {
     this.passwordVisibility = !this.passwordVisibility;
-}
+  }
+
+  onPasswordInput(event: any) {
+    this.isPasswordNotEmpty = event.target.value.trim().length > 0;
+
+    if(!this.isPasswordNotEmpty){
+      this.passwordVisibility = false;
+    }
+  }
   
   async emailValidator(control: any) {
     if (control.value) {
@@ -160,5 +169,5 @@ export class loginComponent implements OnInit {
       this.loginform.get('RememberMe')?.setValue(this.isChecked); 
     }
   }
-  
+ 
 }

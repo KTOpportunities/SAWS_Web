@@ -60,13 +60,11 @@
                                             formControlName="Password"
                                             data-ms-member="password" 
                                             required
+                                            (input)="onPasswordInput($event)"
                                         />
-                                        <!-- <span
-                                            (click)="togglePasswordVisibility()"
-                                            class="material-icons password-toggle">
-                                                {{ passwordVisibility? 'visibility' : 'visibility_off'}}
-                                        </span> -->
-                                        <mat-icon 
+                            
+                                        <mat-icon
+                                            *ngIf="isPasswordNotEmpty"
                                             (click)="togglePasswordVisibility()"
                                             class="password-toggle"
                                             >
