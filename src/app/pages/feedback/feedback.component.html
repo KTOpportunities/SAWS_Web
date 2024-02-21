@@ -20,14 +20,14 @@
                       >
                       <div class="icon w-icon-dropdown-toggle"></div>
                       <div class="text-block">
-                        {{ selectedStatusName !== '' ?  "Status: " + selectedStatusName : "Status" }}
+                        {{ selectedStatusName !== '' ? selectedStatusName : "Status" }}
                       </div>
                     </div>
                     <mat-menu
                       #nameMenu="matMenu">
                       <button
                         *ngFor="let status of statuses"
-                        (click)="selectSubscription(status.status)"
+                        (click)="selectStatus(status.status)"
                           mat-menu-item
                         >
                           <span class="w-dropdown-link-2">
@@ -178,9 +178,9 @@
               <ng-container matColumnDef="status">
                 <mat-header-cell *matHeaderCellDef> Status </mat-header-cell>
                 <mat-cell *matCellDef="let feedback" >
-                  <div class="status" [ngClass]="{ 'status-active': feedback.status }">
+                  <div class="status" [ngClass]="{ 'status-active': feedback.isresponded }">
                     <span class="status-text">
-                        {{ feedback.status
+                        {{ feedback.isresponded
                         ? 'Responded' : 'UnAnswered' }}
                     </span>
                   </div>

@@ -42,8 +42,8 @@ export class FeedbackComponent implements OnInit{
     selection = new SelectionModel<Feedback>(true, []);
 
     statuses: any[] = [
-      { id: 1, status: true, name: "responded" },
-      { id: 2, status: false, name: "unanswered" }
+      { id: 1, status: true, name: "Responded" },
+      { id: 2, status: false, name: "Unanswered" }
     ];
   
     selectedStatus: number | undefined;
@@ -106,15 +106,6 @@ export class FeedbackComponent implements OnInit{
           this.spinner.hide();
           this.feedbackList = data.Data;
 
-          this.feedbackList.forEach(element => {
-
-            if(element.responderId){
-              element.status = true;
-            } else {
-              element.status = false;
-            }
-          });
-
           sessionStorage.removeItem('currentPage');
           sessionStorage.removeItem('pageSize');
 
@@ -146,9 +137,9 @@ isAllSelected() {
         this.dataSource.data.forEach(row => this.selection.select(row));
   }
 
- selectSubscription(status: any) {
+  selectStatus(status: any) {
   this.selectedStatus = status;
-  this.filterSubscription();
+  this.filterStatus();
 }
 
  filterData() {
@@ -157,12 +148,12 @@ isAllSelected() {
   });
  }
 
- filterSubscription() {
+ filterStatus() {
   this.selectedStatusName = '';
   this.selectedDateString = '';
 
   this.dataSource.filterPredicate = (data, filter: string) =>
-    !filter || data.status.toString().includes(filter);
+    !filter || data.isresponded.toString().includes(filter);
 
   this.dataSource.filter = this.selectedStatus!.toString().trim();
 
@@ -205,9 +196,6 @@ isAllSelected() {
   }
 
   filterDate() {
-    // this.selectedProvinceName = '';
-    // this.selectedStatusName = '';
-    // this.selectedPositionName = '';
 
     this.selectedStatusName = '';
 
@@ -218,7 +206,6 @@ isAllSelected() {
 
     this.dataSource.filter = newDate!.toString().trim();
 
-    // Update the button text based on the selected date
     const selectedDate = this.datePipe.transform(this.date, 'MMM dd, yyyy');
 
     if (selectedDate) {
@@ -237,15 +224,6 @@ isAllSelected() {
 
   isFilterActive(): boolean {
     return this.dataSource.filter.trim() !== '';
-  }
-
-  // Add your toggle/edit/delete methods here
-  toggleUser(user: any) {
-    // Implement toggle logic
-  }
-
-  editUser(user: any) {
-    // Implement edit logic
   }
 
   deleteUser(user: any) {

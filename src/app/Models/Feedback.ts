@@ -11,7 +11,7 @@ export interface Feedback {
     updated_at: string;
     isdeleted: boolean;
     deleted_at: any;
-    status: boolean;
+    isresponded: boolean;
     FeedbackMessages: FeedbackMessage[];
 }
   
