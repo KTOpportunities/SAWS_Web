@@ -9,7 +9,30 @@
   mat-row,
   mat-header-row {
       min-width: 800px;
+      text-align: center;
   }
+
+  .mat-column-select {
+    /* overflow: initial; */
+    max-width: 60px;
+    min-width: 50px;
+  }
+
+  .mat-column-action {
+    max-width: 150px;
+    min-width: 140px;
+  }
+
+
+  /* .mat-mdc-row:hover .mat-mdc-cell {
+    border-color: currentColor;
+  } */
+
+  /* .mat-mdc-row .mat-mdc-cell {
+    border-bottom: 1px solid transparent;
+    border-top: 1px solid transparent;
+    cursor: pointer;
+  } */
     
   .w-checkbox {
     margin-bottom: 5px;
@@ -619,7 +642,13 @@
     color: #686868;
     font-size: 12px;
   }
-  
+
+  .mat-column-select {
+    overflow: visible;
+    width: 32px;
+  }
+
+ 
   .content-wrap {
     /* padding-top: 20px; */
     /* padding-left: 15px; */
@@ -767,7 +796,7 @@
   }
 
    .status {
-    width: 55px;
+    width: 90px;
     height: 18px;
     background: #fdb913 0% 0% no-repeat padding-box;
     border-radius: 3px;

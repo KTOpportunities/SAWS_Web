@@ -15,7 +15,7 @@
                   class="w-dropdown">
                     <div
                       mat-button
-                      [matMenuTriggerFor]="subscribedMenu"
+                      [matMenuTriggerFor]="nameMenu"
                       class="dropdown-toggle w-dropdown-toggle"
                       >
                       <div class="icon w-icon-dropdown-toggle"></div>
@@ -24,14 +24,14 @@
                       </div>
                     </div>
                     <mat-menu
-                      #subscribedMenu="matMenu">
+                      #nameMenu="matMenu">
+                      <!-- *ngFor="let subscription of subscriptions"
+                      (click)="selectSubscription(subscription.subscription)" -->
                         <button
                           mat-menu-item
-                          *ngFor="let subscription of subscriptions"
-                          (click)="selectSubscription(subscription.subscription)"
                         >
                           <span class="w-dropdown-link-2">
-                            {{ subscription.subscription }}
+                            <!-- {{ subscription.subscription }} -->
                           </span>
                         </button>
                     </mat-menu>
@@ -44,7 +44,7 @@
                   <div class="dropdown-toggle w-dropdown-toggle">
                     <div class="icon w-icon-dropdown-toggle"></div>
                     <div class="text-block">
-                    {{ selectedDateString ? selectedDateString : "Date" }}
+                    {{ selectedDateString ? selectedDateString : "Received Date" }}
                   </div>
                   </div>
                 </div>
@@ -121,13 +121,38 @@
             class="mat-elevation-z8"
             #adminsSort="matSort"
             >
+
+              <!-- Checkbox Column -->
+              <ng-container 
+                matColumnDef="select">
+                  <mat-header-cell *matHeaderCellDef
+                  >
+                  <mat-checkbox
+                    (change)="$event ? masterToggle() : null"
+                    [checked]="selection.hasValue() && isAllSelected()"
+                    [indeterminate]="selection.hasValue() && !isAllSelected()"
+                    color="primary"
+                    >
+                  </mat-checkbox>
+              
+                  </mat-header-cell>
+                  <mat-cell *matCellDef="let row">
+                    <mat-checkbox 
+                      (click)="$event.stopPropagation()"
+                      (change)="$event ? selection.toggle(row) : null"
+                      [checked]="selection.isSelected(row)"
+                      color="primary">
+                  </mat-checkbox>
+                </mat-cell>
+              </ng-container>
+              
               <!-- Full Name Column -->
               <ng-container matColumnDef="fullname">
                 <mat-header-cell *matHeaderCellDef mat-sort-header>
                   Full Name
                 </mat-header-cell>
-                <mat-cell *matCellDef="let user">
-                    {{ user.fullname }} 
+                <mat-cell *matCellDef="let feedback">
+                    {{ feedback.fullname }} 
                 </mat-cell>
               </ng-container>
     
@@ -136,36 +161,27 @@
                 <mat-header-cell *matHeaderCellDef mat-sort-header>
                   Email
                 </mat-header-cell>
-                <mat-cell *matCellDef="let user"> {{ user.email }} </mat-cell>
-              </ng-container>
-    
-              <!-- contact number Column -->
-              <ng-container matColumnDef="userrole">
-                <mat-header-cell *matHeaderCellDef mat-sort-header>
-                  Role
-                </mat-header-cell>
-                <mat-cell *matCellDef="let user">
-                  {{ user.userrole }}
-                </mat-cell>
+                <mat-cell *matCellDef="let feedback"> {{ feedback.senderEmail }} </mat-cell>
               </ng-container>
     
               <!-- Created Date Column -->
               <ng-container matColumnDef="created_at">
                 <mat-header-cell *matHeaderCellDef mat-sort-header>
-                  Created Date
+                  Received Date
                 </mat-header-cell>
-                <mat-cell *matCellDef="let user"> 
-                   {{ user.created_at | date : "mediumDate" }}
+                <mat-cell *matCellDef="let feedback"> 
+                   {{ feedback.created_at | date : "medium" }}
                 </mat-cell>
               </ng-container>
     
               <!-- Status Column -->
               <ng-container matColumnDef="status">
                 <mat-header-cell *matHeaderCellDef> Status </mat-header-cell>
-                <mat-cell *matCellDef="let user" >
-                  <div class="status" [ngClass]="{ 'status-active': user.subscription }">
+                <mat-cell *matCellDef="let feedback" >
+                  <div class="status" [ngClass]="{ 'status-active': feedback.responderId }">
                     <span class="status-text">
-                        {{ user.subscription ? 'Active' : 'InActive' }}
+                        {{ feedback.responderId
+                        ? 'Responded' : 'UnAnswered' }}
                     </span>
                   </div>
                 </mat-cell>
@@ -207,7 +223,11 @@
               *matHeaderRowDef="displayedColumns; sticky: true"
             ></mat-header-row>
             <!-- Table Rows --> 
-            <mat-row *matRowDef="let user; columns: displayedColumns"></mat-row>
+            <!-- (click)="selection.toggle(row)" -->
+            <mat-row            
+              *matRowDef="let row; 
+              columns: displayedColumns"
+            ></mat-row>
 
             <tr class="mat-row" *matNoDataRow>
               <td class="mat-cell" colspan="4">
