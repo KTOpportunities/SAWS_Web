@@ -7,10 +7,11 @@ import { TokeStorageService } from "src/app/services/token-storage.service";
 import { Dataservice } from "src/app/services/data.service";
 import Swal from "sweetalert2";
 import { ElementRef } from '@angular/core';
+
 @Component({
-  selector: "app-login",
-  templateUrl: "./login.component.html",
-  styleUrls: ["./login.component.css"],
+  selector: 'app-login',
+  templateUrl: './login.component.html',
+  styleUrls: ['./login.component.css'],
 })
 export class loginComponent implements OnInit {
   userData: any = null;
@@ -18,6 +19,7 @@ export class loginComponent implements OnInit {
   submitted = false;
   errMessage: string = "";
   passwordVisibility: boolean = false;
+  isPasswordNotEmpty: boolean = false;
   isChecked: boolean = false;
 
   constructor(
@@ -52,18 +54,18 @@ export class loginComponent implements OnInit {
   }
   ngOnInit(): void {
   }
-  togglePasswordVisibility() {
-    const passwordInput = this.el.nativeElement.querySelector('.password_field');
-    const passwordToggle = this.el.nativeElement.querySelector('.password-toggle');
 
-    if (passwordInput.type === 'password') {
-        passwordInput.type = 'text';
-        passwordToggle.innerText = '👁️';
-    } else {
-        passwordInput.type = 'password';
-        passwordToggle.innerText = '👁️';
+  togglePasswordVisibility() {
+    this.passwordVisibility = !this.passwordVisibility;
+  }
+
+  onPasswordInput(event: any) {
+    this.isPasswordNotEmpty = event.target.value.trim().length > 0;
+
+    if(!this.isPasswordNotEmpty){
+      this.passwordVisibility = false;
     }
-}
+  }
   
   async emailValidator(control: any) {
     if (control.value) {
@@ -167,5 +169,5 @@ export class loginComponent implements OnInit {
       this.loginform.get('RememberMe')?.setValue(this.isChecked); 
     }
   }
-  
+ 
 }

@@ -238,12 +238,6 @@
     display: flex;
   }
 
-  .activebutton {
-    color: #fff;
-    background-color: #008c1d;
-    border-radius: 10px;
-  }
-  
   .field-input {
     width: 328px;
     height: 35px;
@@ -610,6 +604,18 @@
     padding-left: 15px;
     padding-right: 15px;
   }
+
+  .dropdown {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+    margin-right: 20px;
+    width: 24px;
+    height: 24px;
+    color: #fff;
+  }
   
   .search {
     height: 48px;
@@ -666,11 +672,23 @@
     text-decoration: none;
     transition: color .2s, background-color .2s;
     display: flex;
+    cursor: pointer;
   }
   
-  .nav-link:hover {
+  .activebutton {
+    color: #fff;
+    background-color: #008c1d;
+    border-radius: 10px;
+  }
+
+  .nav-link:not(.activebutton):hover {
     color: #fff;
     background-color: #8295C2;
+  }
+
+  .nav-link:hover {
+    color: #fff;
+    background-color: #008c1d;
   }
   
   .nav-link.w--current {

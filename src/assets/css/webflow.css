@@ -1054,16 +1054,42 @@ textarea.w-select {
   font-weight: 700;
 }
 
+.w-dropdown-link-2 {
+  padding: 8px 20px;
+  display: block;
+  /* color: #fff; */
+  /* color: inherit; */
+  color: #000;
+  cursor: pointer;
+  /* font-size: 18px; */
+  font-family: Montserrat, sans-serif;
+  font-weight: 600;
+}
+
 .w-dropdown-link:hover {
   color: #00386c;
   font-weight: bold;
 }
 
+.w-dropdown-link-2:hover {
+  color: #00386c;
+  /* font-weight: bold; */
+  /* font-weight: 600; */
+}
  
 .w-dropdown-link.w--current {
   color: #0082f3;
 }
+
+.w-dropdown-link-2.w--current {
+  color: #0082f3;
+}
+
 .w-dropdown-link:focus {
+  outline: 0;
+}
+
+.w-dropdown-link-2:focus {
   outline: 0;
 }
 

@@ -238,6 +238,18 @@
     padding-right: 0;
     display: flex;
   }
+
+  .password-toggle {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    cursor: pointer;
+  }
+
+  .password-input-wrapper {
+    position: relative;
+  }
   
   .field-input {
     width: 328px;

@@ -20,11 +20,13 @@ import { MatTableModule } from "@angular/material/table";
 import { SharedModule } from "./shared/shared.module"
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { AdminService } from "./services/admin.service";
+import { MatIconModule } from '@angular/material/icon';
+
 @NgModule({
   declarations: [
     AppComponent,
     AuthLayoutComponent,
-    AdminLayoutComponent,
+    AdminLayoutComponent
   ],
   imports: [
     BrowserModule,
@@ -36,7 +38,8 @@ import { AdminService } from "./services/admin.service";
     NgxSpinnerModule,
     MatTableModule,
     SharedModule,
-    FlexLayoutModule
+    FlexLayoutModule,
+    MatIconModule
   ],
   providers: [
     AuthService,

@@ -160,9 +160,12 @@ export class SubscriberUserComponent implements OnInit {
 }
 
 clearFilter() {
-  this.dataSource.filter = '';
+  // this.dataSource.filter = '';
   this.selectedSubscriptionName = '';
   this.selectedDateString = '';
+
+  this.apiData.clearFilter();
+  this.apiData.clearForm();
 }
 
 isFilterActive(): boolean {
@@ -224,10 +227,10 @@ pageChanged(event: PageEvent) {
 
  
   deleteUser(user: any) {
-    // console.log("delete user",user);
-    console.log("delete user",user.userprofileid);
-    const userId = user.userprofileid; // Assuming your user object has an 'id' property
-  
+   
+    const userId = user.userprofileid; 
+    const aspuId = user.aspuid;
+
     Swal.fire({
       title: 'Are you sure you want to delete?',
       icon: 'warning',
@@ -239,7 +242,7 @@ pageChanged(event: PageEvent) {
         this.spinner.show(); // Show spinner while deleting
   
         // Call the soft delete API
-        this.apiService.deleteUserProfileById(userId).subscribe(
+        this.apiService.deleteUserProfileById(userId, aspuId).subscribe(
           () => {
             // Update the status for soft delete
             user.status = 'deleted'; // Update the status value accordingly

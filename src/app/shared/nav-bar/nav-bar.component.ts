@@ -1,5 +1,6 @@
 import { DatePipe } from '@angular/common';
 import { Component, OnInit, HostListener, ElementRef } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router, NavigationEnd  } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { UserLoggedIn } from 'src/app/Models/user.model';
@@ -21,6 +22,8 @@ export class NavBarComponent implements OnInit {
   userRole: any;
   searchTerm: string = '';
 
+  myForm!: FormGroup;
+
   showSearchSubcription!: Subscription;
 
   isUserManagementActive = false;
@@ -34,6 +37,7 @@ export class NavBarComponent implements OnInit {
     public datePipe: DatePipe,
     private apiToken: TokeStorageService,
     private elementRef: ElementRef,
+    private fb: FormBuilder
   ){
     this.date = new Date();
 
@@ -62,7 +66,13 @@ export class NavBarComponent implements OnInit {
       this.userRole = userLoginDetails?.userRole;
     } else {
       this.router.navigate(['/login']);
-    }    
+    }
+
+    this.myForm = this.fb.group({
+      search: ['']
+    });
+
+    this.apiData.setForm(this.myForm);    
   }
 
   ngOnDestroy(): void {
@@ -91,7 +101,9 @@ export class NavBarComponent implements OnInit {
     // Check the current route
     const currentRoute = this.router.url;    
 
-    if (currentRoute !== '/admin/subscriberUser' && currentRoute !== '/admin/adminUser' ) {
+    if (currentRoute !== '/admin/subscriberUser' && currentRoute !== '/admin/adminUser' && 
+    currentRoute !== '/admin/feedback'
+    ) {
       return false;
     } else {
       return true;
@@ -103,16 +115,10 @@ export class NavBarComponent implements OnInit {
     this.isUserManagementActive = currentUrl.startsWith('/admin/adminUser') || currentUrl.startsWith('/admin/subscriberUser');
   }  
 
-  // Define a method to navigate to the specified route
   navigateToDashboard() {
     this.router.navigate(["/admin/dashboard"]);
     this.menuOpen = false;
   }
-
-  // navigateToUsermanagement() {
-  //   this.router.navigate(["/admin/user"]);
-  //   this.router.navigate(["/admin/userManagement"]);
-  // }
 
   navigateToAdminUser() {
     this.router.navigate(["/admin/adminUser"]);
@@ -126,12 +132,6 @@ export class NavBarComponent implements OnInit {
     console.log('Toggling dropdown');
     this.isDropdownOpen = !this.isDropdownOpen;
     this.updateUserManagementActive();
-  }
-
-  handleFeedbackLinkClick(event: Event): void {
-    // Prevent the default behavior of the link
-    this.menuOpen = false;
-    event.preventDefault();
   }
 
   onOptionSelected(option: string) {
@@ -164,5 +164,6 @@ export class NavBarComponent implements OnInit {
 
   hideDropdown() {
   this.isDropdownOpen = false;
+  this.menuOpen = false;
   }
 }

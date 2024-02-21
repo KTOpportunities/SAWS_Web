@@ -49,19 +49,27 @@
                                     class="label_f_password">Password</label>
                                     <div class="password-input-wrapper">
                                         <input
-                                        style="color: black;"
-                                        type="password" 
-                                        class="password_field w-input"
-                                        maxlength="256" 
-                                        name="Password"
-                                        data-name="Password"
-                                        placeholder 
-                                        id="Password"
-                                        formControlName="Password"
-                                        data-ms-member="password" 
-                                        required
+                                            [type]="passwordVisibility ? 'text' : 'password'"
+                                            style="color: black;"
+                                            class="password_field w-input"
+                                            maxlength="256" 
+                                            name="Password"
+                                            data-name="Password"
+                                            placeholder 
+                                            id="Password"
+                                            formControlName="Password"
+                                            data-ms-member="password" 
+                                            required
+                                            (input)="onPasswordInput($event)"
                                         />
-                                        <span class="password-toggle" (click)="togglePasswordVisibility()">👁️</span>
+                            
+                                        <mat-icon
+                                            *ngIf="isPasswordNotEmpty"
+                                            (click)="togglePasswordVisibility()"
+                                            class="password-toggle"
+                                            >
+                                            {{ passwordVisibility? 'visibility' : 'visibility_off'}}
+                                        </mat-icon>
                                     </div>
                                     <span class="errormessage"
                                         *ngIf="submitted && loginform.get('Password')?.hasError('required')"
@@ -95,11 +103,6 @@
                         {{this.errMessage}}
                         </span>
                     </form>
-                    
-                    <!-- <div class="w-form-fail">
-                        <div>Oops! Something went wrong while submitting the
-                            form.</div>
-                    </div> -->
                 </div>
             </div>
         </div>

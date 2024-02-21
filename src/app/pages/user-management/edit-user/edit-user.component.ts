@@ -19,7 +19,8 @@ export class EditUserComponent {
   subscriberObject: any;
   dialogRef: any;
   adminUser: Admin[] = [];
-  userRole: any = ''
+  userRole: any = '';
+  userEmail: any = '';
 
   ngOnInit() {
   }
@@ -60,6 +61,7 @@ export class EditUserComponent {
     });
 
     this.userRole = subscriberObject?.userrole || '';
+    this.userEmail = subscriberObject?.email || '';
   }
 
     onCancel() {
@@ -72,50 +74,69 @@ export class EditUserComponent {
  
   onSubmit() {
     this.submitted = true;
+    
+    if (!this.userForm.valid) {
+      this.userForm.markAllAsTouched();
+      return;
+    }
   
     const formValues = this.userForm.value;
+    const body = {
+      userprofileid: formValues.userprofileid,
+      aspuid: formValues.aspuid,
+      Fullname: formValues.Fullname,
+      Email: formValues.Email,
+      UserRole: formValues.UserRole,
+      created_at: formValues.created_at,
+      UserSubscriptionStatus: formValues.UserSubscriptionStatus,
+    };
   
-    if (this.userForm.valid) {
-      const body = {
-        userprofileid: formValues.userprofileid,
-        aspuid: formValues.aspuid,
-        Fullname: formValues.Fullname,
-        Email: formValues.Email,
-        UserRole: formValues.UserRole,
-        created_at: formValues.created_at,
-        UserSubscriptionStatus: formValues.UserSubscriptionStatus,
-      };
-  
-      this.api.InsertUpdateUserProfile(body).subscribe(
-        (data: any) => {
-         
-          var user: any = this.apiData.getCurrentUser();
-
-          if (user) {
-            const userLoginDetails =  JSON.parse(user);
-            if(userLoginDetails?.userID == data.aspuid) {
-              this.getLoggedInUser(data.aspuid);
-            } 
-          }
-
-          this.showSuccessAlert();
-          this.apiData.removeUser();
-          if (this.userRole == 'Admin') {
-            this.router.navigate(['/admin/adminUser']);
+    if (this.userEmail === body.Email) {
+      this.updateUserForm(body);
+    } else {
+      this.api.loginEmailExist(body.Email).subscribe(
+        (data) => {
+          if (!data) {
+            this.updateUserForm(body);
           } else {
-            this.router.navigate(['/admin/subscriberUser']);
+            this.showExistingEmailAlert();
           }
         },
-        (err) => {
-          console.log("Error:", err);
-          this.showUnsuccessfulAlert();
+        (error) => {
+          console.error(error);
         }
       );
-    } else {
-
-      this.userForm.markAllAsTouched();
     }
-  }  
+  }
+  
+
+  updateUserForm(body: any) {
+    this.api.InsertUpdateUserProfile(body).subscribe(
+      (data: any) => {
+       
+        var user: any = this.apiData.getCurrentUser();
+
+        if (user) {
+          const userLoginDetails =  JSON.parse(user);
+          if(userLoginDetails?.userID == data.aspuid) {
+            this.getLoggedInUser(data.aspuid);
+          } 
+        }
+
+        this.showSuccessAlert();
+        this.apiData.removeUser();
+        if (this.userRole == 'Admin') {
+          this.router.navigate(['/admin/adminUser']);
+        } else {
+          this.router.navigate(['/admin/subscriberUser']);
+        }
+      },
+      (err) => {
+        console.log("Error:", err);
+        this.showUnsuccessfulAlert();
+      }
+    );
+  }
 
   toggleSubscriptionStatus() {
     const currentValue = this.userForm.controls["UserSubscriptionStatus"].value;
@@ -139,7 +160,17 @@ export class EditUserComponent {
       title: "Success!",
       text: `You have successfully updated the ${this.userRole}.`,
       showConfirmButton: false,
-      timer: 2000,
+      timer: 1500,
+    });
+  }
+
+  showExistingEmailAlert() {
+    Swal.fire({
+      icon: "warning",
+      // title: "Email exist!",
+      text: "Cannot update to an existing email!",
+      showConfirmButton: false,
+      timer: 2500,
     });
   }
 

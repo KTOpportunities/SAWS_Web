@@ -52,7 +52,7 @@
                     style="color: red;"
                     *ngIf="
                       submitted &&
-                      userForm.get(['Password'])?.hasError('required')
+                      userForm.get(['Fullname'])?.hasError('required')
                     "
                     class="error-message"
                   >
@@ -75,7 +75,7 @@
                     required=""
                   />
                 </div> -->
-                <div
+                <!-- <div
                   id="w-node-ab03b8d4-e0ed-31b3-68a0-eda284d58ae2-ac205186"
                   class="add-user-admin-div"
                 >
@@ -112,7 +112,7 @@
                   >
                     Username should not contain spaces. You can use underscores (_) or hyphens (-) for word separation
                   </div>
-                </div>
+                </div> -->
                 <div
                   id="w-node-_4cd953d6-568c-454e-fa45-d438d47d0757-ac205186"
                   class="add-user-admin-div"
@@ -164,17 +164,30 @@
                   class="add-user-admin-div"
                 >
                   <label for="field-3" class="add-label">Password</label
-                  ><input
-                    class="add-user-input w-input"
-                    maxlength="256"
-                    name="field-2"
-                    data-name="Field 2"
-                    placeholder="Enter your password"
-                    type="password"
-                    id="field-2"
-                    required=""
-                    formControlName="Password"
-                  />
+                  >
+                  <div
+                  class="password-input-wrapper"  
+                  >
+                    <input
+                      class="add-user-input w-input"
+                      maxlength="256"
+                      name="field-2"
+                      data-name="Field 2"
+                      placeholder="Enter your password"
+                      [type]="passwordVisibility ? 'text' : 'password'"
+                      id="field-2"
+                      required=""
+                      formControlName="Password"
+                      (input)="onPasswordInput($event)"
+                    />
+                    <mat-icon
+                      *ngIf="isPasswordNotEmpty"
+                      (click)="togglePasswordVisibility()"
+                      class="password-toggle"
+                      >
+                        {{ passwordVisibility? 'visibility' : 'visibility_off'}}
+                    </mat-icon>
+                  </div>
                   <div
                     style="color: red;"
                     class="errormessage"
@@ -194,7 +207,7 @@
                     "
                     class="error-message"
                   >
-                    Password must be a mix of letters and numbers
+                    Password must be a combination of letters and numbers
                   </div>
                 </div>
               </div>

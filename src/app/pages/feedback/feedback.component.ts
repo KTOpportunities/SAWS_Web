@@ -1,70 +1,62 @@
-import { Component, ViewChild, AfterViewInit, OnInit } from "@angular/core";
-import { MatTableDataSource } from "@angular/material/table";
-import { MatSortModule } from "@angular/material/sort";
-import { MatPaginatorModule } from "@angular/material/paginator";
-import { MatIconModule } from "@angular/material/icon";
+import { DatePipe } from '@angular/common';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { MatDatepicker, MatDatepickerInputEvent } from '@angular/material/datepicker';
+import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
-import { MatSort } from "@angular/material/sort";
-import { AdminService } from "src/app/services/admin.service";
-import { MatDialog } from "@angular/material/dialog";
-import { AddUserComponent } from "src/app/pages/user-management/add-user/add-user.component";
-import { Router, ActivatedRoute } from "@angular/router";
-import { NgxSpinnerService } from "ngx-spinner";
-import { EditUserComponent } from "../edit-user/edit-user.component";
-import { Admin } from "src/app/Models/admin.model";
-import Swal from "sweetalert2";
-import { SubscriberService } from "src/app/services/subscriber.service";
-import { Dataservice } from "src/app/services/data.service";
-import { MatDatepicker, MatDatepickerInputEvent } from "@angular/material/datepicker";
-import { DatePipe } from "@angular/common";
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
+import { ActivatedRoute, Router } from '@angular/router';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { Admin } from 'src/app/Models/admin.model';
+import { AdminService } from 'src/app/services/admin.service';
+import { Dataservice } from 'src/app/services/data.service';
+import { SubscriberService } from 'src/app/services/subscriber.service';
+import { EditUserComponent } from '../user-management/edit-user/edit-user.component';
+import Swal from 'sweetalert2';
 
 @Component({
-  selector: "app-admin-user",
-  templateUrl: "./admin-user.component.html",
-  styleUrls: ["./admin-user.component.css"]
+  selector: 'app-feedback',
+  templateUrl: './feedback.component.html',
+  styleUrls: ['./feedback.component.css']
 })
+export class FeedbackComponent implements OnInit{
 
-export class AdminUserComponent implements OnInit {
-
-  // Define the displayed columns
-  displayedColumns: string[] = [
-    "fullname",
-    "email",
-    "userrole",
-    "created_at",
-    "status",
-    "action",
-  ];
-
-  @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
-  // @ViewChild(MatPaginator) paginator!: MatPaginator;
-  @ViewChild('picker', { static: false }) picker!: MatDatepicker<Date>;
-  @ViewChild(MatSort, { static: true }) sort!: MatSort;
-
-  dataSource = new MatTableDataSource<Admin>();
-
-  subscriptions: any[] = [
-    { id: 1, subscription: true },
-    { id: 2, subscription: false }
-  ];
-
-  selectedSubscription: number | undefined;
-  adminList: Admin[] = [];
-
-  pageSize = 5;
-  pageSizeStore = 5;
-  currentPage = 0;
-  currentPageStore = 0;
+    // Define the displayed columns
+    displayedColumns: string[] = [
+      "fullname",
+      "email",
+      "userrole",
+      "created_at",
+      "status",
+      "action",
+    ];
   
-  TotalRecords: any = 0;
-  filteredData: any = '';
-
-  selectedDateString: any;
-  selectedSubscriptionName: any = '';
-  date: Date;
-
-  isCurrentUser: boolean = false;
-  currentUser: any;
+    @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
+    // @ViewChild(MatPaginator) paginator!: MatPaginator;
+    @ViewChild('picker', { static: false }) picker!: MatDatepicker<Date>;
+    @ViewChild(MatSort, { static: true }) sort!: MatSort;
+  
+    dataSource = new MatTableDataSource<Admin>();
+  
+    subscriptions: any[] = [
+      { id: 1, subscription: true },
+      { id: 2, subscription: false }
+    ];
+  
+    selectedSubscription: number | undefined;
+    adminList: Admin[] = [];
+  
+    pageSize = 5;
+    pageSizeStore = 5;
+    currentPage = 0;
+    currentPageStore = 0;
+    
+    TotalRecords: any = 0;
+    filteredData: any = '';
+  
+    selectedDateString: any;
+    selectedSubscriptionName: any = '';
+    date: Date;
 
   constructor(
     private apiAdmin: AdminService,
@@ -83,13 +75,11 @@ export class AdminUserComponent implements OnInit {
     this.date = new Date();
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.getAllAdmins(); 
-    this.filterData();
-
-    this.currentUser = this.apiData.getCurrentUser();
+    this.filterData(); 
   }
-    
+
   getAllAdmins(page: number = 1){
 
     var currentPage: number = Number(sessionStorage.getItem('currentPage'));
@@ -115,10 +105,7 @@ export class AdminUserComponent implements OnInit {
 
           this.adminList.forEach(element => {
             element.subscription = true;
-            // element.isCurrentUser = false;
           });
-
-          
 
           sessionStorage.removeItem('currentPage');
           sessionStorage.removeItem('pageSize');
@@ -169,10 +156,9 @@ export class AdminUserComponent implements OnInit {
   }
 }
 
-  addUser() {
-    this.apiData.saveUserUrl('/admin/adminUser');
-    this.router.navigate(["/admin/addUser"]);
-  }
+ addUser() {
+  this.router.navigate(["/admin/addResponse"]);
+}
 
   pageChanged(event: PageEvent) {
     this.pageSize = event.pageSize;
@@ -234,16 +220,8 @@ export class AdminUserComponent implements OnInit {
   }
 
   // Add your toggle/edit/delete methods here
-  checkCurrentUser(user: any) {
-    if (this.currentUser) {
-      const userLoginDetails =  JSON.parse(this.currentUser);
-      if(userLoginDetails?.userID == user.aspuid) {
-        this.isCurrentUser = true;
-        
-      } else {
-        this.isCurrentUser = false;
-      }
-    }
+  toggleUser(user: any) {
+    // Implement toggle logic
   }
 
   editUser(user: any) {

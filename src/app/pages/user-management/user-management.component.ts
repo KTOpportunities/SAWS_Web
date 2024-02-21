@@ -46,9 +46,7 @@ export class UserManagementComponent implements OnInit {
   getPagedAllSubscribers(page: number = 1){
     this.apiService.getPagedAllSubscribers(this.currentPage + page, this.pageSize).subscribe(
       (data) => {
-        console.log("DATA:::", data);
-        this.dataSource.data = data.Data; // Assuming the API returns an array of objects
-        console.log("DATA:::", this.dataSource.data);
+        this.dataSource.data = data.Data;
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
         this.spinner.hide();
@@ -80,10 +78,9 @@ export class UserManagementComponent implements OnInit {
   }
 
   deleteUser(user: any) {
-    // console.log("delete user",user);
-    console.log("delete user",user.userprofileid);
-    const userId = user.userprofileid; // Assuming your user object has an 'id' property
-  
+    const userId = user.userprofileid; 
+    const aspuId = user.aspuid; 
+
     Swal.fire({
       title: 'Are you sure you want to delete?',
       icon: 'warning',
@@ -95,7 +92,7 @@ export class UserManagementComponent implements OnInit {
         this.spinner.show(); // Show spinner while deleting
   
         // Call the soft delete API
-        this.apiService.deleteUserProfileById(userId).subscribe(
+        this.apiService.deleteUserProfileById(userId, aspuId).subscribe(
           () => {
             // Update the status for soft delete
             user.status = 'deleted'; // Update the status value accordingly

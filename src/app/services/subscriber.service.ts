@@ -56,9 +56,16 @@ export class SubscriberService {
     );
   }
 
-  deleteUserProfileById(Id: any) {
+  loginEmailExist(email: any) {
+    return this.http.get<any>(
+      environment.serverAPI + `Authenticate/LoginEmailExist?email=${email}`,
+      email
+    );
+  }
+
+  deleteUserProfileById(Id: any, aspuId: any) {
     return this.http.delete<any>(
-      environment.serverAPI + `Authenticate/deleteUserProfileById?Id=${Id}`,
+      environment.serverAPI + `Authenticate/DeleteUserProfileById?id=${Id}&aspuid=${aspuId}`,
       this.httpOptions
     );
   }
