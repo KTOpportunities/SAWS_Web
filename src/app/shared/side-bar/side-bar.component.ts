@@ -70,6 +70,7 @@ export class SideBarComponent {
     this.apiToken.signOut();
     this.apiData.removeCurrentUser();
     this.apiData.removeUser();
+    this.apiData.removeAdvert();
     this.apiData.removeUserUrl();
     sessionStorage.removeItem('currentPage');
     sessionStorage.removeItem('pageSize');

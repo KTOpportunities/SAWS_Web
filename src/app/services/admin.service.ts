@@ -39,12 +39,12 @@ export class AdminService {
   GetPagedAllAdmins(pageNumber: any, pageSize: any) {
     return this.http.get<any>(
       environment.serverAPI + `Admin/GetPagedAllAdmins?pageNumber=${pageNumber}&pageSize=${pageSize}`,
-      // {
-      //   headers: new HttpHeaders().append(
-      //     'Authorization',
-      //     `Bearer ${this.token}`
-      //   ),
-      // }
+    );
+  }
+
+  GetPagedAllFeedbacks(pageNumber: any, pageSize: any) {
+    return this.http.get<any>(
+      environment.serverAPI + `Feedback/GetPagedAllFeedbacks?pageNumber=${pageNumber}&pageSize=${pageSize}`,
     );
   }
 

@@ -18,6 +18,10 @@ import { AdminUserComponent } from "src/app/pages/user-management/admin-user/adm
 import { FeedbackComponent } from "src/app/pages/feedback/feedback.component";
 import { AddResponseComponent } from "src/app/pages/feedback/add-response/add-response.component";
 import { ViewFeedbackComponent } from "src/app/pages/feedback/view-feedback/view-feedback.component";
+import { AdvertisementComponent } from "src/app/pages/advertisement/advertisement.component";
+import { AddAdvertisementComponent } from "src/app/pages/advertisement/add-advertisement/add-advertisement.component";
+import { EditAdvertisementComponent } from "src/app/pages/advertisement/edit-advertisement/edit-advertisement.component";
+import { ViewAdvertisementComponent } from "src/app/pages/advertisement/view-advertisement/view-advertisement.component";
 @NgModule({
   declarations: [
     UserManagementComponent,
@@ -28,7 +32,11 @@ import { ViewFeedbackComponent } from "src/app/pages/feedback/view-feedback/view
     AdminUserComponent,
     FeedbackComponent,
     AddResponseComponent,
-    ViewFeedbackComponent
+    ViewFeedbackComponent,
+    AdvertisementComponent,
+    AddAdvertisementComponent,
+    EditAdvertisementComponent,
+    ViewAdvertisementComponent
   ],
   imports: [
     CommonModule,

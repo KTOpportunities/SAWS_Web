@@ -89,6 +89,15 @@
     margin-top: 10px;
   }
 
+  .mat-column-action {
+    max-width: 150px;
+    min-width: 140px;
+  }
+
+  /* .mat-mdc-row:hover .mat-mdc-cell {
+    border-color: currentColor;
+  } */
+
   td {
     padding: 10px;
   }
