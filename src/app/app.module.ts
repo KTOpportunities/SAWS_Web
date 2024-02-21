@@ -21,12 +21,14 @@ import { SharedModule } from "./shared/shared.module"
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { AdminService } from "./services/admin.service";
 import { MatIconModule } from '@angular/material/icon';
+import { AdvertisementComponent } from './pages/advertisement/advertisement.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     AuthLayoutComponent,
-    AdminLayoutComponent
+    AdminLayoutComponent,
+    AdvertisementComponent
   ],
   imports: [
     BrowserModule,

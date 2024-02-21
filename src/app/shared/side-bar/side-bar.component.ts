@@ -44,6 +44,9 @@ export class SideBarComponent {
   navigateToSubscriberUser() {
     this.router.navigate(["/admin/subscriberUser"]);
   }
+  navigateaTodvertisement() {
+    this.router.navigate(["/admin/advertisement"]);
+  }
   
   toggleDropdown() {
     this.isDropdownOpen = !this.isDropdownOpen;
