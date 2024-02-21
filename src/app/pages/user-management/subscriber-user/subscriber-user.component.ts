@@ -24,7 +24,7 @@ import { MatDatepicker, MatDatepickerInputEvent } from "@angular/material/datepi
 })
 
 export class SubscriberUserComponent implements OnInit {
-  // Define the displayed columns
+
   displayedColumns: string[] = [
     "fullname",
     "email",
@@ -58,7 +58,6 @@ export class SubscriberUserComponent implements OnInit {
   selectedDateString: any;
   selectedSubscriptionName: any = '';
   date: Date;
-
 
   constructor(
     private apiService: SubscriberService,
@@ -100,10 +99,6 @@ export class SubscriberUserComponent implements OnInit {
 
     this.apiService.getPagedAllSubscribers(this.currentPage + page, this.pageSize).subscribe({
       next: (data: any) => {
-          // this.dataSource.data = data.Data; // Assuming the API returns an array of objects
-          // this.dataSource.paginator = this.paginator;
-          // this.dataSource.sort = this.sort;
-
           this.spinner.hide();
           this.subsciberList = data.Data;
 
@@ -155,12 +150,9 @@ export class SubscriberUserComponent implements OnInit {
   if (selectedSubscription) {
     this.selectedSubscriptionName = selectedSubscription.subscription;
   }
-
-  console.log("selectedSubscription", selectedSubscription)
 }
 
 clearFilter() {
-  // this.dataSource.filter = '';
   this.selectedSubscriptionName = '';
   this.selectedDateString = '';
 
@@ -172,17 +164,17 @@ isFilterActive(): boolean {
   return this.dataSource.filter.trim() !== '';
 }
 
-pageChanged(event: PageEvent) {
-  this.pageSize = event.pageSize;
-  this.currentPage = event.pageIndex;
-  
-  this.getAllSubscribers();
-  
-  if (this.dataSource) {
-        this.dataSource.filterPredicate = (data: any, filter: string) =>
-          data.name.indexOf(filter) || data.Status.indexOf(filter) != -1;
+  pageChanged(event: PageEvent) {
+    this.pageSize = event.pageSize;
+    this.currentPage = event.pageIndex;
+    
+    this.getAllSubscribers();
+    
+    if (this.dataSource) {
+          this.dataSource.filterPredicate = (data: any, filter: string) =>
+            data.name.indexOf(filter) || data.Status.indexOf(filter) != -1;
+    }
   }
-}
 
     selectDate(type: string, event: MatDatepickerInputEvent<Date>) {
       this.date = event.value!;
@@ -197,10 +189,6 @@ pageChanged(event: PageEvent) {
     }
   
     filterDate() {
-      // this.selectedProvinceName = '';
-      // this.selectedStatusName = '';
-      // this.selectedPositionName = '';
-  
       let newDate = this.datePipe.transform(this.date, 'yyyy-MM-dd');
   
       this.dataSource.filterPredicate = (data, filter: string) =>
@@ -208,21 +196,11 @@ pageChanged(event: PageEvent) {
   
       this.dataSource.filter = newDate!.toString().trim();
   
-      // Update the button text based on the selected date
       const selectedDate = this.datePipe.transform(this.date, 'MMM dd, yyyy');
   
       if (selectedDate) {
         this.selectedDateString = selectedDate;
       }
-    }
-
-  // Add your toggle/edit/delete methods here
-  toggleUser(user: any) {
-    // Implement toggle logic
-  }
-
-  editUser(user: any) {
-    // Implement edit logic
   }
 
  
@@ -244,48 +222,30 @@ pageChanged(event: PageEvent) {
         // Call the soft delete API
         this.apiService.deleteUserProfileById(userId, aspuId).subscribe(
           () => {
-            // Update the status for soft delete
-            user.status = 'deleted'; // Update the status value accordingly
-  
-            // Optionally: Provide user feedback (toast, alert, etc.)
-            console.log('User soft deleted successfully.');
-  
-            // Hide spinner after soft deletion
+            user.status = 'deleted';
             this.spinner.hide();
             this.getAllSubscribers();
           },
           (error) => {
             console.error("Error soft deleting user:", error);
-  
-            // Optionally: Provide user feedback on error
-            alert('Error soft deleting user. Please try again.');
-  
-            // Hide spinner on error
             this.spinner.hide();
           }
         );
       }
     });
   }
-  
-  openPopup() {
-    this.dialog.open(EditUserComponent, {
-      width: "49%",
-      height: "52%", // adjust width as needed
-      // Add more configuration options as needed
-    });
-  }
 
   addUser() {
     this.apiData.saveUserUrl('/admin/subscriberUser');
-    this.router.navigate(["/admin/addUser"]);
+    this.router.navigate(["/admin/subscriberUser/addUser"]);
   }
 
   navigateToEditUser(user: Subscriber) {
     sessionStorage.setItem('currentPage', `${this.currentPage}`);
     sessionStorage.setItem('pageSize', `${this.pageSize}`);
     
+    this.apiData.saveUserUrl('/admin/subscriberUser');
     this.apiData.saveUser(user)
-    this.router.navigate(["/admin/editUser"]);
+    this.router.navigate(["/admin/subscriberUser/editUser"]);
   }
 }

@@ -239,23 +239,12 @@ isAllSelected() {
         // Call the soft delete API
         this.apiService.deleteUserProfileById(userId, aspuId).subscribe(
           () => {
-            // Update the status for soft delete
-            user.status = 'deleted'; // Update the status value accordingly
-  
-            // Optionally: Provide user feedback (toast, alert, etc.)
-            console.log('User soft deleted successfully.');
-  
-            // Hide spinner after soft deletion
+             user.status = 'deleted'; 
             this.spinner.hide();
             this.getAllFeedbacks();
           },
           (error) => {
-            console.error("Error soft deleting user:", error);
-  
-            // Optionally: Provide user feedback on error
-            alert('Error soft deleting user. Please try again.');
-  
-            // Hide spinner on error
+            console.error("Error soft deleting advertisement:", error);
             this.spinner.hide();
           }
         );
@@ -264,7 +253,7 @@ isAllSelected() {
   }
   
   addAdvert() {
-    this.router.navigate(["/admin/addAdvert"]);
+    this.router.navigate(["/admin/advertisement/addAdvert"]);
   }
 
   navigateToViewAdvertisement(user: Admin) {
@@ -272,7 +261,7 @@ isAllSelected() {
     sessionStorage.setItem('pageSize', `${this.pageSize}`);
 
     this.apiData.saveAdvert(user);
-    this.router.navigate(["/admin/viewAdvert"]);
+    this.router.navigate(["/admin/advertisement/viewAdvert"]);
   }
 
   editAdvertisement(user: Admin) {
@@ -280,8 +269,7 @@ isAllSelected() {
     sessionStorage.setItem('pageSize', `${this.pageSize}`);
 
     this.apiData.saveAdvert(user);
-    this.router.navigate(["/admin/editAdvert"]);
+    this.router.navigate(["/admin/advertisement/editAdvert"]);
   }
-
 
 }

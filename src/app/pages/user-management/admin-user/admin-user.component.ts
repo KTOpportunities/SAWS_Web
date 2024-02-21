@@ -115,10 +115,7 @@ export class AdminUserComponent implements OnInit {
 
           this.adminList.forEach(element => {
             element.subscription = true;
-            // element.isCurrentUser = false;
-          });
-
-          
+          });          
 
           sessionStorage.removeItem('currentPage');
           sessionStorage.removeItem('pageSize');
@@ -140,39 +137,34 @@ export class AdminUserComponent implements OnInit {
  }
 
  selectSubscription(status: any) {
-  this.selectedSubscription = status;
-  this.filterSubscription();
-}
+    this.selectedSubscription = status;
+    this.filterSubscription();
+  }
 
  filterData() {
-  this.apiData.filterObservable$.subscribe((filter: string) => {
-    this.dataSource.filter = filter.trim().toLowerCase();
-  });
+    this.apiData.filterObservable$.subscribe((filter: string) => {
+      this.dataSource.filter = filter.trim().toLowerCase();
+    });
  }
 
  filterSubscription() {
-  this.selectedSubscriptionName = '';
-  this.selectedDateString = '';
+    this.selectedSubscriptionName = '';
+    this.selectedDateString = '';
 
-  this.dataSource.filterPredicate = (data, filter: string) =>
-    !filter || data.subscription.toString().includes(filter);
+    this.dataSource.filterPredicate = (data, filter: string) =>
+      !filter || data.subscription.toString().includes(filter);
 
-  this.dataSource.filter = this.selectedSubscription!.toString().trim();
+    this.dataSource.filter = this.selectedSubscription!.toString().trim();
 
-  // Update the button text based on the selected subscription status
-  const selectedSubscription = this.subscriptions.find(
-    (subscription) => subscription.subscription === this.selectedSubscription
-  );
+    // Update the button text based on the selected subscription status
+    const selectedSubscription = this.subscriptions.find(
+      (subscription) => subscription.subscription === this.selectedSubscription
+    );
 
-  if (selectedSubscription) {
-    this.selectedSubscriptionName = selectedSubscription.subscription;
-  }
+    if (selectedSubscription) {
+      this.selectedSubscriptionName = selectedSubscription.subscription;
+    }
 }
-
-  addUser() {
-    this.apiData.saveUserUrl('/admin/adminUser');
-    this.router.navigate(["/admin/addUser"]);
-  }
 
   pageChanged(event: PageEvent) {
     this.pageSize = event.pageSize;
@@ -199,10 +191,6 @@ export class AdminUserComponent implements OnInit {
   }
 
   filterDate() {
-    // this.selectedProvinceName = '';
-    // this.selectedStatusName = '';
-    // this.selectedPositionName = '';
-
     this.selectedSubscriptionName = '';
 
     let newDate = this.datePipe.transform(this.date, 'yyyy-MM-dd');
@@ -221,7 +209,6 @@ export class AdminUserComponent implements OnInit {
   }
 
   clearFilter() {
-    // this.dataSource.filter = '';
     this.selectedSubscriptionName = '';
     this.selectedDateString = '';
 
@@ -233,21 +220,16 @@ export class AdminUserComponent implements OnInit {
     return this.dataSource.filter.trim() !== '';
   }
 
-  // Add your toggle/edit/delete methods here
   checkCurrentUser(user: any) {
-    if (this.currentUser) {
-      const userLoginDetails =  JSON.parse(this.currentUser);
-      if(userLoginDetails?.userID == user.aspuid) {
-        this.isCurrentUser = true;
-        
-      } else {
-        this.isCurrentUser = false;
+      if (this.currentUser) {
+          const userLoginDetails =  JSON.parse(this.currentUser);
+          if(userLoginDetails?.userID == user.aspuid) {
+            this.isCurrentUser = true;
+            
+          } else {
+            this.isCurrentUser = false;
+          }
       }
-    }
-  }
-
-  editUser(user: any) {
-    // Implement edit logic
   }
 
   deleteUser(user: any) {
@@ -262,28 +244,16 @@ export class AdminUserComponent implements OnInit {
       cancelButtonText: 'No',
     }).then((result) => {
       if (result.isConfirmed) {
-        this.spinner.show(); // Show spinner while deleting
+        this.spinner.show(); 
   
-        // Call the soft delete API
-        this.apiService.deleteUserProfileById(userId, aspuId).subscribe(
+            this.apiService.deleteUserProfileById(userId, aspuId).subscribe(
           () => {
-            // Update the status for soft delete
-            user.status = 'deleted'; // Update the status value accordingly
-  
-            // Optionally: Provide user feedback (toast, alert, etc.)
-            console.log('User soft deleted successfully.');
-  
-            // Hide spinner after soft deletion
+            user.status = 'deleted';
             this.spinner.hide();
             this.getAllAdmins();
           },
           (error) => {
             console.error("Error soft deleting user:", error);
-  
-            // Optionally: Provide user feedback on error
-            alert('Error soft deleting user. Please try again.');
-  
-            // Hide spinner on error
             this.spinner.hide();
           }
         );
@@ -291,17 +261,9 @@ export class AdminUserComponent implements OnInit {
     });
   }
   
-  openPopup() {
-    this.dialog.open(EditUserComponent, {
-      width: "49%",
-      height: "52%", // adjust width as needed
-
-      // Add more configuration options as needed
-    });
-  }
-
   navigateToAddUser() {
-    this.router.navigate(["/admin/addUser"]);
+    this.apiData.saveUserUrl('/admin/adminUser');
+    this.router.navigate(["/admin/adminUser/addUser"]);
   }
 
   navigateToEditUser(user: Admin) {
@@ -309,7 +271,7 @@ export class AdminUserComponent implements OnInit {
     sessionStorage.setItem('pageSize', `${this.pageSize}`);
 
     this.apiData.saveUser(user);
-    this.router.navigate(["/admin/editUser"]);
+    this.apiData.saveUserUrl('/admin/adminUser');
+    this.router.navigate(["/admin/adminUser/editUser"]);
   }
-
 }

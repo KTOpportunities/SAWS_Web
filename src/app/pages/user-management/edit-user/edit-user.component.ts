@@ -69,7 +69,12 @@ export class EditUserComponent {
     this.userForm.reset();
     Swal.close();
     this.apiData.removeUser();
-    this.router.navigate(['/admin/adminUser']);
+    // this.router.navigate(['/admin/adminUser']);
+
+    var currentUrl: any = this.apiData.getUserUrl();
+    const currentUrlObj = JSON.parse(currentUrl);
+    this.router.navigate([currentUrlObj]);
+    this.apiData.removeUserUrl();
   }
  
   onSubmit() {

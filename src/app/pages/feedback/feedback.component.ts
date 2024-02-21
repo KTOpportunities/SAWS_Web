@@ -40,8 +40,13 @@ export class FeedbackComponent implements OnInit{
   
     dataSource = new MatTableDataSource<Feedback>();
     selection = new SelectionModel<Feedback>(true, []);
+
+    statuses: any[] = [
+      { id: 1, status: true, name: "responded" },
+      { id: 2, status: false, name: "unanswered" }
+    ];
   
-    selectedSubscription: number | undefined;
+    selectedStatus: number | undefined;
     feedbackList: Feedback[] = [];
   
     pageSize = 5;
@@ -53,7 +58,7 @@ export class FeedbackComponent implements OnInit{
     filteredData: any = '';
   
     selectedDateString: any;
-    selectedSubscriptionName: any = '';
+    selectedStatusName: any = '';
     date: Date;
 
   constructor(
@@ -101,6 +106,15 @@ export class FeedbackComponent implements OnInit{
           this.spinner.hide();
           this.feedbackList = data.Data;
 
+          this.feedbackList.forEach(element => {
+
+            if(element.responderId){
+              element.status = true;
+            } else {
+              element.status = false;
+            }
+          });
+
           sessionStorage.removeItem('currentPage');
           sessionStorage.removeItem('pageSize');
 
@@ -133,8 +147,8 @@ isAllSelected() {
   }
 
  selectSubscription(status: any) {
-  this.selectedSubscription = status;
-  // this.filterSubscription();
+  this.selectedStatus = status;
+  this.filterSubscription();
 }
 
  filterData() {
@@ -143,27 +157,27 @@ isAllSelected() {
   });
  }
 
-//  filterSubscription() {
-//     this.selectedSubscriptionName = '';
-//     this.selectedDateString = '';
+ filterSubscription() {
+  this.selectedStatusName = '';
+  this.selectedDateString = '';
 
-//     this.dataSource.filterPredicate = (data, filter: string) =>
-//       !filter || data.subscription.toString().includes(filter);
+  this.dataSource.filterPredicate = (data, filter: string) =>
+    !filter || data.status.toString().includes(filter);
 
-//     this.dataSource.filter = this.selectedSubscription!.toString().trim();
+  this.dataSource.filter = this.selectedStatus!.toString().trim();
 
-//     // Update the button text based on the selected subscription status
-//     const selectedSubscription = this.subscriptions.find(
-//       (subscription) => subscription.subscription === this.selectedSubscription
-//     );
+  // Update the button text based on the selected subscription status
+  const selectedStatus = this.statuses.find(
+    (status) => status.status === this.selectedStatus
+  );
 
-//     if (selectedSubscription) {
-//       this.selectedSubscriptionName = selectedSubscription.subscription;
-//     }
-//   }
+  if (selectedStatus) {
+    this.selectedStatusName = selectedStatus.name;
+  }
+}
 
  addUser() {
-  this.router.navigate(["/admin/addResponse"]);
+  this.router.navigate(["/admin/feedback/addResponse"]);
   }
 
   pageChanged(event: PageEvent) {
@@ -195,7 +209,7 @@ isAllSelected() {
     // this.selectedStatusName = '';
     // this.selectedPositionName = '';
 
-    this.selectedSubscriptionName = '';
+    this.selectedStatusName = '';
 
     let newDate = this.datePipe.transform(this.date, 'yyyy-MM-dd');
 
@@ -214,7 +228,7 @@ isAllSelected() {
 
   clearFilter() {
     // this.dataSource.filter = '';
-    this.selectedSubscriptionName = '';
+    this.selectedStatusName = '';
     this.selectedDateString = '';
 
     this.apiData.clearFilter();
@@ -246,28 +260,16 @@ isAllSelected() {
       cancelButtonText: 'No',
     }).then((result) => {
       if (result.isConfirmed) {
-        this.spinner.show(); // Show spinner while deleting
-  
-        // Call the soft delete API
+        this.spinner.show();
         this.apiService.deleteUserProfileById(userId, aspuId).subscribe(
           () => {
-            // Update the status for soft delete
-            user.status = 'deleted'; // Update the status value accordingly
-  
-            // Optionally: Provide user feedback (toast, alert, etc.)
-            console.log('User soft deleted successfully.');
-  
-            // Hide spinner after soft deletion
-            this.spinner.hide();
+           
+            user.status = 'deleted';
+             this.spinner.hide();
             this.getAllFeedbacks();
           },
           (error) => {
-            console.error("Error soft deleting user:", error);
-  
-            // Optionally: Provide user feedback on error
-            alert('Error soft deleting user. Please try again.');
-  
-            // Hide spinner on error
+            console.error("Error soft deleting feeback:", error);
             this.spinner.hide();
           }
         );
@@ -293,7 +295,6 @@ isAllSelected() {
     sessionStorage.setItem('pageSize', `${this.pageSize}`);
 
     this.apiData.saveUser(user);
-    this.router.navigate(["/admin/editUser"]);
+    this.router.navigate(["/admin/feedback/viewFeedback"]);
   }
-
 }

@@ -99,11 +99,12 @@ export class NavBarComponent implements OnInit {
 
   shouldShowSearchIcon(): boolean {
     // Check the current route
-    const currentRoute = this.router.url;    
+    const currentRoute = this.router.url; 
+    
+    const excludedRoutes: string[] = ['/admin/subscriberUser', '/admin/adminUser', '/admin/feedback', '/admin/advertisement'];
 
-    if (currentRoute !== '/admin/subscriberUser' && currentRoute !== '/admin/adminUser' && 
-    currentRoute !== '/admin/feedback'
-    ) {
+    if (!excludedRoutes.includes(currentRoute)) 
+    {
       return false;
     } else {
       return true;
