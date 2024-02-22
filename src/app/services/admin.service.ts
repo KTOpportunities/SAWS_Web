@@ -48,6 +48,12 @@ export class AdminService {
     );
   }
 
+  GetPagedAllAdverts(pageNumber: any, pageSize: any) {
+    return this.http.get<any>(
+      environment.serverAPI + `Advert/GetPagedAllAdverts?pageNumber=${pageNumber}&pageSize=${pageSize}`,
+    );
+  }
+
   // createNewUser(body: {}) {
   //   return this.http.post<any>(
   //     environment.serverAPI + "Authenticate/RegisterSubscriber",

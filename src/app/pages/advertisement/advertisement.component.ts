@@ -14,7 +14,7 @@ import { Dataservice } from 'src/app/services/data.service';
 import { SubscriberService } from 'src/app/services/subscriber.service';
 import { EditUserComponent } from '../user-management/edit-user/edit-user.component';
 import Swal from 'sweetalert2';
-import { Feedback } from 'src/app/Models/Feedback';
+import { Advert } from 'src/app/Models/Advert';
 
 @Component({
   selector: 'app-advertisement',
@@ -36,11 +36,11 @@ export class AdvertisementComponent implements OnInit {
   @ViewChild('picker', { static: false }) picker!: MatDatepicker<Date>;
   @ViewChild(MatSort, { static: true }) sort!: MatSort;
 
-  dataSource = new MatTableDataSource<Feedback>();
-  selection = new SelectionModel<Feedback>(true, []);
+  dataSource = new MatTableDataSource<Advert>();
+  selection = new SelectionModel<Advert>(true, []);
 
   selectedSubscription: number | undefined;
-  feedbackList: Feedback[] = [];
+  advertList: Advert[] = [];
 
   pageSize = 5;
   pageSizeStore = 5;
@@ -72,11 +72,11 @@ constructor(
   }
 
   ngOnInit(): void {
-    this.getAllFeedbacks(); 
+    this.getAllAdverts(); 
     this.filterData(); 
   }
 
-  getAllFeedbacks(page: number = 1){
+  getAllAdverts(page: number = 1){
 
     var currentPage: number = Number(sessionStorage.getItem('currentPage'));
     var pageSize: number = Number(sessionStorage.getItem('pageSize'));
@@ -94,10 +94,10 @@ constructor(
     }
 
 
-    this.apiAdmin.GetPagedAllFeedbacks(this.currentPage + page, this.pageSize).subscribe({
+    this.apiAdmin.GetPagedAllAdverts(this.currentPage + page, this.pageSize).subscribe({
       next: (data: any) => {
           this.spinner.hide();
-          this.feedbackList = data.Data;
+          this.advertList = data.Data;
 
           sessionStorage.removeItem('currentPage');
           sessionStorage.removeItem('pageSize');
@@ -109,7 +109,7 @@ constructor(
             this.paginator.length = data.TotalRecords;
           });
         
-          this.dataSource = new MatTableDataSource(this.feedbackList);
+          this.dataSource = new MatTableDataSource(this.advertList);
           this.dataSource.paginator = this.paginator;
       },
       error: (error) => {
@@ -118,21 +118,8 @@ constructor(
     });
  }
 
-isAllSelected() {
-    const numSelected = this.selection.selected.length;
-    const numRows = this.dataSource.data.length;
-    return numSelected == numRows;
-}
-
-  masterToggle() {
-    this.isAllSelected() ?
-        this.selection.clear() :
-        this.dataSource.data.forEach(row => this.selection.select(row));
-  }
-
  selectSubscription(status: any) {
   this.selectedSubscription = status;
-  // this.filterSubscription();
 }
 
  filterData() {
@@ -141,32 +128,11 @@ isAllSelected() {
   });
  }
 
-//  filterSubscription() {
-//     this.selectedSubscriptionName = '';
-//     this.selectedDateString = '';
-
-//     this.dataSource.filterPredicate = (data, filter: string) =>
-//       !filter || data.subscription.toString().includes(filter);
-
-//     this.dataSource.filter = this.selectedSubscription!.toString().trim();
-
-//     // Update the button text based on the selected subscription status
-//     const selectedSubscription = this.subscriptions.find(
-//       (subscription) => subscription.subscription === this.selectedSubscription
-//     );
-
-//     if (selectedSubscription) {
-//       this.selectedSubscriptionName = selectedSubscription.subscription;
-//     }
-//   }
-
-
-
   pageChanged(event: PageEvent) {
     this.pageSize = event.pageSize;
     this.currentPage = event.pageIndex;
 
-    this.getAllFeedbacks();
+    this.getAllAdverts();
 
     if (this.dataSource) {
       this.dataSource.filterPredicate = (data: any, filter: string) =>
@@ -187,9 +153,6 @@ isAllSelected() {
   }
 
   filterDate() {
-    // this.selectedProvinceName = '';
-    // this.selectedStatusName = '';
-    // this.selectedPositionName = '';
 
     this.selectedSubscriptionName = '';
 
@@ -209,7 +172,6 @@ isAllSelected() {
   }
 
   clearFilter() {
-    // this.dataSource.filter = '';
     this.selectedSubscriptionName = '';
     this.selectedDateString = '';
 
@@ -220,7 +182,6 @@ isAllSelected() {
   isFilterActive(): boolean {
     return this.dataSource.filter.trim() !== '';
   }
-
 
   deleteAdvertisement(user: any) {
     const userId = user.userprofileid; 
@@ -241,7 +202,7 @@ isAllSelected() {
           () => {
              user.status = 'deleted'; 
             this.spinner.hide();
-            this.getAllFeedbacks();
+            this.getAllAdverts();
           },
           (error) => {
             console.error("Error soft deleting advertisement:", error);

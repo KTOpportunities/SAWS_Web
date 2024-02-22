@@ -99,7 +99,7 @@
                     Uploaded By
                     </mat-header-cell>
                     <mat-cell *matCellDef="let advertisement">
-                        {{ advertisement.fullname }} 
+                        {{ advertisement.uploaded_by }} 
                     </mat-cell>
                 </ng-container>
     
@@ -120,7 +120,7 @@
                         <mat-header-cell *matHeaderCellDef mat-sort-header>
                             Advert Caption
                         </mat-header-cell>
-                        <mat-cell *matCellDef="let advertisement"> {{ advertisement.senderEmail }} </mat-cell>
+                        <mat-cell *matCellDef="let advertisement"> {{ advertisement.advert_caption }} </mat-cell>
                 </ng-container>
 
                  <!-- Advert Link Column -->
@@ -128,7 +128,7 @@
                     <mat-header-cell *matHeaderCellDef mat-sort-header>
                         Advert Link
                     </mat-header-cell>
-                    <mat-cell *matCellDef="let advertisement"> {{ advertisement.senderEmail }} </mat-cell>
+                    <mat-cell *matCellDef="let advertisement"> {{ advertisement.advert_url }} </mat-cell>
                 </ng-container>
     
                 <!-- Action Column -->
