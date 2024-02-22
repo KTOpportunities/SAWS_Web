@@ -13,7 +13,7 @@ import Swal from "sweetalert2";
   styleUrls: ['./edit-advertisement.component.css']
 })
 export class EditAdvertisementComponent {
-  userForm: FormGroup;
+  advertForm: FormGroup;
   submitted = false;
   subscriberObject: any;
   dialogRef: any;
@@ -22,17 +22,6 @@ export class EditAdvertisementComponent {
   userEmail: any = '';
 
   ngOnInit() {
-  }
-
-  emailValidator(control: any) {
-    if (control.value) {
-      const matches = control.value.match(
-        /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/
-      );
-      return matches ? null : { invalidEmail: true };
-    } else {
-      return null;
-    }
   }
 
   constructor(
@@ -46,18 +35,21 @@ export class EditAdvertisementComponent {
     var SubscriberDetails: any = this.apiData.getAdvert();
     const subscriberObject = JSON.parse(SubscriberDetails);
 
-    this.userForm = this.formBuilder.group({
-      userprofileid: [subscriberObject?.userprofileid ?? ''],
-      aspuid: [subscriberObject?.aspuid ?? ''],
-      deleted_at: [subscriberObject?.deleted_at ?? ''],
-      updated_at: [subscriberObject?.updated_at ?? ''],
-      isdeleted: [subscriberObject?.isdeleted ?? false],
-      created_at: [subscriberObject?.created_at ?? ''],
-      Fullname: [subscriberObject?.fullname || '', Validators.required],
-      Email: [subscriberObject?.email || '', [Validators.required, Validators.email]],
-      UserRole: [subscriberObject?.userrole || '', Validators.required],
-      UserSubscriptionStatus: [subscriberObject?.subscription ?? false, Validators.required],
+    this.advertForm = this.formBuilder.group({
+      advertId: [],
+      advert_caption: [],
+      deleted_at: [],
+      updated_at: [],
+      isdeleted: [],
+      created_at: [],
+      uploaded_by: [],
+      advert_url: [],
+      DocAdverts: [[]]
     });
+
+    if (subscriberObject) {
+      this.advertForm.patchValue(subscriberObject);
+    }
 
     this.userRole = subscriberObject?.userrole || '';
     this.userEmail = subscriberObject?.email || '';
@@ -65,21 +57,25 @@ export class EditAdvertisementComponent {
 
     onCancel() {
     this.submitted = false;
-    this.userForm.reset();
+    // this.userForm.reset();
     Swal.close();
     this.apiData.removeAdvert();
     this.router.navigate(['/admin/advertisement']);
   }
- 
+
+  convertBytesToMegabytes(bytes: number): number {
+      return bytes / (1024 * 1024);
+  }
+  
   onSubmit() {
     this.submitted = true;
     
-    if (!this.userForm.valid) {
-      this.userForm.markAllAsTouched();
+    if (!this.advertForm.valid) {
+      this.advertForm.markAllAsTouched();
       return;
     }
   
-    const formValues = this.userForm.value;
+    const formValues = this.advertForm.value;
     const body = {
       userprofileid: formValues.userprofileid,
       aspuid: formValues.aspuid,
@@ -90,22 +86,6 @@ export class EditAdvertisementComponent {
       UserSubscriptionStatus: formValues.UserSubscriptionStatus,
     };
   
-    if (this.userEmail === body.Email) {
-      this.updateUserForm(body);
-    } else {
-      this.api.loginEmailExist(body.Email).subscribe(
-        (data) => {
-          if (!data) {
-            this.updateUserForm(body);
-          } else {
-            this.showExistingEmailAlert();
-          }
-        },
-        (error) => {
-          console.error(error);
-        }
-      );
-    }
   }  
 
   updateUserForm(body: any) {
@@ -116,9 +96,6 @@ export class EditAdvertisementComponent {
 
         if (user) {
           const userLoginDetails =  JSON.parse(user);
-          if(userLoginDetails?.userID == data.aspuid) {
-            this.getLoggedInUser(data.aspuid);
-          } 
         }
 
         this.showSuccessAlert();
@@ -132,21 +109,6 @@ export class EditAdvertisementComponent {
     );
   }
 
-  toggleSubscriptionStatus() {
-    const currentValue = this.userForm.controls["UserSubscriptionStatus"].value;
-    this.userForm.controls["UserSubscriptionStatus"].setValue(!currentValue);
-  }
-
-  getLoggedInUser(Id: string){
-    this.authApi.getLoggedInUser(Id).subscribe(
-      (data: any) => {
-       this.apiData.saveCurrentUser(data);
-      },
-      (err) => {
-        console.log(err);
-      }
-    )
-  }
 
   showSuccessAlert() {
     Swal.fire({
@@ -158,16 +120,6 @@ export class EditAdvertisementComponent {
     });
   }
 
-  showExistingEmailAlert() {
-    Swal.fire({
-      icon: "warning",
-      // title: "Email exist!",
-      text: "Cannot update to an existing email!",
-      showConfirmButton: false,
-      timer: 2500,
-    });
-  }
-
   showUnsuccessfulAlert() {
     Swal.fire({
       icon: "error",
@@ -175,8 +127,5 @@ export class EditAdvertisementComponent {
       text: "Something went wrong. Please try again.",
     });
   }
-  onReset() {
-    this.submitted = false;
-    this.userForm.reset();
-  }
+
 }

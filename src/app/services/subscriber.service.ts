@@ -70,6 +70,13 @@ export class SubscriberService {
     );
   }
 
+  deleteAdvertById(Id: any) {
+    return this.http.delete<any>(
+      environment.serverAPI + `Advert/DeleteAdvertById?id=${Id}`,
+      // this.httpOptions
+    );
+  }
+
   // deleteUserProfileById(Id: any) {
   //   const url = `${environment.serverAPI}/Authenticate/DeleteUserProfileById`;
   //   const params = { Id };

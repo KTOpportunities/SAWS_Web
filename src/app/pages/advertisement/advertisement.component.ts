@@ -183,10 +183,7 @@ constructor(
     return this.dataSource.filter.trim() !== '';
   }
 
-  deleteAdvertisement(user: any) {
-    const userId = user.userprofileid; 
-    const aspuId = user.aspuid;
-  
+  deleteAdvertisement(advertId: any) {
     Swal.fire({
       title: 'Are you sure you want to delete?',
       icon: 'warning',
@@ -195,12 +192,9 @@ constructor(
       cancelButtonText: 'No',
     }).then((result) => {
       if (result.isConfirmed) {
-        this.spinner.show(); // Show spinner while deleting
-  
-        // Call the soft delete API
-        this.apiService.deleteUserProfileById(userId, aspuId).subscribe(
+        this.spinner.show();
+        this.apiService.deleteAdvertById(advertId).subscribe(
           () => {
-             user.status = 'deleted'; 
             this.spinner.hide();
             this.getAllAdverts();
           },
@@ -217,20 +211,40 @@ constructor(
     this.router.navigate(["/admin/advertisement/addAdvert"]);
   }
 
-  navigateToViewAdvertisement(user: Admin) {
+  navigateToViewAdvertisement(advertId: number) {
     sessionStorage.setItem('currentPage', `${this.currentPage}`);
     sessionStorage.setItem('pageSize', `${this.pageSize}`);
 
-    this.apiData.saveAdvert(user);
-    this.router.navigate(["/admin/advertisement/viewAdvert"]);
+    this.apiAdmin.getAdvertByAdvertId(advertId).subscribe(
+      (data) => {
+        console.log("data", data.Value.DetailDescription
+        )
+
+        this.apiData.saveAdvert(data.Value.DetailDescription);
+        this.router.navigate(["/admin/advertisement/viewAdvert"]);
+      },
+      (error) => {
+        console.error("Error in fetching data:", error);
+      }
+    );
   }
 
-  editAdvertisement(user: Admin) {
+  editAdvertisement(advertId: number) {
     sessionStorage.setItem('currentPage', `${this.currentPage}`);
     sessionStorage.setItem('pageSize', `${this.pageSize}`);
 
-    this.apiData.saveAdvert(user);
-    this.router.navigate(["/admin/advertisement/editAdvert"]);
+    this.apiAdmin.getAdvertByAdvertId(advertId).subscribe(
+      (data) => {
+        console.log("data", data.Value.DetailDescription
+        )
+
+        this.apiData.saveAdvert(data.Value.DetailDescription);
+        this.router.navigate(["/admin/advertisement/editAdvert"]);
+      },
+      (error) => {
+        console.error("Error in fetching data:", error);
+      }
+    );
   }
 
 }

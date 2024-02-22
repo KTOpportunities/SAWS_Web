@@ -1462,13 +1462,14 @@
   }
   
   .div-block-439 {
-    border: 1.5px solid #00386c;
+    border: 2px solid #00386c;
     border-radius: 10px;
     flex-direction: row;
     align-items: center;
     padding-left: 10px;
     padding-right: 10px;
     display: flex;
+    /* max-width: 500px; */
   }
   
   .html-embed-5 {

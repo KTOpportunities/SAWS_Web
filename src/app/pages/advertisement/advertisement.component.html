@@ -149,13 +149,13 @@
                     </button>
         
                     <mat-menu #actionMenu="matMenu" class="mat-horizontal-menu">
-                        <button mat-menu-item (click)="navigateToViewAdvertisement(advertisement)">
+                        <button mat-menu-item (click)="navigateToViewAdvertisement(advertisement.advertId)">
                         <mat-icon>visibility</mat-icon> View
                         </button>
-                        <button mat-menu-item (click)="editAdvertisement(advertisement)">
+                        <button mat-menu-item (click)="editAdvertisement(advertisement.advertId)">
                         <mat-icon>edit</mat-icon> Edit
                         </button>
-                        <button mat-menu-item (click)="deleteAdvertisement(advertisement)">
+                        <button mat-menu-item (click)="deleteAdvertisement(advertisement.advertId)">
                         <mat-icon style="color: red">delete</mat-icon> Archive
                         </button>
                     </mat-menu>

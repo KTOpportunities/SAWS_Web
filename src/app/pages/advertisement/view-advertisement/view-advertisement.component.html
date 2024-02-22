@@ -5,87 +5,72 @@
           <div class="group">
             <div class="w-form">
 
-                <form id="email-form-2" name="email-form-2" data-name="Email Form 2" method="get" data-wf-page-id="65d5bbc9a28737588705846e" data-wf-element-id="c7c13352-b0ba-b441-efee-d37f32c936f5">
+                <form
+                  [formGroup]="advertForm"
+                  id="email-form-2" 
+                  name="email-form-2" 
+                  data-name="Email Form 2" 
+                  method="get" 
+                  data-wf-page-id="65d5bbc9a28737588705846e" 
+                  data-wf-element-id="c7c13352-b0ba-b441-efee-d37f32c936f5">
                     <div>
                       <div class="w-layout-grid grid-9">
                         <div id="w-node-c7c13352-b0ba-b441-efee-d37f32c936f8-8705846e" class="w-layout-grid grid-10">
-                          <div id="w-node-c7c13352-b0ba-b441-efee-d37f32c936f9-8705846e"><label for="field" class="add-label">Advert Caption</label><textarea placeholder="" maxlength="5000" id="field-3" name="field-3" data-name="Field 3" class="add-user-input w-input"></textarea></div>
-                          <div id="w-node-c7c13352-b0ba-b441-efee-d37f32c936fd-8705846e"><label for="field" class="add-label">Advert Link</label><input class="add-user-input w-input" maxlength="256" name="field-2" data-name="Field 2" placeholder="" type="text" id="field-2" required=""></div>
+                          <div id="w-node-c7c13352-b0ba-b441-efee-d37f32c936f9-8705846e">
+                            <label for="field" class="add-label">Advert Caption</label>
+                            <textarea
+                              formControlName="advert_caption"
+                              placeholder="" 
+                              maxlength="5000" 
+                              id="field-3" 
+                              name="field-3" 
+                              data-name="Field 3" 
+                              class="add-user-input w-input"
+                              readonly
+                              >
+                            </textarea>
+                          </div>
+                          <div id="w-node-c7c13352-b0ba-b441-efee-d37f32c936fd-8705846e">
+                            <label for="field" class="add-label">Advert Link</label>
+                            <input
+                              formControlName="advert_url" 
+                              class="add-user-input w-input" 
+                              maxlength="256" 
+                              name="field-2" 
+                              data-name="Field 2" 
+                              placeholder="" 
+                              type="text" 
+                              id="field-2" 
+                              required=""
+                              readonly
+                            >
+                          </div>
                         </div>
                         <div id="w-node-c7c13352-b0ba-b441-efee-d37f32c93701-8705846e" class="div-block-436-copy">
-                          <div class="w-layout-grid grid-11">
-                            <div id="w-node-a27cbaad-a17e-068f-bbfd-9a7e45df79f3-8705846e" class="w-layout-grid grid-12">
+                          <div 
+                          class="w-layout-grid grid-11"
+                          formGroupName="DocAdverts"
+                          *ngFor="
+                            let document of advertForm.get('DocAdverts')?.value;
+                            let index = index;"
+                          >
+                            <div
+                            id="w-node-a27cbaad-a17e-068f-bbfd-9a7e45df79f3-8705846e" class="w-layout-grid grid-12">
                               <div id="w-node-_276e9e1c-29d0-9d0e-d8d3-c1d45f938f56-8705846e" class="div-block-439">
-                                <div class="html-embed-5 w-embed"><svg width="16" height="16" viewbox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <g clip-path="url(#clip0_1692_35)">
-                                      <path d="M6.56113 0.805664H0.805664V6.56113H6.56113V0.805664Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-                                      <path d="M15.1949 0.805664H9.43945V6.56113H15.1949V0.805664Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-                                      <path d="M6.56113 9.43945H0.805664V15.1949H6.56113V9.43945Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-                                      <path d="M15.1949 9.43945H9.43945V15.1949H15.1949V9.43945Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                                <div class="html-embed-5 w-embed">
+                                  <svg xmlns="http://www.w3.org/2000/svg" width="39" height="39" viewBox="0 0 39 39">
+                                    <g id="Group_5143" data-name="Group 5143" transform="translate(-13 -7)">
+                                      <circle id="Ellipse_220" data-name="Ellipse 220" cx="19.5" cy="19.5" r="19.5" transform="translate(13 7)" fill="#00386c"/>
+                                      <path id="Icon_awesome-image" data-name="Icon awesome-image" d="M20.841,21.748H2.156A2.156,2.156,0,0,1,0,19.592V6.656A2.156,2.156,0,0,1,2.156,4.5H20.841A2.156,2.156,0,0,1,23,6.656V19.592A2.156,2.156,0,0,1,20.841,21.748ZM5.031,7.015A2.515,2.515,0,1,0,7.546,9.531,2.515,2.515,0,0,0,5.031,7.015ZM2.875,18.873H20.123V13.843L16.192,9.912a.539.539,0,0,0-.762,0L9.343,16,6.849,13.505a.539.539,0,0,0-.762,0L2.875,16.717Z" transform="translate(21 13.5)" fill="#fff"/>
                                     </g>
-                                    <defs>
-                                      <clippath id="clip0_1692_35">
-                                        <rect width="16" height="16" fill="white"></rect>
-                                      </clippath>
-                                    </defs>
-                                  </svg></div>
-                                <h1 class="add-label-copy">Car image advert.jpeg 897 kb</h1>
+                                  </svg>
+                                </div>
+                                <h1 class="add-label-copy">
+                                  {{ document.file_origname }} 
+                                  {{ convertBytesToMegabytes(document.file_size) | number:'1.2-2' }} MB
+                                </h1>
                               </div>
-                            </div>
-                            <div id="w-node-_1345ae3c-0ecc-987b-0aa3-dd4893a2db31-8705846e" class="w-layout-grid grid-12">
-                              <div id="w-node-_1345ae3c-0ecc-987b-0aa3-dd4893a2db32-8705846e" class="div-block-439">
-                                <div class="html-embed-5 w-embed"><svg width="16" height="16" viewbox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <g clip-path="url(#clip0_1692_35)">
-                                      <path d="M6.56113 0.805664H0.805664V6.56113H6.56113V0.805664Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-                                      <path d="M15.1949 0.805664H9.43945V6.56113H15.1949V0.805664Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-                                      <path d="M6.56113 9.43945H0.805664V15.1949H6.56113V9.43945Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-                                      <path d="M15.1949 9.43945H9.43945V15.1949H15.1949V9.43945Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-                                    </g>
-                                    <defs>
-                                      <clippath id="clip0_1692_35">
-                                        <rect width="16" height="16" fill="white"></rect>
-                                      </clippath>
-                                    </defs>
-                                  </svg></div>
-                                <h1 class="add-label-copy">Car image advert.jpeg 897 kb</h1>
-                              </div>
-                            </div>
-                            <div id="w-node-e0c9d784-aff8-7e3e-1960-dd6bc05c8f65-8705846e" class="w-layout-grid grid-12">
-                              <div id="w-node-e0c9d784-aff8-7e3e-1960-dd6bc05c8f66-8705846e" class="div-block-439">
-                                <div class="html-embed-5 w-embed"><svg width="16" height="16" viewbox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <g clip-path="url(#clip0_1692_35)">
-                                      <path d="M6.56113 0.805664H0.805664V6.56113H6.56113V0.805664Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-                                      <path d="M15.1949 0.805664H9.43945V6.56113H15.1949V0.805664Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-                                      <path d="M6.56113 9.43945H0.805664V15.1949H6.56113V9.43945Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-                                      <path d="M15.1949 9.43945H9.43945V15.1949H15.1949V9.43945Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-                                    </g>
-                                    <defs>
-                                      <clippath id="clip0_1692_35">
-                                        <rect width="16" height="16" fill="white"></rect>
-                                      </clippath>
-                                    </defs>
-                                  </svg></div>
-                                <h1 class="add-label-copy">Car image advert.jpeg 897 kb</h1>
-                              </div>
-                            </div>
-                            <div id="w-node-_3ab0564d-c88c-e52d-11bd-0dfa59ac8613-8705846e" class="w-layout-grid grid-12">
-                              <div id="w-node-_3ab0564d-c88c-e52d-11bd-0dfa59ac8614-8705846e" class="div-block-439">
-                                <div class="html-embed-5 w-embed"><svg width="16" height="16" viewbox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <g clip-path="url(#clip0_1692_35)">
-                                      <path d="M6.56113 0.805664H0.805664V6.56113H6.56113V0.805664Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-                                      <path d="M15.1949 0.805664H9.43945V6.56113H15.1949V0.805664Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-                                      <path d="M6.56113 9.43945H0.805664V15.1949H6.56113V9.43945Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-                                      <path d="M15.1949 9.43945H9.43945V15.1949H15.1949V9.43945Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-                                    </g>
-                                    <defs>
-                                      <clippath id="clip0_1692_35">
-                                        <rect width="16" height="16" fill="white"></rect>
-                                      </clippath>
-                                    </defs>
-                                  </svg></div>
-                                <h1 class="add-label-copy">Car image advert.jpeg 897 kb</h1>
-                              </div>
-                            </div>
+                            </div>                            
                           </div>
                         </div>
                       </div>
@@ -98,14 +83,6 @@
                             class="submit-button w-button" value="Close">
                     </div>
                   </form>
-              
-                  
-              <!-- <div class="w-form-done">
-                <div>Thank you! Your submission has been received!</div>
-              </div>
-              <div class="w-form-fail">
-                <div>Oops! Something went wrong while submitting the form.</div>
-              </div> -->
             </div>
           </div>
         </div>

@@ -61,11 +61,12 @@ export class AdminService {
   //   );
   // }
 
-//   deleteUserProfileById(Id: any) {
-//     return this.http.delete<any>(
-// environment.serverAPI + `Authenticate/deleteUserProfileById?Id=${Id}`,this.httpOptions
-//     );
-//   }
+  getAdvertByAdvertId(Id: any) {
+    return this.http.get<any>(
+      environment.serverAPI + `Advert/GetAdvertByAdvertId?Id=${Id}`,
+      
+    );
+  }
 
   // deleteUserProfileById(Id: any) {
   //   const url = `${environment.serverAPI}/Authenticate/DeleteUserProfileById`;
