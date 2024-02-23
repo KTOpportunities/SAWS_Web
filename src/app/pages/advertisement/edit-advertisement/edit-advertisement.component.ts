@@ -51,8 +51,8 @@ export class EditAdvertisementComponent {
       this.advertForm.patchValue(subscriberObject);
     }
 
-    this.userRole = subscriberObject?.userrole || '';
-    this.userEmail = subscriberObject?.email || '';
+    // this.userRole = subscriberObject?.userrole || '';
+    // this.userEmail = subscriberObject?.email || '';
   }
 
     onCancel() {

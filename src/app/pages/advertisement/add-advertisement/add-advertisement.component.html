@@ -5,7 +5,7 @@
           <div class="group">
             <div class="w-form">
                 <form
-                    [formGroup]="userForm"
+                    [formGroup]="advertForm"
                     (ngSubmit)="onSubmit()"
                     id="email-form-2" 
                     name="email-form-2" 
@@ -14,64 +14,100 @@
                     data-wf-page-id="65d5b4159ae9bd30d56aed9e" 
                     data-wf-element-id="1b6e868a-798b-b665-f52d-2861981bee17"
                     >
-                    <div>
-                      <div class="w-layout-grid grid-9">
-                        <div id="w-node-_1c87fd46-ca75-b74f-8b14-e89748e5a6e5-d56aed9e" class="w-layout-grid grid-10">
-                          <div 
-                            id="w-node-_118b3114-e75d-771a-99aa-8c616dac41a5-d56aed9e">
-                                <label for="field-3" class="add-label">Advert Caption</label>
-                                <textarea 
-                                    placeholder="" 
-                                    maxlength="5000" 
-                                    id="field-3" 
-                                    name="field-3" 
-                                    data-name="Field 3" 
-                                class="add-user-input w-input"
+                    <div 
+                    class="inside-form"
+                    >
+                      <div>
+                        <div class="w-layout-grid grid-9">
+                          <div id="w-node-_1c87fd46-ca75-b74f-8b14-e89748e5a6e5-d56aed9e" class="w-layout-grid grid-10">
+                            <div 
+                              id="w-node-_118b3114-e75d-771a-99aa-8c616dac41a5-d56aed9e">
+                                  <label for="field-3" class="add-label">Advert Caption</label>
+                                  <textarea placeholder="" maxlength="5000" id="field-3" name="field-3" data-name="Field 3" class="add-user-input w-input"
+                                  formControlName="advert_caption"
+                                  ></textarea>
+                                  <div
+                                    style="color: red;"
+                                    *ngIf="
+                                      submitted &&
+                                      advertForm.get(['advert_caption'])?.hasError('required')
+                                    "
+                                    class="error-message"
+                                  >
+                                    Advert caption is required
+                                  </div>
+                              </div>
+                            <div 
+                              id="w-node-a775c01d-b46f-ab64-5d90-f9849111742d-d56aed9e">
+                                  <label for="field-2" class="add-label">Advert Link</label>
+                                  <input 
+                                      class="add-user-input w-input" 
+                                      maxlength="256" 
+                                      name="field-2" 
+                                      data-name="Field 2" 
+                                      placeholder="" 
+                                      type="text" 
+                                      id="field-2" 
+                                      required=""
+                                      formControlName="advert_url"
+                                  >
+                                  <div
+                                    style="color: red;"
+                                    *ngIf="
+                                      submitted &&
+                                      advertForm.get(['advert_url'])?.hasError('required')
+                                    "
+                                    class="error-message"
+                                  >
+                                    Advert link is required
+                                  </div>
+                                  <div
+                                    class="errormessage"
+                                    style="color: red;"
+                                    *ngIf="
+                                     submitted &&
+                                     advertForm.get(['advert_url'])?.hasError('invalidUrl')
+                                    "
+                                    class="error-message"
                                 >
-                                </textarea>
+                                    Invalid URL format
+                                </div>
                             </div>
-                          <div 
-                            id="w-node-a775c01d-b46f-ab64-5d90-f9849111742d-d56aed9e">
-                                <label for="field-2" class="add-label">Advert Link</label>
-                                <input 
-                                    class="add-user-input w-input" 
-                                    maxlength="256" 
-                                    name="field-2" 
-                                    data-name="Field 2" 
-                                    placeholder="" 
-                                    type="text" 
-                                    id="field-2" 
-                                    required=""
-                                >
-                        </div>
-                        </div>
-                        <div id="w-node-_3b479c77-eda3-5559-7603-7b25752aa079-d56aed9e" class="div-block-436">
-                          <div><label for="field-4" class="add-label">Upload Image / GIF</label>
-                            <div class="div-block-437">
-                              <div class="html-embed-3 w-embed">
-                                <form action="/action_page.php">
-                                  <input type="file" id="myFile" name="filename">
-                                </form>
+                          </div>
+                          <div id="w-node-_3b479c77-eda3-5559-7603-7b25752aa079-d56aed9e" class="div-block-436">
+                            <div>
+                              <label for="field-4" class="add-label">Upload Image / GIF</label>
+                              <div class="div-block-437">
+                                <div class="html-embed-3 w-embed">
+                                  <!-- <form action="/action_page.php"> -->
+                                    <!-- </form> -->
+                                    <input
+                                    class="input-file"
+                                    type="file" 
+                                    id="myFile" 
+                                    name="filename"
+                                    >
+                                </div>
                               </div>
                             </div>
                           </div>
                         </div>
                       </div>
-                    </div>
-                    <div class="div-block-435">
-                        <input 
-                            (click)="onCancel();"
-                            type="submit" 
-                            data-wait="Please wait..." 
-                            class="cancel-button w-button" 
-                            value="Cancel"
-                        >
-                        <input
-                            type="submit" 
-                            data-wait="Please wait..." 
-                            class="submit-button w-button" 
-                            value="Submit"
-                        >
+                      <div class="div-block-435">
+                          <input 
+                              (click)="onCancel();"
+                              type="submit" 
+                              data-wait="Please wait..." 
+                              class="cancel-button w-button" 
+                              value="Cancel"
+                          >
+                          <input
+                              type="submit" 
+                              data-wait="Please wait..." 
+                              class="submit-button w-button" 
+                              value="Submit"
+                          >
+                      </div>
                     </div>
                 </form>
             </div>

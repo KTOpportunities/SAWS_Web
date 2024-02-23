@@ -253,7 +253,7 @@
     transition: border-color .2s;
     box-shadow: 0 2px 5px #008440;
   }
-  
+
   .field-input:hover, .field-input:focus {
     border-color: #177fff;
   }
@@ -539,7 +539,7 @@
   .resetemail-copy:hover, .resetemail-copy:focus {
     border-color: #177fff;
   }
-  
+
   .reset-new-password {
     width: 328px;
     height: 30px;
@@ -557,6 +557,12 @@
     border-color: #177fff;
   }
   
+  .inside-form {
+    /* max-width: 80vh; */
+    max-height: 50vh;
+    overflow-y: auto;
+  }
+
   .group-hero {
     grid-column-gap: 50px;
     justify-content: space-between;
@@ -1365,7 +1371,8 @@
     background-color: #bfcdda;
     border: 3px dashed #00386c;
     border-radius: 10px;
-    padding: 20px;
+    /* padding: 20px; */
+    padding: 5px;
   }
   
   .search-copy {

@@ -183,7 +183,8 @@
   }
   
   input {
-    font-size: 22px;
+    /* font-size: 22px; */
+    font-size: 18px;
   }
   .mat-checkbox-layout {
     white-space: pre-line !important;

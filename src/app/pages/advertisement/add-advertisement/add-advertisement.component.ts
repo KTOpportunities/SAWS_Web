@@ -23,9 +23,9 @@ import { Dataservice } from "src/app/services/data.service";
 })
 export class AddAdvertisementComponent implements OnInit {
 
-  userForm: FormGroup;
+  advertForm: FormGroup;
   submitted = false;
-  userRole: any;
+  userEmail: any;
   currentUrl: any;
   passwordVisibility: boolean = false;
   isPasswordNotEmpty: boolean = false;
@@ -38,82 +38,57 @@ export class AddAdvertisementComponent implements OnInit {
     private router: Router,
 
   ) {
-    this.userForm = this.formBuilder.group({
-      Fullname: ["", Validators.required],
-      Username: [""],
-      Email: ["", [Validators.required, Validators.email]],
-      Password: ["", [Validators.required, this.passwordValidator]],
-      UserRole: ["", Validators.required],
+
+    var user: any = this.apiData.getCurrentUser();
+
+    if (user) {
+      const userLoginDetails =  JSON.parse(user);
+      this.userEmail = userLoginDetails.userEmail;
+    }
+
+    console.log("user email", this.userEmail)
+
+    this.advertForm = this.formBuilder.group({
+      advertId: [0],
+      advert_caption: ["", Validators.required],
+      advert_url: ["", this.urlValidator, Validators.required],
+      uploaded_by: [this.userEmail],
+      isdeleted: [false],
     });
   }
 
   ngOnInit() {}
 
-  emailValidator(control: any) {
-    if (control.value) {
-      const emailRegex =
-        /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
-
-      if (emailRegex.test(control.value)) {
-        return null; // Valid email format
-      } else {
-        return { invalidEmail: true, invalidFormat: true }; // Invalid email format
-      }
-    } else {
-      return null;
-    }     
-  }
-
-  togglePasswordVisibility() {
-    this.passwordVisibility = !this.passwordVisibility;
-  }
-
-  onPasswordInput(event: any) {
-    this.isPasswordNotEmpty = event.target.value.trim().length > 0;
-
-    if (!this.isPasswordNotEmpty) {
-      this.passwordVisibility = false;
-    }
-  }
-
-  passwordValidator(control: AbstractControl) {
-    const value = control.value;
-    // Check if the password contains at least one letter and one number
-    const containsLetter = /[a-zA-Z]/.test(value);
-    const containsNumber = /\d/.test(value);
-
-    return containsLetter && containsNumber ? null : { invalidPassword: true };
-  }
-
   onSubmit() {
     this.submitted = true;
     var body = {
-      Fullname: this.userForm.controls["Fullname"].value,
-      Email: this.userForm.controls["Email"].value,
-      Username: this.userForm.controls["Email"].value,
-      Password: this.userForm.controls["Password"].value,
-      UserRole: this.userForm.controls["UserRole"].value,
+      advertId: this.advertForm.controls["advertId"].value,
+      advert_caption: this.advertForm.controls["advert_caption"].value,
+      uploaded_by: this.advertForm.controls["uploaded_by"].value,
+      isdeleted: this.advertForm.controls["isdeleted"].value
     };
-
-    this.userRole = body.UserRole;
-    if (this.userForm.invalid) {
+    
+    if (this.advertForm.invalid) {
       return;
     } else {
+
+      console.log("body", body)
       
-      this.api.loginEmailExist(body.Email).subscribe(
-        (data) => {
+      // this.saveUserForm(body);
 
-          if(!data) {
-            this.saveUserForm(body);
+      // this.api.loginEmailExist(body.Email).subscribe(
+      //   (data) => {
 
-          } else {
-            this.showExistingEmailAlert()
-          }
-        },
-        (error) => {
-          console.error(error);
-        }
-      );    
+      //     if(!data) {
+
+      //     } else {
+      //       this.showExistingEmailAlert()
+      //     }
+      //   },
+      //   (error) => {
+      //     console.error(error);
+      //   }
+      // );    
 
     }
   }
@@ -129,6 +104,14 @@ export class AddAdvertisementComponent implements OnInit {
       (err) => console.log("error", err)
       );
   }
+
+  urlValidator(control: AbstractControl) {
+    const value = control.value;
+    const urlPattern = /^((http|https|ftp):\/\/)?([a-zA-Z0-9-_.]+\.[a-zA-Z]{2,})(:[0-9]+)?(\/[a-zA-Z0-9-_.#?&=:]+)*\/?$/;
+    const isValid = urlPattern.test(value);
+
+    return isValid ? null : { invalidUrl: true };
+}
 
   onCancel() {
     this.router.navigate(['/admin/advertisement']);
@@ -163,6 +146,6 @@ export class AddAdvertisementComponent implements OnInit {
   
   onReset() {
     this.submitted = false;
-    this.userForm.reset();
+    this.advertForm.reset();
   }
 }
