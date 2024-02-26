@@ -29,6 +29,16 @@
                                 name="field-3" 
                                 data-name="Field 3" class="add-user-input w-input"
                               ></textarea>
+                              <div
+                                    style="color: red;"
+                                    *ngIf="
+                                      submitted &&
+                                      advertForm.get(['advert_caption'])?.hasError('required')
+                                    "
+                                    class="error-message"
+                                  >
+                                    Advert caption is required
+                              </div>
                             </div>
                             <div id="w-node-ef33307a-7245-2d71-0818-8611a758829a-8d2f5157">
                               <label for="field" class="add-label">Advert Link</label>
@@ -42,6 +52,16 @@
                                 id="field-2" required=""
                                 formControlName="advert_url"
                               >
+                              <div
+                                    style="color: red;"
+                                    *ngIf="
+                                      submitted &&
+                                      advertForm.get(['advert_url'])?.hasError('required')
+                                    "
+                                    class="error-message"
+                                  >
+                                    Advert link is required
+                                  </div>
                             </div>
                           </div>
                           <div id="w-node-ef33307a-7245-2d71-0818-8611a758829e-8d2f5157" class="div-block-436-copy">
@@ -75,10 +95,25 @@
                             <div><label for="field-4" class="add-label">Upload Image / GIF</label>
                               <div class="div-block-437">
                                 <div class="html-embed-3 w-embed">
-                                  <form action="/action_page.php">
-                                    <input type="file" id="myFile" name="filename">
-                                  </form>
+                                  <input
+                                    #myFileInput
+                                    (change)="onChangeAdvert($event)"
+                                    type="file" 
+                                    id="myFile" 
+                                    name="filename"
+                                    formControlName="advertFile"
+                                    >
                                 </div>
+                              </div>
+                              <div
+                                  style="color: red;"
+                                  *ngIf="
+                                    submitted &&
+                                    advertForm.get(['advertFile'])?.hasError('required')
+                                  "
+                                  class="error-message"
+                                >
+                                  Advert  image / GIF is required
                               </div>
                             </div>
                           </div>

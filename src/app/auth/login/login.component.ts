@@ -95,13 +95,9 @@ export class loginComponent implements OnInit {
           if(data.rolesList == 'Admin'){
 
             this.tokenStorage.saveToken(data.token);
-            // this.apiData.saveCurrentUser(data);
 
             this.getLoggedInUser(data.aspUserID);
-  
-            // this.router.navigate(['/admin']);
-  
-            // this.errMessage = "Successfully logged in";
+
             this.userData = data;
             this.spinner.hide();
           } else {

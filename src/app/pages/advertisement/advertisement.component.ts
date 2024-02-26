@@ -235,9 +235,6 @@ constructor(
 
     this.apiAdmin.getAdvertByAdvertId(advertId).subscribe(
       (data) => {
-        console.log("data", data.Value.DetailDescription
-        )
-
         this.apiData.saveAdvert(data.Value.DetailDescription);
         this.router.navigate(["/admin/advertisement/editAdvert"]);
       },

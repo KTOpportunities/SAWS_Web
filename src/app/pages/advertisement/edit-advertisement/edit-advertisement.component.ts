@@ -1,6 +1,14 @@
-import { Component } from "@angular/core";
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { Component, ElementRef, OnInit, ViewChild } from "@angular/core";
+import { 
+  AbstractControl, 
+  FormBuilder, 
+  FormGroup, 
+  ValidationErrors, 
+  Validators
+ } from "@angular/forms";
 import { Router } from "@angular/router";
+import { AdvertDocument } from "src/app/Models/AdvertDocument";
+import { fileData } from "src/app/Models/File";
 import { Admin } from "src/app/Models/admin.model";
 import { AuthService } from "src/app/services/auth.service";
 import { Dataservice } from "src/app/services/data.service";
@@ -12,17 +20,21 @@ import Swal from "sweetalert2";
   templateUrl: './edit-advertisement.component.html',
   styleUrls: ['./edit-advertisement.component.css']
 })
-export class EditAdvertisementComponent {
+export class EditAdvertisementComponent implements OnInit {
   advertForm: FormGroup;
   submitted = false;
   subscriberObject: any;
   dialogRef: any;
   adminUser: Admin[] = [];
   userRole: any = '';
-  userEmail: any = '';
+  userEmail: any = ''; 
 
-  ngOnInit() {
-  }
+  @ViewChild('myFileInput') myFileInputVariable!: ElementRef;
+
+  fileAdvert: any = {};
+
+  files: fileData[] = [];
+  file: AdvertDocument[] = [];
 
   constructor(
     private formBuilder: FormBuilder,
@@ -37,27 +49,28 @@ export class EditAdvertisementComponent {
 
     this.advertForm = this.formBuilder.group({
       advertId: [],
-      advert_caption: [],
+      advert_caption: ['', Validators.required],
       deleted_at: [],
       updated_at: [],
       isdeleted: [],
       created_at: [],
       uploaded_by: [],
-      advert_url: [],
-      DocAdverts: [[]]
+      advert_url: ['', Validators.required],
+      DocAdverts: [[], Validators.required]
     });
 
     if (subscriberObject) {
       this.advertForm.patchValue(subscriberObject);
+      this.file = subscriberObject.DocAdverts;
     }
 
-    // this.userRole = subscriberObject?.userrole || '';
-    // this.userEmail = subscriberObject?.email || '';
+    console.log("file", this.file)
   }
+
+  ngOnInit() {}
 
     onCancel() {
     this.submitted = false;
-    // this.userForm.reset();
     Swal.close();
     this.apiData.removeAdvert();
     this.router.navigate(['/admin/advertisement']);
@@ -77,28 +90,29 @@ export class EditAdvertisementComponent {
   
     const formValues = this.advertForm.value;
     const body = {
-      userprofileid: formValues.userprofileid,
-      aspuid: formValues.aspuid,
-      Fullname: formValues.Fullname,
-      Email: formValues.Email,
-      UserRole: formValues.UserRole,
+      advertId: formValues.advertId,
+      advert_caption: formValues.advert_caption,
+      advert_url: formValues.advert_url,
+      uploaded_by: formValues.uploaded_by,
+      isdeleted: formValues.isdeleted,
       created_at: formValues.created_at,
-      UserSubscriptionStatus: formValues.UserSubscriptionStatus,
     };
+
+    this.updateAdvertForm(body);
   
   }  
 
-  updateUserForm(body: any) {
-    this.api.InsertUpdateUserProfile(body).subscribe(
+  updateAdvertForm(body: any) {
+
+    this.api.postInsertNewAdvert(body).subscribe(
       (data: any) => {
        
-        var user: any = this.apiData.getCurrentUser();
-
-        if (user) {
-          const userLoginDetails =  JSON.parse(user);
-        }
-
         this.showSuccessAlert();
+
+        console.log("data.DetailDescription.advertId", data)
+
+        this.onUpload();
+        
         this.apiData.removeAdvert();
           this.router.navigate(['/admin/advertisement']);
       },
@@ -109,16 +123,97 @@ export class EditAdvertisementComponent {
     );
   }
 
+  onUpload() {
+    if (this.files.length > 0) {
+
+      this.files[0].Id = this.file[0].Id;
+      this.files[0].advertId = this.file[0].advertId;
+      this.files[0].created_at = this.file[0].created_at;
+
+      const formData = new FormData();
+
+      for (let i = 0; i < this.files.length; i++) {
+        formData.append(`files[${i}].id`, JSON.stringify(this.files[i].Id));
+        formData.append(
+          `files[${i}].advertId`,
+          JSON.stringify(this.files[i].advertId)
+        );
+        formData.append(`files[${i}].DocTypeName`, this.files[i].DocTypeName);
+        formData.append(`files[${i}].file`, this.files[i].file);
+      }
+
+      this.api.PostDocsForAdvert(formData).subscribe(
+        (event: any) => {
+          this.resetFilesInp();
+        },
+        (err) => {
+          console.log('file upload failed: ', err);
+        }
+      );
+    }
+  }
+
+  onChangeAdvert(event: any) {
+    let fileSize = event.target.files[0]
+
+    if(fileSize.size <= 10485760) {
+      this.updateFileData(
+        this.fileAdvert,
+        event.target.files[0],
+        "Advert"
+       );
+    } else {
+      this.alertFileMessage("Advert",`${fileSize.type}`)
+      this.myFileInputVariable.nativeElement.value = '';
+    }
+
+  }
+
+  updateFileData(
+    fileDataToUpdate: fileData,
+    newFile: File,
+    docTypeName: string
+  ) {
+    if (newFile) {
+      fileDataToUpdate.file = newFile;
+      fileDataToUpdate.DocTypeName = docTypeName;
+
+      const index = this.files.findIndex(
+        (file) => file.DocTypeName === docTypeName
+      );
+
+      if (index !== -1) {
+        this.files[index] = fileDataToUpdate;
+      } else {
+        this.files.push(fileDataToUpdate);
+      }
+    }
+  }
+
+  resetFilesInp() {
+    this.myFileInputVariable.nativeElement.value = '';
+  }
 
   showSuccessAlert() {
     Swal.fire({
       icon: "success",
       title: "Success!",
-      text: `You have successfully updated the ${this.userRole}.`,
+      text: `You have successfully updated the advert.`,
       showConfirmButton: false,
       timer: 1500,
     });
   }
+
+  alertFileMessage(message: string, text: string) {
+    Swal.fire({
+      // position: "top-end",
+      icon: "warning",
+      title: message,
+      text: text.toUpperCase() + " image / gif exceeds 10mb, please upload a smaller size image / gif",
+      showConfirmButton: false,
+      timer: 2000,
+  });
+}
 
   showUnsuccessfulAlert() {
     Swal.fire({

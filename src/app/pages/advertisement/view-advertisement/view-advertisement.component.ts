@@ -37,6 +37,8 @@ export class ViewAdvertisementComponent {
     var SubscriberDetails: any = this.apiData.getAdvert();
     const subscriberObject = JSON.parse(SubscriberDetails);
 
+    console.log("subscriberObject",subscriberObject);
+
     this.advertForm = this.formBuilder.group({
       advertId: [],
       advert_caption: [],
@@ -52,35 +54,15 @@ export class ViewAdvertisementComponent {
     if (subscriberObject) {
       this.advertForm.patchValue(subscriberObject);
     }
-
-    // this.userRole = subscriberObject?.userrole || '';
-    // this.userEmail = subscriberObject?.email || '';
-
-    // this.files = subscriberObject?.DocAdverts;
-
   }
 
     onCancel() {
-    // this.submitted = false;
-    // this.advertForm.reset();
-    Swal.close();
-    this.apiData.removeAdvert();
-    this.router.navigate(['/admin/advertisement']);
+      Swal.close();
+      this.apiData.removeAdvert();
+      this.router.navigate(['/admin/advertisement']);
   }
 
   convertBytesToMegabytes(bytes: number): number {
      return bytes / (1024 * 1024);
   }
-
-  getLoggedInUser(Id: string){
-    this.authApi.getLoggedInUser(Id).subscribe(
-      (data: any) => {
-       this.apiData.saveCurrentUser(data);
-      },
-      (err) => {
-        console.log(err);
-      }
-    )
-  }
-
 }

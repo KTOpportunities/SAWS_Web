@@ -77,6 +77,29 @@ export class SubscriberService {
     );
   }
 
+  postInsertNewAdvert(body: {}) {
+    return this.http.post<any>(
+      environment.serverAPI + "Advert/PostInsertNewAdvert",
+      body,
+      // this.httpOptions
+      // {
+      //   headers: new HttpHeaders().append(
+      //     "Authorization",
+      //     `Bearer ${this.token}`
+      //   ),
+      // }
+    );
+  }
+
+  PostDocsForAdvert(formData: any) {
+
+    console.log("formData", formData)
+    return this.http.post<any>(
+      environment.serverAPI + "FileManager/PostDocsForAdvert",
+      formData
+    );
+  }
+
   // deleteUserProfileById(Id: any) {
   //   const url = `${environment.serverAPI}/Authenticate/DeleteUserProfileById`;
   //   const params = { Id };
