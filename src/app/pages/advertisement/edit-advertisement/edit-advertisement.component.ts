@@ -63,13 +63,11 @@ export class EditAdvertisementComponent implements OnInit {
       this.advertForm.patchValue(subscriberObject);
       this.file = subscriberObject.DocAdverts;
     }
-
-    console.log("file", this.file)
   }
 
   ngOnInit() {}
 
-    onCancel() {
+  onCancel() {
     this.submitted = false;
     Swal.close();
     this.apiData.removeAdvert();

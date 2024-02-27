@@ -1,5 +1,5 @@
 import { ElementRef, Injectable, ViewChild } from "@angular/core";
-import { BehaviorSubject } from "rxjs";
+import { BehaviorSubject, Observable } from "rxjs";
 
 import { UserLoggedIn } from "../Models/user.model";
 import { Admin } from "../Models/admin.model";
@@ -16,15 +16,14 @@ export class Dataservice {
   private UserInformation = new BehaviorSubject<any>(this.userInformation);
   filterSubjectInformantion: any = '';
   private filterSubject = new BehaviorSubject<string>(this.filterSubjectInformantion);
-
-  // Observable to which components can subscribe
-  filterObservable$ = this.filterSubject.asObservable();
-
   private userSubject = new BehaviorSubject<any | null>(null);
-
+  private feedbackSubject = new BehaviorSubject<any | null>(null);
+  
   // Observable to which components can subscribe
+  filterObservable$ = this.filterSubject.asObservable();  
   public userObservable$ = this.userSubject.asObservable();
-
+  public feedbackObservable$ = this.feedbackSubject.asObservable();
+  
   constructor() {
     
  // Initialize value from sessionStorage
@@ -33,6 +32,14 @@ export class Dataservice {
       const parsedValue: any = JSON.parse(storedValue);
       this.userSubject.next(parsedValue);
     }
+  }
+
+  setFeedbackData(data: any): void {
+    this.feedbackSubject.next(data);
+  }
+
+  getFeedbackData(): Observable<any> {
+    return this.feedbackObservable$;
   }
 
   saveCurrentUser(user: UserLoggedIn): string {
@@ -74,8 +81,8 @@ export class Dataservice {
     sessionStorage.removeItem('UserDetails');
   }
 
-  saveAdvert(user: any) {
-    sessionStorage.setItem("AdvertDetails", JSON.stringify(user));
+  saveAdvert(advert: any) {
+    sessionStorage.setItem("AdvertDetails", JSON.stringify(advert));
   }
 
   getAdvert() {
@@ -84,6 +91,18 @@ export class Dataservice {
 
   removeAdvert() {
     sessionStorage.removeItem('AdvertDetails');
+  }
+
+  saveFeedback(feeback: any) {
+    sessionStorage.setItem("FeedbackDetails", JSON.stringify(feeback));
+  }
+
+  getFeedback() {
+    return sessionStorage.getItem("FeedbackDetails");
+  }
+
+  removeFeedback() {
+    sessionStorage.removeItem('FeedbackDetails');
   }
 
   saveUserRole(role: any) {

@@ -68,6 +68,13 @@ export class AdminService {
     );
   }
 
+  getFeedbackById(Id: any) {
+    return this.http.get<any>(
+      environment.serverAPI + `Feedback/GetFeedbackById?Id=${Id}`,
+      
+    );
+  }
+
   // deleteUserProfileById(Id: any) {
   //   const url = `${environment.serverAPI}/Authenticate/DeleteUserProfileById`;
   //   const params = { Id };

@@ -68,7 +68,7 @@
                 </div>
               </div>
               <a 
-                (click)="addUser()"
+                (click)="addResponse()"
                 class="button w-inline-block">
                   <div class="embed-icon w-embed">
                     <svg
@@ -170,7 +170,7 @@
                   Received Date
                 </mat-header-cell>
                 <mat-cell *matCellDef="let feedback"> 
-                   {{ feedback.created_at | date : "medium" }}
+                   {{ feedback.created_at | date : "short" }}
                 </mat-cell>
               </ng-container>
     
@@ -190,7 +190,7 @@
               <!-- Action Column -->
               <ng-container matColumnDef="action">
                 <mat-header-cell *matHeaderCellDef> Action </mat-header-cell>
-                <mat-cell *matCellDef="let user">
+                <mat-cell *matCellDef="let feedback">
                   <!-- Add your action buttons/icons here -->
                   <button
                     mat-icon-button
@@ -205,13 +205,13 @@
                   </button>
     
                   <mat-menu #actionMenu="matMenu" class="mat-horizontal-menu">
-                    <button mat-menu-item (click)="navigateToEditUser(user)">
+                    <button mat-menu-item (click)="navigateToViewFeedback(feedback.feebackId)">
                       <mat-icon>visibility</mat-icon> View
                     </button>
                     <!-- <button mat-menu-item (click)="toggleUser(user)">
                       <mat-icon>visibility</mat-icon> View
                     </button> -->
-                    <button mat-menu-item (click)="deleteUser(user)">
+                    <button mat-menu-item (click)="deleteFeedback(feedback.feedbackId)">
                       <mat-icon style="color: red">delete</mat-icon> Archive
                     </button>
                   </mat-menu>
@@ -271,4 +271,5 @@
       </style>
     </div>
   </section>
+
  

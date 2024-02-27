@@ -26,7 +26,7 @@ export class ViewAdvertisementComponent {
   ngOnInit() {
   }
 
-  constructor(
+  constructor (
     private formBuilder: FormBuilder,
     private authApi: AuthService,
     private api: SubscriberService,
@@ -34,10 +34,8 @@ export class ViewAdvertisementComponent {
     private router: Router,
   ) {
     const currentDate = new Date();
-    var SubscriberDetails: any = this.apiData.getAdvert();
-    const subscriberObject = JSON.parse(SubscriberDetails);
-
-    console.log("subscriberObject",subscriberObject);
+    var advertDetails: any = this.apiData.getAdvert();
+    const advertObject = JSON.parse(advertDetails);
 
     this.advertForm = this.formBuilder.group({
       advertId: [],
@@ -51,8 +49,8 @@ export class ViewAdvertisementComponent {
       DocAdverts: [[]]
     });
 
-    if (subscriberObject) {
-      this.advertForm.patchValue(subscriberObject);
+    if (advertObject) {
+      this.advertForm.patchValue(advertObject);
     }
   }
 

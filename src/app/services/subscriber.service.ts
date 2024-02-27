@@ -91,6 +91,20 @@ export class SubscriberService {
     );
   }
 
+  postInsertNewFeedback(body: {}) {
+    return this.http.post<any>(
+      environment.serverAPI + "Feedback/PostInsertNewFeedback",
+      body,
+      // this.httpOptions
+      // {
+      //   headers: new HttpHeaders().append(
+      //     "Authorization",
+      //     `Bearer ${this.token}`
+      //   ),
+      // }
+    );
+  }
+
   PostDocsForAdvert(formData: any) {
 
     console.log("formData", formData)

@@ -2,6 +2,7 @@ import { FeedbackMessage } from "./FeedbackMessage";
 
 export interface Feedback {
     feebackId: number;
+    title: string;
     fullname: string;
     senderId: string;
     senderEmail: string;

@@ -103,7 +103,6 @@ export class FeedbackComponent implements OnInit{
 
     this.apiAdmin.GetPagedAllFeedbacks(this.currentPage + page, this.pageSize).subscribe({
       next: (data: any) => {
-          this.spinner.hide();
           this.feedbackList = data.Data;
 
           sessionStorage.removeItem('currentPage');
@@ -167,7 +166,7 @@ isAllSelected() {
   }
 }
 
- addUser() {
+ addResponse() {
   this.router.navigate(["/admin/feedback/addResponse"]);
   }
 
@@ -226,7 +225,7 @@ isAllSelected() {
     return this.dataSource.filter.trim() !== '';
   }
 
-  deleteUser(user: any) {
+  deleteFeedback(user: any) {
     const userId = user.userprofileid; 
     const aspuId = user.aspuid; 
   
@@ -238,17 +237,14 @@ isAllSelected() {
       cancelButtonText: 'No',
     }).then((result) => {
       if (result.isConfirmed) {
-        this.spinner.show();
         this.apiService.deleteUserProfileById(userId, aspuId).subscribe(
           () => {
            
             user.status = 'deleted';
-             this.spinner.hide();
             this.getAllFeedbacks();
           },
           (error) => {
             console.error("Error soft deleting feeback:", error);
-            this.spinner.hide();
           }
         );
       }
@@ -264,15 +260,30 @@ isAllSelected() {
     });
   }
 
-  navigateToAddUser() {
-    this.router.navigate(["/admin/addUser"]);
-  }
-
-  navigateToEditUser(user: Admin) {
+  navigateToViewFeedback(feedbackId: number) {
     sessionStorage.setItem('currentPage', `${this.currentPage}`);
     sessionStorage.setItem('pageSize', `${this.pageSize}`);
 
-    this.apiData.saveUser(user);
-    this.router.navigate(["/admin/feedback/viewFeedback"]);
+    this.apiAdmin.getFeedbackById(feedbackId).subscribe(
+      (data) => {
+
+        this.apiData.setFeedbackData(data);
+
+        // console.log("data", data)
+
+        this.apiData.saveFeedback(data);
+
+
+        // const storedValue = this.getCurrentUser();
+        // if (storedValue) {
+        //   const parsedValue: any = JSON.parse(storedValue);
+        // }
+
+        this.router.navigate(["/admin/feedback/viewFeedback"]);
+      },
+      (error) => {
+        console.error("Error in fetching data:", error);
+      }
+    );
   }
 }
