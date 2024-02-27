@@ -1417,6 +1417,7 @@
     grid-template-rows: auto auto auto auto;
     grid-template-columns: 1fr;
     padding: 10px;
+    background-attachment: fixed;
   }
 
   .grid-14 {
@@ -1426,7 +1427,7 @@
 
   .grid-15 {
     grid-template-rows: auto;
-    grid-template-columns: .25fr 1fr;
+    grid-template-columns: .1fr 1fr;
   }
 
   .div-block-444 {
@@ -1480,7 +1481,7 @@
 
 .grid-17 {
   grid-template-rows: auto;
-  grid-template-columns: 1fr .25fr;
+  grid-template-columns: 1fr .1fr;
 }
 
 .div-block-446 {
