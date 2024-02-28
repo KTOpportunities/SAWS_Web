@@ -1,5 +1,5 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup,  Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { FeedbackMessage } from 'src/app/Models/FeedbackMessage';
@@ -27,7 +27,7 @@ export class ViewFeedbackComponent implements OnInit{
     private apiAdmin: AdminService,
     private authApi: AuthService,
     private api: SubscriberService,
-    private apiData: Dataservice,
+    public apiData: Dataservice,
     private router: Router,
     private spinner: NgxSpinnerService,
   )  {
@@ -48,7 +48,7 @@ export class ViewFeedbackComponent implements OnInit{
       isdeleted: [],
       deleted_at: [],
       isresponded: [],
-      responseMessage: [''],
+      responseMessage: ['', Validators.required],
       FeedbackMessages: [[]]
     });
     
@@ -83,35 +83,39 @@ export class ViewFeedbackComponent implements OnInit{
     this.scrollToBottom();
 }
 
-  onSubmit() {
-    
-    this.spinner.show();
+  onSubmit() {   
+    if (this.isResponseMessageValid() && this.feedbackForm.valid) {
+  
+      const formValues = this.feedbackForm.value;
+  
+      const body = {
+        feebackId: formValues.feebackId,
+        fullname: formValues.fullname,
+        senderId: formValues.senderId,
+        senderEmail: formValues.senderEmail,
+        responderId: this.userId,
+        responderEmail: this.userEmail,
+        created_at: formValues.created_at,
+        title: formValues.title,
+        isresponded: true,
+        FeedbackMessages: [
+          {
+            senderId: formValues.senderId,
+            senderEmail: formValues.senderEmail,
+            responderId: this.userId,
+            responderEmail: this.userEmail,
+            feedback: '',
+            response: formValues.responseMessage,
+          },
+        ]
+      };
+  
+      this.updateFeedbackForm(body);
 
-    const formValues = this.feedbackForm.value;
-
-    const body = {
-      feebackId: formValues.feebackId,
-      fullname: formValues.fullname,
-      senderId: formValues.senderId,
-      senderEmail: formValues.senderEmail,
-      responderId: this.userId,
-      responderEmail: this.userEmail,
-      created_at: formValues.created_at,
-      title: formValues.title,
-      isresponded: true,
-      FeedbackMessages: [
-        {
-          senderId: formValues.senderId,
-          senderEmail: formValues.senderEmail,
-          responderId: this.userId,
-          responderEmail: this.userEmail,
-          feedback: '',
-          response: formValues.responseMessage,
-        },
-      ]
-    };
-
-    this.updateFeedbackForm(body);
+    } else {
+      console.log("not valid")
+      return;
+    }
 
   }
 
@@ -120,12 +124,11 @@ export class ViewFeedbackComponent implements OnInit{
     this.api.postInsertNewFeedback(body).subscribe(
       (data: any) => {
         this.feedbackForm.reset();
-          this.getFeedback(this.feedbackData.feebackId)
+        this.getFeedback(this.feedbackData.feebackId)
       },
       (err) => {
         console.log("Error:", err);
         this.showUnsuccessfulAlert();
-        this.spinner.hide();
       }
     );
   }
@@ -133,16 +136,13 @@ export class ViewFeedbackComponent implements OnInit{
   getFeedback(feedbackId: number) {
     this.apiAdmin.getFeedbackById(feedbackId).subscribe(
       (data) => {
-
         this.apiData.setFeedbackData(data);
-        setTimeout(() => {
-          this.spinner.hide();
-        });
       },
       (error) => {
         console.error("Error in fetching data:", error);
         this.spinner.hide();
       }
+
     );
   }
 
@@ -150,6 +150,11 @@ export class ViewFeedbackComponent implements OnInit{
     try {
       this.content.nativeElement.scrollTop = this.content.nativeElement.scrollHeight;
     } catch (err) {}
+  }
+
+  isResponseMessageValid(): boolean {
+    const responseMessage = this.feedbackForm.get('responseMessage')?.value;
+    return responseMessage && responseMessage.trim() !== '';
   }
 
   onCancel() {

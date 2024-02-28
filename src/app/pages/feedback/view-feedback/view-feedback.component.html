@@ -18,21 +18,22 @@
                     [formGroup]="feedbackForm"
                     (ngSubmit)="onSubmit()"
                     >
-                    <div class="group inside-form" #content>
-                        <h3 class="heading-copy">{{ feedbackForm.get('title')?.value }}</h3>
+                    <div class="group inside-form" #content
+                    *ngIf="apiData.feedbackObservable$ | async as feedback"
+                    >
+                        <h3 class="heading-copy">{{ feedback.title }}</h3>
                         <div class="w-layout-grid grid-13"
                         
                         >
                         <div
                             formGroupName="FeedbackMessages"
-                            *ngFor="let feedback of feedbackForm.get('FeedbackMessages')?.value; let index = index;"
+                            *ngFor="let feedbacks of feedback.FeedbackMessages; let index = index;"
                             >
                             <div
                             id="w-node-aa5e58af-d246-1d55-81c6-6a59b577d835-bf38b96b"
-                            *ngIf="feedback.feedback"
+                            *ngIf="feedbacks.feedback"
                             >
-                              <h4 class="heading-name">{{ feedbackForm.get('fullname')?.value
-                            }}</h4>
+                              <h4 class="heading-name">{{ feedback.fullname }}</h4>
                               <div class="w-layout-grid grid-14">
                                 <div id="w-node-_1994920b-3f65-6b60-4362-b189a3f17c0f-bf38b96b">
                                   <div class="w-layout-grid grid-15">
@@ -52,9 +53,9 @@
                                       </svg>    
                                     </div>
                                     <div id="w-node-_0aeb8ca7-70a9-288f-4d1e-94ac7e404a68-bf38b96b" class="div-block-444">
-                                      <p class="paragraph-3">{{feedback.feedback}}</p>
+                                      <p class="paragraph-3">{{feedbacks.feedback}}</p>
                                       <div>
-                                        <h4 class="time-heading">{{ feedback.created_at | date : "short" }}</h4>
+                                        <h4 class="time-heading">{{ feedbacks.created_at | date : "short" }}</h4>
                                       </div>
                                     </div>
                                   </div>
@@ -65,17 +66,17 @@
 
                             <div                        
                                 id="w-node-d6e462d1-76fb-9d89-7c68-0a48cdb81add-bf38b96b"
-                                *ngIf="feedback.response"
+                                *ngIf="feedbacks.response"
                             >
-                              <h4 class="adm">{{ feedback.responderEmail }}</h4>
+                              <h4 class="adm">{{ feedbacks.responderEmail }}</h4>
                               <div class="w-layout-grid grid-16">
                                 <div id="w-node-_68c2ba2d-a180-6d5d-bc2e-dfc8d4e9ef8b-bf38b96b" class="div-block-448">
                                 </div>
                                 <div id="w-node-_3891c89a-c05f-88ae-0e87-eb0330273651-bf38b96b">
                                   <div class="w-layout-grid grid-17">
                                     <div id="w-node-bb567ea0-417d-ba11-69bd-8fd873445a44-bf38b96b" class="div-block-446">
-                                      <p class="paragraph-3">{{ feedback.response }}</p>
-                                      <h4 class="time-heading-copy">{{ feedback.created_at | date : "short" }}</h4>
+                                      <p class="paragraph-3">{{ feedbacks.response }}</p>
+                                      <h4 class="time-heading-copy">{{ feedbacks.created_at | date : "short" }}</h4>
                                     </div>
                                     <div id="w-node-_5ddf5ebf-8f5e-e5f5-cd98-b70df93808a4-bf38b96b" class="div-block-445">
                                       <!-- <img
@@ -110,9 +111,10 @@
                                     placeholder="Say Something here......" 
                                     type="text" 
                                     id="name"
+                                    required
                                     >
-                                <input
-                                    *ngIf="feedbackForm.get('responseMessage')!.value.trim() !== ''"
+                                    <input
+                                    *ngIf="isResponseMessageValid()"
                                     type="submit" 
                                     data-wait="Please wait..." 
                                     class="submit-button-3 w-button" 
