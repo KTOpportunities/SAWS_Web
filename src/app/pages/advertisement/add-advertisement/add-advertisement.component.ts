@@ -60,6 +60,7 @@ export class AddAdvertisementComponent implements OnInit {
       advert_url: ["", this.urlValidator, Validators.required],
       uploaded_by: [this.userEmail],
       isdeleted: [false],
+      ispublished: [false],
       advertFile: ["", Validators.required]
     });
   }
@@ -74,7 +75,8 @@ export class AddAdvertisementComponent implements OnInit {
       advert_caption: this.advertForm.controls["advert_caption"].value,
       advert_url: this.advertForm.controls["advert_url"].value,
       uploaded_by: this.advertForm.controls["uploaded_by"].value,
-      isdeleted: this.advertForm.controls["isdeleted"].value
+      isdeleted: this.advertForm.controls["isdeleted"].value,
+      ispublished: this.advertForm.controls["ispublished"].value
     };
     
     if (this.advertForm.invalid) {

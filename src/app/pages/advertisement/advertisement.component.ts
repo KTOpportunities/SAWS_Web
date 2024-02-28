@@ -28,7 +28,7 @@ export class AdvertisementComponent implements OnInit {
     "uploaded_date",
     "advert_caption",
     "advert_link",
-    "publish_advert",
+    "publish",
     "action",
   ];
 
@@ -40,7 +40,12 @@ export class AdvertisementComponent implements OnInit {
   dataSource = new MatTableDataSource<Advert>();
   selection = new SelectionModel<Advert>(true, []);
 
-  selectedSubscription: number | undefined;
+  statuses: any[] = [
+    { id: 1, published: true },
+    { id: 2, published: false }
+  ];
+
+  selectedStatus: number | undefined;
   advertList: Advert[] = [];
 
   pageSize = 5;
@@ -52,7 +57,7 @@ export class AdvertisementComponent implements OnInit {
   filteredData: any = '';
 
   selectedDateString: any;
-  selectedSubscriptionName: any = '';
+  selectedStatusName: any = '';
   date: Date;
 
 constructor(
@@ -119,8 +124,27 @@ constructor(
     });
  }
 
- selectSubscription(status: any) {
-  this.selectedSubscription = status;
+ selectStatus(status: any) {
+  this.selectedStatus = status;
+  this.filterStatus();
+}
+
+filterStatus() {
+  this.selectedStatusName = '';
+  this.selectedDateString = '';
+
+  this.dataSource.filterPredicate = (data, filter: string) =>
+    !filter || data.ispublished.toString().includes(filter);
+
+  this.dataSource.filter = this.selectedStatus!.toString().trim();
+
+  const selectedStatus = this.statuses.find(
+    (status) => status.status === this.selectedStatus
+  );
+
+  if (selectedStatus) {
+    this.selectedStatusName = selectedStatus.name;
+  }
 }
 
  filterData() {
@@ -154,7 +178,7 @@ constructor(
 
   filterDate() {
 
-    this.selectedSubscriptionName = '';
+    this.selectedStatusName = '';
 
     let newDate = this.datePipe.transform(this.date, 'yyyy-MM-dd');
 
@@ -172,7 +196,7 @@ constructor(
   }
 
   clearFilter() {
-    this.selectedSubscriptionName = '';
+    this.selectedStatusName = '';
     this.selectedDateString = '';
 
     this.dataSource.filter = '';
@@ -246,7 +270,59 @@ constructor(
 
   toggleStatus(advert: Advert) {
     // user.subscription = !user.subscription;
-    console.log("advert", advert.ispublished)
+    
+    
+    const body = {
+      advertId: advert.advertId,
+      advert_caption: advert.advert_caption,
+      advert_url: advert.advert_url,
+      uploaded_by: advert.uploaded_by,
+      isdeleted: advert.isdeleted,
+      ispublished: advert.ispublished,
+      created_at: advert.created_at,
+    };
+    
+    this.updateAdvertForm(body);
   }
+
+  updateAdvertForm(body: any) {
+
+    this.apiService.postInsertNewAdvert(body).subscribe(
+      (data: any) => {
+
+        if (data.DetailDescription.ispublished) {
+          this.showSuccessAlert('published');
+        } else {
+          this.showSuccessAlert('unpublished');
+        }
+
+      },
+      (err) => {
+        console.log("Error:", err);
+        this.showUnsuccessfulAlert();
+      }
+    );
+  }
+
+  showSuccessAlert(message: string) {
+    Swal.fire({
+      icon: "success",
+      title: "Success!",
+      text: `You have successfully ${message} the advert.`,
+      showConfirmButton: false,
+      timer: 3000,
+    });
+
+  }
+  
+
+  showUnsuccessfulAlert() {
+    Swal.fire({
+      icon: "error",
+      title: "Error!",
+      text: "Something went wrong. Please try again.",
+    });
+  }
+
 
 }

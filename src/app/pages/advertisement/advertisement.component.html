@@ -8,6 +8,33 @@
                 <div class="group-hero_text">Filter by</div>
                 <div data-hover="false" data-delay="0" class="w-dropdown">
                 </div>
+                <div 
+                  data-hover="false" 
+                  data-delay="0" 
+                  class="w-dropdown">
+                    <div
+                      mat-button
+                      [matMenuTriggerFor]="nameMenu"
+                      class="dropdown-toggle w-dropdown-toggle"
+                      >
+                      <div class="icon w-icon-dropdown-toggle"></div>
+                      <div class="text-block">
+                        {{ selectedStatusName !== '' ? selectedStatusName : "Published" }}
+                      </div>
+                    </div>
+                    <mat-menu
+                      #nameMenu="matMenu">
+                      <button
+                        *ngFor="let status of statuses"
+                        (click)="selectStatus(status.published)"
+                          mat-menu-item
+                        >
+                          <span class="w-dropdown-link-2">
+                            {{ status.published }}
+                          </span>
+                        </button>
+                    </mat-menu>
+                </div>
                 <div
                   (click)="openPicker()"
                   data-hover="false" 
@@ -131,22 +158,16 @@
                     <mat-cell *matCellDef="let advertisement"> {{ advertisement.advert_url }} </mat-cell>
                 </ng-container>
 
-                <!-- Status Column -->
-              <ng-container matColumnDef="publish_advert">
+                <!-- Published Column -->
+              <ng-container matColumnDef="publish">
                 <mat-header-cell *matHeaderCellDef> Published </mat-header-cell>
-                <mat-cell *matCellDef="let advert">
-                  <!-- mat-menu-item -->
-                <!-- <mat-icon
-                     (click)="toggleStatus(advert)"
-                      style="font-size: 25px;"
-                      [style.color]="advert.subscription ? 'green' : '#00386C'">
-                        {{ advert.subscription ? 'toggle_on' : 'toggle_off' }}
-                    </mat-icon> -->
-                    
-                      <mat-slide-toggle
-                      [(ngModel)]="advert.ispublished"
-                      ></mat-slide-toggle>
-          
+                <mat-cell *matCellDef="let advert">                                 
+                      <mat-slide-toggle 
+                        hideIcon
+                        color="primary"
+                        [(ngModel)]="advert.ispublished"
+                        (ngModelChange)="toggleStatus(advert)"
+                      ></mat-slide-toggle>          
                 </mat-cell>
               </ng-container>
     

@@ -53,6 +53,7 @@ export class EditAdvertisementComponent implements OnInit {
       deleted_at: [],
       updated_at: [],
       isdeleted: [],
+      ispublished: [],
       created_at: [],
       uploaded_by: [],
       advert_url: ['', Validators.required],
@@ -93,6 +94,7 @@ export class EditAdvertisementComponent implements OnInit {
       advert_url: formValues.advert_url,
       uploaded_by: formValues.uploaded_by,
       isdeleted: formValues.isdeleted,
+      ispublished: formValues.ispublished,
       created_at: formValues.created_at,
     };
 
