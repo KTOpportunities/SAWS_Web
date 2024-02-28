@@ -226,10 +226,7 @@ isAllSelected() {
     return this.dataSource.filter.trim() !== '';
   }
 
-  deleteFeedback(user: any) {
-    const userId = user.userprofileid; 
-    const aspuId = user.aspuid; 
-  
+  deleteFeedback(feebackId: any) {
     Swal.fire({
       title: 'Are you sure you want to delete?',
       icon: 'warning',
@@ -238,10 +235,8 @@ isAllSelected() {
       cancelButtonText: 'No',
     }).then((result) => {
       if (result.isConfirmed) {
-        this.apiService.deleteUserProfileById(userId, aspuId).subscribe(
+        this.apiService.deleteFeedbackById(feebackId).subscribe(
           () => {
-           
-            user.status = 'deleted';
             this.getAllFeedbacks();
           },
           (error) => {

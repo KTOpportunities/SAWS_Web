@@ -1,7 +1,7 @@
 import { FeedbackMessage } from "./FeedbackMessage";
 
 export interface Feedback {
-    feebackId: number;
+    feedbackId: number;
     title: string;
     fullname: string;
     senderId: string;

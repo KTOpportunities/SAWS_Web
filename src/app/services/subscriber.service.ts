@@ -77,6 +77,13 @@ export class SubscriberService {
     );
   }
 
+  deleteFeedbackById(Id: any) {
+    return this.http.delete<any>(
+      environment.serverAPI + `Feedback/DeleteFeedbackById?id=${Id}`,
+      // this.httpOptions
+    );
+  }
+
   postInsertNewAdvert(body: {}) {
     return this.http.post<any>(
       environment.serverAPI + "Advert/PostInsertNewAdvert",
