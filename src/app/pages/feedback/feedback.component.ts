@@ -226,7 +226,7 @@ isAllSelected() {
     return this.dataSource.filter.trim() !== '';
   }
 
-  deleteFeedback(feebackId: any) {
+  deleteFeedback(feedbackId: any) {
     Swal.fire({
       title: 'Are you sure you want to delete?',
       icon: 'warning',
@@ -235,7 +235,7 @@ isAllSelected() {
       cancelButtonText: 'No',
     }).then((result) => {
       if (result.isConfirmed) {
-        this.apiService.deleteFeedbackById(feebackId).subscribe(
+        this.apiService.deleteFeedbackById(feedbackId).subscribe(
           () => {
             this.getAllFeedbacks();
           },

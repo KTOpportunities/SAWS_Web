@@ -36,7 +36,7 @@ export class ViewFeedbackComponent implements OnInit{
     const feedbackObject = JSON.parse(feedbackDetails);
     
     this.feedbackForm = this.formBuilder.group({
-      feebackId: [],
+      feedbackId: [],
       title: [],
       fullname: [],
       senderId: [],
@@ -89,7 +89,7 @@ export class ViewFeedbackComponent implements OnInit{
       const formValues = this.feedbackForm.value;
   
       const body = {
-        feebackId: formValues.feebackId,
+        feedbackId: formValues.feedbackId,
         fullname: formValues.fullname,
         senderId: formValues.senderId,
         senderEmail: formValues.senderEmail,
@@ -123,7 +123,7 @@ export class ViewFeedbackComponent implements OnInit{
     this.api.postInsertNewFeedback(body).subscribe(
       (data: any) => {
         this.feedbackForm.reset();
-        this.getFeedback(this.feedbackData.feebackId)
+        this.getFeedback(this.feedbackData.feedbackId)
       },
       (err) => {
         console.log("Error:", err);

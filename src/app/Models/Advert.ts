@@ -9,6 +9,7 @@ export interface Advert {
     created_at: string
     updated_at: string
     isdeleted: boolean
+    ispublished: boolean
     deleted_at: any
     DocAdverts: AdvertDocument[]
 }

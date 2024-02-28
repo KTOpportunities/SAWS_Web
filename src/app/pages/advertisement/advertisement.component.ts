@@ -28,6 +28,7 @@ export class AdvertisementComponent implements OnInit {
     "uploaded_date",
     "advert_caption",
     "advert_link",
+    "publish_advert",
     "action",
   ];
 
@@ -241,6 +242,11 @@ constructor(
         console.error("Error in fetching data:", error);
       }
     );
+  }
+
+  toggleStatus(advert: Advert) {
+    // user.subscription = !user.subscription;
+    console.log("advert", advert.ispublished)
   }
 
 }
