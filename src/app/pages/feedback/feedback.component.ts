@@ -105,6 +105,8 @@ export class FeedbackComponent implements OnInit{
       next: (data: any) => {
           this.feedbackList = data.Data;
 
+          console.log("feedbackList", this.feedbackList)
+
           sessionStorage.removeItem('currentPage');
           sessionStorage.removeItem('pageSize');
 
@@ -188,7 +190,6 @@ isAllSelected() {
   }
 
   openPicker() {
-    console.log('picked')
     if (this.picker) {
       this.picker.open();
     }
@@ -205,6 +206,8 @@ isAllSelected() {
 
     this.dataSource.filter = newDate!.toString().trim();
 
+    console.log("this.dataSource.filter date", this.dataSource.filter)
+
     const selectedDate = this.datePipe.transform(this.date, 'MMM dd, yyyy');
 
     if (selectedDate) {
@@ -213,9 +216,11 @@ isAllSelected() {
   }
 
   clearFilter() {
-    // this.dataSource.filter = '';
+    this.dataSource.filter = '';
     this.selectedStatusName = '';
     this.selectedDateString = '';
+
+    this.getAllFeedbacks();
 
     this.apiData.clearFilter();
     this.apiData.clearForm();

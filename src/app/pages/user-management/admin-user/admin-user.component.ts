@@ -184,7 +184,6 @@ export class AdminUserComponent implements OnInit {
   }
 
   openPicker() {
-    console.log('picked')
     if (this.picker) {
       this.picker.open();
     }
@@ -211,6 +210,10 @@ export class AdminUserComponent implements OnInit {
   clearFilter() {
     this.selectedSubscriptionName = '';
     this.selectedDateString = '';
+
+    this.dataSource.filter = '';
+
+    this.getAllAdmins();
 
     this.apiData.clearFilter();
     this.apiData.clearForm();

@@ -156,6 +156,10 @@ clearFilter() {
   this.selectedSubscriptionName = '';
   this.selectedDateString = '';
 
+  this.dataSource.filter = '';
+
+  this.getAllSubscribers();
+
   this.apiData.clearFilter();
   this.apiData.clearForm();
 }
@@ -182,7 +186,6 @@ isFilterActive(): boolean {
     }
   
     openPicker() {
-      console.log('picked')
       if (this.picker) {
         this.picker.open();
       }

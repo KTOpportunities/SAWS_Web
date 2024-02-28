@@ -146,7 +146,6 @@ constructor(
   }
 
   openPicker() {
-    console.log('picked')
     if (this.picker) {
       this.picker.open();
     }
@@ -174,6 +173,9 @@ constructor(
   clearFilter() {
     this.selectedSubscriptionName = '';
     this.selectedDateString = '';
+
+    this.dataSource.filter = '';
+    this.getAllAdverts();
 
     this.apiData.clearFilter();
     this.apiData.clearForm();
