@@ -107,8 +107,6 @@ export class EditAdvertisementComponent implements OnInit {
        
         this.showSuccessAlert();
 
-        console.log("data.DetailDescription.advertId", data)
-
         this.onUpload();
         
         this.apiData.removeAdvert();

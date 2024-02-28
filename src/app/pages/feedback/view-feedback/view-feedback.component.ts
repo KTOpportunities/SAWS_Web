@@ -113,7 +113,6 @@ export class ViewFeedbackComponent implements OnInit{
       this.updateFeedbackForm(body);
 
     } else {
-      console.log("not valid")
       return;
     }
 

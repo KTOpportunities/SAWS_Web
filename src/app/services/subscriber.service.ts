@@ -107,7 +107,6 @@ export class SubscriberService {
 
   PostDocsForAdvert(formData: any) {
 
-    console.log("formData", formData)
     return this.http.post<any>(
       environment.serverAPI + "FileManager/PostDocsForAdvert",
       formData

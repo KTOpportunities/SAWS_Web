@@ -130,7 +130,6 @@ export class NavBarComponent implements OnInit {
   }
 
   toggleDropdown() {
-    console.log('Toggling dropdown');
     this.isDropdownOpen = !this.isDropdownOpen;
     this.updateUserManagementActive();
   }

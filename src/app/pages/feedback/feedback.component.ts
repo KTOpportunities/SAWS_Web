@@ -105,8 +105,6 @@ export class FeedbackComponent implements OnInit{
       next: (data: any) => {
           this.feedbackList = data.Data;
 
-          console.log("feedbackList", this.feedbackList)
-
           sessionStorage.removeItem('currentPage');
           sessionStorage.removeItem('pageSize');
 
@@ -206,8 +204,6 @@ isAllSelected() {
 
     this.dataSource.filter = newDate!.toString().trim();
 
-    console.log("this.dataSource.filter date", this.dataSource.filter)
-
     const selectedDate = this.datePipe.transform(this.date, 'MMM dd, yyyy');
 
     if (selectedDate) {
@@ -273,8 +269,6 @@ isAllSelected() {
       (data) => {
 
         this.apiData.setFeedbackData(data);
-
-        // console.log("data", data)
 
         this.apiData.saveFeedback(data);
 

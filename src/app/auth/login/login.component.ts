@@ -159,8 +159,6 @@ export class loginComponent implements OnInit {
   toggleCheckbox() {
     this.isChecked = !this.isChecked;
 
-    console.log("isCheck", this.isChecked)
-
     if (this.loginform) {
       this.loginform.get('RememberMe')?.setValue(this.isChecked); 
     }
