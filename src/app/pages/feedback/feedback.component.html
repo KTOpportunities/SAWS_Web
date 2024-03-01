@@ -165,10 +165,10 @@
               <!-- Created Date Column -->
               <ng-container matColumnDef="created_at">
                 <mat-header-cell *matHeaderCellDef mat-sort-header>
-                  Received Date
+                  Last Received Date
                 </mat-header-cell>
                 <mat-cell *matCellDef="let feedback"> 
-                   {{ feedback.created_at | date : "short" }}
+                   {{ feedback.updated_at | date : "short" }}
                 </mat-cell>
               </ng-container>
     
