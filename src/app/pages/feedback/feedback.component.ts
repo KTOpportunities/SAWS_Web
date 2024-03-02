@@ -80,7 +80,7 @@ export class FeedbackComponent implements OnInit{
 
   ngOnInit(): void {
     this.getAllFeedbacks(); 
-    this.filterData(); 
+    this.filterData();
   }
 
   getAllFeedbacks(page: number = 1){
@@ -124,11 +124,11 @@ export class FeedbackComponent implements OnInit{
     });
  }
 
-isAllSelected() {
-    const numSelected = this.selection.selected.length;
-    const numRows = this.dataSource.data.length;
-    return numSelected == numRows;
-}
+  isAllSelected() {
+      const numSelected = this.selection.selected.length;
+      const numRows = this.dataSource.data.length;
+      return numSelected == numRows;
+  }
 
   masterToggle() {
     this.isAllSelected() ?
@@ -166,118 +166,131 @@ isAllSelected() {
   }
 }
 
- addResponse() {
-  this.router.navigate(["/admin/feedback/addResponse"]);
+
+pageChanged(event: PageEvent) {
+  this.pageSize = event.pageSize;
+  this.currentPage = event.pageIndex;
+  
+  this.getAllFeedbacks();
+  
+  if (this.dataSource) {
+    this.dataSource.filterPredicate = (data: any, filter: string) =>
+    data.name.indexOf(filter) || data.Status.indexOf(filter) != -1;
   }
+}
 
-  pageChanged(event: PageEvent) {
-    this.pageSize = event.pageSize;
-    this.currentPage = event.pageIndex;
+selectDate(type: string, event: MatDatepickerInputEvent<Date>) {
+  this.date = event.value!;
+  this.filterDate();
+}
 
-    this.getAllFeedbacks();
-
-    if (this.dataSource) {
-      this.dataSource.filterPredicate = (data: any, filter: string) =>
-        data.name.indexOf(filter) || data.Status.indexOf(filter) != -1;
-    }
+openPicker() {
+  if (this.picker) {
+    this.picker.open();
   }
+}
 
-  selectDate(type: string, event: MatDatepickerInputEvent<Date>) {
-    this.date = event.value!;
-    this.filterDate();
+filterDate() {
+  
+  this.selectedStatusName = '';
+  
+  let newDate = this.datePipe.transform(this.date, 'yyyy-MM-dd');
+  
+  this.dataSource.filterPredicate = (data, filter: string) =>
+  !filter || data.created_at.includes(filter);
+  
+  this.dataSource.filter = newDate!.toString().trim();
+  
+  const selectedDate = this.datePipe.transform(this.date, 'MMM dd, yyyy');
+  
+  if (selectedDate) {
+    this.selectedDateString = selectedDate;
   }
+}
 
-  openPicker() {
-    if (this.picker) {
-      this.picker.open();
-    }
-  }
+clearFilter() {
+  this.dataSource.filter = '';
+  this.selectedStatusName = '';
+  this.selectedDateString = '';
+  
+  this.getAllFeedbacks();
+  
+  this.apiData.clearFilter();
+  this.apiData.clearForm();
+}
 
-  filterDate() {
+isFilterActive(): boolean {
+  return this.dataSource.filter.trim() !== '';
+}
 
-    this.selectedStatusName = '';
-
-    let newDate = this.datePipe.transform(this.date, 'yyyy-MM-dd');
-
-    this.dataSource.filterPredicate = (data, filter: string) =>
-      !filter || data.created_at.includes(filter);
-
-    this.dataSource.filter = newDate!.toString().trim();
-
-    const selectedDate = this.datePipe.transform(this.date, 'MMM dd, yyyy');
-
-    if (selectedDate) {
-      this.selectedDateString = selectedDate;
-    }
-  }
-
-  clearFilter() {
-    this.dataSource.filter = '';
-    this.selectedStatusName = '';
-    this.selectedDateString = '';
-
-    this.getAllFeedbacks();
-
-    this.apiData.clearFilter();
-    this.apiData.clearForm();
-  }
-
-  isFilterActive(): boolean {
-    return this.dataSource.filter.trim() !== '';
-  }
-
-  deleteFeedback(feedbackId: any) {
-    Swal.fire({
-      title: 'Are you sure you want to delete?',
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonText: 'Yes',
-      cancelButtonText: 'No',
-    }).then((result) => {
-      if (result.isConfirmed) {
-        this.apiService.deleteFeedbackById(feedbackId).subscribe(
-          () => {
-            this.getAllFeedbacks();
-          },
-          (error) => {
-            console.error("Error soft deleting feeback:", error);
-          }
+deleteFeedback(feedbackId: any) {
+  Swal.fire({
+    title: 'Are you sure you want to delete?',
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonText: 'Yes',
+    cancelButtonText: 'No',
+  }).then((result) => {
+    if (result.isConfirmed) {
+      this.apiService.deleteFeedbackById(feedbackId).subscribe(
+        () => {
+          this.getAllFeedbacks();
+        },
+        (error) => {
+          console.error("Error soft deleting feeback:", error);
+        }
         );
       }
     });
   }
   
+  
   openPopup() {
     this.dialog.open(EditUserComponent, {
       width: "49%",
       height: "52%", // adjust width as needed
-
+      
       // Add more configuration options as needed
     });
   }
-
+  
   navigateToViewFeedback(feedbackId: number) {
     sessionStorage.setItem('currentPage', `${this.currentPage}`);
     sessionStorage.setItem('pageSize', `${this.pageSize}`);
-
+    
     this.apiAdmin.getFeedbackById(feedbackId).subscribe(
       (data) => {
-
+        
         this.apiData.setFeedbackData(data);
-
-        this.apiData.saveFeedback(data);
-
-
-        // const storedValue = this.getCurrentUser();
-        // if (storedValue) {
-        //   const parsedValue: any = JSON.parse(storedValue);
-        // }
-
         this.router.navigate(["/admin/feedback/viewFeedback"]);
       },
       (error) => {
         console.error("Error in fetching data:", error);
       }
-    );
+      );
+    }
+
+    addResponse() {
+    sessionStorage.setItem('currentPage', `${this.currentPage}`);
+    sessionStorage.setItem('pageSize', `${this.pageSize}`);
+
+    const data = this.selection.selected;    
+    this.apiData.setFeedbackData(data);
+
+    this.getAllBroadcastMessages();
+
+    this.router.navigate(["/admin/feedback/addResponse"]);
+    }
+
+    getAllBroadcastMessages() {
+      this.apiAdmin.getBroadcastMessages().subscribe(
+        (data: any) => {
+          console.log("data getAllBroadcastMessages ", data)
+          this.apiData.setBroadcastData(data);
+        },
+        (error) => {
+          console.error("Error soft deleting feeback:", error);
+        }
+        );
+    }
   }
-}

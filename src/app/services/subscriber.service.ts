@@ -112,6 +112,13 @@ export class SubscriberService {
     );
   }
 
+  postInsertBroadcastMessages(feedbackList: any[]) {
+    return this.http.post<any>(
+      environment.serverAPI + "Feedback/PostInsertBroadcastMessages",
+      feedbackList
+    );
+  }
+
   PostDocsForAdvert(formData: any) {
 
     return this.http.post<any>(

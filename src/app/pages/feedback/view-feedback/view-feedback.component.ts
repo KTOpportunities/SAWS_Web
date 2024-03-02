@@ -32,8 +32,8 @@ export class ViewFeedbackComponent implements OnInit{
     private spinner: NgxSpinnerService,
   )  {
 
-    var feedbackDetails: any = this.apiData.getFeedback();
-    const feedbackObject = JSON.parse(feedbackDetails);
+    // var feedbackDetails: any = this.apiData.getFeedback();
+    // const feedbackObject = JSON.parse(feedbackDetails);
     
     this.feedbackForm = this.formBuilder.group({
       feedbackId: [],
@@ -59,8 +59,6 @@ export class ViewFeedbackComponent implements OnInit{
     //  if (this.feedbackData) {
     //   this.feedbackForm.patchValue(this.feedbackData);
     // }
-
-    
   }
 
   ngOnInit() {
@@ -81,7 +79,7 @@ export class ViewFeedbackComponent implements OnInit{
 
   ngAfterViewChecked() {
     this.scrollToBottom();
-}
+  }
 
   onSubmit() {   
     if (this.isResponseMessageValid() && this.feedbackForm.valid) {
@@ -157,8 +155,6 @@ export class ViewFeedbackComponent implements OnInit{
   }
 
   onCancel() {
-    Swal.close();
-    this.apiData.removeFeedback();
     this.router.navigate(['/admin/feedback']);
   }
 

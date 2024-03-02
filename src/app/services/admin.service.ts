@@ -48,6 +48,12 @@ export class AdminService {
     );
   }
 
+  getBroadcastMessages() {
+    return this.http.get<any>(
+      environment.serverAPI + `Feedback/GetBroadcastMessages`,
+    );
+  }
+
   GetPagedAllAdverts(pageNumber: any, pageSize: any) {
     return this.http.get<any>(
       environment.serverAPI + `Advert/GetPagedAllAdverts?pageNumber=${pageNumber}&pageSize=${pageSize}`,

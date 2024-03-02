@@ -18,11 +18,13 @@ export class Dataservice {
   private filterSubject = new BehaviorSubject<string>(this.filterSubjectInformantion);
   private userSubject = new BehaviorSubject<any | null>(null);
   private feedbackSubject = new BehaviorSubject<any | null>(null);
+  private broadcastSubject = new BehaviorSubject<any | null>(null);
   
   // Observable to which components can subscribe
   filterObservable$ = this.filterSubject.asObservable();  
   public userObservable$ = this.userSubject.asObservable();
   public feedbackObservable$ = this.feedbackSubject.asObservable();
+  public broadcastObservable$ = this.broadcastSubject.asObservable();
   
   constructor() {
     
@@ -40,6 +42,14 @@ export class Dataservice {
 
   getFeedbackData(): Observable<any> {
     return this.feedbackObservable$;
+  }
+
+  setBroadcastData(data: any): void {
+    this.broadcastSubject.next(data);
+  }
+
+  getBroadcastData(): Observable<any> {
+    return this.broadcastObservable$;
   }
 
   saveCurrentUser(user: UserLoggedIn): string {
@@ -93,13 +103,13 @@ export class Dataservice {
     sessionStorage.removeItem('AdvertDetails');
   }
 
-  saveFeedback(feeback: any) {
-    sessionStorage.setItem("FeedbackDetails", JSON.stringify(feeback));
-  }
+  // saveFeedback(feeback: any) {
+  //   sessionStorage.setItem("FeedbackDetails", JSON.stringify(feeback));
+  // }
 
-  getFeedback() {
-    return sessionStorage.getItem("FeedbackDetails");
-  }
+  // getFeedback() {
+  //   return sessionStorage.getItem("FeedbackDetails");
+  // }
 
   removeFeedback() {
     sessionStorage.removeItem('FeedbackDetails');

@@ -65,7 +65,8 @@
                   clear filters
                 </div>
               </div>
-              <a 
+              <a
+                *ngIf="selection.selected.length > 0"
                 (click)="addResponse()"
                 class="button w-inline-block">
                   <div class="embed-icon w-embed">
@@ -105,8 +106,53 @@
                       </defs>
                     </svg>
                   </div>
-                <div class="button-text">Respond</div>
+                <div class="button-text">Respond ({{selection.selected.length}})</div>
               </a>
+
+              <a
+                *ngIf="selection.selected.length == 0"
+                (click)="addResponse()"
+                class="button w-inline-block">
+                  <!-- <div class="embed-icon w-embed">
+                    <svg
+                      width="16"
+                      height="16"
+                      viewbox="0 0 16 16"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <g clip-path="url(#clip0_1695_120)">
+                        <path
+                          d="M8.00021 14.9623C11.8453 14.9623 14.9623 11.8453 14.9623 8.00021C14.9623 4.15514 11.8453 1.03809 8.00021 1.03809C4.15514 1.03809 1.03809 4.15514 1.03809 8.00021C1.03809 11.8453 4.15514 14.9623 8.00021 14.9623Z"
+                          stroke="currentColor"
+                          stroke-width="1.5"
+                          stroke-miterlimit="10"
+                        ></path>
+                        <path
+                          d="M5.09961 8H10.9014"
+                          stroke="currentColor"
+                          stroke-width="1.5"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        ></path>
+                        <path
+                          d="M8 5.09961V10.9014"
+                          stroke="currentColor"
+                          stroke-width="1.5"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        ></path>
+                      </g>
+                      <defs>
+                        <clippath id="clip0_1695_120">
+                          <rect width="16" height="16" fill="white"></rect>
+                        </clippath>
+                      </defs>
+                    </svg>
+                  </div> -->
+                <div class="button-text">View Broadcast</div>
+              </a>
+              
             </div>
           </div>
   
@@ -229,8 +275,8 @@
 
             <tr class="mat-row" *matNoDataRow>
               <td class="mat-cell" colspan="4">
-               No data matching the filter "{{dataSource.filter}}"
-                </td>
+                No data matching the filter "{{dataSource.filter}}"
+              </td>
             </tr>
           </mat-table>
           <mat-paginator
