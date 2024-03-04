@@ -12,25 +12,24 @@ import { Admin } from 'src/app/Models/admin.model';
 import { AdminService } from 'src/app/services/admin.service';
 import { Dataservice } from 'src/app/services/data.service';
 import { SubscriberService } from 'src/app/services/subscriber.service';
-import { EditUserComponent } from '../user-management/edit-user/edit-user.component';
 import Swal from 'sweetalert2';
 import { Feedback } from 'src/app/Models/Feedback';
 
 @Component({
-  selector: 'app-feedback',
-  templateUrl: './feedback.component.html',
-  styleUrls: ['./feedback.component.css']
+  selector: 'app-broadcast',
+  templateUrl: './broadcast.component.html',
+  styleUrls: ['./broadcast.component.css']
 })
-export class FeedbackComponent implements OnInit{
+export class BroadcastComponent implements OnInit{
 
     // Define the displayed columns
     displayedColumns: string[] = [
-      // "select",
+      "select",
       "fullname",
       "email",
       "created_at",
-      "status",
-      "action",
+      // "status",
+      // "action",
     ];
   
     @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
@@ -101,9 +100,11 @@ export class FeedbackComponent implements OnInit{
     }
 
 
-    this.apiAdmin.GetPagedAllFeedbacks(this.currentPage + page, this.pageSize).subscribe({
+    this.apiAdmin.getPagedAllFeedbacksByUniqueEmail(this.currentPage + page, this.pageSize).subscribe({
       next: (data: any) => {
           this.feedbackList = data.Data;
+
+          console.log("data.Data", data.Data)
 
           sessionStorage.removeItem('currentPage');
           sessionStorage.removeItem('pageSize');
@@ -243,13 +244,13 @@ deleteFeedback(feedbackId: any) {
     });
   }  
   
-  openPopup() {
-    this.dialog.open(EditUserComponent, {
-      width: "49%",
-      height: "52%",
+  // openPopup() {
+  //   this.dialog.open(EditUserComponent, {
+  //     width: "49%",
+  //     height: "52%",
 
-    });
-  }
+  //   });
+  // }
   
   navigateToViewFeedback(feedbackId: number) {
     sessionStorage.setItem('currentPage', `${this.currentPage}`);
@@ -267,38 +268,39 @@ deleteFeedback(feedbackId: any) {
       );
     }
 
-    // addBroadcast() {
-    // sessionStorage.setItem('currentPage', `${this.currentPage}`);
-    // sessionStorage.setItem('pageSize', `${this.pageSize}`);
+    addBroadcast() {
+    sessionStorage.setItem('currentPage', `${this.currentPage}`);
+    sessionStorage.setItem('pageSize', `${this.pageSize}`);
 
-    // const data = this.selection.selected;   
-    // this.apiData.setFeedbackData(data);
+    const data = this.selection.selected;   
+    this.apiData.setFeedbackData(data);
 
-    // // this.getAllBroadcastMessages();
+    this.getAllBroadcastMessages();
 
-    // this.router.navigate(["/admin/feedback/addBroadcast"]);
-    // }
+    this.router.navigate(["/admin/feedback/addBroadcast"]);
+    }
 
-    viewSubscribersByFeedback() {
+    viewBroadcast() {
       sessionStorage.setItem('currentPage', `${this.currentPage}`);
       sessionStorage.setItem('pageSize', `${this.pageSize}`);
   
-      // const data = this.selection.selected;    
-      // this.apiData.setFeedbackData(data);
+      const data = this.selection.selected;    
+      this.apiData.setFeedbackData(data);
   
-      // this.getAllBroadcastMessages();
+      this.getAllBroadcastMessages();
   
-      this.router.navigate(["/admin/feedback/broadcast"]);
+      this.router.navigate(["/admin/feedback/broadcast/listBroadcasts"]);
       }
 
-    // getAllBroadcastMessages() {
-    //   this.apiAdmin.getBroadcastMessages().subscribe(
-    //     (data: any) => {
-    //       this.apiData.setBroadcastData(data);
-    //     },
-    //     (error) => {
-    //       console.error("Error soft deleting feeback:", error);
-    //     }
-    //     );
-    // }
+    getAllBroadcastMessages() {
+      this.apiAdmin.getBroadcastMessages().subscribe(
+        (data: any) => {
+          console.log("data getAllBroadcastMessages ", data)
+          this.apiData.setBroadcastData(data);
+        },
+        (error) => {
+          console.error("Error soft deleting feeback:", error);
+        }
+        );
+    }
   }

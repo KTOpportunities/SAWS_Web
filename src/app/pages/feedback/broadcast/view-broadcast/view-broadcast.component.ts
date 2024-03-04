@@ -12,24 +12,24 @@ import { Admin } from 'src/app/Models/admin.model';
 import { AdminService } from 'src/app/services/admin.service';
 import { Dataservice } from 'src/app/services/data.service';
 import { SubscriberService } from 'src/app/services/subscriber.service';
-import { EditUserComponent } from '../user-management/edit-user/edit-user.component';
+// import { EditUserComponent } from '../user-management/edit-user/edit-user.component';
 import Swal from 'sweetalert2';
 import { Feedback } from 'src/app/Models/Feedback';
 
 @Component({
-  selector: 'app-feedback',
-  templateUrl: './feedback.component.html',
-  styleUrls: ['./feedback.component.css']
+  selector: 'app-view-broadcast',
+  templateUrl: './view-broadcast.component.html',
+  styleUrls: ['./view-broadcast.component.css']
 })
-export class FeedbackComponent implements OnInit{
+export class ViewBroadcastComponent implements OnInit{
 
     // Define the displayed columns
     displayedColumns: string[] = [
       // "select",
-      "fullname",
+      "title",
       "email",
       "created_at",
-      "status",
+      // "status",
       "action",
     ];
   
@@ -47,7 +47,7 @@ export class FeedbackComponent implements OnInit{
     ];
   
     selectedStatus: number | undefined;
-    feedbackList: Feedback[] = [];
+    broadcastList: Feedback[] = [];
   
     pageSize = 5;
     pageSizeStore = 5;
@@ -79,11 +79,11 @@ export class FeedbackComponent implements OnInit{
   }
 
   ngOnInit(): void {
-    this.getAllFeedbacks(); 
+    this.getAllBroadcasts(); 
     this.filterData();
   }
 
-  getAllFeedbacks(page: number = 1){
+  getAllBroadcasts(page: number = 1){
 
     var currentPage: number = Number(sessionStorage.getItem('currentPage'));
     var pageSize: number = Number(sessionStorage.getItem('pageSize'));
@@ -101,9 +101,11 @@ export class FeedbackComponent implements OnInit{
     }
 
 
-    this.apiAdmin.GetPagedAllFeedbacks(this.currentPage + page, this.pageSize).subscribe({
+    this.apiAdmin.GetPagedAllBroadcasts(this.currentPage + page, this.pageSize).subscribe({
       next: (data: any) => {
-          this.feedbackList = data.Data;
+          this.broadcastList = data.Data;
+
+          console.log("broadcastList", this.broadcastList)
 
           sessionStorage.removeItem('currentPage');
           sessionStorage.removeItem('pageSize');
@@ -115,7 +117,7 @@ export class FeedbackComponent implements OnInit{
             this.paginator.length = data.TotalRecords;
           });
         
-          this.dataSource = new MatTableDataSource(this.feedbackList);
+          this.dataSource = new MatTableDataSource(this.broadcastList);
           this.dataSource.paginator = this.paginator;
       },
       error: (error) => {
@@ -170,7 +172,7 @@ pageChanged(event: PageEvent) {
   this.pageSize = event.pageSize;
   this.currentPage = event.pageIndex;
   
-  this.getAllFeedbacks();
+  this.getAllBroadcasts();
   
   if (this.dataSource) {
     this.dataSource.filterPredicate = (data: any, filter: string) =>
@@ -212,7 +214,7 @@ clearFilter() {
   this.selectedStatusName = '';
   this.selectedDateString = '';
   
-  this.getAllFeedbacks();
+  this.getAllBroadcasts();
   
   this.apiData.clearFilter();
   this.apiData.clearForm();
@@ -233,7 +235,7 @@ deleteFeedback(feedbackId: any) {
     if (result.isConfirmed) {
       this.apiService.deleteFeedbackById(feedbackId).subscribe(
         () => {
-          this.getAllFeedbacks();
+          this.getAllBroadcasts();
         },
         (error) => {
           console.error("Error soft deleting feeback:", error);
@@ -243,13 +245,13 @@ deleteFeedback(feedbackId: any) {
     });
   }  
   
-  openPopup() {
-    this.dialog.open(EditUserComponent, {
-      width: "49%",
-      height: "52%",
+  // openPopup() {
+  //   this.dialog.open(EditUserComponent, {
+  //     width: "49%",
+  //     height: "52%",
 
-    });
-  }
+  //   });
+  // }
   
   navigateToViewFeedback(feedbackId: number) {
     sessionStorage.setItem('currentPage', `${this.currentPage}`);
@@ -302,3 +304,4 @@ deleteFeedback(feedbackId: any) {
     //     );
     // }
   }
+

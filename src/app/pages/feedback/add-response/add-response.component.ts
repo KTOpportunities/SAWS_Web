@@ -49,7 +49,6 @@ export class AddResponseComponent implements OnInit{
       deleted_at: [],
       isresponded: [],
       broadcastMessage: ['', Validators.required],
-      // responseMessage: ['', Validators.required],
       FeedbackMessages: [[]]
     });
 
@@ -71,7 +70,7 @@ export class AddResponseComponent implements OnInit{
   }
 
   onSubmit() {   
-    if (this.isBroadcastMessageValid() && this.broadcastForm.valid) {  
+    if (this.isBroadcastMessageValid() && this.broadcastForm.valid) {
       
       this.feedbackData.forEach((element: { [key: string]: any; }) => {
 
@@ -80,14 +79,14 @@ export class AddResponseComponent implements OnInit{
         const formValues = this.broadcastForm.value;
 
         const body = {
-          feedbackId: formValues.feedbackId,
+          feedbackId: 0,
           fullname: formValues.fullname,
           senderId: formValues.senderId,
           senderEmail: formValues.senderEmail,
           responderId: this.userId,
           responderEmail: this.userEmail,
           created_at: formValues.created_at,
-          title: formValues.title,
+          title: "Broadcast SAWS",
           isresponded: true,
           FeedbackMessages: [
             {

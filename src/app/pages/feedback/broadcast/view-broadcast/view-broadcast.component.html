@@ -105,7 +105,7 @@
                       </defs>
                     </svg>
                   </div> -->
-                <div class="button-text">Broadcast</div>
+                <div class="button-text">Send Broadcast</div>
               </a>
               
             </div>
@@ -146,21 +146,23 @@
               </ng-container> -->
               
               <!-- Full Name Column -->
-              <ng-container matColumnDef="fullname">
+              <ng-container matColumnDef="title">
                 <mat-header-cell *matHeaderCellDef mat-sort-header>
-                  Full Name
+                  Broadcast Title
                 </mat-header-cell>
-                <mat-cell *matCellDef="let feedback">
-                    {{ feedback.fullname }} 
+                <mat-cell *matCellDef="let broadcast
+                ">
+                    {{ broadcast.title }} 
                 </mat-cell>
               </ng-container>
     
               <!-- Email Column -->
               <ng-container matColumnDef="email">
                 <mat-header-cell *matHeaderCellDef mat-sort-header>
-                  Email
+                  Sender Email
                 </mat-header-cell>
-                <mat-cell *matCellDef="let feedback"> {{ feedback.senderEmail }} </mat-cell>
+                <mat-cell *matCellDef="let broadcast"> {{ broadcast.
+                    broadcasterEmail }} </mat-cell>
               </ng-container>
     
               <!-- Created Date Column -->
@@ -168,18 +170,18 @@
                 <mat-header-cell *matHeaderCellDef mat-sort-header>
                   Last Received Date
                 </mat-header-cell>
-                <mat-cell *matCellDef="let feedback"> 
-                   {{ feedback.updated_at | date : "short" }}
+                <mat-cell *matCellDef="let broadcast"> 
+                   {{ broadcast.updated_at | date : "short" }}
                 </mat-cell>
               </ng-container>
     
               <!-- Status Column -->
               <ng-container matColumnDef="status">
                 <mat-header-cell *matHeaderCellDef> Status </mat-header-cell>
-                <mat-cell *matCellDef="let feedback" >
-                  <div class="status" [ngClass]="{ 'status-active': feedback.isresponded }">
+                <mat-cell *matCellDef="let broadcast" >
+                  <div class="status" [ngClass]="{ 'status-active': broadcast.isresponded }">
                     <span class="status-text">
-                        {{ feedback.isresponded
+                        {{ broadcast.isresponded
                         ? 'Responded' : 'UnAnswered' }}
                     </span>
                   </div>
@@ -189,7 +191,7 @@
               <!-- Action Column -->
               <ng-container matColumnDef="action">
                 <mat-header-cell *matHeaderCellDef> Action </mat-header-cell>
-                <mat-cell *matCellDef="let feedback">
+                <mat-cell *matCellDef="let broadcast">
                   <!-- Add your action buttons/icons here -->
                   <button
                     mat-icon-button
@@ -204,13 +206,13 @@
                   </button>
     
                   <mat-menu #actionMenu="matMenu" class="mat-horizontal-menu">
-                    <button mat-menu-item (click)="navigateToViewFeedback(feedback.feedbackId)">
+                    <button mat-menu-item (click)="navigateToViewFeedback(broadcast.feedbackId)">
                       <mat-icon>visibility</mat-icon> View
                     </button>
                     <!-- <button mat-menu-item (click)="toggleUser(user)">
                       <mat-icon>visibility</mat-icon> View
                     </button> -->
-                    <button mat-menu-item (click)="deleteFeedback(feedback.feedbackId)">
+                    <button mat-menu-item (click)="deleteFeedback(broadcast.feedbackId)">
                       <mat-icon style="color: red">delete</mat-icon> Archive
                     </button>
                   </mat-menu>

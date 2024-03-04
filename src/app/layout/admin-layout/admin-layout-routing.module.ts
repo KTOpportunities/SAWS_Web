@@ -6,6 +6,8 @@ import { EditAdvertisementComponent } from "src/app/pages/advertisement/edit-adv
 import { ViewAdvertisementComponent } from "src/app/pages/advertisement/view-advertisement/view-advertisement.component";
 import { DashboardComponent } from "src/app/pages/dashboard/dashboard.component";
 import { AddResponseComponent } from "src/app/pages/feedback/add-response/add-response.component";
+import { BroadcastComponent } from "src/app/pages/feedback/broadcast/broadcast.component";
+import { ViewBroadcastComponent } from "src/app/pages/feedback/broadcast/view-broadcast/view-broadcast.component";
 import { FeedbackComponent } from "src/app/pages/feedback/feedback.component";
 import { ViewFeedbackComponent } from "src/app/pages/feedback/view-feedback/view-feedback.component";
 import { AddUserComponent } from "src/app/pages/user-management/add-user/add-user.component";
@@ -32,6 +34,8 @@ const routes: Routes = [
   { path: "feedback/addBroadcast", component: AddResponseComponent },
   { path: "feedback/viewBroadcast", component: AddResponseComponent },
   { path: "feedback/viewFeedback", component: ViewFeedbackComponent },
+  { path: "feedback/broadcast", component: BroadcastComponent },
+  { path: "feedback/broadcast/listBroadcasts", component: ViewBroadcastComponent },
   { path: "advertisement/viewAdvert", component: ViewAdvertisementComponent },
   // {
   //   path: "user",

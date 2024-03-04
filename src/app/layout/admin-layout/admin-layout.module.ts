@@ -22,6 +22,9 @@ import { AdvertisementComponent } from "src/app/pages/advertisement/advertisemen
 import { AddAdvertisementComponent } from "src/app/pages/advertisement/add-advertisement/add-advertisement.component";
 import { EditAdvertisementComponent } from "src/app/pages/advertisement/edit-advertisement/edit-advertisement.component";
 import { ViewAdvertisementComponent } from "src/app/pages/advertisement/view-advertisement/view-advertisement.component";
+import { BroadcastComponent } from "src/app/pages/feedback/broadcast/broadcast.component";
+import { AddBroadcastComponent } from "src/app/pages/feedback/broadcast/add-broadcast/add-broadcast.component";
+import { ViewBroadcastComponent } from "src/app/pages/feedback/broadcast/view-broadcast/view-broadcast.component";
 @NgModule({
   declarations: [
     UserManagementComponent,
@@ -36,7 +39,10 @@ import { ViewAdvertisementComponent } from "src/app/pages/advertisement/view-adv
     AdvertisementComponent,
     AddAdvertisementComponent,
     EditAdvertisementComponent,
-    ViewAdvertisementComponent
+    ViewAdvertisementComponent,
+    BroadcastComponent,
+    AddBroadcastComponent,
+    ViewBroadcastComponent
   ],
   imports: [
     CommonModule,

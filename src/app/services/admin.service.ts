@@ -48,6 +48,18 @@ export class AdminService {
     );
   }
 
+  GetPagedAllBroadcasts(pageNumber: any, pageSize: any) {
+    return this.http.get<any>(
+      environment.serverAPI + `Feedback/GetPagedAllBroadcasts?pageNumber=${pageNumber}&pageSize=${pageSize}`,
+    );
+  }
+
+  getPagedAllFeedbacksByUniqueEmail(pageNumber: any, pageSize: any) {
+    return this.http.get<any>(
+      environment.serverAPI + `Feedback/GetPagedAllFeedbacksByUniqueEmail?pageNumber=${pageNumber}&pageSize=${pageSize}`,
+    );
+  }
+
   getBroadcastMessages() {
     return this.http.get<any>(
       environment.serverAPI + `Feedback/GetBroadcastMessages`,

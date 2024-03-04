@@ -7,7 +7,7 @@
               <div class="group-hero_l">
                 <div class="group-hero_text">Filter by</div>
                 <div data-hover="false" data-delay="0" class="w-dropdown"></div>
-                <div 
+                <!-- <div 
                   data-hover="false" 
                   data-delay="0" 
                   class="w-dropdown">
@@ -33,7 +33,7 @@
                           </span>
                         </button>
                     </mat-menu>
-                </div>
+                </div> -->
                 <div
                   (click)="openPicker()"
                   data-hover="false" 
@@ -66,7 +66,52 @@
                 </div>
               </div>
               <a
-                (click)="viewSubscribersByFeedback()"
+                *ngIf="selection.selected.length > 0"
+                (click)="addBroadcast()"
+                class="button w-inline-block">
+                  <div class="embed-icon w-embed">
+                    <svg
+                      width="16"
+                      height="16"
+                      viewbox="0 0 16 16"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <g clip-path="url(#clip0_1695_120)">
+                        <path
+                          d="M8.00021 14.9623C11.8453 14.9623 14.9623 11.8453 14.9623 8.00021C14.9623 4.15514 11.8453 1.03809 8.00021 1.03809C4.15514 1.03809 1.03809 4.15514 1.03809 8.00021C1.03809 11.8453 4.15514 14.9623 8.00021 14.9623Z"
+                          stroke="currentColor"
+                          stroke-width="1.5"
+                          stroke-miterlimit="10"
+                        ></path>
+                        <path
+                          d="M5.09961 8H10.9014"
+                          stroke="currentColor"
+                          stroke-width="1.5"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        ></path>
+                        <path
+                          d="M8 5.09961V10.9014"
+                          stroke="currentColor"
+                          stroke-width="1.5"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        ></path>
+                      </g>
+                      <defs>
+                        <clippath id="clip0_1695_120">
+                          <rect width="16" height="16" fill="white"></rect>
+                        </clippath>
+                      </defs>
+                    </svg>
+                  </div>
+                <div class="button-text">Broadcast to ({{selection.selected.length}})</div>
+              </a>
+
+              <a
+                *ngIf="selection.selected.length == 0"
+                (click)="viewBroadcast()"
                 class="button w-inline-block">
                   <!-- <div class="embed-icon w-embed">
                     <svg
@@ -105,7 +150,7 @@
                       </defs>
                     </svg>
                   </div> -->
-                <div class="button-text">Broadcast</div>
+                <div class="button-text">List Broadcasts</div>
               </a>
               
             </div>
@@ -122,7 +167,7 @@
             >
 
               <!-- Checkbox Column -->
-              <!-- <ng-container 
+              <ng-container 
                 matColumnDef="select">
                   <mat-header-cell *matHeaderCellDef
                   >
@@ -143,7 +188,7 @@
                       color="primary">
                   </mat-checkbox>
                 </mat-cell>
-              </ng-container> -->
+              </ng-container>
               
               <!-- Full Name Column -->
               <ng-container matColumnDef="fullname">
@@ -174,7 +219,7 @@
               </ng-container>
     
               <!-- Status Column -->
-              <ng-container matColumnDef="status">
+              <!-- <ng-container matColumnDef="status">
                 <mat-header-cell *matHeaderCellDef> Status </mat-header-cell>
                 <mat-cell *matCellDef="let feedback" >
                   <div class="status" [ngClass]="{ 'status-active': feedback.isresponded }">
@@ -184,13 +229,12 @@
                     </span>
                   </div>
                 </mat-cell>
-              </ng-container>
+              </ng-container> -->
     
               <!-- Action Column -->
-              <ng-container matColumnDef="action">
+              <!-- <ng-container matColumnDef="action">
                 <mat-header-cell *matHeaderCellDef> Action </mat-header-cell>
                 <mat-cell *matCellDef="let feedback">
-                  <!-- Add your action buttons/icons here -->
                   <button
                     mat-icon-button
                     [matMenuTriggerFor]="actionMenu"
@@ -207,23 +251,20 @@
                     <button mat-menu-item (click)="navigateToViewFeedback(feedback.feedbackId)">
                       <mat-icon>visibility</mat-icon> View
                     </button>
-                    <!-- <button mat-menu-item (click)="toggleUser(user)">
-                      <mat-icon>visibility</mat-icon> View
-                    </button> -->
                     <button mat-menu-item (click)="deleteFeedback(feedback.feedbackId)">
                       <mat-icon style="color: red">delete</mat-icon> Archive
                     </button>
                   </mat-menu>
                 </mat-cell>
-              </ng-container>
+              </ng-container> -->
   
             <!-- Table Header Row -->
             <mat-header-row 
               *matHeaderRowDef="displayedColumns; sticky: true"
             ></mat-header-row>
             <!-- Table Rows --> 
-            <!-- (click)="selection.toggle(row)" -->
             <mat-row            
+            (click)="selection.toggle(row)"
               *matRowDef="let row; 
               columns: displayedColumns"
             ></mat-row>

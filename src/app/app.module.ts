@@ -26,7 +26,7 @@ import { MatIconModule } from '@angular/material/icon';
   declarations: [
     AppComponent,
     AuthLayoutComponent,
-    AdminLayoutComponent
+    AdminLayoutComponent,
   ],
   imports: [
     BrowserModule,
