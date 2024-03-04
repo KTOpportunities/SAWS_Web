@@ -1418,6 +1418,9 @@
     grid-template-columns: 1fr;
     padding: 10px;
     background-attachment: fixed;
+
+    max-height: 60vh;
+    overflow-y: auto;
   }
 
   .grid-14 {

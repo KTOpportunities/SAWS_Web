@@ -18,11 +18,13 @@
                     [formGroup]="feedbackForm"
                     (ngSubmit)="onSubmit()"
                     >
-                    <div class="group inside-form" #content
+                    <div class="group inside-form"
                     *ngIf="apiData.feedbackObservable$ | async as feedback"
                     >
                         <h3 class="heading-copy">{{ feedback.title }}</h3>
-                        <div class="w-layout-grid grid-13"
+                        <div
+                          #content
+                          class="w-layout-grid grid-13"
                         
                         >
                         <div

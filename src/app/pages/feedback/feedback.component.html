@@ -67,7 +67,7 @@
               </div>
               <a
                 *ngIf="selection.selected.length > 0"
-                (click)="addResponse()"
+                (click)="addBroadcast()"
                 class="button w-inline-block">
                   <div class="embed-icon w-embed">
                     <svg
@@ -111,7 +111,7 @@
 
               <a
                 *ngIf="selection.selected.length == 0"
-                (click)="addResponse()"
+                (click)="viewBroadcast()"
                 class="button w-inline-block">
                   <!-- <div class="embed-icon w-embed">
                     <svg

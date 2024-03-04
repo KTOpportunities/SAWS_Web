@@ -29,7 +29,8 @@ const routes: Routes = [
   { path: "advertisement/editAdvert", component: EditAdvertisementComponent },
   { path: "adminUser", component: AdminUserComponent },
   { path: "subscriberUser", component: SubscriberUserComponent },
-  { path: "feedback/addResponse", component: AddResponseComponent },
+  { path: "feedback/addBroadcast", component: AddResponseComponent },
+  { path: "feedback/viewBroadcast", component: AddResponseComponent },
   { path: "feedback/viewFeedback", component: ViewFeedbackComponent },
   { path: "advertisement/viewAdvert", component: ViewAdvertisementComponent },
   // {

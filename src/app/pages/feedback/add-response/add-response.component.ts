@@ -58,14 +58,6 @@ export class AddResponseComponent implements OnInit{
   ngOnInit(): void {
     this.apiData.getFeedbackData().subscribe(data => {
       this.feedbackData = data;
-      // this.feedbackForm.patchValue(data[0]);
-    });
-
-    this.apiData.getBroadcastData().subscribe(data => {
-      // this.feedbackData = data;
-      // this.broadcastForm.patchValue(data);
-
-      console.log("dataaa", data)
     });
 
     var user: any = this.apiData.getCurrentUser();
@@ -111,11 +103,8 @@ export class AddResponseComponent implements OnInit{
         };
 
         this.broadcastData.push(body);
-
-        // this.updateFeedbackForm(body);
       });
 
-      // console.log('this.broadcastData', this.broadcastData)
       this.addBroadcastMessageForm(this.broadcastData);
 
     } else {
@@ -129,7 +118,7 @@ export class AddResponseComponent implements OnInit{
     this.api.postInsertBroadcastMessages(broadcastData).subscribe(
       (data: any) => {
         this.broadcastForm.reset();
-        // this.getFeedback(this.feedbackData.feedbackId);
+        this.getAllBroadcastMessages();
 
       },
       (err) => {
@@ -139,16 +128,16 @@ export class AddResponseComponent implements OnInit{
     );
   }
 
-  getFeedback(feedbackId: number) {
-    this.apiAdmin.getFeedbackById(feedbackId).subscribe(
-      (data) => {
-        this.apiData.setFeedbackData(data);
+  getAllBroadcastMessages() {
+    this.apiAdmin.getBroadcastMessages().subscribe(
+      (data: any) => {
+        console.log("data getAllBroadcastMessages ", data)
+        this.apiData.setBroadcastData(data);
       },
       (error) => {
-        console.error("Error in fetching data:", error);
-        this.spinner.hide();
+        console.error("Error soft deleting feeback:", error);
       }
-    );
+      );
   }
 
   ngAfterViewChecked() {

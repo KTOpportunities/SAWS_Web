@@ -18,12 +18,14 @@
                   [formGroup]="broadcastForm"
                   (ngSubmit)="onSubmit()"
                   >
-                  <div class="group inside-form" #content
+                  <div class="group inside-form"
                   *ngIf="apiData.broadcastObservable$ | async as broadcasts"
                   >
-                      <h3 class="heading-copy">Broadcast Response ({{ feedbackData.length }} - selected)</h3>
-                      <div class="w-layout-grid grid-13"
-                      
+                      <h3 class="heading-copy">Broadcast {{ feedbackData.length === 0 ? 'Messages' : 'Response (' + feedbackData.length + ' - selected)' }}</h3>
+
+                      <div
+                        #content
+                        class="w-layout-grid grid-13"
                       >
                       <div
                           formGroupName="FeedbackMessages"
@@ -59,7 +61,9 @@
                           </div>
                       </div>
 
-                      <div id="w-node-_3fb734d5-7419-d57c-65b2-a87e0c26e603-bf38b96b">
+                      <div id="w-node-_3fb734d5-7419-d57c-65b2-a87e0c26e603-bf38b96b" 
+                      *ngIf="feedbackData.length"
+                      >
                           <div class="w-form">
                               <div class="div-block-450">
                                 <input

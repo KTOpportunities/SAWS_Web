@@ -166,7 +166,6 @@ export class FeedbackComponent implements OnInit{
   }
 }
 
-
 pageChanged(event: PageEvent) {
   this.pageSize = event.pageSize;
   this.currentPage = event.pageIndex;
@@ -242,15 +241,13 @@ deleteFeedback(feedbackId: any) {
         );
       }
     });
-  }
-  
+  }  
   
   openPopup() {
     this.dialog.open(EditUserComponent, {
       width: "49%",
-      height: "52%", // adjust width as needed
-      
-      // Add more configuration options as needed
+      height: "52%",
+
     });
   }
   
@@ -270,17 +267,29 @@ deleteFeedback(feedbackId: any) {
       );
     }
 
-    addResponse() {
+    addBroadcast() {
     sessionStorage.setItem('currentPage', `${this.currentPage}`);
     sessionStorage.setItem('pageSize', `${this.pageSize}`);
 
-    const data = this.selection.selected;    
+    const data = this.selection.selected;   
     this.apiData.setFeedbackData(data);
 
     this.getAllBroadcastMessages();
 
-    this.router.navigate(["/admin/feedback/addResponse"]);
+    this.router.navigate(["/admin/feedback/addBroadcast"]);
     }
+
+    viewBroadcast() {
+      sessionStorage.setItem('currentPage', `${this.currentPage}`);
+      sessionStorage.setItem('pageSize', `${this.pageSize}`);
+  
+      const data = this.selection.selected;    
+      this.apiData.setFeedbackData(data);
+  
+      this.getAllBroadcastMessages();
+  
+      this.router.navigate(["/admin/feedback/viewBroadcast"]);
+      }
 
     getAllBroadcastMessages() {
       this.apiAdmin.getBroadcastMessages().subscribe(
