@@ -220,7 +220,7 @@ isFilterActive(): boolean {
   return this.dataSource.filter.trim() !== '';
 }
 
-deleteBroadcast(title: any) {
+deleteBroadcast(batchId: any) {
   Swal.fire({
     title: 'Are you sure you want to delete?',
     icon: 'warning',
@@ -229,7 +229,7 @@ deleteBroadcast(title: any) {
     cancelButtonText: 'No',
   }).then((result) => {
     if (result.isConfirmed) {
-      this.apiService.deleteBroadcastByTitle(title).subscribe(
+      this.apiService.deleteBroadcastByTitle(batchId).subscribe(
         () => {
           this.getAllBroadcasts();
         },
