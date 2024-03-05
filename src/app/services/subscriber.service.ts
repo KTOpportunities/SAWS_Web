@@ -84,9 +84,9 @@ export class SubscriberService {
     );
   }
 
-  deleteBroadcastByTitle(title: any) {
+  DeleteBroadcastByBatchId(batchId: any) {
     return this.http.delete<any>(
-      environment.serverAPI + `Feedback/DeleteBroadcastByTitle?title=${title}`,
+      environment.serverAPI + `Feedback/DeleteBroadcastByBatchId?batchId=${batchId}`,
       // this.httpOptions
     );
   }

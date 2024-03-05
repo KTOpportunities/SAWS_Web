@@ -229,7 +229,7 @@ deleteBroadcast(batchId: any) {
     cancelButtonText: 'No',
   }).then((result) => {
     if (result.isConfirmed) {
-      this.apiService.deleteBroadcastByTitle(batchId).subscribe(
+      this.apiService.DeleteBroadcastByBatchId(batchId).subscribe(
         () => {
           this.getAllBroadcasts();
         },
