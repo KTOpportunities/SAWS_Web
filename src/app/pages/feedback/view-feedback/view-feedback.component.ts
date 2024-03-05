@@ -31,9 +31,6 @@ export class ViewFeedbackComponent implements OnInit{
     private router: Router,
     private spinner: NgxSpinnerService,
   )  {
-
-    // var feedbackDetails: any = this.apiData.getFeedback();
-    // const feedbackObject = JSON.parse(feedbackDetails);
     
     this.feedbackForm = this.formBuilder.group({
       feedbackId: [],
@@ -52,13 +49,6 @@ export class ViewFeedbackComponent implements OnInit{
       FeedbackMessages: [[]]
     });
     
-    // if (feedbackObject) {
-    //   this.feedbackForm.patchValue(feedbackObject);
-    // }
-
-    //  if (this.feedbackData) {
-    //   this.feedbackForm.patchValue(this.feedbackData);
-    // }
   }
 
   ngOnInit() {

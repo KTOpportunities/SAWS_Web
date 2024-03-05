@@ -84,6 +84,13 @@ export class SubscriberService {
     );
   }
 
+  deleteBroadcastByTitle(title: any) {
+    return this.http.delete<any>(
+      environment.serverAPI + `Feedback/DeleteBroadcastByTitle?title=${title}`,
+      // this.httpOptions
+    );
+  }
+
   postInsertNewAdvert(body: {}) {
     return this.http.post<any>(
       environment.serverAPI + "Advert/PostInsertNewAdvert",

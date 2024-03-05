@@ -1,276 +1,127 @@
 <section class="section-3">
-    <div class="container">
-      <div class="content">
+  <div class="container">
+    <div class="content">        
         <div class="content-wrap">
-          <div class="user-managemnt-group">
-            <div class="group-hero">
-              <div class="group-hero_l">
-                <div class="group-hero_text">Filter by</div>
-                <div data-hover="false" data-delay="0" class="w-dropdown"></div>
-                <div 
-                  data-hover="false" 
-                  data-delay="0" 
-                  class="w-dropdown">
-                    <div
-                      mat-button
-                      [matMenuTriggerFor]="nameMenu"
-                      class="dropdown-toggle w-dropdown-toggle"
-                      >
-                      <div class="icon w-icon-dropdown-toggle"></div>
-                      <div class="text-block">
-                        {{ selectedStatusName !== '' ? selectedStatusName : "Status" }}
+            <div class="user-managemnt-group">
+                <div class="group-hero-copy">
+                    <div class="group-hero_l">
+                          <a
+                              (click)="onCancel()"
+                              class="button-11 w-button">
+                              Back
+                          </a>
                       </div>
-                    </div>
-                    <mat-menu
-                      #nameMenu="matMenu">
-                      <button
-                        *ngFor="let status of statuses"
-                        (click)="selectStatus(status.status)"
-                          mat-menu-item
-                        >
-                          <span class="w-dropdown-link-2">
-                            {{ status.name }}
-                          </span>
-                        </button>
-                    </mat-menu>
-                </div>
-                <div
-                  (click)="openPicker()"
-                  data-hover="false" 
-                  data-delay="0" 
-                  class="w-dropdown">
-                  <div class="dropdown-toggle w-dropdown-toggle">
-                    <div class="icon w-icon-dropdown-toggle"></div>
-                    <div class="text-block">
-                    {{ selectedDateString ? selectedDateString : "Received Date" }}
                   </div>
-                  </div>
-                </div>
-                <div>
-                  <input
-                  [matDatepicker]="picker"
-                  #datepickerTrigger
-                  class="filterDate"
-                  (dateInput)="selectDate('input', $event)"
-                />
-            
-                <mat-datepicker #picker class="filterDate"></mat-datepicker>
-                </div>
-
-                <div
-                  *ngIf="isFilterActive()"
-                  (click)="clearFilter()"
-                  class="dropdown-toggle-3 w-dropdown-toggle text-block"
-                  >
-                  clear filters
-                </div>
               </div>
-              <a
-                (click)="viewSubscribersByFeedback()"
-                class="button w-inline-block">
-                  <!-- <div class="embed-icon w-embed">
-                    <svg
-                      width="16"
-                      height="16"
-                      viewbox="0 0 16 16"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <g clip-path="url(#clip0_1695_120)">
-                        <path
-                          d="M8.00021 14.9623C11.8453 14.9623 14.9623 11.8453 14.9623 8.00021C14.9623 4.15514 11.8453 1.03809 8.00021 1.03809C4.15514 1.03809 1.03809 4.15514 1.03809 8.00021C1.03809 11.8453 4.15514 14.9623 8.00021 14.9623Z"
-                          stroke="currentColor"
-                          stroke-width="1.5"
-                          stroke-miterlimit="10"
-                        ></path>
-                        <path
-                          d="M5.09961 8H10.9014"
-                          stroke="currentColor"
-                          stroke-width="1.5"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                        ></path>
-                        <path
-                          d="M8 5.09961V10.9014"
-                          stroke="currentColor"
-                          stroke-width="1.5"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                        ></path>
-                      </g>
-                      <defs>
-                        <clippath id="clip0_1695_120">
-                          <rect width="16" height="16" fill="white"></rect>
-                        </clippath>
-                      </defs>
-                    </svg>
-                  </div> -->
-                <div class="button-text">Send Broadcast</div>
-              </a>
-              
-            </div>
-          </div>
-  
-          <mat-table 
-            #feedbackTable
-            id="feedbackTable"
-            mat-table
-            [dataSource]="dataSource" 
-            matSort 
-            class="mat-elevation-z8"
-            #adminsSort="matSort"
-            >
 
-              <!-- Checkbox Column -->
-              <!-- <ng-container 
-                matColumnDef="select">
-                  <mat-header-cell *matHeaderCellDef
+              <form
+                  [formGroup]="feedbackForm"
+                  (ngSubmit)="onSubmit()"
                   >
-                  <mat-checkbox
-                    (change)="$event ? masterToggle() : null"
-                    [checked]="selection.hasValue() && isAllSelected()"
-                    [indeterminate]="selection.hasValue() && !isAllSelected()"
-                    color="primary"
-                    >
-                  </mat-checkbox>
-              
-                  </mat-header-cell>
-                  <mat-cell *matCellDef="let row">
-                    <mat-checkbox 
-                      (click)="$event.stopPropagation()"
-                      (change)="$event ? selection.toggle(row) : null"
-                      [checked]="selection.isSelected(row)"
-                      color="primary">
-                  </mat-checkbox>
-                </mat-cell>
-              </ng-container> -->
-              
-              <!-- Full Name Column -->
-              <ng-container matColumnDef="title">
-                <mat-header-cell *matHeaderCellDef mat-sort-header>
-                  Broadcast Title
-                </mat-header-cell>
-                <mat-cell *matCellDef="let broadcast
-                ">
-                    {{ broadcast.title }} 
-                </mat-cell>
-              </ng-container>
-    
-              <!-- Email Column -->
-              <ng-container matColumnDef="email">
-                <mat-header-cell *matHeaderCellDef mat-sort-header>
-                  Sender Email
-                </mat-header-cell>
-                <mat-cell *matCellDef="let broadcast"> {{ broadcast.
-                    broadcasterEmail }} </mat-cell>
-              </ng-container>
-    
-              <!-- Created Date Column -->
-              <ng-container matColumnDef="created_at">
-                <mat-header-cell *matHeaderCellDef mat-sort-header>
-                  Last Received Date
-                </mat-header-cell>
-                <mat-cell *matCellDef="let broadcast"> 
-                   {{ broadcast.updated_at | date : "short" }}
-                </mat-cell>
-              </ng-container>
-    
-              <!-- Status Column -->
-              <ng-container matColumnDef="status">
-                <mat-header-cell *matHeaderCellDef> Status </mat-header-cell>
-                <mat-cell *matCellDef="let broadcast" >
-                  <div class="status" [ngClass]="{ 'status-active': broadcast.isresponded }">
-                    <span class="status-text">
-                        {{ broadcast.isresponded
-                        ? 'Responded' : 'UnAnswered' }}
-                    </span>
+                  <div class="group inside-form"
+                  *ngIf="apiData.feedbackObservable$ | async as feedback"
+                  >
+                      <h3 class="heading-copy">{{ feedback.title }}</h3>
+                      <div
+                        #content
+                        class="w-layout-grid grid-13"
+                      
+                      >
+                      <div
+                          formGroupName="FeedbackMessages"
+                          *ngFor="let feedbacks of feedback.FeedbackMessages; let index = index;"
+                          >
+                          <div                        
+                              id="w-node-d6e462d1-76fb-9d89-7c68-0a48cdb81add-bf38b96b"
+                              *ngIf="feedbacks.broadcast"
+                          >
+                            <h4 class="adm">{{ feedback.broadcasterEmail }}</h4>
+                            <div class="w-layout-grid grid-16">
+                              <div id="w-node-_68c2ba2d-a180-6d5d-bc2e-dfc8d4e9ef8b-bf38b96b" class="div-block-448">
+                              </div>
+                              <div id="w-node-_3891c89a-c05f-88ae-0e87-eb0330273651-bf38b96b">
+                                <div class="w-layout-grid grid-17">
+                                  <div id="w-node-bb567ea0-417d-ba11-69bd-8fd873445a44-bf38b96b" class="div-block-446">
+                                    <p class="paragraph-3">{{ feedbacks.broadcast }}</p>
+                                    <h4 class="time-heading-copy">{{ feedbacks.created_at | date : "short" }}</h4>
+                                  </div>
+                                  <div id="w-node-_5ddf5ebf-8f5e-e5f5-cd98-b70df93808a4-bf38b96b" class="div-block-445">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="52.025" height="48.611" viewBox="0 0 52.025 48.611">
+                                      <g id="Group_5146" data-name="Group 5146" transform="translate(-732 -362.389)">
+                                        <path id="Icon_simple-hipchat" data-name="Icon simple-hipchat" d="M8.664,40.353A21.2,21.2,0,0,1,0,23.621C0,11.232,11.647,1.18,26.006,1.18s26.019,10.052,26.019,22.44S40.383,46.069,26.017,46.069a29.831,29.831,0,0,1-5.471-.494l-.568-.1A27.074,27.074,0,0,1,6.347,49.791a1.4,1.4,0,0,1-1.2-2.393C6.555,45.675,9.02,40.624,8.664,40.353Z" transform="translate(732 361.208)" fill="#8295c2"/>
+                                        <circle id="Ellipse_212" data-name="Ellipse 212" cx="3.5" cy="3.5" r="3.5" transform="translate(743 383)" fill="#fff"/>
+                                        <circle id="Ellipse_213" data-name="Ellipse 213" cx="3.5" cy="3.5" r="3.5" transform="translate(754 383)" fill="#fff"/>
+                                        <circle id="Ellipse_214" data-name="Ellipse 214" cx="3.5" cy="3.5" r="3.5" transform="translate(767 383)" fill="#fff"/>
+                                      </g>
+                                    </svg>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                      </div>
+
+                      <!-- <div id="w-node-_3fb734d5-7419-d57c-65b2-a87e0c26e603-bf38b96b">
+                          <div class="w-form">
+                              <div class="div-block-450">
+                                <input
+                                  formControlName="responseMessage" 
+                                  class="text-field-2 w-input" 
+                                  maxlength="256" 
+                                  name="name" 
+                                  data-name="Name" 
+                                  placeholder="Say Something here......" 
+                                  type="text" 
+                                  id="name"
+                                  required
+                                  >
+                                  <input
+                                  *ngIf="isResponseMessageValid()"
+                                  type="submit" 
+                                  data-wait="Please wait..." 
+                                  class="submit-button-3 w-button" 
+                                  value=""
+                                >
+                              </div>
+                          </div>
+                        </div> -->
+                      </div> 
                   </div>
-                </mat-cell>
-              </ng-container>
-    
-              <!-- Action Column -->
-              <ng-container matColumnDef="action">
-                <mat-header-cell *matHeaderCellDef> Action </mat-header-cell>
-                <mat-cell *matCellDef="let broadcast">
-                  <!-- Add your action buttons/icons here -->
-                  <button
-                    mat-icon-button
-                    [matMenuTriggerFor]="actionMenu"
-                    class="mat-button mat-horizontal-menu" 
-                  >
-                    <mat-icon style="color: #323259">
-                      <img
-                        src="assets/images/metro-more-horiz.svg"
-                        class="searchIcon"
-                    /></mat-icon>
-                  </button>
-    
-                  <mat-menu #actionMenu="matMenu" class="mat-horizontal-menu">
-                    <button mat-menu-item (click)="navigateToViewFeedback(broadcast.feedbackId)">
-                      <mat-icon>visibility</mat-icon> View
-                    </button>
-                    <!-- <button mat-menu-item (click)="toggleUser(user)">
-                      <mat-icon>visibility</mat-icon> View
-                    </button> -->
-                    <button mat-menu-item (click)="deleteFeedback(broadcast.feedbackId)">
-                      <mat-icon style="color: red">delete</mat-icon> Archive
-                    </button>
-                  </mat-menu>
-                </mat-cell>
-              </ng-container>
-  
-            <!-- Table Header Row -->
-            <mat-header-row 
-              *matHeaderRowDef="displayedColumns; sticky: true"
-            ></mat-header-row>
-            <!-- Table Rows --> 
-            <!-- (click)="selection.toggle(row)" -->
-            <mat-row            
-              *matRowDef="let row; 
-              columns: displayedColumns"
-            ></mat-row>
-
-            <tr class="mat-row" *matNoDataRow>
-              <td class="mat-cell" colspan="4">
-                No data matching the filter "{{dataSource.filter}}"
-              </td>
-            </tr>
-          </mat-table>
-          <mat-paginator
-            #paginator
-            [length]="TotalRecords"
-            [pageIndex]="currentPage"
-            [pageSize]="pageSize"
-            [pageSizeOptions]="[5, 10, TotalRecords]"
-            (page)="pageChanged($event)"
-            aria-label="Select page"
-            showFirstLastButtons
-            aria-label="'Select page of admins'"
-          ></mat-paginator>
-        </div>
+              </form>
+          </div>
       </div>
       <div
-        data-w-id="717ec873-5bdf-1582-6da6-888fecad4a6e"
-        class="nav-shadow"
+      data-w-id="717ec873-5bdf-1582-6da6-888fecad4a6e"
+      class="nav-shadow"
       ></div>
-    </div>
-    <div class="custom-css w-embed">
-      <style>
-        /*width*/
-        .scroll::-webkit-scrollbar {
-          height: 2px;
-        }
-        /*track*/
-        .scroll::-webkit-scrollbar-track {
-          background: rgba(255, 255, 255, 0);
-        }
-        /*thumb*/
-        .scroll::-webkit-scrollbar-thumb {
-          background: rgb(233, 229, 221);
-          border-radius: 1000px;
-        }
-      </style>
-    </div>
-  </section>
+  </div>
+  <div class="custom-css w-embed">
+    <style>
+      /*width*/
+      .scroll::-webkit-scrollbar {
+        height: 2px;
+      }
+      /*track*/
+      .scroll::-webkit-scrollbar-track {
+        background: rgba(255, 255, 255, 0);
+      }
+      /*thumb*/
+      .scroll::-webkit-scrollbar-thumb {
+        background: rgb(233, 229, 221);
+        border-radius: 1000px;
+      }
+    </style>
+  </div>
+</section>
 
- 
+  <ngx-spinner
+      bdColor="rgba(51,51,51,0.8)"
+      size="medium"
+      color="#fff"
+      type="ball-scale-multiple" 
+      type="ball-scale-multiple">
+      <p
+      style="font-size: 20px; color: white"
+      >Replying...
+      <p>
+  </ngx-spinner>

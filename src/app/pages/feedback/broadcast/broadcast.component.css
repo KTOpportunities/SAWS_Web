@@ -105,7 +105,7 @@
     max-width: 100%;
   }
 
-  #feedbackTable {
+  #broadcastTable {
     overflow: auto;
     /* overflow-y: auto; */
     max-height: 50vh;
@@ -1452,7 +1452,7 @@
       align-items: flex-start;
     }
 
-    #feedbackTable {
+    #broadcastTable {
       max-height: 40vh;
     }
 

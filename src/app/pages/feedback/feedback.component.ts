@@ -108,6 +108,12 @@ export class FeedbackComponent implements OnInit{
           sessionStorage.removeItem('currentPage');
           sessionStorage.removeItem('pageSize');
 
+          sessionStorage.removeItem('currentPage_1');
+          sessionStorage.removeItem('pageSize_1');
+
+          sessionStorage.removeItem('currentPage_2');
+          sessionStorage.removeItem('pageSize_2');
+
           this.TotalRecords = data.TotalRecords;
      
           setTimeout(() => {
@@ -267,38 +273,12 @@ deleteFeedback(feedbackId: any) {
       );
     }
 
-    // addBroadcast() {
-    // sessionStorage.setItem('currentPage', `${this.currentPage}`);
-    // sessionStorage.setItem('pageSize', `${this.pageSize}`);
-
-    // const data = this.selection.selected;   
-    // this.apiData.setFeedbackData(data);
-
-    // // this.getAllBroadcastMessages();
-
-    // this.router.navigate(["/admin/feedback/addBroadcast"]);
-    // }
 
     viewSubscribersByFeedback() {
       sessionStorage.setItem('currentPage', `${this.currentPage}`);
       sessionStorage.setItem('pageSize', `${this.pageSize}`);
-  
-      // const data = this.selection.selected;    
-      // this.apiData.setFeedbackData(data);
-  
-      // this.getAllBroadcastMessages();
-  
+          
       this.router.navigate(["/admin/feedback/broadcast"]);
       }
 
-    // getAllBroadcastMessages() {
-    //   this.apiAdmin.getBroadcastMessages().subscribe(
-    //     (data: any) => {
-    //       this.apiData.setBroadcastData(data);
-    //     },
-    //     (error) => {
-    //       console.error("Error soft deleting feeback:", error);
-    //     }
-    //     );
-    // }
   }

@@ -6,7 +6,9 @@ import { EditAdvertisementComponent } from "src/app/pages/advertisement/edit-adv
 import { ViewAdvertisementComponent } from "src/app/pages/advertisement/view-advertisement/view-advertisement.component";
 import { DashboardComponent } from "src/app/pages/dashboard/dashboard.component";
 import { AddResponseComponent } from "src/app/pages/feedback/add-response/add-response.component";
+import { AddBroadcastComponent } from "src/app/pages/feedback/broadcast/add-broadcast/add-broadcast.component";
 import { BroadcastComponent } from "src/app/pages/feedback/broadcast/broadcast.component";
+import { ListBroadcastComponent } from "src/app/pages/feedback/broadcast/list-broadcast/list-broadcast.component";
 import { ViewBroadcastComponent } from "src/app/pages/feedback/broadcast/view-broadcast/view-broadcast.component";
 import { FeedbackComponent } from "src/app/pages/feedback/feedback.component";
 import { ViewFeedbackComponent } from "src/app/pages/feedback/view-feedback/view-feedback.component";
@@ -31,11 +33,12 @@ const routes: Routes = [
   { path: "advertisement/editAdvert", component: EditAdvertisementComponent },
   { path: "adminUser", component: AdminUserComponent },
   { path: "subscriberUser", component: SubscriberUserComponent },
-  { path: "feedback/addBroadcast", component: AddResponseComponent },
-  { path: "feedback/viewBroadcast", component: AddResponseComponent },
+  { path: "feedback/broadcast/addBroadcast", component: AddBroadcastComponent},
+  // { path: "feedback/viewBroadcast", component: AddResponseComponent },
   { path: "feedback/viewFeedback", component: ViewFeedbackComponent },
   { path: "feedback/broadcast", component: BroadcastComponent },
-  { path: "feedback/broadcast/listBroadcasts", component: ViewBroadcastComponent },
+  { path: "feedback/broadcast/viewBroadcast", component: ViewBroadcastComponent },
+  { path: "feedback/broadcast/listBroadcasts", component: ListBroadcastComponent },
   { path: "advertisement/viewAdvert", component: ViewAdvertisementComponent },
   // {
   //   path: "user",

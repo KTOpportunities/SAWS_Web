@@ -12,24 +12,23 @@ import { Admin } from 'src/app/Models/admin.model';
 import { AdminService } from 'src/app/services/admin.service';
 import { Dataservice } from 'src/app/services/data.service';
 import { SubscriberService } from 'src/app/services/subscriber.service';
+// import { EditUserComponent } from '../user-management/edit-user/edit-user.component';
 import Swal from 'sweetalert2';
 import { Feedback } from 'src/app/Models/Feedback';
 
 @Component({
-  selector: 'app-broadcast',
-  templateUrl: './broadcast.component.html',
-  styleUrls: ['./broadcast.component.css']
+  selector: 'app-list-broadcast',
+  templateUrl: './list-broadcast.component.html',
+  styleUrls: ['./list-broadcast.component.css']
 })
-export class BroadcastComponent implements OnInit{
+export class ListBroadcastComponent implements OnInit{
 
     // Define the displayed columns
     displayedColumns: string[] = [
-      "select",
-      "fullname",
+      "title",
       "email",
       "created_at",
-      // "status",
-      // "action",
+      "action",
     ];
   
     @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
@@ -46,7 +45,7 @@ export class BroadcastComponent implements OnInit{
     ];
   
     selectedStatus: number | undefined;
-    feedbackList: Feedback[] = [];
+    broadcastList: Feedback[] = [];
   
     pageSize = 5;
     pageSizeStore = 5;
@@ -78,14 +77,14 @@ export class BroadcastComponent implements OnInit{
   }
 
   ngOnInit(): void {
-    this.getAllFeedbacksByUniqueEmail(); 
+    this.getAllBroadcasts(); 
     this.filterData();
   }
 
-  getAllFeedbacksByUniqueEmail(page: number = 1){
+  getAllBroadcasts(page: number = 1){
 
-    var currentPage: number = Number(sessionStorage.getItem('currentPage_1'));
-    var pageSize: number = Number(sessionStorage.getItem('pageSize_1'));
+    var currentPage: number = Number(sessionStorage.getItem('currentPage_2'));
+    var pageSize: number = Number(sessionStorage.getItem('pageSize_2'));
 
     if (currentPage == 0) {
       currentPage = this.currentPage;
@@ -100,12 +99,12 @@ export class BroadcastComponent implements OnInit{
     }
 
 
-    this.apiAdmin.getPagedAllFeedbacksByUniqueEmail(this.currentPage + page, this.pageSize).subscribe({
+    this.apiAdmin.GetPagedAllBroadcasts(this.currentPage + page, this.pageSize).subscribe({
       next: (data: any) => {
-          this.feedbackList = data.Data;
+          this.broadcastList = data.Data;
 
-          sessionStorage.removeItem('currentPage_1');
-          sessionStorage.removeItem('pageSize_1');
+          sessionStorage.removeItem('currentPage_2');
+          sessionStorage.removeItem('pageSize_2');
 
           this.TotalRecords = data.TotalRecords;
      
@@ -114,7 +113,7 @@ export class BroadcastComponent implements OnInit{
             this.paginator.length = data.TotalRecords;
           });
         
-          this.dataSource = new MatTableDataSource(this.feedbackList);
+          this.dataSource = new MatTableDataSource(this.broadcastList);
           this.dataSource.paginator = this.paginator;
       },
       error: (error) => {
@@ -169,7 +168,7 @@ pageChanged(event: PageEvent) {
   this.pageSize = event.pageSize;
   this.currentPage = event.pageIndex;
   
-  this.getAllFeedbacksByUniqueEmail();
+  this.getAllBroadcasts();
   
   if (this.dataSource) {
     this.dataSource.filterPredicate = (data: any, filter: string) =>
@@ -211,7 +210,7 @@ clearFilter() {
   this.selectedStatusName = '';
   this.selectedDateString = '';
   
-  this.getAllFeedbacksByUniqueEmail();
+  this.getAllBroadcasts();
   
   this.apiData.clearFilter();
   this.apiData.clearForm();
@@ -221,38 +220,70 @@ isFilterActive(): boolean {
   return this.dataSource.filter.trim() !== '';
 }
 
-  addBroadcast() {
-      sessionStorage.setItem('currentPage_1', `${this.currentPage}`);
-      sessionStorage.setItem('pageSize_1', `${this.pageSize}`);
-
-      const data = this.selection.selected;
-      this.apiData.setFeedbackData(data);
-
-      this.getAllBroadcastMessages();
-
-      this.router.navigate(["/admin/feedback/broadcast/addBroadcast"]);
-    }
-
-    viewBroadcast() {
-      sessionStorage.setItem('currentPage_1', `${this.currentPage}`);
-      sessionStorage.setItem('pageSize_1', `${this.pageSize}`);
-  
-      const data = this.selection.selected; 
-      this.apiData.setFeedbackData(data);
-  
-      this.getAllBroadcastMessages();
-  
-      this.router.navigate(["/admin/feedback/broadcast/listBroadcasts"]);
-    }
-
-    getAllBroadcastMessages() {
-      this.apiAdmin.getBroadcastMessages().subscribe(
-        (data: any) => {
-          this.apiData.setBroadcastData(data);
+deleteBroadcast(title: any) {
+  Swal.fire({
+    title: 'Are you sure you want to delete?',
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonText: 'Yes',
+    cancelButtonText: 'No',
+  }).then((result) => {
+    if (result.isConfirmed) {
+      this.apiService.deleteBroadcastByTitle(title).subscribe(
+        () => {
+          this.getAllBroadcasts();
         },
         (error) => {
-          console.error("Error soft deleting feeback:", error);
+          console.error("Error soft deleting broadcast:", error);
         }
         );
+      }
+    });
+  }  
+  
+  // openPopup() {
+  //   this.dialog.open(EditUserComponent, {
+  //     width: "49%",
+  //     height: "52%",
+
+  //   });
+  // }
+  
+  navigateToViewBroadcast(feedbackId: number) {
+    sessionStorage.setItem('currentPage_2', `${this.currentPage}`);
+    sessionStorage.setItem('pageSize_2', `${this.pageSize}`);
+    
+    this.apiAdmin.getFeedbackById(feedbackId).subscribe(
+      (data) => {
+        
+        this.apiData.setFeedbackData(data);
+        this.router.navigate(["/admin/feedback/broadcast/viewBroadcast"]);
+      },
+      (error) => {
+        console.error("Error in fetching data:", error);
+      }
+      );
     }
+
+    // navigateToEditBroadcast(feedbackId: number) {
+    //   sessionStorage.setItem('currentPage_2', `${this.currentPage}`);
+    //   sessionStorage.setItem('pageSize_2', `${this.pageSize}`);
+
+    //   this.apiAdmin.getFeedbackById(feedbackId).subscribe(
+    //     (data) => {
+          
+    //       this.apiData.setFeedbackData(data);
+    //       this.router.navigate(["/admin/feedback/broadcast/addBroadcast"]);
+    //     },
+    //     (error) => {
+    //       console.error("Error in fetching data:", error);
+    //     }
+    //     );
+  
+    // }
+
+    sendBroadcast() {  
+      this.router.navigate(["/admin/feedback/broadcast"]);
+      }
   }
+

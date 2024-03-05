@@ -1,307 +1,160 @@
-import { DatePipe } from '@angular/common';
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatDatepicker, MatDatepickerInputEvent } from '@angular/material/datepicker';
-import { MatDialog } from '@angular/material/dialog';
-import {SelectionModel} from '@angular/cdk/collections';
-import { MatPaginator, PageEvent } from '@angular/material/paginator';
-import { MatSort } from '@angular/material/sort';
-import { MatTableDataSource } from '@angular/material/table';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { FormBuilder, FormGroup,  Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { Admin } from 'src/app/Models/admin.model';
+import { FeedbackMessage } from 'src/app/Models/FeedbackMessage';
 import { AdminService } from 'src/app/services/admin.service';
+import { AuthService } from 'src/app/services/auth.service';
 import { Dataservice } from 'src/app/services/data.service';
 import { SubscriberService } from 'src/app/services/subscriber.service';
-// import { EditUserComponent } from '../user-management/edit-user/edit-user.component';
 import Swal from 'sweetalert2';
-import { Feedback } from 'src/app/Models/Feedback';
-
+  
 @Component({
-  selector: 'app-view-broadcast',
-  templateUrl: './view-broadcast.component.html',
-  styleUrls: ['./view-broadcast.component.css']
+    selector: 'app-view-broadcast',
+    templateUrl: './view-broadcast.component.html',
+    styleUrls: ['./view-broadcast.component.css']
 })
 export class ViewBroadcastComponent implements OnInit{
-
-    // Define the displayed columns
-    displayedColumns: string[] = [
-      // "select",
-      "title",
-      "email",
-      "created_at",
-      // "status",
-      "action",
-    ];
+    feedbackData: any;
+    feedbackForm: FormGroup;
+    userEmail: any;
+    userId: any;
   
-    @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
-    // @ViewChild(MatPaginator) paginator!: MatPaginator;
-    @ViewChild('picker', { static: false }) picker!: MatDatepicker<Date>;
-    @ViewChild(MatSort, { static: true }) sort!: MatSort;
+@ViewChild('content') content!: ElementRef;
   
-    dataSource = new MatTableDataSource<Feedback>();
-    selection = new SelectionModel<Feedback>(true, []);
-
-    statuses: any[] = [
-      { id: 1, status: true, name: "Responded" },
-      { id: 2, status: false, name: "Unanswered" }
-    ];
-  
-    selectedStatus: number | undefined;
-    broadcastList: Feedback[] = [];
-  
-    pageSize = 5;
-    pageSizeStore = 5;
-    currentPage = 0;
-    currentPageStore = 0;
-    
-    TotalRecords: any = 0;
-    filteredData: any = '';
-  
-    selectedDateString: any;
-    selectedStatusName: any = '';
-    date: Date;
-
-  constructor(
-    private apiAdmin: AdminService,
-    private apiService: SubscriberService,
-    private apiData: Dataservice,
-    public dialog: MatDialog,
-    private router: Router,
-    private route: ActivatedRoute,
-    private spinner: NgxSpinnerService,
-    public datePipe: DatePipe,
-  ) {
-    
-    this.dataSource.filterPredicate = (data, filter: string) =>
-      !filter || data.created_at.includes(filter);
-
-    this.date = new Date();
+  constructor (
+      private formBuilder: FormBuilder,
+      private apiAdmin: AdminService,
+      private authApi: AuthService,
+      private api: SubscriberService,
+      public apiData: Dataservice,
+      private router: Router,
+      private spinner: NgxSpinnerService,
+    )  {
+      
+      this.feedbackForm = this.formBuilder.group({
+        feedbackId: [],
+        title: [],
+        fullname: [],
+        senderId: [],
+        senderEmail: [],
+        responderId: [],
+        responderEmail: [],
+        created_at: [],
+        updated_at: [],
+        isdeleted: [],
+        deleted_at: [],
+        isresponded: [],
+        responseMessage: ['', Validators.required],
+        FeedbackMessages: [[]]
+      });
+      
   }
-
-  ngOnInit(): void {
-    this.getAllBroadcasts(); 
-    this.filterData();
-  }
-
-  getAllBroadcasts(page: number = 1){
-
-    var currentPage: number = Number(sessionStorage.getItem('currentPage'));
-    var pageSize: number = Number(sessionStorage.getItem('pageSize'));
-
-    if (currentPage == 0) {
-      currentPage = this.currentPage;
-    } else {
-      this.currentPage = currentPage
+  
+  ngOnInit() {
+      this.apiData.getFeedbackData().subscribe(data => {
+        this.feedbackData = data;
+        this.feedbackForm.patchValue(data);
+      });
+  
+      var user: any = this.apiData.getCurrentUser();
+  
+      if (user) {
+        const userLoginDetails =  JSON.parse(user);
+        this.userEmail = userLoginDetails.userEmail;
+        this.userId = userLoginDetails.userID;
+      }
+  
     }
-    
-    if (pageSize == 0) {
-      pageSize = this.pageSize;
-    } else {
-      this.pageSize = pageSize;
+  
+    ngAfterViewChecked() {
+      this.scrollToBottom();
     }
-
-
-    this.apiAdmin.GetPagedAllBroadcasts(this.currentPage + page, this.pageSize).subscribe({
-      next: (data: any) => {
-          this.broadcastList = data.Data;
-
-          console.log("broadcastList", this.broadcastList)
-
-          sessionStorage.removeItem('currentPage');
-          sessionStorage.removeItem('pageSize');
-
-          this.TotalRecords = data.TotalRecords;
-     
-          setTimeout(() => {
-            this.paginator.pageIndex = this.currentPage;
-            this.paginator.length = data.TotalRecords;
-          });
-        
-          this.dataSource = new MatTableDataSource(this.broadcastList);
-          this.dataSource.paginator = this.paginator;
-      },
-      error: (error) => {
-          console.error("Error fetching data from API:", error);
-      },
-    });
- }
-
-  isAllSelected() {
-      const numSelected = this.selection.selected.length;
-      const numRows = this.dataSource.data.length;
-      return numSelected == numRows;
-  }
-
-  masterToggle() {
-    this.isAllSelected() ?
-        this.selection.clear() :
-        this.dataSource.data.forEach(row => this.selection.select(row));
-  }
-
-  selectStatus(status: any) {
-  this.selectedStatus = status;
-  this.filterStatus();
-}
-
- filterData() {
-  this.apiData.filterObservable$.subscribe((filter: string) => {
-    this.dataSource.filter = filter.trim().toLowerCase();
-  });
- }
-
- filterStatus() {
-  this.selectedStatusName = '';
-  this.selectedDateString = '';
-
-  this.dataSource.filterPredicate = (data, filter: string) =>
-    !filter || data.isresponded.toString().includes(filter);
-
-  this.dataSource.filter = this.selectedStatus!.toString().trim();
-
-  // Update the button text based on the selected subscription status
-  const selectedStatus = this.statuses.find(
-    (status) => status.status === this.selectedStatus
-  );
-
-  if (selectedStatus) {
-    this.selectedStatusName = selectedStatus.name;
-  }
-}
-
-pageChanged(event: PageEvent) {
-  this.pageSize = event.pageSize;
-  this.currentPage = event.pageIndex;
   
-  this.getAllBroadcasts();
+    onSubmit() {   
+      if (this.isResponseMessageValid() && this.feedbackForm.valid) {
+    
+        const formValues = this.feedbackForm.value;
+    
+        const body = {
+          feedbackId: formValues.feedbackId,
+          fullname: formValues.fullname,
+          senderId: formValues.senderId,
+          senderEmail: formValues.senderEmail,
+          responderId: this.userId,
+          responderEmail: this.userEmail,
+          created_at: formValues.created_at,
+          title: formValues.title,
+          isresponded: true,
+          FeedbackMessages: [
+            {
+              senderId: formValues.senderId,
+              senderEmail: formValues.senderEmail,
+              responderId: this.userId,
+              responderEmail: this.userEmail,
+              feedback: '',
+              response: formValues.responseMessage,
+            },
+          ]
+        };
+    
+        this.updateFeedbackForm(body);
   
-  if (this.dataSource) {
-    this.dataSource.filterPredicate = (data: any, filter: string) =>
-    data.name.indexOf(filter) || data.Status.indexOf(filter) != -1;
-  }
-}
-
-selectDate(type: string, event: MatDatepickerInputEvent<Date>) {
-  this.date = event.value!;
-  this.filterDate();
-}
-
-openPicker() {
-  if (this.picker) {
-    this.picker.open();
-  }
-}
-
-filterDate() {
+      } else {
+        return;
+      }
   
-  this.selectedStatusName = '';
+    }
   
-  let newDate = this.datePipe.transform(this.date, 'yyyy-MM-dd');
+    updateFeedbackForm(body: any) {
   
-  this.dataSource.filterPredicate = (data, filter: string) =>
-  !filter || data.created_at.includes(filter);
-  
-  this.dataSource.filter = newDate!.toString().trim();
-  
-  const selectedDate = this.datePipe.transform(this.date, 'MMM dd, yyyy');
-  
-  if (selectedDate) {
-    this.selectedDateString = selectedDate;
-  }
-}
-
-clearFilter() {
-  this.dataSource.filter = '';
-  this.selectedStatusName = '';
-  this.selectedDateString = '';
-  
-  this.getAllBroadcasts();
-  
-  this.apiData.clearFilter();
-  this.apiData.clearForm();
-}
-
-isFilterActive(): boolean {
-  return this.dataSource.filter.trim() !== '';
-}
-
-deleteFeedback(feedbackId: any) {
-  Swal.fire({
-    title: 'Are you sure you want to delete?',
-    icon: 'warning',
-    showCancelButton: true,
-    confirmButtonText: 'Yes',
-    cancelButtonText: 'No',
-  }).then((result) => {
-    if (result.isConfirmed) {
-      this.apiService.deleteFeedbackById(feedbackId).subscribe(
-        () => {
-          this.getAllBroadcasts();
+      this.api.postInsertNewFeedback(body).subscribe(
+        (data: any) => {
+          this.feedbackForm.reset();
+          this.getFeedback(this.feedbackData.feedbackId)
         },
-        (error) => {
-          console.error("Error soft deleting feeback:", error);
+        (err) => {
+          console.log("Error:", err);
+          this.showUnsuccessfulAlert();
         }
-        );
-      }
-    });
-  }  
-  
-  // openPopup() {
-  //   this.dialog.open(EditUserComponent, {
-  //     width: "49%",
-  //     height: "52%",
-
-  //   });
-  // }
-  
-  navigateToViewFeedback(feedbackId: number) {
-    sessionStorage.setItem('currentPage', `${this.currentPage}`);
-    sessionStorage.setItem('pageSize', `${this.pageSize}`);
-    
-    this.apiAdmin.getFeedbackById(feedbackId).subscribe(
-      (data) => {
-        
-        this.apiData.setFeedbackData(data);
-        this.router.navigate(["/admin/feedback/viewFeedback"]);
-      },
-      (error) => {
-        console.error("Error in fetching data:", error);
-      }
       );
     }
-
-    // addBroadcast() {
-    // sessionStorage.setItem('currentPage', `${this.currentPage}`);
-    // sessionStorage.setItem('pageSize', `${this.pageSize}`);
-
-    // const data = this.selection.selected;   
-    // this.apiData.setFeedbackData(data);
-
-    // // this.getAllBroadcastMessages();
-
-    // this.router.navigate(["/admin/feedback/addBroadcast"]);
-    // }
-
-    viewSubscribersByFeedback() {
-      sessionStorage.setItem('currentPage', `${this.currentPage}`);
-      sessionStorage.setItem('pageSize', `${this.pageSize}`);
   
-      // const data = this.selection.selected;    
-      // this.apiData.setFeedbackData(data);
+    getFeedback(feedbackId: number) {
+      this.apiAdmin.getFeedbackById(feedbackId).subscribe(
+        (data) => {
+          this.apiData.setFeedbackData(data);
+        },
+        (error) => {
+          console.error("Error in fetching data:", error);
+          this.spinner.hide();
+        }
   
-      // this.getAllBroadcastMessages();
+      );
+    }
   
-      this.router.navigate(["/admin/feedback/broadcast"]);
-      }
-
-    // getAllBroadcastMessages() {
-    //   this.apiAdmin.getBroadcastMessages().subscribe(
-    //     (data: any) => {
-    //       this.apiData.setBroadcastData(data);
-    //     },
-    //     (error) => {
-    //       console.error("Error soft deleting feeback:", error);
-    //     }
-    //     );
-    // }
+    scrollToBottom = () => {
+      try {
+        this.content.nativeElement.scrollTop = this.content.nativeElement.scrollHeight;
+      } catch (err) {}
+    }
+  
+    isResponseMessageValid(): boolean {
+      const responseMessage = this.feedbackForm.get('responseMessage')?.value;
+      return responseMessage && responseMessage.trim() !== '';
+    }
+  
+    onCancel() {
+      this.router.navigate(['/admin/feedback/broadcast/listBroadcasts']);
+    }
+  
+    showUnsuccessfulAlert() {
+      Swal.fire({
+        icon: "error",
+        title: "Error!",
+        text: "Something went wrong. Please try again.",
+      });
+    }
+  
   }
 
