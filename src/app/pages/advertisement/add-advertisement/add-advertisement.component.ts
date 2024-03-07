@@ -57,7 +57,7 @@ export class AddAdvertisementComponent implements OnInit {
     this.advertForm = this.formBuilder.group({
       advertId: [0],
       advert_caption: ["", Validators.required],
-      advert_url: ["", this.urlValidator, Validators.required],
+      advert_url: ["", Validators.required],
       uploaded_by: [this.userEmail],
       isdeleted: [false],
       ispublished: [false],
@@ -78,11 +78,11 @@ export class AddAdvertisementComponent implements OnInit {
       isdeleted: this.advertForm.controls["isdeleted"].value,
       ispublished: this.advertForm.controls["ispublished"].value
     };
-    
-    if (this.advertForm.invalid) {
-      return;
-    } else {    
+   
+    if (this.advertForm.valid) {
       this.saveUserForm(body);
+    } else {
+      return;
     }
   }
 
