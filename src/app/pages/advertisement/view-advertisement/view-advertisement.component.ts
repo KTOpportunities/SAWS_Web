@@ -60,7 +60,7 @@ export class ViewAdvertisementComponent {
   }
 
 
-  openViewImageDialog(element: any) {
+  openViewImageDialog(element: any, enterAnimationDuration: string, exitAnimationDuration: string) {
 
     console.log('element source edit - before', element);
 
@@ -75,6 +75,8 @@ export class ViewAdvertisementComponent {
 
     const dialogRef = this.dialog.open(ViewAdvertImageComponent, {
       data: dialogConfig,
+      enterAnimationDuration,
+      exitAnimationDuration
     });
 
     dialogRef.afterClosed().subscribe((result: any) => {

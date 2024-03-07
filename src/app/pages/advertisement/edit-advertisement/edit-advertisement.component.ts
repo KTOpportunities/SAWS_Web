@@ -170,7 +170,7 @@ export class EditAdvertisementComponent implements OnInit {
 
   }
 
-  openViewImageDialog(element: any) {
+  openViewImageDialog(element: any,  enterAnimationDuration: string, exitAnimationDuration: string) {
 
     console.log('element source edit - before', element);
 
@@ -185,6 +185,8 @@ export class EditAdvertisementComponent implements OnInit {
 
     const dialogRef = this.dialog.open(ViewAdvertImageComponent, {
       data: dialogConfig,
+      enterAnimationDuration,
+      exitAnimationDuration
     });
 
     dialogRef.afterClosed().subscribe((result: any) => {
