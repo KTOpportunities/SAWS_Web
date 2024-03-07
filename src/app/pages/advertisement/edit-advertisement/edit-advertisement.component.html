@@ -72,7 +72,9 @@
                                 let index = index;"
                             >
                               <div id="w-node-ef33307a-7245-2d71-0818-8611a75882a0-8d2f5157" class="w-layout-grid grid-12">
-                                <div id="w-node-ef33307a-7245-2d71-0818-8611a75882a1-8d2f5157" class="div-block-439">
+                                <div
+                                (click)="openViewImageDialog(document)"
+                                id="w-node-ef33307a-7245-2d71-0818-8611a75882a1-8d2f5157" class="div-block-439">
                                   <div class="html-embed-5 w-embed">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="39" height="39" viewBox="0 0 39 39">
                                       <g id="Group_5143" data-name="Group 5143" transform="translate(-13 -7)">
@@ -86,8 +88,10 @@
                                     {{ convertBytesToMegabytes(document.file_size) | number:'1.2-2' }} MB
                                   </h1>
                                 </div>                       
-                              
                               </div>
+                              <span style="color: red;">
+                                Click on image to view!
+                              </span>
                             </div>
                           </div>
                           <div id="w-node-_097ed07c-6e93-dc13-8644-8230f2eae033-8d2f5157" class="div-block-436">

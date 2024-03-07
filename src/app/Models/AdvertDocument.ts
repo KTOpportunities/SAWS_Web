@@ -6,6 +6,7 @@ export interface AdvertDocument {
     file_origname: string
     file_seqname: any
     file_url: string
+    base64_file_url: string
     file_mimetype: string
     file_size: number
     file_extention: string

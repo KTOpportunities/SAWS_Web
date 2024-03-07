@@ -6,6 +6,7 @@ import {
   ValidationErrors, 
   Validators
  } from "@angular/forms";
+ import { MatDialog, MatDialogRef, MatDialogConfig } from '@angular/material/dialog';
 import { Router } from "@angular/router";
 import { AdvertDocument } from "src/app/Models/AdvertDocument";
 import { fileData } from "src/app/Models/File";
@@ -14,6 +15,7 @@ import { AuthService } from "src/app/services/auth.service";
 import { Dataservice } from "src/app/services/data.service";
 import { SubscriberService } from "src/app/services/subscriber.service";
 import Swal from "sweetalert2";
+import { ViewAdvertImageComponent } from "../view-advert-image/view-advert-image.component";
 
 @Component({
   selector: 'app-edit-advertisement',
@@ -42,6 +44,7 @@ export class EditAdvertisementComponent implements OnInit {
     private api: SubscriberService,
     private apiData: Dataservice,
     private router: Router,
+    public dialog: MatDialog,
   ) {
     const currentDate = new Date();
     var SubscriberDetails: any = this.apiData.getAdvert();
@@ -165,6 +168,27 @@ export class EditAdvertisementComponent implements OnInit {
       this.myFileInputVariable.nativeElement.value = '';
     }
 
+  }
+
+  openViewImageDialog(element: any) {
+
+    console.log('element source edit - before', element);
+
+    const dialogConfig = new MatDialogConfig();
+
+    dialogConfig.data = element;
+    dialogConfig.autoFocus = true;
+    dialogConfig.width = '65%';
+    dialogConfig.height = 'auto';
+    dialogConfig.maxWidth = '100%';
+    dialogConfig.disableClose = true;
+
+    const dialogRef = this.dialog.open(ViewAdvertImageComponent, {
+      data: dialogConfig,
+    });
+
+    dialogRef.afterClosed().subscribe((result: any) => {
+    });  
   }
 
   updateFileData(
