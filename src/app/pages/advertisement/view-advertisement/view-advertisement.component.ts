@@ -24,11 +24,10 @@ export class ViewAdvertisementComponent {
   adminUser: Admin[] = [];
   userRole: any = '';
   userEmail: any = '';
+  url: any = '';
   files: AdvertDocument[] = [];
 
-  ngOnInit() {
-  }
-
+  
   constructor (
     private formBuilder: FormBuilder,
     private authApi: AuthService,
@@ -37,10 +36,7 @@ export class ViewAdvertisementComponent {
     private router: Router,
     private sanitizer: DomSanitizer,
     public dialog: MatDialog,
-  ) {
-    const currentDate = new Date();
-    var advertDetails: any = this.apiData.getAdvert();
-    const advertObject = JSON.parse(advertDetails);
+    ) {
 
     this.advertForm = this.formBuilder.group({
       advertId: [],
@@ -53,18 +49,20 @@ export class ViewAdvertisementComponent {
       advert_url: [],
       DocAdverts: [[]]
     });
-
-    if (advertObject) {
-      this.advertForm.patchValue(advertObject);
-    }
   }
-
+  
+  ngOnInit() {
+    this.apiData.getFeedbackData().subscribe(data => {
+      this.url = data.FileUrl;
+      this.advertForm.patchValue(data.Advert);
+    });
+  }
 
   openViewImageDialog(element: any, enterAnimationDuration: string, exitAnimationDuration: string) {
 
     const dialogConfig = new MatDialogConfig();
 
-    dialogConfig.data = element;
+    dialogConfig.data = this.url;
     dialogConfig.autoFocus = true;
     // dialogConfig.width = '65%';
     // dialogConfig.height = 'auto';

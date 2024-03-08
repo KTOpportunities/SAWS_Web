@@ -35,7 +35,7 @@ export class ViewAdvertImageComponent implements OnInit {
       
       this.imageBaseUrl =
       this.sanitizer.bypassSecurityTrustResourceUrl(
-        'data:image/jpg;base64,' + data.data.base64_file_url
+        data.data
       );
     }
     

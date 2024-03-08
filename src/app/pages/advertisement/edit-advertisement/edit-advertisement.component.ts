@@ -29,6 +29,7 @@ export class EditAdvertisementComponent implements OnInit {
   dialogRef: any;
   adminUser: Admin[] = [];
   userRole: any = '';
+  url: any = '';
   userEmail: any = ''; 
 
   @ViewChild('myFileInput') myFileInputVariable!: ElementRef;
@@ -62,14 +63,14 @@ export class EditAdvertisementComponent implements OnInit {
       advert_url: ['', Validators.required],
       DocAdverts: [[], Validators.required]
     });
-
-    if (subscriberObject) {
-      this.advertForm.patchValue(subscriberObject);
-      this.file = subscriberObject.DocAdverts;
-    }
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.apiData.getFeedbackData().subscribe(data => {
+      this.url = data.FileUrl;
+      this.advertForm.patchValue(data.Advert);
+    });
+  }
 
   onCancel() {
     this.submitted = false;
@@ -172,21 +173,22 @@ export class EditAdvertisementComponent implements OnInit {
 
   openViewImageDialog(element: any,  enterAnimationDuration: string, exitAnimationDuration: string) {
 
-    console.log('element source edit - before', element);
+    // console.log('element source edit - before', element);
 
     const dialogConfig = new MatDialogConfig();
 
-    dialogConfig.data = element;
+    dialogConfig.data = this.url;
     dialogConfig.autoFocus = true;
-    dialogConfig.width = '65%';
-    dialogConfig.height = 'auto';
-    dialogConfig.maxWidth = '100%';
+    // dialogConfig.width = '65%';
+    // dialogConfig.height = 'auto';
+    // dialogConfig.maxWidth = '100%';
     dialogConfig.disableClose = true;
 
     const dialogRef = this.dialog.open(ViewAdvertImageComponent, {
       data: dialogConfig,
       enterAnimationDuration,
-      exitAnimationDuration
+      exitAnimationDuration,
+      width:'auto',
     });
 
     dialogRef.afterClosed().subscribe((result: any) => {

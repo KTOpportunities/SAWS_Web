@@ -18,13 +18,15 @@ export class Dataservice {
   private filterSubject = new BehaviorSubject<string>(this.filterSubjectInformantion);
   private userSubject = new BehaviorSubject<any | null>(null);
   private feedbackSubject = new BehaviorSubject<any | null>(null);
-  private broadcastSubject = new BehaviorSubject<any | null>(null);
+  private broadcastSubject = new BehaviorSubject<any | null>(null);  
+  private advertSubject = new BehaviorSubject<any | null>(null);
   
   // Observable to which components can subscribe
   filterObservable$ = this.filterSubject.asObservable();  
   public userObservable$ = this.userSubject.asObservable();
   public feedbackObservable$ = this.feedbackSubject.asObservable();
   public broadcastObservable$ = this.broadcastSubject.asObservable();
+  public advertObservable$ = this.advertSubject.asObservable();
   
   constructor() {
     
@@ -44,8 +46,16 @@ export class Dataservice {
     return this.feedbackObservable$;
   }
 
+  setAdvertData(data: any): void {
+    this.feedbackSubject.next(data);
+  }
+
+  getAdvertData(): Observable<any> {
+    return this.advertObservable$;
+  }
+
   setBroadcastData(data: any): void {
-    this.broadcastSubject.next(data);
+    this.advertSubject.next(data);
   }
 
   getBroadcastData(): Observable<any> {
@@ -111,9 +121,9 @@ export class Dataservice {
   //   return sessionStorage.getItem("FeedbackDetails");
   // }
 
-  removeFeedback() {
-    sessionStorage.removeItem('FeedbackDetails');
-  }
+  // removeFeedback() {
+  //   sessionStorage.removeItem('FeedbackDetails');
+  // }
 
   saveUserRole(role: any) {
     sessionStorage.setItem("UserRole", JSON.stringify(role));
