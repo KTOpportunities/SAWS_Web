@@ -33,18 +33,13 @@ export class ViewAdvertImageComponent implements OnInit {
     )  {
       const currentDate = new Date();
       
-      console.log('Received data - view image:', data);
-
       this.imageBaseUrl =
       this.sanitizer.bypassSecurityTrustResourceUrl(
         'data:image/jpg;base64,' + data.data.base64_file_url
       );
-
-      console.log("this.imageBaseUrl", this.imageBaseUrl )
     }
     
     ngOnInit() {
-
 
     }
 

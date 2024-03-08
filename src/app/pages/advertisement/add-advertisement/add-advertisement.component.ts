@@ -131,7 +131,7 @@ export class AddAdvertisementComponent implements OnInit {
 
   onChangeAdvert(event: any) {
       let fileSize = event.target.files[0]
-      if(fileSize.size <= 10485760) {
+      if(fileSize.size <= 26214400 ) {
         this.updateFileData(
           this.fileAdvert,
           event.target.files[0],
@@ -196,7 +196,7 @@ export class AddAdvertisementComponent implements OnInit {
       Swal.fire({
         icon: "warning",
         title: message,
-        text: text.toUpperCase() + " image / gif exceeds 10mb, please upload a smaller size image / gif",
+        text: text.toUpperCase() + " file exceeds 25Mb, please upload a smaller size file",
         showConfirmButton: false,
         timer: 2000,
     });

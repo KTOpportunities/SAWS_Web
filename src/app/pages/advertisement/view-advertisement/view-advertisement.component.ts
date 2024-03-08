@@ -62,21 +62,20 @@ export class ViewAdvertisementComponent {
 
   openViewImageDialog(element: any, enterAnimationDuration: string, exitAnimationDuration: string) {
 
-    console.log('element source edit - before', element);
-
     const dialogConfig = new MatDialogConfig();
 
     dialogConfig.data = element;
     dialogConfig.autoFocus = true;
-    dialogConfig.width = '65%';
-    dialogConfig.height = 'auto';
-    dialogConfig.maxWidth = '100%';
+    // dialogConfig.width = '65%';
+    // dialogConfig.height = 'auto';
+    // dialogConfig.maxWidth = '100%';
     dialogConfig.disableClose = true;
 
     const dialogRef = this.dialog.open(ViewAdvertImageComponent, {
       data: dialogConfig,
       enterAnimationDuration,
-      exitAnimationDuration
+      exitAnimationDuration,
+      width:'auto',
     });
 
     dialogRef.afterClosed().subscribe((result: any) => {

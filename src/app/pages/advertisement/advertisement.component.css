@@ -12,6 +12,10 @@
       text-align: center;
   }
 
+  .mat-column-advert {
+    cursor: pointer;
+  }
+
   .mat-column-select {
     /* overflow: initial; */
     max-width: 60px;
@@ -26,6 +30,10 @@
   .mat-column-publish {
     max-width: 150px;
     min-width: 140px;
+  }
+
+  .link {
+  cursor: pointer;
   }
 
 

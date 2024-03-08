@@ -151,11 +151,15 @@
                 </ng-container>
 
                  <!-- Advert Link Column -->
-                 <ng-container matColumnDef="advert_link">
+                 <ng-container matColumnDef="advert">
                     <mat-header-cell *matHeaderCellDef mat-sort-header>
                         Advert Link
                     </mat-header-cell>
-                    <mat-cell *matCellDef="let advertisement"> {{ advertisement.advert_url }} </mat-cell>
+                    <mat-cell *matCellDef="let advertisement"
+                    (click)="launchAdvertLink(advertisement.advert_url)"
+                    >
+                      {{ advertisement.advert_url }}
+                    </mat-cell>
                 </ng-container>
 
                 <!-- Published Column -->
@@ -189,11 +193,14 @@
                     </button>
         
                     <mat-menu #actionMenu="matMenu" class="mat-horizontal-menu">
-                        <button mat-menu-item (click)="navigateToViewAdvertisement(advertisement.advertId)">
+                      <button mat-menu-item (click)="navigateToViewAdvertisement(advertisement.advertId)">
                         <mat-icon>visibility</mat-icon> View
-                        </button>
-                        <button mat-menu-item (click)="editAdvertisement(advertisement.advertId)">
+                      </button>
+                      <button mat-menu-item (click)="editAdvertisement(advertisement.advertId)">
                         <mat-icon>edit</mat-icon> Edit
+                      </button>
+                      <button mat-menu-item (click)="launchAdvertLink(advertisement.advert_url)">
+                        <mat-icon>launch</mat-icon> Launch 
                         </button>
                         <button mat-menu-item (click)="deleteAdvertisement(advertisement.advertId)">
                         <mat-icon style="color: red">delete</mat-icon> Archive

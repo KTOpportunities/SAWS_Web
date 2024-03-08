@@ -27,7 +27,7 @@ export class AdvertisementComponent implements OnInit {
     "uploaded_by",
     "uploaded_date",
     "advert_caption",
-    "advert_link",
+    "advert",
     "publish",
     "action",
   ];
@@ -104,6 +104,8 @@ constructor(
       next: (data: any) => {
           this.spinner.hide();
           this.advertList = data.Data;
+
+          // debugger;
 
           sessionStorage.removeItem('currentPage');
           sessionStorage.removeItem('pageSize');
@@ -251,6 +253,13 @@ filterStatus() {
         console.error("Error in fetching data:", error);
       }
     );
+  }
+
+  launchAdvertLink(advert_url: any) {
+    if (!advert_url.startsWith('http://') && !advert_url.startsWith('https://')) {
+        advert_url = 'https://' + advert_url;
+    }
+    window.open(advert_url, "_blank");
   }
 
   editAdvertisement(advertId: number) {
