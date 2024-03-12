@@ -16,7 +16,6 @@ import { FlexLayoutModule } from "@angular/flex-layout";
 import { SubscriberUserComponent } from "src/app/pages/user-management/subscriber-user/subscriber-user.component";
 import { AdminUserComponent } from "src/app/pages/user-management/admin-user/admin-user.component";
 import { FeedbackComponent } from "src/app/pages/feedback/feedback.component";
-import { AddResponseComponent } from "src/app/pages/feedback/add-response/add-response.component";
 import { ViewFeedbackComponent } from "src/app/pages/feedback/view-feedback/view-feedback.component";
 import { AdvertisementComponent } from "src/app/pages/advertisement/advertisement.component";
 import { AddAdvertisementComponent } from "src/app/pages/advertisement/add-advertisement/add-advertisement.component";
@@ -36,7 +35,6 @@ import { ViewAdvertImageComponent } from "src/app/pages/advertisement/view-adver
     EditUserComponent,
     AdminUserComponent,
     FeedbackComponent,
-    AddResponseComponent,
     ViewFeedbackComponent,
     AdvertisementComponent,
     AddAdvertisementComponent,

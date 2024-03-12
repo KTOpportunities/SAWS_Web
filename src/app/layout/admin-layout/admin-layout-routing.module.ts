@@ -5,7 +5,6 @@ import { AdvertisementComponent } from "src/app/pages/advertisement/advertisemen
 import { EditAdvertisementComponent } from "src/app/pages/advertisement/edit-advertisement/edit-advertisement.component";
 import { ViewAdvertisementComponent } from "src/app/pages/advertisement/view-advertisement/view-advertisement.component";
 import { DashboardComponent } from "src/app/pages/dashboard/dashboard.component";
-import { AddResponseComponent } from "src/app/pages/feedback/add-response/add-response.component";
 import { AddBroadcastComponent } from "src/app/pages/feedback/broadcast/add-broadcast/add-broadcast.component";
 import { BroadcastComponent } from "src/app/pages/feedback/broadcast/broadcast.component";
 import { ListBroadcastComponent } from "src/app/pages/feedback/broadcast/list-broadcast/list-broadcast.component";
