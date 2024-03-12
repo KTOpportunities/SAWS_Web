@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { fileDataFeedback } from 'src/app/Models/File';
 
 
 @Component({
@@ -11,4 +12,5 @@ export class DashboardComponent implements OnInit {
   constructor(){}
   ngOnInit(): void {
   }
+
 }

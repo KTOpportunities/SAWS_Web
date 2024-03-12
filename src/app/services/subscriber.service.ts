@@ -134,6 +134,14 @@ export class SubscriberService {
     );
   }
 
+  PostDocsForFeedback(formData: any) {
+
+    return this.http.post<any>(
+      environment.serverAPI + "FileManager/PostDocsForFeedback",
+      formData
+    );
+  }
+
   // deleteUserProfileById(Id: any) {
   //   const url = `${environment.serverAPI}/Authenticate/DeleteUserProfileById`;
   //   const params = { Id };

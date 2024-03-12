@@ -26,6 +26,7 @@ import { AddBroadcastComponent } from "src/app/pages/feedback/broadcast/add-broa
 import { ViewBroadcastComponent } from "src/app/pages/feedback/broadcast/view-broadcast/view-broadcast.component";
 import { ListBroadcastComponent } from "src/app/pages/feedback/broadcast/list-broadcast/list-broadcast.component";
 import { ViewAdvertImageComponent } from "src/app/pages/advertisement/view-advert-image/view-advert-image.component";
+import { AttachmentFileComponent } from "src/app/pages/feedback/attachment-file/attachment-file.component";
 @NgModule({
   declarations: [
     UserManagementComponent,
@@ -45,6 +46,7 @@ import { ViewAdvertImageComponent } from "src/app/pages/advertisement/view-adver
     ViewBroadcastComponent,
     ListBroadcastComponent,
     ViewAdvertImageComponent,
+    AttachmentFileComponent
   ],
   imports: [
     CommonModule,

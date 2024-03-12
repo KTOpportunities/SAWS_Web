@@ -62,6 +62,8 @@ export class ViewAdvertisementComponent {
 
     const dialogConfig = new MatDialogConfig();
 
+    console.log("this.url", this.url)
+
     dialogConfig.data = this.url;
     dialogConfig.autoFocus = true;
     // dialogConfig.width = '65%';

@@ -21,7 +21,6 @@ import { SharedModule } from "./shared/shared.module"
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { AdminService } from "./services/admin.service";
 import { MatIconModule } from '@angular/material/icon';
-import { ViewAdvertImageComponent } from './pages/advertisement/view-advert-image/view-advert-image.component';
 
 @NgModule({
   declarations: [

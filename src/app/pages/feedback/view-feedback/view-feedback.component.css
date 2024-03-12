@@ -1412,10 +1412,10 @@
 
   .grid-13 {
     background-color: #ebeff3;
-    background-image: linear-gradient(rgba(235, 239, 243, .86), rgba(235, 239, 243, .86)), url('../../../../assets/images/Mask-Group-12.svg');
+    /* background-image: linear-gradient(rgba(235, 239, 243, .86), rgba(235, 239, 243, .86)), url('../../../../assets/images/Mask-Group-12.svg');
     background-position: 0 0, 48% 53%;
     background-repeat: repeat, repeat-y;
-    background-size: auto, 294px 654%;
+    background-size: auto, 294px 654%; */
     border-radius: 10px;
     grid-template-rows: auto auto auto auto;
     grid-template-columns: 1fr;
@@ -1534,6 +1534,7 @@
     font-weight: 600;
     max-width: 90%;
     padding-left: 22px;
+    padding-right: 43px
 }
   
 
@@ -1555,6 +1556,11 @@
   background-size: auto 39px;
   border-radius: 100px;
   padding: 18px 12px 12px 47px;
+}
+
+.attachment {
+  position: relative;
+  right: 60px;
 }
 
 
@@ -1669,6 +1675,11 @@
     .text-field-2 {
       margin-left: 5px;
       margin-right: 5px;
+      padding-right: 43px;
+    }
+
+    .attachment {
+      right: 40px;
     }
 
     .div-block-442 {
