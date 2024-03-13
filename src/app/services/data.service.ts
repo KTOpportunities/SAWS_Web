@@ -100,18 +100,6 @@ export class Dataservice {
     sessionStorage.removeItem('UserDetails');
   }
 
-  // saveAdvert(advert: any) {
-  //   sessionStorage.setItem("AdvertDetails", JSON.stringify(advert));
-  // }
-
-  // getAdvert() {
-  //   return sessionStorage.getItem("AdvertDetails");
-  // }
-
-  // removeAdvert() {
-  //   sessionStorage.removeItem('AdvertDetails');
-  // }
-
   saveUserRole(role: any) {
     sessionStorage.setItem("UserRole", JSON.stringify(role));
   }
