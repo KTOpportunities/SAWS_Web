@@ -5,13 +5,13 @@ export interface fileData {
     DocTypeName: string;
     file: File;
     isdeleted: boolean;
-  }
+}
 
-  export interface fileDataFeedback {
+export interface fileDataFeedback {
     Id: number;
     feedbackMessageId: number;
     created_at: string;
     DocTypeName: string;
     file: File;
     isdeleted: boolean;
-  }
+}

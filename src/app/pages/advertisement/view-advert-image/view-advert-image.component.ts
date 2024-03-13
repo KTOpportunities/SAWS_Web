@@ -17,7 +17,10 @@ import Swal from "sweetalert2";
 })
 export class ViewAdvertImageComponent implements OnInit {
 
-  imageBaseUrl: any;
+  baseUrl: any;
+  isImage: boolean = false;
+  isVideo: boolean = false;
+  isAudio: boolean = false;
 
   
   constructor (
@@ -33,10 +36,15 @@ export class ViewAdvertImageComponent implements OnInit {
     )  {
       const currentDate = new Date();
       
-      this.imageBaseUrl =
+      this.baseUrl =
       this.sanitizer.bypassSecurityTrustResourceUrl(
-        data.data
+        data.url
       );
+
+      this.isImage = data.fileType == 'Image';
+      this.isVideo = data.fileType == 'Video';
+      this.isAudio = data.fileType == 'Audio';
+
     }
     
     ngOnInit() {

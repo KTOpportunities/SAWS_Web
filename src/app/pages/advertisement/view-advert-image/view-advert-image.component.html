@@ -1,6 +1,6 @@
 <div class="image-container">
     <span
-    mat-dialog-close
+        mat-dialog-close
         class="cancel-icon"
         >
         <svg 
@@ -13,7 +13,40 @@
             </svg>
       </span>
 
-      <img [src]="imageBaseUrl" alt="Advertisement Image">
+        <img 
+            *ngIf="isImage"
+            [src]="baseUrl" 
+            alt="Advertisement Image"
+        >
+
+        <!-- height="528"
+        width="940"
+        class="embedly-embed"
+        [src]="baseUrl"
+        scrolling="no"
+        allowfullscreen="" 
+        title=""
+        controls -->
+        <video
+            *ngIf="isVideo"
+            [src]="baseUrl"
+            autoplay 
+            loop 
+            width="1200"
+            controls
+        >
+        </video>
+
+        <audio 
+            *ngIf="isAudio"
+            [src]="baseUrl"
+            autoplay
+            controls 
+        >
+            <source [src]="baseUrl">
+        </audio>
+
+      
 </div>
 <!-- <mat-dialog-content>
     <h2 mat-dialog-title>Install Angular</h2>

@@ -25,6 +25,7 @@ export class ViewAdvertisementComponent {
   userRole: any = '';
   userEmail: any = '';
   url: any = '';
+  fileType: any = '';
   files: AdvertDocument[] = [];
 
   
@@ -53,8 +54,11 @@ export class ViewAdvertisementComponent {
   
   ngOnInit() {
     this.apiData.getFeedbackData().subscribe(data => {
-      this.url = data.FileUrl;
       this.advertForm.patchValue(data.Advert);
+      
+      this.url = data.FileUrl;
+      this.fileType = this.apiData.getFileType(data.Advert.DocAdverts[0].file_mimetype)
+
     });
   }
 
@@ -62,17 +66,18 @@ export class ViewAdvertisementComponent {
 
     const dialogConfig = new MatDialogConfig();
 
-    console.log("this.url", this.url)
-
-    dialogConfig.data = this.url;
     dialogConfig.autoFocus = true;
+    dialogConfig.disableClose = true;
+    // dialogConfig.data = this.url;
     // dialogConfig.width = '65%';
     // dialogConfig.height = 'auto';
     // dialogConfig.maxWidth = '100%';
-    dialogConfig.disableClose = true;
 
     const dialogRef = this.dialog.open(ViewAdvertImageComponent, {
-      data: dialogConfig,
+      data: {
+        url: this.url,
+        fileType: this.fileType
+      },
       enterAnimationDuration,
       exitAnimationDuration,
       width:'auto',
@@ -84,7 +89,6 @@ export class ViewAdvertisementComponent {
 
     onCancel() {
       Swal.close();
-      this.apiData.removeAdvert();
       this.router.navigate(['/admin/advertisement']);
   }
 

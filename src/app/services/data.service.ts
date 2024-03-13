@@ -2,7 +2,6 @@ import { ElementRef, Injectable, ViewChild } from "@angular/core";
 import { BehaviorSubject, Observable } from "rxjs";
 
 import { UserLoggedIn } from "../Models/user.model";
-import { Admin } from "../Models/admin.model";
 import { FormGroup } from "@angular/forms";
 
 interface User {}
@@ -101,28 +100,16 @@ export class Dataservice {
     sessionStorage.removeItem('UserDetails');
   }
 
-  saveAdvert(advert: any) {
-    sessionStorage.setItem("AdvertDetails", JSON.stringify(advert));
-  }
-
-  getAdvert() {
-    return sessionStorage.getItem("AdvertDetails");
-  }
-
-  removeAdvert() {
-    sessionStorage.removeItem('AdvertDetails');
-  }
-
-  // saveFeedback(feeback: any) {
-  //   sessionStorage.setItem("FeedbackDetails", JSON.stringify(feeback));
+  // saveAdvert(advert: any) {
+  //   sessionStorage.setItem("AdvertDetails", JSON.stringify(advert));
   // }
 
-  // getFeedback() {
-  //   return sessionStorage.getItem("FeedbackDetails");
+  // getAdvert() {
+  //   return sessionStorage.getItem("AdvertDetails");
   // }
 
-  // removeFeedback() {
-  //   sessionStorage.removeItem('FeedbackDetails');
+  // removeAdvert() {
+  //   sessionStorage.removeItem('AdvertDetails');
   // }
 
   saveUserRole(role: any) {
@@ -160,6 +147,22 @@ export class Dataservice {
   clearForm() {
     if (this.form) {
       this.form.reset();
+    }
+  }
+
+  getFileType(fileMimetype: string): string {
+    const videoMimeTypes = ["video/mp4", "video/quicktime", "video/x-msvideo", "video/x-ms-wmv"];
+    const imageMimeTypes = ["image/jpeg", "image/png", "image/gif", "image/bmp", "image/jpg"];
+    const audioMimeTypes = ["audio/mpeg", "audio/mp4", "audio/ogg", "audio/wav",  "audio/mp3"];
+
+    if (videoMimeTypes.includes(fileMimetype)) {
+      return "Video";
+    } else if (imageMimeTypes.includes(fileMimetype)) {
+      return "Image";
+    } else if (audioMimeTypes.includes(fileMimetype)) {
+      return "Audio";
+    } else {
+      return "Unknown";
     }
   }
 }

@@ -9,6 +9,7 @@
 
 
 .cancel-icon {
+    z-index: 1000;
     background-color: transparent;
     border: none;
     cursor: pointer;

@@ -269,8 +269,7 @@ filterStatus() {
 
     this.apiAdmin.getAdvertByAdvertId(advertId).subscribe(
       (data) => {
-        // this.apiData.saveAdvert(data.Value.DetailDescription);
-        this.apiData.setAdvertData(data.Value.DetailDescription);
+         this.apiData.setAdvertData(data.Value.DetailDescription);
         this.router.navigate(["/admin/advertisement/editAdvert"]);
       },
       (error) => {

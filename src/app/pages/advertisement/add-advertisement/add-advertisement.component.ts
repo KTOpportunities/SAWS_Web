@@ -80,13 +80,13 @@ export class AddAdvertisementComponent implements OnInit {
     };
    
     if (this.advertForm.valid) {
-      this.saveUserForm(body);
+      this.saveAdvertForm(body);
     } else {
       return;
     }
   }
 
-  saveUserForm(body: any){
+  saveAdvertForm(body: any){
     this.api.postInsertNewAdvert(body)
       .subscribe((data: any) => {        
 
@@ -130,15 +130,16 @@ export class AddAdvertisementComponent implements OnInit {
   }
 
   onChangeAdvert(event: any) {
-      let fileSize = event.target.files[0]
-      if(fileSize.size <= 26214400 ) {
+      let file = event.target.files[0]
+
+      if(file.size <= 26214400 ) {
         this.updateFileData(
           this.fileAdvert,
           event.target.files[0],
           "Advert"
          );
       } else {
-        this.alertFileMessage("Advert",`${fileSize.type}`)
+        this.alertFileMessage("Advert",`${file.type}`)
         this.myFileInputVariable.nativeElement.value = '';
       }
     }
@@ -200,8 +201,7 @@ export class AddAdvertisementComponent implements OnInit {
         showConfirmButton: false,
         timer: 2000,
     });
-  }
-  
+  }  
 
   resetFilesInp() {
     this.myFileInputVariable.nativeElement.value = '';

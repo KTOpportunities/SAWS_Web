@@ -30,6 +30,7 @@ export class EditAdvertisementComponent implements OnInit {
   adminUser: Admin[] = [];
   userRole: any = '';
   url: any = '';
+  fileType: any = '';
   userEmail: any = ''; 
 
   @ViewChild('myFileInput') myFileInputVariable!: ElementRef;
@@ -38,6 +39,9 @@ export class EditAdvertisementComponent implements OnInit {
 
   files: fileData[] = [];
   file: AdvertDocument[] = [];
+  fileId: any;
+  advertId: any;
+  createdAt: any = new Date();
 
   constructor(
     private formBuilder: FormBuilder,
@@ -48,8 +52,6 @@ export class EditAdvertisementComponent implements OnInit {
     public dialog: MatDialog,
   ) {
     const currentDate = new Date();
-    var SubscriberDetails: any = this.apiData.getAdvert();
-    const subscriberObject = JSON.parse(SubscriberDetails);
 
     this.advertForm = this.formBuilder.group({
       advertId: [],
@@ -61,21 +63,28 @@ export class EditAdvertisementComponent implements OnInit {
       created_at: [],
       uploaded_by: [],
       advert_url: ['', Validators.required],
-      DocAdverts: [[], Validators.required]
+      DocAdverts: [[], Validators.required],
+      advertFile: ["", Validators.required]
     });
   }
 
   ngOnInit() {
     this.apiData.getFeedbackData().subscribe(data => {
-      this.url = data.FileUrl;
       this.advertForm.patchValue(data.Advert);
+      
+      this.url = data.FileUrl;
+      this.fileType = this.apiData.getFileType(data.Advert.DocAdverts[0].file_mimetype)
+      // this.files = data.Advert.DocAdverts[0];
+
+      this.fileId = data.Advert.DocAdverts[0].Id;
+      this.advertId = data.Advert.advertId;
+      this.createdAt = data.Advert.DocAdverts[0].created_at;
     });
   }
 
   onCancel() {
     this.submitted = false;
     Swal.close();
-    this.apiData.removeAdvert();
     this.router.navigate(['/admin/advertisement']);
   }
 
@@ -92,6 +101,7 @@ export class EditAdvertisementComponent implements OnInit {
     }
   
     const formValues = this.advertForm.value;
+
     const body = {
       advertId: formValues.advertId,
       advert_caption: formValues.advert_caption,
@@ -103,7 +113,7 @@ export class EditAdvertisementComponent implements OnInit {
     };
 
     this.updateAdvertForm(body);
-  
+
   }  
 
   updateAdvertForm(body: any) {
@@ -111,12 +121,13 @@ export class EditAdvertisementComponent implements OnInit {
     this.api.postInsertNewAdvert(body).subscribe(
       (data: any) => {
        
-        this.showSuccessAlert();
+        // this.onUpload();
 
-        this.onUpload();
+        this.onUpload(data.DetailDescription.advertId);
         
-        this.apiData.removeAdvert();
-          this.router.navigate(['/admin/advertisement']);
+        this.router.navigate(['/admin/advertisement']);
+
+        this.showSuccessAlert();
       },
       (err) => {
         console.log("Error:", err);
@@ -125,12 +136,13 @@ export class EditAdvertisementComponent implements OnInit {
     );
   }
 
-  onUpload() {
+  onUpload(id: number) {
+
     if (this.files.length > 0) {
 
-      this.files[0].Id = this.file[0].Id;
-      this.files[0].advertId = this.file[0].advertId;
-      this.files[0].created_at = this.file[0].created_at;
+      this.files[0].Id = this.fileId;
+      this.files[0].advertId = id;
+      this.files[0].created_at = this.createdAt;
 
       const formData = new FormData();
 
@@ -155,21 +167,7 @@ export class EditAdvertisementComponent implements OnInit {
     }
   }
 
-  onChangeAdvert(event: any) {
-    let fileSize = event.target.files[0]
-
-    if(fileSize.size <= 10485760) {
-      this.updateFileData(
-        this.fileAdvert,
-        event.target.files[0],
-        "Advert"
-       );
-    } else {
-      this.alertFileMessage("Advert",`${fileSize.type}`)
-      this.myFileInputVariable.nativeElement.value = '';
-    }
-
-  }
+ 
 
   openViewImageDialog(element: any,  enterAnimationDuration: string, exitAnimationDuration: string) {
 
@@ -177,15 +175,18 @@ export class EditAdvertisementComponent implements OnInit {
 
     const dialogConfig = new MatDialogConfig();
 
-    dialogConfig.data = this.url;
     dialogConfig.autoFocus = true;
+    dialogConfig.disableClose = true;
+    // dialogConfig.data = this.url;
     // dialogConfig.width = '65%';
     // dialogConfig.height = 'auto';
     // dialogConfig.maxWidth = '100%';
-    dialogConfig.disableClose = true;
 
     const dialogRef = this.dialog.open(ViewAdvertImageComponent, {
-      data: dialogConfig,
+      data: {
+        url: this.url,
+        fileType: this.fileType
+      },
       enterAnimationDuration,
       exitAnimationDuration,
       width:'auto',
@@ -195,11 +196,31 @@ export class EditAdvertisementComponent implements OnInit {
     });  
   }
 
+  onChangeAdvert(event: any) {
+    let file = event.target.files[0]
+
+    if(file.size <= 26214400) {
+      this.updateFileData(
+        this.fileAdvert,
+        event.target.files[0],
+        "Advert"
+       );
+    } else {
+      this.alertFileMessage("Advert",`${file.type}`)
+      this.myFileInputVariable.nativeElement.value = '';
+    }
+
+  }
+
   updateFileData(
     fileDataToUpdate: fileData,
     newFile: File,
     docTypeName: string
   ) {
+
+    console.log("fileDataToUpdate", fileDataToUpdate)
+    console.log("newFile", newFile)
+    console.log("docTypeName", docTypeName)
     if (newFile) {
       fileDataToUpdate.file = newFile;
       fileDataToUpdate.DocTypeName = docTypeName;
@@ -235,7 +256,7 @@ export class EditAdvertisementComponent implements OnInit {
       // position: "top-end",
       icon: "warning",
       title: message,
-      text: text.toUpperCase() + " image / gif exceeds 10mb, please upload a smaller size image / gif",
+      text: text.toUpperCase() + " image / gif exceeds 25Mb, please upload a smaller size image / gif",
       showConfirmButton: false,
       timer: 2000,
   });
