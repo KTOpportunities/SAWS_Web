@@ -1428,7 +1428,8 @@
 
   .grid-14 {
     grid-template-rows: auto;
-    grid-template-columns: 1fr .25fr;
+    /* grid-template-columns: 1fr .25fr; */
+    grid-template-columns: 1fr .5fr;
   }
 
   .grid-15 {
@@ -1444,10 +1445,17 @@
   }
 
   .div-block-445 {
-    justify-content: center;
+    justify-content: flex-end;
     align-items: center;
     display: flex;
   }
+
+  .div-block-445-2 {
+    justify-content: flex-start;
+    align-items: center;
+    display: flex;
+  }
+
 
   .time-heading {
     color: #fff;
@@ -1485,12 +1493,19 @@
 
 .grid-16 {
   grid-template-rows: auto;
-  grid-template-columns: .25fr 1fr;
+  /* grid-template-columns: .25fr 1fr; */
+  grid-template-columns: .5fr 1fr;
 }
 
 .grid-17 {
   grid-template-rows: auto;
   grid-template-columns: 1fr .1fr;
+}
+
+.grid-17-1 {
+  grid-template-rows: auto;
+  /* grid-template-columns: 1fr .1fr; */
+
 }
 
 .div-block-446 {
@@ -1563,6 +1578,40 @@
   right: 60px;
 }
 
+.image-grid {
+  grid-template-rows: auto;
+  /* grid-template-columns: .25fr 1fr; */
+  grid-template-columns: .5fr 1fr;
+}
+
+.image-grid-2 {
+  grid-template-rows: auto;
+  /* grid-template-columns: .25fr 1fr; */
+}
+
+.image-div {
+  background-color: #00386c;
+  border-radius: 10px;
+  padding: 5px;
+}
+
+.image-div-name {
+  justify-content: flex-end;
+  align-items: flex-start;
+  display: flex;
+}
+
+.div-block-451 {
+  justify-content: center;
+  align-items: center;
+  display: flex;
+}
+
+.image-10 {
+  margin: 10px;
+  border-radius: 6px;
+}
+
 
 
   @media screen and (min-width: 1920px) {
@@ -1609,8 +1658,7 @@
       background-image: linear-gradient(to bottom, null, null), url('../../../../assets/images/Mask-Group-12.svg');
       background-position: 0 0, 50%;
       padding: 20px 10px;
-    }  
-
+    }
   }
   
   @media screen and (max-width: 991px) {
@@ -1710,6 +1758,10 @@
        display: flex;
        flex-direction: row;
     } */
+
+    .image-grid {
+      grid-template-columns: 1fr;
+    }
   }
   
   #w-node-_6893efaf-f5d2-e004-7217-6e934a6c6167-ac205186, #w-node-_459b960d-ce15-c6e4-2d77-8c8da4e753be-ac205186, #w-node-_02ef87fc-7f4c-21df-4208-311cd379fcaf-ac205186, #w-node-ab03b8d4-e0ed-31b3-68a0-eda284d58ae2-ac205186, #w-node-_4cd953d6-568c-454e-fa45-d438d47d0757-ac205186, #w-node-_699a36c7-0b04-cd39-a219-a4022b828597-ac205186, #w-node-dd4f0d99-f1e9-678e-8353-dee0b9049da9-ac205186 {

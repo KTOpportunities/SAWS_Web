@@ -39,7 +39,7 @@
                               <div class="w-layout-grid grid-14">
                                 <div id="w-node-_1994920b-3f65-6b60-4362-b189a3f17c0f-bf38b96b">
                                   <div class="w-layout-grid grid-15">
-                                    <div id="w-node-cf55cddc-2c29-f04a-1353-f077533db390-bf38b96b" class="div-block-445">
+                                    <div id="w-node-cf55cddc-2c29-f04a-1353-f077533db390-bf38b96b" class="div-block-445-2">
                                       <svg xmlns="http://www.w3.org/2000/svg" width="52.025" height="48.611" viewBox="0 0 52.025 48.611">
                                         <g id="Group_4959" data-name="Group 4959" transform="translate(-332 -351)">
                                           <path id="Icon_simple-hipchat" data-name="Icon simple-hipchat" d="M43.361,40.353a21.2,21.2,0,0,0,8.664-16.733c0-12.388-11.647-22.44-26.006-22.44S0,11.232,0,23.621,11.643,46.07,26.008,46.07a29.831,29.831,0,0,0,5.471-.494l.568-.1a27.074,27.074,0,0,0,13.631,4.314,1.4,1.4,0,0,0,1.2-2.393C45.47,45.675,43.005,40.624,43.361,40.353Z" transform="translate(332 349.819)" fill="#00386c"/>
@@ -119,23 +119,37 @@
                               </div>
                             </div>
 
-                            <div                        
-                                id="w-node-d6e462d1-76fb-9d89-7c68-0a48cdb81add-bf38b96b"
-                                *ngIf="feedbacks.responseAttachmentFileName"
-                                (click)="openAttachmentDialog(feedbacks.DocFeedbacks[0], '500ms', '500ms')"
-                            >
+                            <div
+                              id="w-node-_041085f5-5cc9-2350-48c8-fc5441902170-bf38b96b"
+                              *ngIf="feedbacks.responseAttachmentFileName"
+                              >
                               <h4 class="adm">{{ feedbacks.responderEmail }}</h4>
-                              <div class="w-layout-grid grid-16">
-                                <div id="w-node-_68c2ba2d-a180-6d5d-bc2e-dfc8d4e9ef8b-bf38b96b" class="div-block-448">
+                              <div class="w-layout-grid image-grid-2">
+                                <div id="w-node-_041085f5-5cc9-2350-48c8-fc5441902174-bf38b96b" class="div-block-449">
                                 </div>
-                                <div id="w-node-_3891c89a-c05f-88ae-0e87-eb0330273651-bf38b96b">
-                                  <div class="w-layout-grid grid-17">
-                                    <div id="w-node-bb567ea0-417d-ba11-69bd-8fd873445a44-bf38b96b" class="div-block-446">
-                                      <p class="paragraph-3">{{ feedbacks.responseAttachmentFileName }}</p>
+                                <div id="w-node-_041085f5-5cc9-2350-48c8-fc5441902175-bf38b96b">
+                                  <div class="w-layout-grid grid-17-1"
+                                  (click)="openAttachmentDialog(feedbacks.DocFeedbacks[0], '500ms', '500ms')"
+                                  >
+                                    <div id="w-node-_041085f5-5cc9-2350-48c8-fc5441902177-bf38b96b" class="image-div">
+                                      <div class="div-block-451">
+                                        <img 
+                                        [src]="feedbacks.DocFeedbacks[0].file_url" 
+                                        loading="lazy" 
+                                        width="327" 
+                                        sizes="(max-width: 479px) 69vw, 327px" 
+                                        [alt]="feedbacks.responseAttachmentFileName" 
+                                        class="image-10"
+                                        >
+                                      </div>
                                       <p class="paragraph-3">{{ feedbacks.responseAttachment }}</p>
-                                      <h4 class="time-heading-copy">{{ feedbacks.created_at | date : "short" }}</h4>
+                                      <h4 class="time-heading-copy">{{ feedbacks.created_at | date : "short" }}
+                                      </h4>
                                     </div>
-                                    <div id="w-node-_5ddf5ebf-8f5e-e5f5-cd98-b70df93808a4-bf38b96b" class="div-block-445">
+                                    <div
+                                      id="w-node-_041085f5-5cc9-2350-48c8-fc544190217c-bf38b96b"
+                                      class="image-div-name"
+                                      >
                                       <svg xmlns="http://www.w3.org/2000/svg" width="52.025" height="48.611" viewBox="0 0 52.025 48.611">
                                         <g id="Group_5146" data-name="Group 5146" transform="translate(-732 -362.389)">
                                           <path id="Icon_simple-hipchat" data-name="Icon simple-hipchat" d="M8.664,40.353A21.2,21.2,0,0,1,0,23.621C0,11.232,11.647,1.18,26.006,1.18s26.019,10.052,26.019,22.44S40.383,46.069,26.017,46.069a29.831,29.831,0,0,1-5.471-.494l-.568-.1A27.074,27.074,0,0,1,6.347,49.791a1.4,1.4,0,0,1-1.2-2.393C6.555,45.675,9.02,40.624,8.664,40.353Z" transform="translate(732 361.208)" fill="#8295c2"/>
@@ -144,6 +158,7 @@
                                           <circle id="Ellipse_214" data-name="Ellipse 214" cx="3.5" cy="3.5" r="3.5" transform="translate(767 383)" fill="#fff"/>
                                         </g>
                                       </svg>
+                                      
                                     </div>
                                   </div>
                                 </div>

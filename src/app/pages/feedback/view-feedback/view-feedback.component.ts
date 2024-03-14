@@ -24,6 +24,8 @@ export class ViewFeedbackComponent implements OnInit{
 
   addFile: boolean = false;
 
+  shouldScrollToBottom: boolean = true;
+
   selectedFile: File | undefined;
   selectedFileName: string | undefined;
   selectedFileSrc: string | ArrayBuffer | null = null;
@@ -70,6 +72,8 @@ export class ViewFeedbackComponent implements OnInit{
     this.apiData.getFeedbackData().subscribe(data => {
       this.feedbackData = data;
       this.feedbackForm.patchValue(data);
+
+      this.shouldScrollToBottom = true;
     });
 
     var user: any = this.apiData.getCurrentUser();
@@ -189,20 +193,6 @@ export class ViewFeedbackComponent implements OnInit{
     }
   }
 
-  // onChangeAdvert(event: any) {
-  //   let fileSize = event.target.files[0]
-  //   if(fileSize.size <= 26214400 ) {
-  //     this.updateFileData(
-  //       this.fileFeedback,
-  //       event.target.files[0],
-  //       "Feedback"
-  //      );
-  //   } else {
-  //     this.alertFileMessage("Feedback",`${fileSize.type}`)
-  //     this.myFileInputVariable.nativeElement.value = '';
-  //   }
-  // }
-
   updateFileData(
     fileDataToUpdate: fileDataFeedback,
     newFile: File,
@@ -268,6 +258,8 @@ export class ViewFeedbackComponent implements OnInit{
 
   openAttachmentDialog(element: any, enterAnimationDuration: string, exitAnimationDuration: string) {
 
+    this.shouldScrollToBottom = false;
+
     const formValues = this.feedbackForm.value;
 
     const dialogConfig = new MatDialogConfig();
@@ -294,6 +286,7 @@ export class ViewFeedbackComponent implements OnInit{
     dialogRef.afterClosed().subscribe((result: any) => {
       if(result == 'submit'){
         this.onSubmitAttachment();
+        this.shouldScrollToBottom = true;
       }
       
       this.selectedFile = undefined;
@@ -303,10 +296,12 @@ export class ViewFeedbackComponent implements OnInit{
     });  
   }
 
-  scrollToBottom = () => {
-    try {
-      this.content.nativeElement.scrollTop = this.content.nativeElement.scrollHeight;
-    } catch (err) {}
+  scrollToBottom() {
+    if (this.shouldScrollToBottom) {
+      try {
+        this.content.nativeElement.scrollTop = this.content.nativeElement.scrollHeight;
+      } catch (err) {}
+    }
   }
 
   isResponseMessageValid(): boolean {
