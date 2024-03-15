@@ -16,6 +16,10 @@ export class AttachmentFileComponent implements OnInit {
 
   fileBaseUrl: any;
   date: Date;
+  isImage: boolean = false;
+  isVideo: boolean = false;
+  isAudio: boolean = false;
+  isApplication: boolean = false;
 
   constructor (
     private formBuilder: FormBuilder,
@@ -36,6 +40,11 @@ export class AttachmentFileComponent implements OnInit {
         );
 
         this.date = currentDate;
+
+        this.isImage = data.fileType == 'Image';
+        this.isVideo = data.fileType == 'Video';
+        this.isAudio = data.fileType == 'Audio';
+        this.isApplication = data.fileType == 'Application';
       }
       
       ngOnInit() {

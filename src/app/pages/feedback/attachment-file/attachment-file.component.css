@@ -97,3 +97,11 @@
     max-height: 80vh;
     overflow-y: auto;
   }
+
+  iframe:focus {
+    outline: none;
+  }
+  
+  iframe[seamless] {
+    display: block;
+  }

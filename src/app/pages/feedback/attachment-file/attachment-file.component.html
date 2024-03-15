@@ -13,7 +13,47 @@
         </svg>
     </span>
 
-    <img class="fileImage" [src]="fileBaseUrl" alt="Selected Image">
+    <!-- <img 
+        [src]="fileBaseUrl" 
+        alt="Selected Image"
+        > -->
+        
+    <img 
+        class="fileImage" 
+        *ngIf="isImage"
+        [src]="fileBaseUrl" 
+        alt="Selected Image"
+        width="auto"
+    >
+
+    <video
+        *ngIf="isVideo"
+        [src]="fileBaseUrl"
+        autoplay 
+        loop 
+        controls
+    >
+    </video>
+
+    <audio 
+        *ngIf="isAudio"
+        [src]="fileBaseUrl"
+        autoplay
+        loop 
+        controls 
+    >
+        <source [src]="fileBaseUrl">
+    </audio>
+
+    <!-- width="500"
+        height="auto" -->
+        <iframe
+        *ngIf="isApplication"
+        [src]="fileBaseUrl"
+        width="100%" 
+        height="800"
+        > 
+    </iframe> 
 
     <div                        
         id="w-node-d6e462d1-76fb-9d89-7c68-0a48cdb81add-bf38b96b"
@@ -44,10 +84,10 @@
     </div>   
 
     <button
-    *ngIf="data.addFile"
-    class="submit-button w-button" 
-    (click)="closeSubmitDialog()">
-        Send
+        *ngIf="data.addFile"
+        class="submit-button w-button" 
+        (click)="closeSubmitDialog()">
+            Send
     </button>
     
 </mat-dialog-content>

@@ -57,7 +57,7 @@ export class ViewAdvertisementComponent {
       this.advertForm.patchValue(data.Advert);
       
       this.url = data.FileUrl;
-      this.fileType = this.apiData.getFileType(data.Advert.DocAdverts[0].file_mimetype)
+      this.fileType = this.apiData.getFileType(data.Advert.DocAdverts[0].file_mimetype);
 
     });
   }

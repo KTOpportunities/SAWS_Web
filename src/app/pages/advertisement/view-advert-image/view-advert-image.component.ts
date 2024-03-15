@@ -21,6 +21,7 @@ export class ViewAdvertImageComponent implements OnInit {
   isImage: boolean = false;
   isVideo: boolean = false;
   isAudio: boolean = false;
+  isApplication: boolean = false;
 
   
   constructor (
@@ -44,6 +45,7 @@ export class ViewAdvertImageComponent implements OnInit {
       this.isImage = data.fileType == 'Image';
       this.isVideo = data.fileType == 'Video';
       this.isAudio = data.fileType == 'Audio';
+      this.isApplication = data.fileType == 'Application';
 
     }
     

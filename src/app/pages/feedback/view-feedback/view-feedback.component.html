@@ -133,15 +133,60 @@
                                   >
                                     <div id="w-node-_041085f5-5cc9-2350-48c8-fc5441902177-bf38b96b" class="image-div">
                                       <div class="div-block-451">
-                                        <img 
-                                        [src]="feedbacks.DocFeedbacks[0].file_url" 
+
+                           
+                                        <img
+                                        *ngIf="feedbacks.DocFeedbacks[0].file_mimetype.includes('image')" 
+                                        [src]="getSafeUrl(feedbacks.DocFeedbacks[0].file_url)" 
                                         loading="lazy" 
                                         width="327" 
                                         sizes="(max-width: 479px) 69vw, 327px" 
                                         [alt]="feedbacks.responseAttachmentFileName" 
                                         class="image-10"
                                         >
+
+                                        <audio 
+                                        *ngIf="feedbacks.DocFeedbacks[0].file_mimetype.includes('audio')" 
+                                        [src]="getSafeUrl(feedbacks.DocFeedbacks[0].file_url)"
+                                          autoplay
+                                          controls
+                                          class="image-10"
+                                        >
+                                            <!-- <source [src]="fileBaseUrl"> -->
+                                        </audio>
+
+                                        <video
+                                        *ngIf="feedbacks.DocFeedbacks[0].file_mimetype.includes('video')" 
+                                        [src]="getSafeUrl(feedbacks.DocFeedbacks[0].file_url)"
+                                        width="327" 
+                                        sizes="(max-width: 479px) 69vw, 327px" 
+                                        class="image-10"
+                                          >
+                                      </video>
+
+                                      <iframe
+                                        *ngIf="feedbacks.DocFeedbacks[0].file_mimetype.includes('application')" 
+                                        [src]="getSafeUrl(feedbacks.DocFeedbacks[0].file_url)"
+                                          width="327" 
+                                          sizes="(max-width: 479px) 69vw, 327px"
+                                          class="image-10"
+                                          style="border:none"
+                                          > 
+                                        </iframe> 
+                                        <!-- [src]="fileBaseUrl"
+                                        width="500"
+                                        height="auto" -->
+
+                                        <!-- <embed 
+                                          *ngIf="feedbacks.DocFeedbacks[0].file_mimetype.includes('application')" 
+                                          [src]="getSafeUrl(feedbacks.DocFeedbacks[0].file_url)"
+                                          type="application/pdf"
+                                          width="327" 
+                                          sizes="(max-width: 479px) 69vw, 327px"
+                                          class="image-10"
+                                        />  -->
                                       </div>
+                              
                                       <p class="paragraph-3">{{ feedbacks.responseAttachment }}</p>
                                       <h4 class="time-heading-copy">{{ feedbacks.created_at | date : "short" }}
                                       </h4>

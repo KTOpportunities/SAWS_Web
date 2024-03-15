@@ -10,6 +10,8 @@ import { SubscriberService } from 'src/app/services/subscriber.service';
 import Swal from 'sweetalert2';
 import { AttachmentFileComponent } from '../attachment-file/attachment-file.component';
 import { fileDataFeedback } from 'src/app/Models/File';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+
 
 @Component({
   selector: 'app-view-feedback',
@@ -24,16 +26,23 @@ export class ViewFeedbackComponent implements OnInit{
 
   addFile: boolean = false;
 
+  isImage: boolean = false;
+  isVideo: boolean = false;
+  isAudio: boolean = false;
+  isApplication: boolean = false;
+
   shouldScrollToBottom: boolean = true;
 
   selectedFile: File | undefined;
   selectedFileName: string | undefined;
   selectedFileSrc: string | ArrayBuffer | null = null;
+  selectedFileType: string | undefined;
 
   @ViewChild('myFileInput') myFileInputVariable!: ElementRef;
   @ViewChild('content') content!: ElementRef;
 
   fileFeedback: any = {};
+  fileType: any = '';
 
   files: fileDataFeedback[] = [];
 
@@ -46,6 +55,7 @@ export class ViewFeedbackComponent implements OnInit{
     private router: Router,
     private spinner: NgxSpinnerService,
     public dialog: MatDialog,
+    private sanitizer: DomSanitizer
   )  {
     
     this.feedbackForm = this.formBuilder.group({
@@ -72,6 +82,8 @@ export class ViewFeedbackComponent implements OnInit{
     this.apiData.getFeedbackData().subscribe(data => {
       this.feedbackData = data;
       this.feedbackForm.patchValue(data);
+
+      console.log('data', data)
 
       this.shouldScrollToBottom = true;
     });
@@ -256,7 +268,15 @@ export class ViewFeedbackComponent implements OnInit{
     );
   }
 
+  getSafeUrl(url: string): SafeResourceUrl {
+    return this.sanitizer.bypassSecurityTrustResourceUrl(url);
+  }
+
   openAttachmentDialog(element: any, enterAnimationDuration: string, exitAnimationDuration: string) {
+
+    this.fileType = this.apiData.getFileType(element.file_mimetype || this.selectedFileType);
+
+    console.log(element);
 
     this.shouldScrollToBottom = false;
 
@@ -274,7 +294,8 @@ export class ViewFeedbackComponent implements OnInit{
         message: formValues.responseMessage || '',
         responderEmail: this.userEmail,
         resonderId: this.userId,
-        addFile: this.addFile
+        addFile: this.addFile,
+        fileType: this.fileType
       },
       enterAnimationDuration,
       exitAnimationDuration,
@@ -291,6 +312,7 @@ export class ViewFeedbackComponent implements OnInit{
       
       this.selectedFile = undefined;
       this.selectedFileSrc = null;
+      this.selectedFileType = undefined;
       this.addFile = false;
       // this.feedbackForm.reset();
     });  
@@ -311,9 +333,12 @@ export class ViewFeedbackComponent implements OnInit{
 
   onFileSelected(event: any) {
 
+    console.log("event", event);
+
     const file = event.target.files[0];
     this.selectedFile = file;
     this.selectedFileName = file.name;
+    // this.selectedFileType = file.name;
 
     if ( file.size <= 26214400 ) {
       const reader = new FileReader();
