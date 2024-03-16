@@ -171,8 +171,6 @@ export class EditAdvertisementComponent implements OnInit {
 
   openViewImageDialog(element: any,  enterAnimationDuration: string, exitAnimationDuration: string) {
 
-    // console.log('element source edit - before', element);
-
     const dialogConfig = new MatDialogConfig();
 
     dialogConfig.autoFocus = true;
@@ -218,9 +216,6 @@ export class EditAdvertisementComponent implements OnInit {
     docTypeName: string
   ) {
 
-    console.log("fileDataToUpdate", fileDataToUpdate)
-    console.log("newFile", newFile)
-    console.log("docTypeName", docTypeName)
     if (newFile) {
       fileDataToUpdate.file = newFile;
       fileDataToUpdate.DocTypeName = docTypeName;

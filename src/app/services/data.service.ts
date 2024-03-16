@@ -140,7 +140,7 @@ export class Dataservice {
 
   getFileType(fileMimetype: string): string {
     const videoMimeTypes = ["video/mp4", "video/quicktime", "video/x-msvideo", "video/x-ms-wmv"];
-    const imageMimeTypes = ["image/jpeg", "image/png", "image/gif", "image/bmp", "image/jpg"];
+    const imageMimeTypes = ["image/jpeg", "image/png", "image/gif", "image/bmp", "image/jpg", "image/svg+xml"];
     const applicationMimeTypes = ["application/pdf"];
     const audioMimeTypes = ["audio/mpeg", "audio/mp4", "audio/ogg", "audio/wav",  "audio/mp3"];
 

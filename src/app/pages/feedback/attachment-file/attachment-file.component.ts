@@ -45,6 +45,7 @@ export class AttachmentFileComponent implements OnInit {
         this.isVideo = data.fileType == 'Video';
         this.isAudio = data.fileType == 'Audio';
         this.isApplication = data.fileType == 'Application';
+
       }
       
       ngOnInit() {

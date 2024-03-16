@@ -83,8 +83,6 @@ export class ViewFeedbackComponent implements OnInit{
       this.feedbackData = data;
       this.feedbackForm.patchValue(data);
 
-      console.log('data', data)
-
       this.shouldScrollToBottom = true;
     });
 
@@ -245,7 +243,6 @@ export class ViewFeedbackComponent implements OnInit{
     this.api.postInsertNewFeedback(body).subscribe(
       (data: any) => {
         this.feedbackForm.reset();
-        console.log("data", data.DetailDescription.FeedbackMessages[0])
         this.onUpload(data.DetailDescription.FeedbackMessages[0].feedbackMessageId);
       },
       (err) => {
@@ -275,8 +272,6 @@ export class ViewFeedbackComponent implements OnInit{
   openAttachmentDialog(element: any, enterAnimationDuration: string, exitAnimationDuration: string) {
 
     this.fileType = this.apiData.getFileType(element.file_mimetype || this.selectedFileType);
-
-    console.log(element);
 
     this.shouldScrollToBottom = false;
 
@@ -333,12 +328,10 @@ export class ViewFeedbackComponent implements OnInit{
 
   onFileSelected(event: any) {
 
-    console.log("event", event);
-
     const file = event.target.files[0];
     this.selectedFile = file;
     this.selectedFileName = file.name;
-    // this.selectedFileType = file.name;
+    this.selectedFileType = file.type;
 
     if ( file.size <= 26214400 ) {
       const reader = new FileReader();
