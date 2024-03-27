@@ -229,8 +229,8 @@
 
             <tr class="mat-row" *matNoDataRow>
               <td class="mat-cell" colspan="4">
-               No data matching the filter "{{dataSource.filter}}"
-                </td>
+               {{ dataSource.filter ? 'No data matching the filter ' + dataSource.filter : 'loading data...'}}
+              </td>
             </tr>
           </mat-table>
           <mat-paginator
