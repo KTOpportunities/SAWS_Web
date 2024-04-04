@@ -211,6 +211,168 @@
                             </div>
 
 
+                            <div
+                            id="w-node-_041085f5-5cc9-2350-48c8-fc5441902170-bf38b96b"
+                            *ngIf="feedbacks.feedbackAttachmentFileName"
+                          >
+                            <h4 class="heading-name">{{ feedback.fullname }}</h4>
+                            <div class="w-layout-grid image-grid-2">
+                              <div
+                                id="w-node-_041085f5-5cc9-2350-48c8-fc5441902175-bf38b96b"
+                              >
+                                <div
+                                  class="w-layout-grid grid-17-1"
+                                  (click)="
+                                    openAttachmentDialog(
+                                      feedbacks.DocFeedbacks[0],
+                                      '500ms',
+                                      '500ms'
+                                    )
+                                  "
+                                >
+                                  <div
+                                    id="w-node-cf55cddc-2c29-f04a-1353-f077533db390-bf38b96b"
+                                    class="div-block-445-2"
+                                  >
+                                    <svg
+                                      xmlns="http://www.w3.org/2000/svg"
+                                      width="52.025"
+                                      height="48.611"
+                                      viewBox="0 0 52.025 48.611"
+                                    >
+                                      <g
+                                        id="Group_4959"
+                                        data-name="Group 4959"
+                                        transform="translate(-332 -351)"
+                                      >
+                                        <path
+                                          id="Icon_simple-hipchat"
+                                          data-name="Icon simple-hipchat"
+                                          d="M43.361,40.353a21.2,21.2,0,0,0,8.664-16.733c0-12.388-11.647-22.44-26.006-22.44S0,11.232,0,23.621,11.643,46.07,26.008,46.07a29.831,29.831,0,0,0,5.471-.494l.568-.1a27.074,27.074,0,0,0,13.631,4.314,1.4,1.4,0,0,0,1.2-2.393C45.47,45.675,43.005,40.624,43.361,40.353Z"
+                                          transform="translate(332 349.819)"
+                                          fill="#00386c"
+                                        />
+                                        <circle
+                                          id="Ellipse_209"
+                                          data-name="Ellipse 209"
+                                          cx="3.5"
+                                          cy="3.5"
+                                          r="3.5"
+                                          transform="translate(340 372)"
+                                          fill="#fff"
+                                        />
+                                        <circle
+                                          id="Ellipse_210"
+                                          data-name="Ellipse 210"
+                                          cx="3.5"
+                                          cy="3.5"
+                                          r="3.5"
+                                          transform="translate(351 372)"
+                                          fill="#fff"
+                                        />
+                                        <circle
+                                          id="Ellipse_211"
+                                          data-name="Ellipse 211"
+                                          cx="3.5"
+                                          cy="3.5"
+                                          r="3.5"
+                                          transform="translate(364 372)"
+                                          fill="#fff"
+                                        />
+                                      </g>
+                                    </svg>
+                                  </div>
+                                  <div
+                                    id="w-node-_041085f5-5cc9-2350-48c8-fc5441902177-bf38b96b"
+                                    class="div-block-444"
+                                  >
+                                    <div class="div-block-451">
+                                      <img
+                                        *ngIf="
+                                          feedbacks.DocFeedbacks[0].file_mimetype.includes(
+                                            'image'
+                                          )
+                                        "
+                                        [src]="
+                                          getSafeUrl(feedbacks.DocFeedbacks[0].file_url)
+                                        "
+                                        loading="lazy"
+                                        width="327"
+                                        sizes="(max-width: 479px) 69vw, 327px"
+                                        [alt]="feedbacks.responseAttachmentFileName"
+                                        class="image-10"
+                                      />
+          
+                                      <audio
+                                        *ngIf="
+                                          feedbacks.DocFeedbacks[0].file_mimetype.includes(
+                                            'audio'
+                                          )
+                                        "
+                                        [src]="
+                                          getSafeUrl(feedbacks.DocFeedbacks[0].file_url)
+                                        "
+                                        autoplay
+                                        controls
+                                        class="image-10"
+                                      >
+                                        <!-- <source [src]="fileBaseUrl"> -->
+                                      </audio>
+          
+                                      <video
+                                        *ngIf="
+                                          feedbacks.DocFeedbacks[0].file_mimetype.includes(
+                                            'video'
+                                          )
+                                        "
+                                        [src]="
+                                          getSafeUrl(feedbacks.DocFeedbacks[0].file_url)
+                                        "
+                                        width="327"
+                                        sizes="(max-width: 479px) 69vw, 327px"
+                                        class="image-10"
+                                      ></video>
+          
+                                      <iframe
+                                        *ngIf="
+                                          feedbacks.DocFeedbacks[0].file_mimetype.includes(
+                                            'application'
+                                          )
+                                        "
+                                        [src]="
+                                          getSafeUrl(feedbacks.DocFeedbacks[0].file_url)
+                                        "
+                                        width="327"
+                                        sizes="(max-width: 479px) 69vw, 327px"
+                                        class="image-10"
+                                        style="border: none"
+                                      >
+                                      </iframe>
+                                      <!-- [src]="fileBaseUrl"
+                                width="500"
+                                height="auto" -->
+          
+                                      <!-- <embed 
+                                  *ngIf="feedbacks.DocFeedbacks[0].file_mimetype.includes('application')" 
+                                  [src]="getSafeUrl(feedbacks.DocFeedbacks[0].file_url)"
+                                  type="application/pdf"
+                                  width="327" 
+                                  sizes="(max-width: 479px) 69vw, 327px"
+                                  class="image-10"
+                                />  -->
+                                    </div>
+          
+                                    <p class="paragraph-3">
+                                      {{ feedbacks.feedbackAttachment }}
+                                    </p>
+                                    <h4 class="time-heading-copy">
+                                      {{ feedbacks.created_at | date : "short" }}
+                                    </h4>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
 
                         </div>
 
