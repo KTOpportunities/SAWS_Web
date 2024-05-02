@@ -1,183 +1,365 @@
 <section class="section-3">
-    <div class="container">
-      <div class="content">        
-          <div class="content-wrap">
-              <div class="user-managemnt-group">
-                  <div class="group-hero-copy">
-                      <div class="group-hero_l">
-                            <a
-                                (click)="onCancel()"
-                                class="button-11 w-button">
-                                Back
-                            </a>
+  <div class="container">
+    <div class="content">
+      <div class="content-wrap">
+        <div class="user-managemnt-group">
+          <div class="group-hero-copy">
+            <div class="group-hero_l">
+              <a (click)="onCancel()" class="button-11 w-button"> Back </a>
+            </div>
+          </div>
+        </div>
+
+        <form [formGroup]="feedbackForm" (ngSubmit)="onSubmit()">
+          <div
+            class="group inside-form"
+            *ngIf="apiData.feedbackObservable$ | async as feedback"
+          >
+            <h3 class="heading-copy">{{ feedback.title }}</h3>
+            <div #content class="w-layout-grid grid-13">
+              <div
+                formGroupName="FeedbackMessages"
+                *ngFor="
+                  let feedbacks of feedback.FeedbackMessages;
+                  let index = index
+                "
+              >
+                <div
+                  id="w-node-aa5e58af-d246-1d55-81c6-6a59b577d835-bf38b96b"
+                  *ngIf="feedbacks.feedback"
+                >
+                  <h4 class="heading-name">{{ feedback.fullname }}</h4>
+                  <div class="w-layout-grid grid-14">
+                    <div
+                      id="w-node-_1994920b-3f65-6b60-4362-b189a3f17c0f-bf38b96b"
+                    >
+                      <div class="w-layout-grid grid-15">
+                        <div
+                          id="w-node-cf55cddc-2c29-f04a-1353-f077533db390-bf38b96b"
+                          class="div-block-445-2"
+                        >
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="52.025"
+                            height="48.611"
+                            viewBox="0 0 52.025 48.611"
+                          >
+                            <g
+                              id="Group_4959"
+                              data-name="Group 4959"
+                              transform="translate(-332 -351)"
+                            >
+                              <path
+                                id="Icon_simple-hipchat"
+                                data-name="Icon simple-hipchat"
+                                d="M43.361,40.353a21.2,21.2,0,0,0,8.664-16.733c0-12.388-11.647-22.44-26.006-22.44S0,11.232,0,23.621,11.643,46.07,26.008,46.07a29.831,29.831,0,0,0,5.471-.494l.568-.1a27.074,27.074,0,0,0,13.631,4.314,1.4,1.4,0,0,0,1.2-2.393C45.47,45.675,43.005,40.624,43.361,40.353Z"
+                                transform="translate(332 349.819)"
+                                fill="#00386c"
+                              />
+                              <circle
+                                id="Ellipse_209"
+                                data-name="Ellipse 209"
+                                cx="3.5"
+                                cy="3.5"
+                                r="3.5"
+                                transform="translate(340 372)"
+                                fill="#fff"
+                              />
+                              <circle
+                                id="Ellipse_210"
+                                data-name="Ellipse 210"
+                                cx="3.5"
+                                cy="3.5"
+                                r="3.5"
+                                transform="translate(351 372)"
+                                fill="#fff"
+                              />
+                              <circle
+                                id="Ellipse_211"
+                                data-name="Ellipse 211"
+                                cx="3.5"
+                                cy="3.5"
+                                r="3.5"
+                                transform="translate(364 372)"
+                                fill="#fff"
+                              />
+                            </g>
+                          </svg>
                         </div>
+                        <div
+                          id="w-node-_0aeb8ca7-70a9-288f-4d1e-94ac7e404a68-bf38b96b"
+                          class="div-block-444"
+                        >
+                          <p class="paragraph-3">{{ feedbacks.feedback }}</p>
+                          <div>
+                            <h4 class="time-heading">
+                              {{ feedbacks.created_at | date : "short" }}
+                            </h4>
+                          </div>
+                        </div>
+                      </div>
                     </div>
+                  </div>
                 </div>
 
-                <form
-                    [formGroup]="feedbackForm"
-                    (ngSubmit)="onSubmit()"
+                <div
+                  id="w-node-d6e462d1-76fb-9d89-7c68-0a48cdb81add-bf38b96b"
+                  *ngIf="feedbacks.response"
+                >
+                  <h4 class="adm">{{ feedbacks.responderEmail }}</h4>
+                  <div class="w-layout-grid grid-16">
+                    <div
+                      id="w-node-_68c2ba2d-a180-6d5d-bc2e-dfc8d4e9ef8b-bf38b96b"
+                      class="div-block-448"
+                    ></div>
+                    <div
+                      id="w-node-_3891c89a-c05f-88ae-0e87-eb0330273651-bf38b96b"
                     >
-                    <div class="group inside-form"
-                    *ngIf="apiData.feedbackObservable$ | async as feedback"
-                    >
-                        <h3 class="heading-copy">{{ feedback.title }}</h3>
+                      <div class="w-layout-grid grid-17">
                         <div
-                          #content
-                          class="w-layout-grid grid-13"
-                        
+                          id="w-node-bb567ea0-417d-ba11-69bd-8fd873445a44-bf38b96b"
+                          class="div-block-446"
                         >
+                          <p class="paragraph-3">{{ feedbacks.response }}</p>
+                          <h4 class="time-heading-copy">
+                            {{ feedbacks.created_at | date : "short" }}
+                          </h4>
+                        </div>
                         <div
-                            formGroupName="FeedbackMessages"
-                            *ngFor="let feedbacks of feedback.FeedbackMessages; let index = index;"
+                          id="w-node-_5ddf5ebf-8f5e-e5f5-cd98-b70df93808a4-bf38b96b"
+                          class="div-block-445"
+                        >
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="52.025"
+                            height="48.611"
+                            viewBox="0 0 52.025 48.611"
+                          >
+                            <g
+                              id="Group_5146"
+                              data-name="Group 5146"
+                              transform="translate(-732 -362.389)"
                             >
-                            <div
-                            id="w-node-aa5e58af-d246-1d55-81c6-6a59b577d835-bf38b96b"
-                            *ngIf="feedbacks.feedback"
+                              <path
+                                id="Icon_simple-hipchat"
+                                data-name="Icon simple-hipchat"
+                                d="M8.664,40.353A21.2,21.2,0,0,1,0,23.621C0,11.232,11.647,1.18,26.006,1.18s26.019,10.052,26.019,22.44S40.383,46.069,26.017,46.069a29.831,29.831,0,0,1-5.471-.494l-.568-.1A27.074,27.074,0,0,1,6.347,49.791a1.4,1.4,0,0,1-1.2-2.393C6.555,45.675,9.02,40.624,8.664,40.353Z"
+                                transform="translate(732 361.208)"
+                                fill="#8295c2"
+                              />
+                              <circle
+                                id="Ellipse_212"
+                                data-name="Ellipse 212"
+                                cx="3.5"
+                                cy="3.5"
+                                r="3.5"
+                                transform="translate(743 383)"
+                                fill="#fff"
+                              />
+                              <circle
+                                id="Ellipse_213"
+                                data-name="Ellipse 213"
+                                cx="3.5"
+                                cy="3.5"
+                                r="3.5"
+                                transform="translate(754 383)"
+                                fill="#fff"
+                              />
+                              <circle
+                                id="Ellipse_214"
+                                data-name="Ellipse 214"
+                                cx="3.5"
+                                cy="3.5"
+                                r="3.5"
+                                transform="translate(767 383)"
+                                fill="#fff"
+                              />
+                            </g>
+                          </svg>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div
+                  id="w-node-d6e462d1-76fb-9d89-7c68-0a48cdb81add-bf38b96b"
+                  *ngIf="feedbacks.broadcast"
+                >
+                  <h4 class="adm">{{ feedbacks.responderEmail }}</h4>
+                  <div class="w-layout-grid grid-16">
+                    <div
+                      id="w-node-_68c2ba2d-a180-6d5d-bc2e-dfc8d4e9ef8b-bf38b96b"
+                      class="div-block-448"
+                    ></div>
+                    <div
+                      id="w-node-_3891c89a-c05f-88ae-0e87-eb0330273651-bf38b96b"
+                    >
+                      <div class="w-layout-grid grid-17">
+                        <div
+                          id="w-node-bb567ea0-417d-ba11-69bd-8fd873445a44-bf38b96b"
+                          class="div-block-446"
+                        >
+                          <p class="paragraph-3">{{ feedbacks.broadcast }}</p>
+                          <h4 class="time-heading-copy">
+                            {{ feedbacks.created_at | date : "short" }}
+                          </h4>
+                        </div>
+                        <div
+                          id="w-node-_5ddf5ebf-8f5e-e5f5-cd98-b70df93808a4-bf38b96b"
+                          class="div-block-445"
+                        >
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="52.025"
+                            height="48.611"
+                            viewBox="0 0 52.025 48.611"
+                          >
+                            <g
+                              id="Group_5146"
+                              data-name="Group 5146"
+                              transform="translate(-732 -362.389)"
                             >
-                              <h4 class="heading-name">{{ feedback.fullname }}</h4>
-                              <div class="w-layout-grid grid-14">
-                                <div id="w-node-_1994920b-3f65-6b60-4362-b189a3f17c0f-bf38b96b">
-                                  <div class="w-layout-grid grid-15">
-                                    <div id="w-node-cf55cddc-2c29-f04a-1353-f077533db390-bf38b96b" class="div-block-445-2">
-                                      <svg xmlns="http://www.w3.org/2000/svg" width="52.025" height="48.611" viewBox="0 0 52.025 48.611">
-                                        <g id="Group_4959" data-name="Group 4959" transform="translate(-332 -351)">
-                                          <path id="Icon_simple-hipchat" data-name="Icon simple-hipchat" d="M43.361,40.353a21.2,21.2,0,0,0,8.664-16.733c0-12.388-11.647-22.44-26.006-22.44S0,11.232,0,23.621,11.643,46.07,26.008,46.07a29.831,29.831,0,0,0,5.471-.494l.568-.1a27.074,27.074,0,0,0,13.631,4.314,1.4,1.4,0,0,0,1.2-2.393C45.47,45.675,43.005,40.624,43.361,40.353Z" transform="translate(332 349.819)" fill="#00386c"/>
-                                          <circle id="Ellipse_209" data-name="Ellipse 209" cx="3.5" cy="3.5" r="3.5" transform="translate(340 372)" fill="#fff"/>
-                                          <circle id="Ellipse_210" data-name="Ellipse 210" cx="3.5" cy="3.5" r="3.5" transform="translate(351 372)" fill="#fff"/>
-                                          <circle id="Ellipse_211" data-name="Ellipse 211" cx="3.5" cy="3.5" r="3.5" transform="translate(364 372)" fill="#fff"/>
-                                        </g>
-                                      </svg>  
-                                    </div>
-                                    <div id="w-node-_0aeb8ca7-70a9-288f-4d1e-94ac7e404a68-bf38b96b" class="div-block-444">
-                                      <p class="paragraph-3">{{feedbacks.feedback}}</p>
-                                      <div>
-                                        <h4 class="time-heading">{{ feedbacks.created_at | date : "short" }}</h4>
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
+                              <path
+                                id="Icon_simple-hipchat"
+                                data-name="Icon simple-hipchat"
+                                d="M8.664,40.353A21.2,21.2,0,0,1,0,23.621C0,11.232,11.647,1.18,26.006,1.18s26.019,10.052,26.019,22.44S40.383,46.069,26.017,46.069a29.831,29.831,0,0,1-5.471-.494l-.568-.1A27.074,27.074,0,0,1,6.347,49.791a1.4,1.4,0,0,1-1.2-2.393C6.555,45.675,9.02,40.624,8.664,40.353Z"
+                                transform="translate(732 361.208)"
+                                fill="#8295c2"
+                              />
+                              <circle
+                                id="Ellipse_212"
+                                data-name="Ellipse 212"
+                                cx="3.5"
+                                cy="3.5"
+                                r="3.5"
+                                transform="translate(743 383)"
+                                fill="#fff"
+                              />
+                              <circle
+                                id="Ellipse_213"
+                                data-name="Ellipse 213"
+                                cx="3.5"
+                                cy="3.5"
+                                r="3.5"
+                                transform="translate(754 383)"
+                                fill="#fff"
+                              />
+                              <circle
+                                id="Ellipse_214"
+                                data-name="Ellipse 214"
+                                cx="3.5"
+                                cy="3.5"
+                                r="3.5"
+                                transform="translate(767 383)"
+                                fill="#fff"
+                              />
+                            </g>
+                          </svg>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
 
+                <div
+                  id="w-node-_041085f5-5cc9-2350-48c8-fc5441902170-bf38b96b"
+                  *ngIf="feedbacks.responseAttachmentFileName"
+                >
+                  <h4 class="adm">{{ feedbacks.responderEmail }}</h4>
+                  <div class="w-layout-grid image-grid-2">
+                    <div
+                      id="w-node-_041085f5-5cc9-2350-48c8-fc5441902174-bf38b96b"
+                      class="div-block-449"
+                    ></div>
+                    <div
+                      id="w-node-_041085f5-5cc9-2350-48c8-fc5441902175-bf38b96b"
+                      *ngIf="
+                        feedbacks.DocFeedbacks &&
+                        feedbacks.DocFeedbacks.length > 0
+                      "
+                    >
+                      <div
+                        class="w-layout-grid grid-17-1"
+                        (click)="
+                          openAttachmentDialog(
+                            feedbacks.DocFeedbacks[0],
+                            '500ms',
+                            '500ms'
+                          )
+                        "
+                      >
+                        <div
+                          id="w-node-_041085f5-5cc9-2350-48c8-fc5441902177-bf38b96b"
+                          class="image-div"
+                        >
+                          <div class="div-block-451">
+                            <img
+                              *ngIf="
+                                feedbacks.DocFeedbacks[0].file_mimetype.includes(
+                                  'image'
+                                )
+                              "
+                              [src]="
+                                getSafeUrl(feedbacks.DocFeedbacks[0].file_url)
+                              "
+                              loading="lazy"
+                              width="327"
+                              sizes="(max-width: 479px) 69vw, 327px"
+                              [alt]="feedbacks.responseAttachmentFileName"
+                              class="image-10"
+                            />
 
-                            <div                        
-                                id="w-node-d6e462d1-76fb-9d89-7c68-0a48cdb81add-bf38b96b"
-                                *ngIf="feedbacks.response"
+                            <audio
+                              *ngIf="
+                                feedbacks.DocFeedbacks[0].file_mimetype.includes(
+                                  'audio'
+                                )
+                              "
+                              [src]="
+                                getSafeUrl(feedbacks.DocFeedbacks[0].file_url)
+                              "
+                              autoplay
+                              controls
+                              class="image-10"
                             >
-                              <h4 class="adm">{{ feedbacks.responderEmail }}</h4>
-                              <div class="w-layout-grid grid-16">
-                                <div id="w-node-_68c2ba2d-a180-6d5d-bc2e-dfc8d4e9ef8b-bf38b96b" class="div-block-448">
-                                </div>
-                                <div id="w-node-_3891c89a-c05f-88ae-0e87-eb0330273651-bf38b96b">
-                                  <div class="w-layout-grid grid-17">
-                                    <div id="w-node-bb567ea0-417d-ba11-69bd-8fd873445a44-bf38b96b" class="div-block-446">
-                                      <p class="paragraph-3">{{ feedbacks.response }}</p>
-                                      <h4 class="time-heading-copy">{{ feedbacks.created_at | date : "short" }}</h4>
-                                    </div>
-                                    <div id="w-node-_5ddf5ebf-8f5e-e5f5-cd98-b70df93808a4-bf38b96b" class="div-block-445">
-                                      <svg xmlns="http://www.w3.org/2000/svg" width="52.025" height="48.611" viewBox="0 0 52.025 48.611">
-                                        <g id="Group_5146" data-name="Group 5146" transform="translate(-732 -362.389)">
-                                          <path id="Icon_simple-hipchat" data-name="Icon simple-hipchat" d="M8.664,40.353A21.2,21.2,0,0,1,0,23.621C0,11.232,11.647,1.18,26.006,1.18s26.019,10.052,26.019,22.44S40.383,46.069,26.017,46.069a29.831,29.831,0,0,1-5.471-.494l-.568-.1A27.074,27.074,0,0,1,6.347,49.791a1.4,1.4,0,0,1-1.2-2.393C6.555,45.675,9.02,40.624,8.664,40.353Z" transform="translate(732 361.208)" fill="#8295c2"/>
-                                          <circle id="Ellipse_212" data-name="Ellipse 212" cx="3.5" cy="3.5" r="3.5" transform="translate(743 383)" fill="#fff"/>
-                                          <circle id="Ellipse_213" data-name="Ellipse 213" cx="3.5" cy="3.5" r="3.5" transform="translate(754 383)" fill="#fff"/>
-                                          <circle id="Ellipse_214" data-name="Ellipse 214" cx="3.5" cy="3.5" r="3.5" transform="translate(767 383)" fill="#fff"/>
-                                        </g>
-                                      </svg>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
+                              <!-- <source [src]="fileBaseUrl"> -->
+                            </audio>
 
-                            <div                        
-                                id="w-node-d6e462d1-76fb-9d89-7c68-0a48cdb81add-bf38b96b"
-                                *ngIf="feedbacks.broadcast"
+                            <video
+                              *ngIf="
+                                feedbacks.DocFeedbacks[0].file_mimetype.includes(
+                                  'video'
+                                )
+                              "
+                              [src]="
+                                getSafeUrl(feedbacks.DocFeedbacks[0].file_url)
+                              "
+                              width="327"
+                              sizes="(max-width: 479px) 69vw, 327px"
+                              class="image-10"
+                            ></video>
+
+                            <iframe
+                              *ngIf="
+                                feedbacks.DocFeedbacks[0].file_mimetype.includes(
+                                  'application'
+                                )
+                              "
+                              [src]="
+                                getSafeUrl(feedbacks.DocFeedbacks[0].file_url)
+                              "
+                              width="327"
+                              sizes="(max-width: 479px) 69vw, 327px"
+                              class="image-10"
+                              style="border: none"
                             >
-                              <h4 class="adm">{{ feedbacks.responderEmail }}</h4>
-                              <div class="w-layout-grid grid-16">
-                                <div id="w-node-_68c2ba2d-a180-6d5d-bc2e-dfc8d4e9ef8b-bf38b96b" class="div-block-448">
-                                </div>
-                                <div id="w-node-_3891c89a-c05f-88ae-0e87-eb0330273651-bf38b96b">
-                                  <div class="w-layout-grid grid-17">
-                                    <div id="w-node-bb567ea0-417d-ba11-69bd-8fd873445a44-bf38b96b" class="div-block-446">
-                                      <p class="paragraph-3">{{ feedbacks.broadcast }}</p>
-                                      <h4 class="time-heading-copy">{{ feedbacks.created_at | date : "short" }}</h4>
-                                    </div>
-                                    <div id="w-node-_5ddf5ebf-8f5e-e5f5-cd98-b70df93808a4-bf38b96b" class="div-block-445">
-                                      <svg xmlns="http://www.w3.org/2000/svg" width="52.025" height="48.611" viewBox="0 0 52.025 48.611">
-                                        <g id="Group_5146" data-name="Group 5146" transform="translate(-732 -362.389)">
-                                          <path id="Icon_simple-hipchat" data-name="Icon simple-hipchat" d="M8.664,40.353A21.2,21.2,0,0,1,0,23.621C0,11.232,11.647,1.18,26.006,1.18s26.019,10.052,26.019,22.44S40.383,46.069,26.017,46.069a29.831,29.831,0,0,1-5.471-.494l-.568-.1A27.074,27.074,0,0,1,6.347,49.791a1.4,1.4,0,0,1-1.2-2.393C6.555,45.675,9.02,40.624,8.664,40.353Z" transform="translate(732 361.208)" fill="#8295c2"/>
-                                          <circle id="Ellipse_212" data-name="Ellipse 212" cx="3.5" cy="3.5" r="3.5" transform="translate(743 383)" fill="#fff"/>
-                                          <circle id="Ellipse_213" data-name="Ellipse 213" cx="3.5" cy="3.5" r="3.5" transform="translate(754 383)" fill="#fff"/>
-                                          <circle id="Ellipse_214" data-name="Ellipse 214" cx="3.5" cy="3.5" r="3.5" transform="translate(767 383)" fill="#fff"/>
-                                        </g>
-                                      </svg>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-
-                            <div
-                              id="w-node-_041085f5-5cc9-2350-48c8-fc5441902170-bf38b96b"
-                              *ngIf="feedbacks.responseAttachmentFileName"
-                              >
-                              <h4 class="adm">{{ feedbacks.responderEmail }}</h4>
-                              <div class="w-layout-grid image-grid-2">
-                                <div id="w-node-_041085f5-5cc9-2350-48c8-fc5441902174-bf38b96b" class="div-block-449">
-                                </div>
-                                <div id="w-node-_041085f5-5cc9-2350-48c8-fc5441902175-bf38b96b">
-                                  <div class="w-layout-grid grid-17-1"
-                                  (click)="openAttachmentDialog(feedbacks.DocFeedbacks[0], '500ms', '500ms')"
-                                  >
-                                    <div id="w-node-_041085f5-5cc9-2350-48c8-fc5441902177-bf38b96b" class="image-div">
-                                      <div class="div-block-451">
-
-                           
-                                        <img
-                                        *ngIf="feedbacks.DocFeedbacks[0].file_mimetype.includes('image')" 
-                                        [src]="getSafeUrl(feedbacks.DocFeedbacks[0].file_url)" 
-                                        loading="lazy" 
-                                        width="327" 
-                                        sizes="(max-width: 479px) 69vw, 327px" 
-                                        [alt]="feedbacks.responseAttachmentFileName" 
-                                        class="image-10"
-                                        >
-
-                                        <audio 
-                                        *ngIf="feedbacks.DocFeedbacks[0].file_mimetype.includes('audio')" 
-                                        [src]="getSafeUrl(feedbacks.DocFeedbacks[0].file_url)"
-                                          autoplay
-                                          controls
-                                          class="image-10"
-                                        >
-                                            <!-- <source [src]="fileBaseUrl"> -->
-                                        </audio>
-
-                                        <video
-                                        *ngIf="feedbacks.DocFeedbacks[0].file_mimetype.includes('video')" 
-                                        [src]="getSafeUrl(feedbacks.DocFeedbacks[0].file_url)"
-                                        width="327" 
-                                        sizes="(max-width: 479px) 69vw, 327px" 
-                                        class="image-10"
-                                          >
-                                      </video>
-
-                                      <iframe
-                                        *ngIf="feedbacks.DocFeedbacks[0].file_mimetype.includes('application')" 
-                                        [src]="getSafeUrl(feedbacks.DocFeedbacks[0].file_url)"
-                                          width="327" 
-                                          sizes="(max-width: 479px) 69vw, 327px"
-                                          class="image-10"
-                                          style="border:none"
-                                          > 
-                                        </iframe> 
-                                        <!-- [src]="fileBaseUrl"
+                            </iframe>
+                            <!-- [src]="fileBaseUrl"
                                         width="500"
                                         height="auto" -->
 
-                                        <!-- <embed 
+                            <!-- <embed 
                                           *ngIf="feedbacks.DocFeedbacks[0].file_mimetype.includes('application')" 
                                           [src]="getSafeUrl(feedbacks.DocFeedbacks[0].file_url)"
                                           type="application/pdf"
@@ -185,112 +367,325 @@
                                           sizes="(max-width: 479px) 69vw, 327px"
                                           class="image-10"
                                         />  -->
-                                      </div>
-                              
-                                      <p class="paragraph-3">{{ feedbacks.responseAttachment }}</p>
-                                      <h4 class="time-heading-copy">{{ feedbacks.created_at | date : "short" }}
-                                      </h4>
-                                    </div>
-                                    <div
-                                      id="w-node-_041085f5-5cc9-2350-48c8-fc544190217c-bf38b96b"
-                                      class="image-div-name"
-                                      >
-                                      <svg xmlns="http://www.w3.org/2000/svg" width="52.025" height="48.611" viewBox="0 0 52.025 48.611">
-                                        <g id="Group_5146" data-name="Group 5146" transform="translate(-732 -362.389)">
-                                          <path id="Icon_simple-hipchat" data-name="Icon simple-hipchat" d="M8.664,40.353A21.2,21.2,0,0,1,0,23.621C0,11.232,11.647,1.18,26.006,1.18s26.019,10.052,26.019,22.44S40.383,46.069,26.017,46.069a29.831,29.831,0,0,1-5.471-.494l-.568-.1A27.074,27.074,0,0,1,6.347,49.791a1.4,1.4,0,0,1-1.2-2.393C6.555,45.675,9.02,40.624,8.664,40.353Z" transform="translate(732 361.208)" fill="#8295c2"/>
-                                          <circle id="Ellipse_212" data-name="Ellipse 212" cx="3.5" cy="3.5" r="3.5" transform="translate(743 383)" fill="#fff"/>
-                                          <circle id="Ellipse_213" data-name="Ellipse 213" cx="3.5" cy="3.5" r="3.5" transform="translate(754 383)" fill="#fff"/>
-                                          <circle id="Ellipse_214" data-name="Ellipse 214" cx="3.5" cy="3.5" r="3.5" transform="translate(767 383)" fill="#fff"/>
-                                        </g>
-                                      </svg>
-                                      
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-
-
-
-                        </div>
-
-                        <div id="w-node-_3fb734d5-7419-d57c-65b2-a87e0c26e603-bf38b96b">
-                            <div class="w-form">
-                                <div class="div-block-450">
-                                  <input
-                                    formControlName="responseMessage" 
-                                    class="text-field-2 w-input" 
-                                    maxlength="256" 
-                                    name="name" 
-                                    data-name="Name" 
-                                    placeholder="Say Something here......" 
-                                    type="text" 
-                                    id="name"
-                                    required
-                                    >
-                                    <svg
-                                      (click)="myFileInput.click()"
-                                      class="attachment"
-                                      xmlns="http://www.w3.org/2000/svg" width="26.992" height="30.849" viewBox="0 0 26.992 30.849">
-                                        <path id="Icon_metro-attachment" data-name="Icon metro-attachment" d="M22.629,11.781,20.673,9.825l-9.785,9.783a4.151,4.151,0,0,0,5.871,5.87L28.5,13.737a6.918,6.918,0,0,0-9.784-9.783L6.388,16.282l-.026.025A9.649,9.649,0,0,0,20.008,29.951l.025-.026h0l8.415-8.414-1.958-1.956-8.415,8.413-.025.025a6.881,6.881,0,0,1-9.733-9.73l.027-.025v0L20.673,5.911a4.151,4.151,0,0,1,5.871,5.87L14.8,23.521a1.383,1.383,0,0,1-1.957-1.956l9.785-9.784Z" transform="translate(-3.535 -1.928)" fill="#fff"/>
-                                    </svg>
-
-                                    <input 
-                                        type="file" 
-                                        #myFileInput
-                                        (change)="onFileSelected($event)"
-                                        formControlName="feedbackFile"
-                                        style="display:none;"
-                                    >
-
-                                    <input
-                                      *ngIf="isResponseMessageValid()"
-                                      type="submit" 
-                                      data-wait="Please wait..." 
-                                      class="submit-button-3 w-button" 
-                                      value=""
-                                    >
-                                </div>
-                            </div>
                           </div>
-                        </div> 
-                    </div>
-                </form>
-            </div>
-        </div>
-        <div
-        data-w-id="717ec873-5bdf-1582-6da6-888fecad4a6e"
-        class="nav-shadow"
-        ></div>
-    </div>
-    <div class="custom-css w-embed">
-      <style>
-        /*width*/
-        .scroll::-webkit-scrollbar {
-          height: 2px;
-        }
-        /*track*/
-        .scroll::-webkit-scrollbar-track {
-          background: rgba(255, 255, 255, 0);
-        }
-        /*thumb*/
-        .scroll::-webkit-scrollbar-thumb {
-          background: rgb(233, 229, 221);
-          border-radius: 1000px;
-        }
-      </style>
-    </div>
-  </section>
 
-    <ngx-spinner
-        bdColor="rgba(51,51,51,0.8)"
-        size="medium"
-        color="#fff"
-        type="ball-scale-multiple" 
-        type="ball-scale-multiple">
-        <p
-        style="font-size: 20px; color: white"
-        >Replying...
-        <p>
-    </ngx-spinner>
- 
+                          <p class="paragraph-3">
+                            {{ feedbacks.responseAttachment }}
+                          </p>
+                          <h4 class="time-heading-copy">
+                            {{ feedbacks.created_at | date : "short" }}
+                          </h4>
+                        </div>
+                        <div
+                          id="w-node-_041085f5-5cc9-2350-48c8-fc544190217c-bf38b96b"
+                          class="image-div-name"
+                        >
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="52.025"
+                            height="48.611"
+                            viewBox="0 0 52.025 48.611"
+                          >
+                            <g
+                              id="Group_5146"
+                              data-name="Group 5146"
+                              transform="translate(-732 -362.389)"
+                            >
+                              <path
+                                id="Icon_simple-hipchat"
+                                data-name="Icon simple-hipchat"
+                                d="M8.664,40.353A21.2,21.2,0,0,1,0,23.621C0,11.232,11.647,1.18,26.006,1.18s26.019,10.052,26.019,22.44S40.383,46.069,26.017,46.069a29.831,29.831,0,0,1-5.471-.494l-.568-.1A27.074,27.074,0,0,1,6.347,49.791a1.4,1.4,0,0,1-1.2-2.393C6.555,45.675,9.02,40.624,8.664,40.353Z"
+                                transform="translate(732 361.208)"
+                                fill="#8295c2"
+                              />
+                              <circle
+                                id="Ellipse_212"
+                                data-name="Ellipse 212"
+                                cx="3.5"
+                                cy="3.5"
+                                r="3.5"
+                                transform="translate(743 383)"
+                                fill="#fff"
+                              />
+                              <circle
+                                id="Ellipse_213"
+                                data-name="Ellipse 213"
+                                cx="3.5"
+                                cy="3.5"
+                                r="3.5"
+                                transform="translate(754 383)"
+                                fill="#fff"
+                              />
+                              <circle
+                                id="Ellipse_214"
+                                data-name="Ellipse 214"
+                                cx="3.5"
+                                cy="3.5"
+                                r="3.5"
+                                transform="translate(767 383)"
+                                fill="#fff"
+                              />
+                            </g>
+                          </svg>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div
+                  id="w-node-_041085f5-5cc9-2350-48c8-fc5441902170-bf38b96b"
+                  *ngIf="feedbacks.feedbackAttachmentFileName"
+                >
+                  <h4 class="heading-name">{{ feedback.fullname }}</h4>
+                  <div class="w-layout-grid image-grid-2">
+                    <div
+                      id="w-node-_041085f5-5cc9-2350-48c8-fc5441902175-bf38b96b"
+                      *ngIf="
+                        feedbacks.DocFeedbacks &&
+                        feedbacks.DocFeedbacks.length > 0
+                      "
+                    >
+                      <div
+                        class="w-layout-grid grid-17-1"
+                        (click)="
+                          openAttachmentDialog(
+                            feedbacks.DocFeedbacks[0],
+                            '500ms',
+                            '500ms'
+                          )
+                        "
+                      >
+                        <div
+                          id="w-node-cf55cddc-2c29-f04a-1353-f077533db390-bf38b96b"
+                          class="div-block-445-3"
+                        >
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="52.025"
+                            height="48.611"
+                            viewBox="0 0 52.025 48.611"
+                          >
+                            <g
+                              id="Group_4959"
+                              data-name="Group 4959"
+                              transform="translate(-332 -351)"
+                            >
+                              <path
+                                id="Icon_simple-hipchat"
+                                data-name="Icon simple-hipchat"
+                                d="M43.361,40.353a21.2,21.2,0,0,0,8.664-16.733c0-12.388-11.647-22.44-26.006-22.44S0,11.232,0,23.621,11.643,46.07,26.008,46.07a29.831,29.831,0,0,0,5.471-.494l.568-.1a27.074,27.074,0,0,0,13.631,4.314,1.4,1.4,0,0,0,1.2-2.393C45.47,45.675,43.005,40.624,43.361,40.353Z"
+                                transform="translate(332 349.819)"
+                                fill="#00386c"
+                              />
+                              <circle
+                                id="Ellipse_209"
+                                data-name="Ellipse 209"
+                                cx="3.5"
+                                cy="3.5"
+                                r="3.5"
+                                transform="translate(340 372)"
+                                fill="#fff"
+                              />
+                              <circle
+                                id="Ellipse_210"
+                                data-name="Ellipse 210"
+                                cx="3.5"
+                                cy="3.5"
+                                r="3.5"
+                                transform="translate(351 372)"
+                                fill="#fff"
+                              />
+                              <circle
+                                id="Ellipse_211"
+                                data-name="Ellipse 211"
+                                cx="3.5"
+                                cy="3.5"
+                                r="3.5"
+                                transform="translate(364 372)"
+                                fill="#fff"
+                              />
+                            </g>
+                          </svg>
+                        </div>
+                        <div
+                          id="w-node-_041085f5-5cc9-2350-48c8-fc5441902177-bf38b96b"
+                          class="div-block-444"
+                        >
+                          <div class="div-block-451">
+                            <img
+                              *ngIf="
+                                feedbacks.DocFeedbacks[0].file_mimetype.includes(
+                                  'image'
+                                )
+                              "
+                              [src]="
+                                getSafeUrl(feedbacks.DocFeedbacks[0].file_url)
+                              "
+                              loading="lazy"
+                              width="327"
+                              sizes="(max-width: 479px) 69vw, 327px"
+                              [alt]="feedbacks.responseAttachmentFileName"
+                              class="image-10"
+                            />
+
+                            <audio
+                              *ngIf="
+                                feedbacks.DocFeedbacks[0].file_mimetype.includes(
+                                  'audio'
+                                )
+                              "
+                              [src]="
+                                getSafeUrl(feedbacks.DocFeedbacks[0].file_url)
+                              "
+                              autoplay
+                              controls
+                              class="image-10"
+                            >
+                              <!-- <source [src]="fileBaseUrl"> -->
+                            </audio>
+
+                            <video
+                              *ngIf="
+                                feedbacks.DocFeedbacks[0].file_mimetype.includes(
+                                  'video'
+                                )
+                              "
+                              [src]="
+                                getSafeUrl(feedbacks.DocFeedbacks[0].file_url)
+                              "
+                              width="327"
+                              sizes="(max-width: 479px) 69vw, 327px"
+                              class="image-10"
+                            ></video>
+
+                            <iframe
+                              *ngIf="
+                                feedbacks.DocFeedbacks[0].file_mimetype.includes(
+                                  'application'
+                                )
+                              "
+                              [src]="
+                                getSafeUrl(feedbacks.DocFeedbacks[0].file_url)
+                              "
+                              width="327"
+                              sizes="(max-width: 479px) 69vw, 327px"
+                              class="image-10"
+                              style="border: none"
+                            >
+                            </iframe>
+                            <!-- [src]="fileBaseUrl"
+                                width="500"
+                                height="auto" -->
+
+                            <!-- <embed 
+                                  *ngIf="feedbacks.DocFeedbacks[0].file_mimetype.includes('application')" 
+                                  [src]="getSafeUrl(feedbacks.DocFeedbacks[0].file_url)"
+                                  type="application/pdf"
+                                  width="327" 
+                                  sizes="(max-width: 479px) 69vw, 327px"
+                                  class="image-10"
+                                />  -->
+                          </div>
+
+                          <p class="paragraph-3">
+                            {{ feedbacks.feedbackAttachment }}
+                          </p>
+                          <h4 class="time-heading">
+                            {{ feedbacks.created_at | date : "short" }}
+                          </h4>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div> 
+              </div>
+
+              <div id="w-node-_3fb734d5-7419-d57c-65b2-a87e0c26e603-bf38b96b">
+                <div class="w-form">
+                  <div class="div-block-450">
+                    <input
+                      formControlName="responseMessage"
+                      class="text-field-2 w-input"
+                      maxlength="256"
+                      name="name"
+                      data-name="Name"
+                      placeholder="Say Something here......"
+                      type="text"
+                      id="name"
+                      required
+                    />
+                    <svg
+                      (click)="myFileInput.click()"
+                      class="attachment"
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="26.992"
+                      height="30.849"
+                      viewBox="0 0 26.992 30.849"
+                    >
+                      <path
+                        id="Icon_metro-attachment"
+                        data-name="Icon metro-attachment"
+                        d="M22.629,11.781,20.673,9.825l-9.785,9.783a4.151,4.151,0,0,0,5.871,5.87L28.5,13.737a6.918,6.918,0,0,0-9.784-9.783L6.388,16.282l-.026.025A9.649,9.649,0,0,0,20.008,29.951l.025-.026h0l8.415-8.414-1.958-1.956-8.415,8.413-.025.025a6.881,6.881,0,0,1-9.733-9.73l.027-.025v0L20.673,5.911a4.151,4.151,0,0,1,5.871,5.87L14.8,23.521a1.383,1.383,0,0,1-1.957-1.956l9.785-9.784Z"
+                        transform="translate(-3.535 -1.928)"
+                        fill="#fff"
+                      />
+                    </svg>
+
+                    <input
+                      type="file"
+                      #myFileInput
+                      (change)="onFileSelected($event)"
+                      formControlName="feedbackFile"
+                      style="display: none"
+                    />
+
+                    <input
+                      *ngIf="isResponseMessageValid()"
+                      type="submit"
+                      data-wait="Please wait..."
+                      class="submit-button-3 w-button"
+                      value=""
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div
+      data-w-id="717ec873-5bdf-1582-6da6-888fecad4a6e"
+      class="nav-shadow"
+    ></div>
+  </div>
+  <div class="custom-css w-embed">
+    <style>
+      /*width*/
+      .scroll::-webkit-scrollbar {
+        height: 2px;
+      }
+      /*track*/
+      .scroll::-webkit-scrollbar-track {
+        background: rgba(255, 255, 255, 0);
+      }
+      /*thumb*/
+      .scroll::-webkit-scrollbar-thumb {
+        background: rgb(233, 229, 221);
+        border-radius: 1000px;
+      }
+    </style>
+  </div>
+</section>
+
+<ngx-spinner
+  bdColor="rgba(51,51,51,0.8)"
+  size="medium"
+  color="#fff"
+  type="ball-scale-multiple"
+  type="ball-scale-multiple"
+>
+  <p style="font-size: 20px; color: white">Replying...</p>
+  <p></p
+></ngx-spinner>
