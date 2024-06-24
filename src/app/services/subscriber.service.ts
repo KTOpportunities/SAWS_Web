@@ -38,7 +38,7 @@ export class SubscriberService {
 
   getPagedAllSubscribers(pageNumber: any, pageSize: any) {
     return this.http.get<any>(
-      environment.serverAPI + `Subscriber/GetPagedAllSubscribers?pageNumber=${pageNumber}&pageSize=${pageSize}`,
+      environment.serverAPI + `v1/Subscriber/GetPagedAllSubscribers?pageNumber=${pageNumber}&pageSize=${pageSize}`,
       // {
       //   headers: new HttpHeaders().append(
       //     'Authorization',
@@ -51,49 +51,49 @@ export class SubscriberService {
 
   registerSubscriber(body: {}) {
     return this.http.post<any>(
-      environment.serverAPI + "Authenticate/RegisterSubscriber",
+      environment.serverAPI + "v1/Authenticate/RegisterSubscriber",
       body
     );
   }
 
   loginEmailExist(email: any) {
     return this.http.get<any>(
-      environment.serverAPI + `Authenticate/LoginEmailExist?email=${email}`,
+      environment.serverAPI + `v1/Authenticate/LoginEmailExist?email=${email}`,
       email
     );
   }
 
   deleteUserProfileById(Id: any, aspuId: any) {
     return this.http.delete<any>(
-      environment.serverAPI + `Authenticate/DeleteUserProfileById?id=${Id}&aspuid=${aspuId}`,
+      environment.serverAPI + `v1/Authenticate/DeleteUserProfileById?id=${Id}&aspuid=${aspuId}`,
       this.httpOptions
     );
   }
 
   deleteAdvertById(Id: any) {
     return this.http.delete<any>(
-      environment.serverAPI + `Advert/DeleteAdvertById?id=${Id}`,
+      environment.serverAPI + `v1/Advert/DeleteAdvertById?id=${Id}`,
       // this.httpOptions
     );
   }
 
   deleteFeedbackById(Id: any) {
     return this.http.delete<any>(
-      environment.serverAPI + `Feedback/DeleteFeedbackById?id=${Id}`,
+      environment.serverAPI + `v1/Feedback/DeleteFeedbackById?id=${Id}`,
       // this.httpOptions
     );
   }
 
   DeleteBroadcastByBatchId(batchId: any) {
     return this.http.delete<any>(
-      environment.serverAPI + `Feedback/DeleteBroadcastByBatchId?batchId=${batchId}`,
+      environment.serverAPI + `v1/Feedback/DeleteBroadcastByBatchId?batchId=${batchId}`,
       // this.httpOptions
     );
   }
 
   postInsertNewAdvert(body: {}) {
     return this.http.post<any>(
-      environment.serverAPI + "Advert/PostInsertNewAdvert",
+      environment.serverAPI + "v1/Advert/PostInsertNewAdvert",
       body,
       // this.httpOptions
       // {
@@ -107,7 +107,7 @@ export class SubscriberService {
 
   postInsertNewFeedback(body: {}) {
     return this.http.post<any>(
-      environment.serverAPI + "Feedback/PostInsertNewFeedback",
+      environment.serverAPI + "v1/Feedback/PostInsertNewFeedback",
       body,
       // this.httpOptions
       // {
@@ -121,7 +121,7 @@ export class SubscriberService {
 
   postInsertBroadcastMessages(feedbackList: any[]) {
     return this.http.post<any>(
-      environment.serverAPI + "Feedback/PostInsertBroadcastMessages",
+      environment.serverAPI + "v1/Feedback/PostInsertBroadcastMessages",
       feedbackList
     );
   }
@@ -129,7 +129,7 @@ export class SubscriberService {
   PostDocsForAdvert(formData: any) {
 
     return this.http.post<any>(
-      environment.serverAPI + "FileManager/PostDocsForAdvert",
+      environment.serverAPI + "v1/FileManager/PostDocsForAdvert",
       formData
     );
   }
@@ -137,7 +137,7 @@ export class SubscriberService {
   PostDocsForFeedback(formData: any) {
 
     return this.http.post<any>(
-      environment.serverAPI + "FileManager/PostDocsForFeedback",
+      environment.serverAPI + "v1/FileManager/PostDocsForFeedback",
       formData
     );
   }
@@ -151,7 +151,7 @@ export class SubscriberService {
 
   InsertUpdateUserProfile(body: {}) {
     return this.http.post<any>(
-      environment.serverAPI + "Authenticate/InsertUpdateUserProfile",
+      environment.serverAPI + "v1/Authenticate/InsertUpdateUserProfile",
       body,
       this.httpOptions
       // {

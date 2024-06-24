@@ -61,7 +61,7 @@ export class AuthService {
 
   RequestPasswordReset(form: any) {
     return this.http.post<any>(
-      environment.serverAPI + `Authenticate/RequestPasswordReset?email=${form.Email}`,
+      environment.serverAPI + `v1/Authenticate/RequestPasswordReset?email=${form.Email}`,
       form
     ).pipe(
       catchError((error) => {
@@ -73,7 +73,7 @@ export class AuthService {
 
   getLoggedInUser(userId: any) {
     return this.http.get<any>(
-      environment.serverAPI + `Authenticate/GetLoggedInUser?Id=${userId}`,
+      environment.serverAPI + `v1/Authenticate/GetLoggedInUser?Id=${userId}`,
       {
         headers: new HttpHeaders().append(
           'Authorization',

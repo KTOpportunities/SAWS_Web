@@ -38,37 +38,37 @@ export class AdminService {
 
   GetPagedAllAdmins(pageNumber: any, pageSize: any) {
     return this.http.get<any>(
-      environment.serverAPI + `Admin/GetPagedAllAdmins?pageNumber=${pageNumber}&pageSize=${pageSize}`,
+      environment.serverAPI + `v1/Admin/GetPagedAllAdmins?pageNumber=${pageNumber}&pageSize=${pageSize}`,
     );
   }
 
   GetPagedAllFeedbacks(pageNumber: any, pageSize: any) {
     return this.http.get<any>(
-      environment.serverAPI + `Feedback/GetPagedAllFeedbacks?pageNumber=${pageNumber}&pageSize=${pageSize}`,
+      environment.serverAPI + `v1/Feedback/GetPagedAllFeedbacks?pageNumber=${pageNumber}&pageSize=${pageSize}`,
     );
   }
 
   GetPagedAllBroadcasts(pageNumber: any, pageSize: any) {
     return this.http.get<any>(
-      environment.serverAPI + `Feedback/GetPagedAllBroadcasts?pageNumber=${pageNumber}&pageSize=${pageSize}`,
+      environment.serverAPI + `v1/Feedback/GetPagedAllBroadcasts?pageNumber=${pageNumber}&pageSize=${pageSize}`,
     );
   }
 
   getPagedAllFeedbacksByUniqueEmail(pageNumber: any, pageSize: any) {
     return this.http.get<any>(
-      environment.serverAPI + `Feedback/GetPagedAllFeedbacksByUniqueEmail?pageNumber=${pageNumber}&pageSize=${pageSize}`,
+      environment.serverAPI + `v1/Feedback/GetPagedAllFeedbacksByUniqueEmail?pageNumber=${pageNumber}&pageSize=${pageSize}`,
     );
   }
 
   getBroadcastMessages() {
     return this.http.get<any>(
-      environment.serverAPI + `Feedback/GetBroadcastMessages`,
+      environment.serverAPI + `v1/Feedback/GetBroadcastMessages`,
     );
   }
 
   GetPagedAllAdverts(pageNumber: any, pageSize: any) {
     return this.http.get<any>(
-      environment.serverAPI + `Advert/GetPagedAllAdverts?pageNumber=${pageNumber}&pageSize=${pageSize}`,
+      environment.serverAPI + `v1/Advert/GetPagedAllAdverts?pageNumber=${pageNumber}&pageSize=${pageSize}`,
     );
   }
 
@@ -81,27 +81,27 @@ export class AdminService {
 
   getAdvertByAdvertId(Id: any) {
     return this.http.get<any>(
-      environment.serverAPI + `Advert/GetAdvertByAdvertId?Id=${Id}`,
+      environment.serverAPI + `v1/Advert/GetAdvertByAdvertId?Id=${Id}`,
       
     );
   }
 
   getFeedbackById(Id: any) {
     return this.http.get<any>(
-      environment.serverAPI + `Feedback/GetFeedbackById?Id=${Id}`,
+      environment.serverAPI + `v1/Feedback/GetFeedbackById?Id=${Id}`,
       
     );
   }
 
   // deleteUserProfileById(Id: any) {
-  //   const url = `${environment.serverAPI}/Authenticate/DeleteUserProfileById`;
+  //   const url = `${environment.serverAPI}/v1/Authenticate/DeleteUserProfileById`;
   //   const params = { Id };
   //   return this.http.delete<any>(url, { params });
   // }
 
   // InsertUpdateUserProfile(body: {}) {
   //   return this.http.post<any>(
-  //     environment.serverAPI + "Authenticate/InsertUpdateUserProfile",
+  //     environment.serverAPI + "v1/Authenticate/InsertUpdateUserProfile",
   //     body,
   //     this.httpOptions
   //     // {
