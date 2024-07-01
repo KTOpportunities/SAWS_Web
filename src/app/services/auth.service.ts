@@ -39,17 +39,17 @@ export class AuthService {
 
   login(form: loginform) {
     return this.http.post<any>(
-      environment.serverAPI + "Authenticate/login",
+      environment.serverAPI + "v1/Authenticate/login",
       form
     );
   }
 
   requestPasswordReset(form: ResetPassword){
-    return this.http.post<ResetPassword>(environment.serverAPI + `Authenticate/RequestPasswordReset?email=${form.email}`, {});
+    return this.http.post<ResetPassword>(environment.serverAPI + `v1/Authenticate/RequestPasswordReset?email=${form.email}`, {});
   }
 
   resetPassword(form: ResetConfirmPassword) {
-   return this.http.post<ResetConfirmPassword>(environment.serverAPI + 'Authenticate/ResetPassword', form);
+   return this.http.post<ResetConfirmPassword>(environment.serverAPI + 'v1/Authenticate/ResetPassword', form);
   }
 
   // requestPasswordReset(form: any){
