@@ -64,7 +64,7 @@ export class EditAdvertisementComponent implements OnInit {
       uploaded_by: [],
       advert_url: ['', Validators.required],
       DocAdverts: [[], Validators.required],
-      advertFile: ["", Validators.required]
+      advertFile: ['']
     });
   }
 

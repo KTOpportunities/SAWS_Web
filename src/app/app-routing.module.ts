@@ -5,6 +5,7 @@ import { AdminLayoutComponent } from './layout/admin-layout/admin-layout.compone
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { BrowserModule } from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';
+import { SuccessComponent } from './pages/subscription/success/success.component';
 // Available options
 interface NgxSpinnerConfig {
   type?: string;
@@ -36,6 +37,10 @@ const routes: Routes = [ {
     }
   ],
   // canActivate: [AuthGuard]
+},
+{
+  path: 'subscription/success', 
+  component: SuccessComponent,
 },
 {
   path: '**',

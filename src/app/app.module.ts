@@ -21,12 +21,14 @@ import { SharedModule } from "./shared/shared.module"
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { AdminService } from "./services/admin.service";
 import { MatIconModule } from '@angular/material/icon';
+import { SuccessComponent } from './pages/subscription/success/success.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     AuthLayoutComponent,
-    AdminLayoutComponent
+    AdminLayoutComponent,
+    SuccessComponent
   ],
   imports: [
     BrowserModule,
