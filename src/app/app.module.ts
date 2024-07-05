@@ -4,9 +4,10 @@ import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
 import { AuthLayoutComponent } from "./layout/auth-layout/auth-layout.component";
 import { AdminLayoutComponent } from "./layout/admin-layout/admin-layout.component";
+
 import { AuthService } from "./services/auth.service";
 import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
-import { DatePipe } from '@angular/common';
+import { DatePipe } from "@angular/common";
 // import { SideBarComponent } from "./shared/side-bar/side-bar.component";
 // import { NavBarComponent } from "./shared/nav-bar/nav-bar.component";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
@@ -17,18 +18,20 @@ import { TokeninterceptorService } from "./services/token.interceptor";
 import { SubscriberService } from "./services/subscriber.service";
 import { Dataservice } from "./services/data.service";
 import { MatTableModule } from "@angular/material/table";
-import { SharedModule } from "./shared/shared.module"
-import { FlexLayoutModule } from '@angular/flex-layout';
+import { SharedModule } from "./shared/shared.module";
+import { FlexLayoutModule } from "@angular/flex-layout";
 import { AdminService } from "./services/admin.service";
-import { MatIconModule } from '@angular/material/icon';
-import { SuccessComponent } from './pages/subscription/success/success.component';
+import { MatIconModule } from "@angular/material/icon";
+import { SuccessComponent } from "./pages/subscription/success/success.component";
+import { CanvasJSAngularChartsModule } from "@canvasjs/angular-charts";
+import { NgChartsModule } from "ng2-charts";
 
 @NgModule({
   declarations: [
     AppComponent,
     AuthLayoutComponent,
     AdminLayoutComponent,
-    SuccessComponent
+    SuccessComponent,
   ],
   imports: [
     BrowserModule,
@@ -41,7 +44,9 @@ import { SuccessComponent } from './pages/subscription/success/success.component
     MatTableModule,
     SharedModule,
     FlexLayoutModule,
-    MatIconModule
+    MatIconModule,
+    CanvasJSAngularChartsModule,
+    NgChartsModule
   ],
   providers: [
     AuthService,

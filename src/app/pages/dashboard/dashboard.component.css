@@ -1,7 +1,7 @@
 :root {
     --blue-cor: #00386c;
   }
-  
+  .regist{max-width: 50%; background-color: #fff;margin-top:5px;margin-left: 5px;}
   .w-checkbox {
     margin-bottom: 5px;
     padding-left: 20px;
