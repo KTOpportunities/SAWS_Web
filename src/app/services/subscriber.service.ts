@@ -167,9 +167,20 @@ export class SubscriberService {
       environment.serverAPI + `v1/Lookup/GetRegistrationsPerUserType`
     );
   }
+<<<<<<< Updated upstream
   GetAdvertsClickPerMonth() {
     return this.http.get<any>(
       environment.serverAPI + `v1/Lookup/GetAdvertsClickPerMonth`
     );
   }
+=======
+  GetSubscriptionsPerPackageType() {
+    return this.http.get<any>(
+      environment.serverAPI + `v1/Lookup/GetSubscriptionsPerPackageType`
+    );
+  }
+
+
+
+>>>>>>> Stashed changes
 }
