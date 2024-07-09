@@ -25,6 +25,9 @@ import { MatIconModule } from "@angular/material/icon";
 import { SuccessComponent } from "./pages/subscription/success/success.component";
 import { CanvasJSAngularChartsModule } from "@canvasjs/angular-charts";
 import { NgChartsModule } from "ng2-charts";
+import { RegistrationCountComponent } from "./pages/dashboard/registration-count/registration-count.component";
+import { ClickCountComponent } from "./pages/dashboard/click-count/click-count.component";
+import { DashboardComponent } from "./pages/dashboard/dashboard.component";
 
 @NgModule({
   declarations: [
@@ -32,6 +35,7 @@ import { NgChartsModule } from "ng2-charts";
     AuthLayoutComponent,
     AdminLayoutComponent,
     SuccessComponent,
+  
   ],
   imports: [
     BrowserModule,
@@ -46,7 +50,9 @@ import { NgChartsModule } from "ng2-charts";
     FlexLayoutModule,
     MatIconModule,
     CanvasJSAngularChartsModule,
-    NgChartsModule
+    NgChartsModule,
+   
+    
   ],
   providers: [
     AuthService,

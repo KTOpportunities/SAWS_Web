@@ -2,27 +2,26 @@ import { Component, OnInit } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { Chart } from "chart.js";
 import { SubscriberService } from "src/app/services/subscriber.service";
-import { RegistrationCountComponent} from "./registration-count/registration-count.component"
-import { ClickCountComponent} from "./click-count/click-count.component"
-interface RegistrationData {
-  UserRole: string;
+
+interface ClickData {
+
   MonthString: string;
   Count: number;
 }
 
 @Component({
-  selector: "app-dashboard",
-  templateUrl: "./dashboard.component.html",
-  styleUrls: ["./dashboard.component.css"],
+  selector: 'app-click-count',
+  templateUrl: './click-count.component.html',
+  styleUrls: ['./click-count.component.css']
 })
-export class DashboardComponent implements OnInit {
-  registrations: RegistrationData[] = [];
+export class ClickCountComponent {
+  registrations: ClickData[] = [];
   barChart: any;
 
   constructor(private subscriberService: SubscriberService) {}
 
   ngOnInit(): void {
-    this.subscriberService.GetRegistrationsPerUserType().subscribe((data) => {
+    this.subscriberService.GetAdvertsClickPerMonth().subscribe((data) => {
       this.registrations = data;
       console.log("test:", this.registrations);
       this.renderBarChart();
@@ -57,13 +56,12 @@ export class DashboardComponent implements OnInit {
       }
     });
 
-    this.barChart = new Chart("barChart", {
+    this.barChart = new Chart("barClickChart", {
       type: "bar",
       data: {
         labels: months,
         datasets: [
           {
-            label: "Registrations per Month",
             data: monthCounts,
             backgroundColor: [
               "rgba(255, 0, 0, 0.8)", // Red
@@ -98,11 +96,26 @@ export class DashboardComponent implements OnInit {
         ],
       },
       options: {
+        plugins: {
+          legend: {
+            display: false,
+          },
+        },
         scales: {
+          x: {
+            title: {
+              display: true,
+              text: "Months",
+            },
+          },
           y: {
             beginAtZero: true,
             ticks: {
               stepSize: 1,
+            },
+            title: {
+              display: true,
+              text: "Number of Clicks",
             },
           },
         },
