@@ -25,7 +25,7 @@ export class FeedbackComponent implements OnInit{
 
     // Define the displayed columns
     displayedColumns: string[] = [
-      "select",
+      // "select",
       "fullname",
       "email",
       "created_at",
@@ -40,8 +40,13 @@ export class FeedbackComponent implements OnInit{
   
     dataSource = new MatTableDataSource<Feedback>();
     selection = new SelectionModel<Feedback>(true, []);
+
+    statuses: any[] = [
+      { id: 1, status: true, name: "Responded" },
+      { id: 2, status: false, name: "Unanswered" }
+    ];
   
-    selectedSubscription: number | undefined;
+    selectedStatus: number | undefined;
     feedbackList: Feedback[] = [];
   
     pageSize = 5;
@@ -53,7 +58,7 @@ export class FeedbackComponent implements OnInit{
     filteredData: any = '';
   
     selectedDateString: any;
-    selectedSubscriptionName: any = '';
+    selectedStatusName: any = '';
     date: Date;
 
   constructor(
@@ -75,7 +80,7 @@ export class FeedbackComponent implements OnInit{
 
   ngOnInit(): void {
     this.getAllFeedbacks(); 
-    this.filterData(); 
+    this.filterData();
   }
 
   getAllFeedbacks(page: number = 1){
@@ -98,11 +103,16 @@ export class FeedbackComponent implements OnInit{
 
     this.apiAdmin.GetPagedAllFeedbacks(this.currentPage + page, this.pageSize).subscribe({
       next: (data: any) => {
-          this.spinner.hide();
           this.feedbackList = data.Data;
 
           sessionStorage.removeItem('currentPage');
           sessionStorage.removeItem('pageSize');
+
+          sessionStorage.removeItem('currentPage_1');
+          sessionStorage.removeItem('pageSize_1');
+
+          sessionStorage.removeItem('currentPage_2');
+          sessionStorage.removeItem('pageSize_2');
 
           this.TotalRecords = data.TotalRecords;
      
@@ -120,11 +130,11 @@ export class FeedbackComponent implements OnInit{
     });
  }
 
-isAllSelected() {
-    const numSelected = this.selection.selected.length;
-    const numRows = this.dataSource.data.length;
-    return numSelected == numRows;
-}
+  isAllSelected() {
+      const numSelected = this.selection.selected.length;
+      const numRows = this.dataSource.data.length;
+      return numSelected == numRows;
+  }
 
   masterToggle() {
     this.isAllSelected() ?
@@ -132,9 +142,9 @@ isAllSelected() {
         this.dataSource.data.forEach(row => this.selection.select(row));
   }
 
- selectSubscription(status: any) {
-  this.selectedSubscription = status;
-  // this.filterSubscription();
+  selectStatus(status: any) {
+  this.selectedStatus = status;
+  this.filterStatus();
 }
 
  filterData() {
@@ -143,157 +153,132 @@ isAllSelected() {
   });
  }
 
-//  filterSubscription() {
-//     this.selectedSubscriptionName = '';
-//     this.selectedDateString = '';
+ filterStatus() {
+  this.selectedStatusName = '';
+  this.selectedDateString = '';
 
-//     this.dataSource.filterPredicate = (data, filter: string) =>
-//       !filter || data.subscription.toString().includes(filter);
+  this.dataSource.filterPredicate = (data, filter: string) =>
+    !filter || data.isresponded.toString().includes(filter);
 
-//     this.dataSource.filter = this.selectedSubscription!.toString().trim();
+  this.dataSource.filter = this.selectedStatus!.toString().trim();
 
-//     // Update the button text based on the selected subscription status
-//     const selectedSubscription = this.subscriptions.find(
-//       (subscription) => subscription.subscription === this.selectedSubscription
-//     );
+  // Update the button text based on the selected subscription status
+  const selectedStatus = this.statuses.find(
+    (status) => status.status === this.selectedStatus
+  );
 
-//     if (selectedSubscription) {
-//       this.selectedSubscriptionName = selectedSubscription.subscription;
-//     }
-//   }
-
- addUser() {
-  this.router.navigate(["/admin/addResponse"]);
+  if (selectedStatus) {
+    this.selectedStatusName = selectedStatus.name;
   }
+}
 
-  pageChanged(event: PageEvent) {
-    this.pageSize = event.pageSize;
-    this.currentPage = event.pageIndex;
-
-    this.getAllFeedbacks();
-
-    if (this.dataSource) {
-      this.dataSource.filterPredicate = (data: any, filter: string) =>
-        data.name.indexOf(filter) || data.Status.indexOf(filter) != -1;
-    }
-  }
-
-  selectDate(type: string, event: MatDatepickerInputEvent<Date>) {
-    this.date = event.value!;
-    this.filterDate();
-  }
-
-  openPicker() {
-    console.log('picked')
-    if (this.picker) {
-      this.picker.open();
-    }
-  }
-
-  filterDate() {
-    // this.selectedProvinceName = '';
-    // this.selectedStatusName = '';
-    // this.selectedPositionName = '';
-
-    this.selectedSubscriptionName = '';
-
-    let newDate = this.datePipe.transform(this.date, 'yyyy-MM-dd');
-
-    this.dataSource.filterPredicate = (data, filter: string) =>
-      !filter || data.created_at.includes(filter);
-
-    this.dataSource.filter = newDate!.toString().trim();
-
-    // Update the button text based on the selected date
-    const selectedDate = this.datePipe.transform(this.date, 'MMM dd, yyyy');
-
-    if (selectedDate) {
-      this.selectedDateString = selectedDate;
-    }
-  }
-
-  clearFilter() {
-    // this.dataSource.filter = '';
-    this.selectedSubscriptionName = '';
-    this.selectedDateString = '';
-
-    this.apiData.clearFilter();
-    this.apiData.clearForm();
-  }
-
-  isFilterActive(): boolean {
-    return this.dataSource.filter.trim() !== '';
-  }
-
-  // Add your toggle/edit/delete methods here
-  toggleUser(user: any) {
-    // Implement toggle logic
-  }
-
-  editUser(user: any) {
-    // Implement edit logic
-  }
-
-  deleteUser(user: any) {
-    const userId = user.userprofileid; 
-    const aspuId = user.aspuid; 
+pageChanged(event: PageEvent) {
+  this.pageSize = event.pageSize;
+  this.currentPage = event.pageIndex;
   
-    Swal.fire({
-      title: 'Are you sure you want to delete?',
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonText: 'Yes',
-      cancelButtonText: 'No',
-    }).then((result) => {
-      if (result.isConfirmed) {
-        this.spinner.show(); // Show spinner while deleting
+  this.getAllFeedbacks();
   
-        // Call the soft delete API
-        this.apiService.deleteUserProfileById(userId, aspuId).subscribe(
-          () => {
-            // Update the status for soft delete
-            user.status = 'deleted'; // Update the status value accordingly
+  if (this.dataSource) {
+    this.dataSource.filterPredicate = (data: any, filter: string) =>
+    data.name.indexOf(filter) || data.Status.indexOf(filter) != -1;
+  }
+}
+
+selectDate(type: string, event: MatDatepickerInputEvent<Date>) {
+  this.date = event.value!;
+  this.filterDate();
+}
+
+openPicker() {
+  if (this.picker) {
+    this.picker.open();
+  }
+}
+
+filterDate() {
   
-            // Optionally: Provide user feedback (toast, alert, etc.)
-            console.log('User soft deleted successfully.');
+  this.selectedStatusName = '';
   
-            // Hide spinner after soft deletion
-            this.spinner.hide();
-            this.getAllFeedbacks();
-          },
-          (error) => {
-            console.error("Error soft deleting user:", error);
+  let newDate = this.datePipe.transform(this.date, 'yyyy-MM-dd');
   
-            // Optionally: Provide user feedback on error
-            alert('Error soft deleting user. Please try again.');
+  this.dataSource.filterPredicate = (data, filter: string) =>
+  !filter || data.created_at.includes(filter);
   
-            // Hide spinner on error
-            this.spinner.hide();
-          }
+  this.dataSource.filter = newDate!.toString().trim();
+  
+  const selectedDate = this.datePipe.transform(this.date, 'MMM dd, yyyy');
+  
+  if (selectedDate) {
+    this.selectedDateString = selectedDate;
+  }
+}
+
+clearFilter() {
+  this.dataSource.filter = '';
+  this.selectedStatusName = '';
+  this.selectedDateString = '';
+  
+  this.getAllFeedbacks();
+  
+  this.apiData.clearFilter();
+  this.apiData.clearForm();
+}
+
+isFilterActive(): boolean {
+  return this.dataSource.filter.trim() !== '';
+}
+
+deleteFeedback(feedbackId: any) {
+  Swal.fire({
+    title: 'Are you sure you want to delete?',
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonText: 'Yes',
+    cancelButtonText: 'No',
+  }).then((result) => {
+    if (result.isConfirmed) {
+      this.apiService.deleteFeedbackById(feedbackId).subscribe(
+        () => {
+          this.getAllFeedbacks();
+        },
+        (error) => {
+          console.error("Error soft deleting feeback:", error);
+        }
         );
       }
     });
-  }
+  }  
   
   openPopup() {
     this.dialog.open(EditUserComponent, {
       width: "49%",
-      height: "52%", // adjust width as needed
+      height: "52%",
 
-      // Add more configuration options as needed
     });
   }
-
-  navigateToAddUser() {
-    this.router.navigate(["/admin/addUser"]);
-  }
-
-  navigateToEditUser(user: Admin) {
+  
+  navigateToViewFeedback(feedbackId: number) {
     sessionStorage.setItem('currentPage', `${this.currentPage}`);
     sessionStorage.setItem('pageSize', `${this.pageSize}`);
+    
+    this.apiAdmin.getFeedbackById(feedbackId).subscribe(
+      (data) => {
+        
+        this.apiData.setFeedbackData(data);
+        this.router.navigate(["/admin/feedback/viewFeedback"]);
+      },
+      (error) => {
+        console.error("Error in fetching data:", error);
+      }
+      );
+    }
 
-    this.apiData.saveUser(user);
-    this.router.navigate(["/admin/editUser"]);
+
+    viewSubscribersByFeedback() {
+      sessionStorage.setItem('currentPage', `${this.currentPage}`);
+      sessionStorage.setItem('pageSize', `${this.pageSize}`);
+          
+      this.router.navigate(["/admin/feedback/broadcast"]);
+      }
+
   }
-
-}

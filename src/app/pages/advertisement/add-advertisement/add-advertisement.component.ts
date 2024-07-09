@@ -15,6 +15,7 @@ import { SubscriberService } from "../../../services/subscriber.service";
 import Swal from "sweetalert2";
 import { Router } from "@angular/router";
 import { Dataservice } from "src/app/services/data.service";
+import { fileData } from "src/app/Models/File";
 
 @Component({
   selector: 'app-add-advertisement',
@@ -23,12 +24,19 @@ import { Dataservice } from "src/app/services/data.service";
 })
 export class AddAdvertisementComponent implements OnInit {
 
-  userForm: FormGroup;
+  advertForm: FormGroup;
+  // advertDocForm: FormGroup;
   submitted = false;
-  userRole: any;
+  userEmail: any;
   currentUrl: any;
   passwordVisibility: boolean = false;
   isPasswordNotEmpty: boolean = false;
+
+  @ViewChild('myFileInput') myFileInputVariable!: ElementRef;
+
+  fileAdvert: any = {};
+
+  files: fileData[] = [];
 
 
   constructor(
@@ -38,97 +46,132 @@ export class AddAdvertisementComponent implements OnInit {
     private router: Router,
 
   ) {
-    this.userForm = this.formBuilder.group({
-      Fullname: ["", Validators.required],
-      Username: [""],
-      Email: ["", [Validators.required, Validators.email]],
-      Password: ["", [Validators.required, this.passwordValidator]],
-      UserRole: ["", Validators.required],
+
+    var user: any = this.apiData.getCurrentUser();
+
+    if (user) {
+      const userLoginDetails =  JSON.parse(user);
+      this.userEmail = userLoginDetails.userEmail;
+    }
+
+    this.advertForm = this.formBuilder.group({
+      advertId: [0],
+      advert_caption: ["", Validators.required],
+      advert_url: ["", Validators.required],
+      uploaded_by: [this.userEmail],
+      isdeleted: [false],
+      ispublished: [false],
+      advertFile: ["", Validators.required]
     });
   }
 
   ngOnInit() {}
 
-  emailValidator(control: any) {
-    if (control.value) {
-      const emailRegex =
-        /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
-
-      if (emailRegex.test(control.value)) {
-        return null; // Valid email format
-      } else {
-        return { invalidEmail: true, invalidFormat: true }; // Invalid email format
-      }
-    } else {
-      return null;
-    }     
-  }
-
-  togglePasswordVisibility() {
-    this.passwordVisibility = !this.passwordVisibility;
-  }
-
-  onPasswordInput(event: any) {
-    this.isPasswordNotEmpty = event.target.value.trim().length > 0;
-
-    if (!this.isPasswordNotEmpty) {
-      this.passwordVisibility = false;
-    }
-  }
-
-  passwordValidator(control: AbstractControl) {
-    const value = control.value;
-    // Check if the password contains at least one letter and one number
-    const containsLetter = /[a-zA-Z]/.test(value);
-    const containsNumber = /\d/.test(value);
-
-    return containsLetter && containsNumber ? null : { invalidPassword: true };
-  }
-
   onSubmit() {
     this.submitted = true;
+
     var body = {
-      Fullname: this.userForm.controls["Fullname"].value,
-      Email: this.userForm.controls["Email"].value,
-      Username: this.userForm.controls["Email"].value,
-      Password: this.userForm.controls["Password"].value,
-      UserRole: this.userForm.controls["UserRole"].value,
+      advertId: this.advertForm.controls["advertId"].value,
+      advert_caption: this.advertForm.controls["advert_caption"].value,
+      advert_url: this.advertForm.controls["advert_url"].value,
+      uploaded_by: this.advertForm.controls["uploaded_by"].value,
+      isdeleted: this.advertForm.controls["isdeleted"].value,
+      ispublished: this.advertForm.controls["ispublished"].value
     };
-
-    this.userRole = body.UserRole;
-    if (this.userForm.invalid) {
-      return;
+   
+    if (this.advertForm.valid) {
+      this.saveAdvertForm(body);
     } else {
-      
-      this.api.loginEmailExist(body.Email).subscribe(
-        (data) => {
-
-          if(!data) {
-            this.saveUserForm(body);
-
-          } else {
-            this.showExistingEmailAlert()
-          }
-        },
-        (error) => {
-          console.error(error);
-        }
-      );    
-
+      return;
     }
   }
 
-  saveUserForm(body: any){
-    this.api.registerSubscriber(body)
-      .subscribe((data: any) => {
+  saveAdvertForm(body: any){
+    this.api.postInsertNewAdvert(body)
+      .subscribe((data: any) => {        
 
         this.showSuccessAlert();
+
+        this.onUpload(data.DetailDescription.advertId);
 
         this.router.navigate(['/admin/advertisement']);
       }, 
       (err) => console.log("error", err)
       );
   }
+
+  onUpload(id: number) {
+    if (this.files.length > 0) {
+
+      this.files[0].Id = 0;
+      this.files[0].advertId = id;
+
+      const formData = new FormData();
+
+      for (let i = 0; i < this.files.length; i++) {
+        formData.append(`files[${i}].id`, JSON.stringify(this.files[i].Id));
+        formData.append(
+          `files[${i}].advertId`,
+          JSON.stringify(this.files[i].advertId)
+        );
+        formData.append(`files[${i}].DocTypeName`, this.files[i].DocTypeName);
+        formData.append(`files[${i}].file`, this.files[i].file);
+      }
+
+      this.api.PostDocsForAdvert(formData).subscribe(
+        (event: any) => {
+          this.resetFilesInp();
+        },
+        (err) => {
+          console.log('file upload failed: ', err);
+        }
+      );
+    }
+  }
+
+  onChangeAdvert(event: any) {
+      let file = event.target.files[0]
+
+      if(file.size <= 26214400 ) {
+        this.updateFileData(
+          this.fileAdvert,
+          event.target.files[0],
+          "Advert"
+         );
+      } else {
+        this.alertFileMessage("Advert",`${file.type}`)
+        this.myFileInputVariable.nativeElement.value = '';
+      }
+    }
+
+    updateFileData(
+      fileDataToUpdate: fileData,
+      newFile: File,
+      docTypeName: string
+    ) {
+      if (newFile) {
+        fileDataToUpdate.file = newFile;
+        fileDataToUpdate.DocTypeName = docTypeName;
+  
+        const index = this.files.findIndex(
+          (file) => file.DocTypeName === docTypeName
+        );
+  
+        if (index !== -1) {
+          this.files[index] = fileDataToUpdate;
+        } else {
+          this.files.push(fileDataToUpdate);
+        }
+      }
+    }
+
+  urlValidator(control: AbstractControl) {
+    const value = control.value;
+    const urlPattern = /^((http|https|ftp):\/\/)?([a-zA-Z0-9-_.]+\.[a-zA-Z]{2,})(:[0-9]+)?(\/[a-zA-Z0-9-_.#?&=:]+)*\/?$/;
+    const isValid = urlPattern.test(value);
+
+    return isValid ? null : { invalidUrl: true };
+}
 
   onCancel() {
     this.router.navigate(['/admin/advertisement']);
@@ -138,7 +181,7 @@ export class AddAdvertisementComponent implements OnInit {
     Swal.fire({
       icon: "success",
       title: "Success!",
-      text: "You added new user successfully.",
+      text: "You added new advert successfully.",
     });
   }
 
@@ -150,19 +193,22 @@ export class AddAdvertisementComponent implements OnInit {
     });
   }
 
-  showExistingEmailAlert() {
-    Swal.fire({
-      icon: "warning",
-      // title: "Email exist!",
-      text: "Email already exist!",
-      showConfirmButton: false,
-      timer: 2500,
-
+  alertFileMessage(message: string, text: string) {
+      Swal.fire({
+        icon: "warning",
+        title: message,
+        text: text.toUpperCase() + " file exceeds 25Mb, please upload a smaller size file",
+        showConfirmButton: false,
+        timer: 2000,
     });
+  }  
+
+  resetFilesInp() {
+    this.myFileInputVariable.nativeElement.value = '';
   }
   
   onReset() {
     this.submitted = false;
-    this.userForm.reset();
+    this.advertForm.reset();
   }
 }

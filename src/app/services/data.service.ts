@@ -1,8 +1,7 @@
 import { ElementRef, Injectable, ViewChild } from "@angular/core";
-import { BehaviorSubject } from "rxjs";
+import { BehaviorSubject, Observable } from "rxjs";
 
 import { UserLoggedIn } from "../Models/user.model";
-import { Admin } from "../Models/admin.model";
 import { FormGroup } from "@angular/forms";
 
 interface User {}
@@ -16,15 +15,18 @@ export class Dataservice {
   private UserInformation = new BehaviorSubject<any>(this.userInformation);
   filterSubjectInformantion: any = '';
   private filterSubject = new BehaviorSubject<string>(this.filterSubjectInformantion);
-
-  // Observable to which components can subscribe
-  filterObservable$ = this.filterSubject.asObservable();
-
   private userSubject = new BehaviorSubject<any | null>(null);
-
+  private feedbackSubject = new BehaviorSubject<any | null>(null);
+  private broadcastSubject = new BehaviorSubject<any | null>(null);  
+  private advertSubject = new BehaviorSubject<any | null>(null);
+  
   // Observable to which components can subscribe
+  filterObservable$ = this.filterSubject.asObservable();  
   public userObservable$ = this.userSubject.asObservable();
-
+  public feedbackObservable$ = this.feedbackSubject.asObservable();
+  public broadcastObservable$ = this.broadcastSubject.asObservable();
+  public advertObservable$ = this.advertSubject.asObservable();
+  
   constructor() {
     
  // Initialize value from sessionStorage
@@ -33,6 +35,30 @@ export class Dataservice {
       const parsedValue: any = JSON.parse(storedValue);
       this.userSubject.next(parsedValue);
     }
+  }
+
+  setFeedbackData(data: any): void {
+    this.feedbackSubject.next(data);
+  }
+
+  getFeedbackData(): Observable<any> {
+    return this.feedbackObservable$;
+  }
+
+  setAdvertData(data: any): void {
+    this.feedbackSubject.next(data);
+  }
+
+  getAdvertData(): Observable<any> {
+    return this.advertObservable$;
+  }
+
+  setBroadcastData(data: any): void {
+    this.advertSubject.next(data);
+  }
+
+  getBroadcastData(): Observable<any> {
+    return this.broadcastObservable$;
   }
 
   saveCurrentUser(user: UserLoggedIn): string {
@@ -74,18 +100,6 @@ export class Dataservice {
     sessionStorage.removeItem('UserDetails');
   }
 
-  saveAdvert(user: any) {
-    sessionStorage.setItem("AdvertDetails", JSON.stringify(user));
-  }
-
-  getAdvert() {
-    return sessionStorage.getItem("AdvertDetails");
-  }
-
-  removeAdvert() {
-    sessionStorage.removeItem('AdvertDetails');
-  }
-
   saveUserRole(role: any) {
     sessionStorage.setItem("UserRole", JSON.stringify(role));
   }
@@ -121,6 +135,25 @@ export class Dataservice {
   clearForm() {
     if (this.form) {
       this.form.reset();
+    }
+  }
+
+  getFileType(fileMimetype: string): string {
+    const videoMimeTypes = ["video/mp4", "video/quicktime", "video/x-msvideo", "video/x-ms-wmv"];
+    const imageMimeTypes = ["image/jpeg", "image/png", "image/gif", "image/bmp", "image/jpg", "image/svg+xml"];
+    const applicationMimeTypes = ["application/pdf"];
+    const audioMimeTypes = ["audio/mpeg", "audio/mp4", "audio/ogg", "audio/wav",  "audio/mp3"];
+
+    if (videoMimeTypes.includes(fileMimetype)) {
+      return "Video";
+    } else if (imageMimeTypes.includes(fileMimetype)) {
+      return "Image";
+    } else if (applicationMimeTypes.includes(fileMimetype)) {
+      return "Application";
+    } else if (audioMimeTypes.includes(fileMimetype)) {
+      return "Audio";
+    } else {
+      return "Unknown";
     }
   }
 }

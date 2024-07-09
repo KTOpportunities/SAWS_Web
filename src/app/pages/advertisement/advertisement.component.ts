@@ -14,7 +14,7 @@ import { Dataservice } from 'src/app/services/data.service';
 import { SubscriberService } from 'src/app/services/subscriber.service';
 import { EditUserComponent } from '../user-management/edit-user/edit-user.component';
 import Swal from 'sweetalert2';
-import { Feedback } from 'src/app/Models/Feedback';
+import { Advert } from 'src/app/Models/Advert';
 
 @Component({
   selector: 'app-advertisement',
@@ -27,7 +27,8 @@ export class AdvertisementComponent implements OnInit {
     "uploaded_by",
     "uploaded_date",
     "advert_caption",
-    "advert_link",
+    "advert",
+    "publish",
     "action",
   ];
 
@@ -36,11 +37,16 @@ export class AdvertisementComponent implements OnInit {
   @ViewChild('picker', { static: false }) picker!: MatDatepicker<Date>;
   @ViewChild(MatSort, { static: true }) sort!: MatSort;
 
-  dataSource = new MatTableDataSource<Feedback>();
-  selection = new SelectionModel<Feedback>(true, []);
+  dataSource = new MatTableDataSource<Advert>();
+  selection = new SelectionModel<Advert>(true, []);
 
-  selectedSubscription: number | undefined;
-  feedbackList: Feedback[] = [];
+  statuses: any[] = [
+    { id: 1, published: true },
+    { id: 2, published: false }
+  ];
+
+  selectedStatus: number | undefined;
+  advertList: Advert[] = [];
 
   pageSize = 5;
   pageSizeStore = 5;
@@ -51,7 +57,7 @@ export class AdvertisementComponent implements OnInit {
   filteredData: any = '';
 
   selectedDateString: any;
-  selectedSubscriptionName: any = '';
+  selectedStatusName: any = '';
   date: Date;
 
 constructor(
@@ -72,11 +78,11 @@ constructor(
   }
 
   ngOnInit(): void {
-    this.getAllFeedbacks(); 
+    this.getAllAdverts(); 
     this.filterData(); 
   }
 
-  getAllFeedbacks(page: number = 1){
+  getAllAdverts(page: number = 1){
 
     var currentPage: number = Number(sessionStorage.getItem('currentPage'));
     var pageSize: number = Number(sessionStorage.getItem('pageSize'));
@@ -94,10 +100,12 @@ constructor(
     }
 
 
-    this.apiAdmin.GetPagedAllFeedbacks(this.currentPage + page, this.pageSize).subscribe({
+    this.apiAdmin.GetPagedAllAdverts(this.currentPage + page, this.pageSize).subscribe({
       next: (data: any) => {
           this.spinner.hide();
-          this.feedbackList = data.Data;
+          this.advertList = data.Data;
+
+          // debugger;
 
           sessionStorage.removeItem('currentPage');
           sessionStorage.removeItem('pageSize');
@@ -109,7 +117,7 @@ constructor(
             this.paginator.length = data.TotalRecords;
           });
         
-          this.dataSource = new MatTableDataSource(this.feedbackList);
+          this.dataSource = new MatTableDataSource(this.advertList);
           this.dataSource.paginator = this.paginator;
       },
       error: (error) => {
@@ -118,21 +126,27 @@ constructor(
     });
  }
 
-isAllSelected() {
-    const numSelected = this.selection.selected.length;
-    const numRows = this.dataSource.data.length;
-    return numSelected == numRows;
+ selectStatus(status: any) {
+  this.selectedStatus = status;
+  this.filterStatus();
 }
 
-  masterToggle() {
-    this.isAllSelected() ?
-        this.selection.clear() :
-        this.dataSource.data.forEach(row => this.selection.select(row));
-  }
+filterStatus() {
+  this.selectedStatusName = '';
+  this.selectedDateString = '';
 
- selectSubscription(status: any) {
-  this.selectedSubscription = status;
-  // this.filterSubscription();
+  this.dataSource.filterPredicate = (data, filter: string) =>
+    !filter || data.ispublished.toString().includes(filter);
+
+  this.dataSource.filter = this.selectedStatus!.toString().trim();
+
+  const selectedStatus = this.statuses.find(
+    (status) => status.status === this.selectedStatus
+  );
+
+  if (selectedStatus) {
+    this.selectedStatusName = selectedStatus.name;
+  }
 }
 
  filterData() {
@@ -141,32 +155,11 @@ isAllSelected() {
   });
  }
 
-//  filterSubscription() {
-//     this.selectedSubscriptionName = '';
-//     this.selectedDateString = '';
-
-//     this.dataSource.filterPredicate = (data, filter: string) =>
-//       !filter || data.subscription.toString().includes(filter);
-
-//     this.dataSource.filter = this.selectedSubscription!.toString().trim();
-
-//     // Update the button text based on the selected subscription status
-//     const selectedSubscription = this.subscriptions.find(
-//       (subscription) => subscription.subscription === this.selectedSubscription
-//     );
-
-//     if (selectedSubscription) {
-//       this.selectedSubscriptionName = selectedSubscription.subscription;
-//     }
-//   }
-
-
-
   pageChanged(event: PageEvent) {
     this.pageSize = event.pageSize;
     this.currentPage = event.pageIndex;
 
-    this.getAllFeedbacks();
+    this.getAllAdverts();
 
     if (this.dataSource) {
       this.dataSource.filterPredicate = (data: any, filter: string) =>
@@ -180,18 +173,14 @@ isAllSelected() {
   }
 
   openPicker() {
-    console.log('picked')
     if (this.picker) {
       this.picker.open();
     }
   }
 
   filterDate() {
-    // this.selectedProvinceName = '';
-    // this.selectedStatusName = '';
-    // this.selectedPositionName = '';
 
-    this.selectedSubscriptionName = '';
+    this.selectedStatusName = '';
 
     let newDate = this.datePipe.transform(this.date, 'yyyy-MM-dd');
 
@@ -209,9 +198,11 @@ isAllSelected() {
   }
 
   clearFilter() {
-    // this.dataSource.filter = '';
-    this.selectedSubscriptionName = '';
+    this.selectedStatusName = '';
     this.selectedDateString = '';
+
+    this.dataSource.filter = '';
+    this.getAllAdverts();
 
     this.apiData.clearFilter();
     this.apiData.clearForm();
@@ -221,11 +212,7 @@ isAllSelected() {
     return this.dataSource.filter.trim() !== '';
   }
 
-
-  deleteAdvertisement(user: any) {
-    const userId = user.userprofileid; 
-    const aspuId = user.aspuid;
-  
+  deleteAdvertisement(advertId: any) {
     Swal.fire({
       title: 'Are you sure you want to delete?',
       icon: 'warning',
@@ -234,28 +221,14 @@ isAllSelected() {
       cancelButtonText: 'No',
     }).then((result) => {
       if (result.isConfirmed) {
-        this.spinner.show(); // Show spinner while deleting
-  
-        // Call the soft delete API
-        this.apiService.deleteUserProfileById(userId, aspuId).subscribe(
+        this.spinner.show();
+        this.apiService.deleteAdvertById(advertId).subscribe(
           () => {
-            // Update the status for soft delete
-            user.status = 'deleted'; // Update the status value accordingly
-  
-            // Optionally: Provide user feedback (toast, alert, etc.)
-            console.log('User soft deleted successfully.');
-  
-            // Hide spinner after soft deletion
             this.spinner.hide();
-            this.getAllFeedbacks();
+            this.getAllAdverts();
           },
           (error) => {
-            console.error("Error soft deleting user:", error);
-  
-            // Optionally: Provide user feedback on error
-            alert('Error soft deleting user. Please try again.');
-  
-            // Hide spinner on error
+            console.error("Error soft deleting advertisement:", error);
             this.spinner.hide();
           }
         );
@@ -264,23 +237,101 @@ isAllSelected() {
   }
   
   addAdvert() {
-    this.router.navigate(["/admin/addAdvert"]);
+    this.router.navigate(["/admin/advertisement/addAdvert"]);
   }
 
-  navigateToViewAdvertisement(user: Admin) {
+  navigateToViewAdvertisement(advertId: number) {
     sessionStorage.setItem('currentPage', `${this.currentPage}`);
     sessionStorage.setItem('pageSize', `${this.pageSize}`);
 
-    this.apiData.saveAdvert(user);
-    this.router.navigate(["/admin/viewAdvert"]);
+    this.apiAdmin.getAdvertByAdvertId(advertId).subscribe(
+      (data) => {
+        // this.apiData.saveAdvert(data.Value.DetailDescription);
+        this.apiData.setAdvertData(data.Value.DetailDescription);
+        this.router.navigate(["/admin/advertisement/viewAdvert"]);
+      },
+      (error) => {
+        console.error("Error in fetching data:", error);
+      }
+    );
   }
 
-  editAdvertisement(user: Admin) {
+  launchAdvertLink(advert_url: any) {
+    if (!advert_url.startsWith('http://') && !advert_url.startsWith('https://')) {
+        advert_url = 'https://' + advert_url;
+    }
+    window.open(advert_url, "_blank");
+  }
+
+  editAdvertisement(advertId: number) {
     sessionStorage.setItem('currentPage', `${this.currentPage}`);
     sessionStorage.setItem('pageSize', `${this.pageSize}`);
 
-    this.apiData.saveAdvert(user);
-    this.router.navigate(["/admin/editAdvert"]);
+    this.apiAdmin.getAdvertByAdvertId(advertId).subscribe(
+      (data) => {
+         this.apiData.setAdvertData(data.Value.DetailDescription);
+        this.router.navigate(["/admin/advertisement/editAdvert"]);
+      },
+      (error) => {
+        console.error("Error in fetching data:", error);
+      }
+    );
+  }
+
+  toggleStatus(advert: Advert) {
+    // user.subscription = !user.subscription;
+    
+    
+    const body = {
+      advertId: advert.advertId,
+      advert_caption: advert.advert_caption,
+      advert_url: advert.advert_url,
+      uploaded_by: advert.uploaded_by,
+      isdeleted: advert.isdeleted,
+      ispublished: advert.ispublished,
+      created_at: advert.created_at,
+    };
+    
+    this.updateAdvertForm(body);
+  }
+
+  updateAdvertForm(body: any) {
+
+    this.apiService.postInsertNewAdvert(body).subscribe(
+      (data: any) => {
+
+        if (data.DetailDescription.ispublished) {
+          this.showSuccessAlert('published');
+        } else {
+          this.showSuccessAlert('unpublished');
+        }
+
+      },
+      (err) => {
+        console.log("Error:", err);
+        this.showUnsuccessfulAlert();
+      }
+    );
+  }
+
+  showSuccessAlert(message: string) {
+    Swal.fire({
+      icon: "success",
+      title: "Success!",
+      text: `You have successfully ${message} the advert.`,
+      showConfirmButton: false,
+      timer: 3000,
+    });
+
+  }
+  
+
+  showUnsuccessfulAlert() {
+    Swal.fire({
+      icon: "error",
+      title: "Error!",
+      text: "Something went wrong. Please try again.",
+    });
   }
 
 

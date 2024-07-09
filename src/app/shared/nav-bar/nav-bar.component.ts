@@ -99,11 +99,12 @@ export class NavBarComponent implements OnInit {
 
   shouldShowSearchIcon(): boolean {
     // Check the current route
-    const currentRoute = this.router.url;    
+    const currentRoute = this.router.url; 
+    
+    const excludedRoutes: string[] = ['/admin/subscriberUser', '/admin/adminUser', '/admin/feedback', '/admin/advertisement', '/admin/feedback/broadcast', '/admin/feedback/broadcast/listBroadcasts'];
 
-    if (currentRoute !== '/admin/subscriberUser' && currentRoute !== '/admin/adminUser' && 
-    currentRoute !== '/admin/feedback'
-    ) {
+    if (!excludedRoutes.includes(currentRoute)) 
+    {
       return false;
     } else {
       return true;
@@ -129,7 +130,6 @@ export class NavBarComponent implements OnInit {
   }
 
   toggleDropdown() {
-    console.log('Toggling dropdown');
     this.isDropdownOpen = !this.isDropdownOpen;
     this.updateUserManagementActive();
   }
@@ -154,7 +154,6 @@ export class NavBarComponent implements OnInit {
     this.apiToken.signOut();
     this.apiData.removeCurrentUser();
     this.apiData.removeUser();
-    this.apiData.removeAdvert();
     this.apiData.removeUserUrl();
     sessionStorage.removeItem('currentPage');
     sessionStorage.removeItem('pageSize');

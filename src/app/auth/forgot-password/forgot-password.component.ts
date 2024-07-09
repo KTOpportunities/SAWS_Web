@@ -149,6 +149,6 @@ interface ResetPassword{
 
     submitForm() {
       this.showSuccessAlert();
-      console.log('Form submitted!');
+
     } 
   }

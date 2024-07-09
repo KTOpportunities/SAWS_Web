@@ -12,6 +12,10 @@
       text-align: center;
   }
 
+  .mat-column-advert {
+    cursor: pointer;
+  }
+
   .mat-column-select {
     /* overflow: initial; */
     max-width: 60px;
@@ -21,6 +25,15 @@
   .mat-column-action {
     max-width: 150px;
     min-width: 140px;
+  }
+
+  .mat-column-publish {
+    max-width: 150px;
+    min-width: 140px;
+  }
+
+  .link {
+  cursor: pointer;
   }
 
 
@@ -907,6 +920,9 @@
     font-family: Montserrat, sans-serif;
     font-size: 12px;
     font-weight: 700;
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
   }
   
   .image-9 {

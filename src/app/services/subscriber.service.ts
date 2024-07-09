@@ -38,7 +38,8 @@ export class SubscriberService {
 
   getPagedAllSubscribers(pageNumber: any, pageSize: any) {
     return this.http.get<any>(
-      environment.serverAPI + `Subscriber/GetPagedAllSubscribers?pageNumber=${pageNumber}&pageSize=${pageSize}`,
+      environment.serverAPI +
+        `v1/Subscriber/GetPagedAllSubscribers?pageNumber=${pageNumber}&pageSize=${pageSize}`
       // {
       //   headers: new HttpHeaders().append(
       //     'Authorization',
@@ -46,27 +47,98 @@ export class SubscriberService {
       //   ),
       // }
     );
-   
   }
 
   registerSubscriber(body: {}) {
     return this.http.post<any>(
-      environment.serverAPI + "Authenticate/RegisterSubscriber",
+      environment.serverAPI + "v1/Authenticate/RegisterSubscriber",
       body
     );
   }
 
   loginEmailExist(email: any) {
     return this.http.get<any>(
-      environment.serverAPI + `Authenticate/LoginEmailExist?email=${email}`,
+      environment.serverAPI + `v1/Authenticate/LoginEmailExist?email=${email}`,
       email
     );
   }
 
   deleteUserProfileById(Id: any, aspuId: any) {
     return this.http.delete<any>(
-      environment.serverAPI + `Authenticate/DeleteUserProfileById?id=${Id}&aspuid=${aspuId}`,
+      environment.serverAPI +
+        `v1/Authenticate/DeleteUserProfileById?id=${Id}&aspuid=${aspuId}`,
       this.httpOptions
+    );
+  }
+
+  deleteAdvertById(Id: any) {
+    return this.http.delete<any>(
+      environment.serverAPI + `v1/Advert/DeleteAdvertById?id=${Id}`
+      // this.httpOptions
+    );
+  }
+
+  deleteFeedbackById(Id: any) {
+    return this.http.delete<any>(
+      environment.serverAPI + `v1/Feedback/DeleteFeedbackById?id=${Id}`
+      // this.httpOptions
+    );
+  }
+
+  DeleteBroadcastByBatchId(batchId: any) {
+    return this.http.delete<any>(
+      environment.serverAPI +
+        `v1/Feedback/DeleteBroadcastByBatchId?batchId=${batchId}`
+      // this.httpOptions
+    );
+  }
+
+  postInsertNewAdvert(body: {}) {
+    return this.http.post<any>(
+      environment.serverAPI + "v1/Advert/PostInsertNewAdvert",
+      body
+      // this.httpOptions
+      // {
+      //   headers: new HttpHeaders().append(
+      //     "Authorization",
+      //     `Bearer ${this.token}`
+      //   ),
+      // }
+    );
+  }
+
+  postInsertNewFeedback(body: {}) {
+    return this.http.post<any>(
+      environment.serverAPI + "v1/Feedback/PostInsertNewFeedback",
+      body
+      // this.httpOptions
+      // {
+      //   headers: new HttpHeaders().append(
+      //     "Authorization",
+      //     `Bearer ${this.token}`
+      //   ),
+      // }
+    );
+  }
+
+  postInsertBroadcastMessages(feedbackList: any[]) {
+    return this.http.post<any>(
+      environment.serverAPI + "v1/Feedback/PostInsertBroadcastMessages",
+      feedbackList
+    );
+  }
+
+  PostDocsForAdvert(formData: any) {
+    return this.http.post<any>(
+      environment.serverAPI + "v1/FileManager/PostDocsForAdvert",
+      formData
+    );
+  }
+
+  PostDocsForFeedback(formData: any) {
+    return this.http.post<any>(
+      environment.serverAPI + "v1/FileManager/PostDocsForFeedback",
+      formData
     );
   }
 
@@ -76,10 +148,9 @@ export class SubscriberService {
   //   return this.http.delete<any>(url, { params });
   // }
 
-
   InsertUpdateUserProfile(body: {}) {
     return this.http.post<any>(
-      environment.serverAPI + "Authenticate/InsertUpdateUserProfile",
+      environment.serverAPI + "v1/Authenticate/InsertUpdateUserProfile",
       body,
       this.httpOptions
       // {
@@ -90,4 +161,26 @@ export class SubscriberService {
       // }
     );
   }
+
+  GetRegistrationsPerUserType() {
+    return this.http.get<any>(
+      environment.serverAPI + `v1/Lookup/GetRegistrationsPerUserType`
+    );
+  }
+<<<<<<< Updated upstream
+  GetAdvertsClickPerMonth() {
+    return this.http.get<any>(
+      environment.serverAPI + `v1/Lookup/GetAdvertsClickPerMonth`
+    );
+  }
+=======
+  GetSubscriptionsPerPackageType() {
+    return this.http.get<any>(
+      environment.serverAPI + `v1/Lookup/GetSubscriptionsPerPackageType`
+    );
+  }
+
+
+
+>>>>>>> Stashed changes
 }

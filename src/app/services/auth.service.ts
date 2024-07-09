@@ -39,17 +39,17 @@ export class AuthService {
 
   login(form: loginform) {
     return this.http.post<any>(
-      environment.serverAPI + "Authenticate/login",
+      environment.serverAPI + "v1/Authenticate/login",
       form
     );
   }
 
   requestPasswordReset(form: ResetPassword){
-    return this.http.post<ResetPassword>(environment.serverAPI + `Authenticate/RequestPasswordReset?email=${form.email}`, {});
+    return this.http.post<ResetPassword>(environment.serverAPI + `v1/Authenticate/RequestPasswordReset?email=${form.email}`, {});
   }
 
   resetPassword(form: ResetConfirmPassword) {
-   return this.http.post<ResetConfirmPassword>(environment.serverAPI + 'Authenticate/ResetPassword', form);
+   return this.http.post<ResetConfirmPassword>(environment.serverAPI + 'v1/Authenticate/ResetPassword', form);
   }
 
   // requestPasswordReset(form: any){
@@ -61,7 +61,7 @@ export class AuthService {
 
   RequestPasswordReset(form: any) {
     return this.http.post<any>(
-      environment.serverAPI + `Authenticate/RequestPasswordReset?email=${form.Email}`,
+      environment.serverAPI + `v1/Authenticate/RequestPasswordReset?email=${form.Email}`,
       form
     ).pipe(
       catchError((error) => {
@@ -73,7 +73,7 @@ export class AuthService {
 
   getLoggedInUser(userId: any) {
     return this.http.get<any>(
-      environment.serverAPI + `Authenticate/GetLoggedInUser?Id=${userId}`,
+      environment.serverAPI + `v1/Authenticate/GetLoggedInUser?Id=${userId}`,
       {
         headers: new HttpHeaders().append(
           'Authorization',

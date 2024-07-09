@@ -5,10 +5,13 @@
           <div class="user-managemnt-group">
             <div class="group-hero">
               <div class="group-hero_l">
-                <div class="group-hero_text">Filter by</div>
-                <div data-hover="false" data-delay="0" class="w-dropdown">
-
+                <div class="group-hero_text">
+                  <mat-icon>filter_list</mat-icon>
+                  <div>                    
+                    Filter by
+                  </div>
                 </div>
+                <div data-hover="false" data-delay="0" class="w-dropdown"></div>
                 <div 
                   data-hover="false" 
                   data-delay="0" 
@@ -20,18 +23,18 @@
                       >
                       <div class="icon w-icon-dropdown-toggle"></div>
                       <div class="text-block">
-                        {{ selectedSubscriptionName !== '' ?  "Subscribed: " + selectedSubscriptionName : "Subscribed" }}
+                        {{ selectedStatusName !== '' ? selectedStatusName : "Status" }}
                       </div>
                     </div>
                     <mat-menu
                       #nameMenu="matMenu">
-                      <!-- *ngFor="let subscription of subscriptions"
-                      (click)="selectSubscription(subscription.subscription)" -->
-                        <button
+                      <button
+                        *ngFor="let status of statuses"
+                        (click)="selectStatus(status.status)"
                           mat-menu-item
                         >
                           <span class="w-dropdown-link-2">
-                            <!-- {{ subscription.subscription }} -->
+                            {{ status.name }}
                           </span>
                         </button>
                     </mat-menu>
@@ -67,48 +70,12 @@
                   clear filters
                 </div>
               </div>
-              <a 
-                (click)="addUser()"
+              <a
+                (click)="viewSubscribersByFeedback()"
                 class="button w-inline-block">
-                  <div class="embed-icon w-embed">
-                    <svg
-                      width="16"
-                      height="16"
-                      viewbox="0 0 16 16"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <g clip-path="url(#clip0_1695_120)">
-                        <path
-                          d="M8.00021 14.9623C11.8453 14.9623 14.9623 11.8453 14.9623 8.00021C14.9623 4.15514 11.8453 1.03809 8.00021 1.03809C4.15514 1.03809 1.03809 4.15514 1.03809 8.00021C1.03809 11.8453 4.15514 14.9623 8.00021 14.9623Z"
-                          stroke="currentColor"
-                          stroke-width="1.5"
-                          stroke-miterlimit="10"
-                        ></path>
-                        <path
-                          d="M5.09961 8H10.9014"
-                          stroke="currentColor"
-                          stroke-width="1.5"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                        ></path>
-                        <path
-                          d="M8 5.09961V10.9014"
-                          stroke="currentColor"
-                          stroke-width="1.5"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                        ></path>
-                      </g>
-                      <defs>
-                        <clippath id="clip0_1695_120">
-                          <rect width="16" height="16" fill="white"></rect>
-                        </clippath>
-                      </defs>
-                    </svg>
-                  </div>
-                <div class="button-text">Respond</div>
+                <div class="button-text">Broadcast</div>
               </a>
+              
             </div>
           </div>
   
@@ -120,32 +87,7 @@
             matSort 
             class="mat-elevation-z8"
             #adminsSort="matSort"
-            >
-
-              <!-- Checkbox Column -->
-              <ng-container 
-                matColumnDef="select">
-                  <mat-header-cell *matHeaderCellDef
-                  >
-                  <mat-checkbox
-                    (change)="$event ? masterToggle() : null"
-                    [checked]="selection.hasValue() && isAllSelected()"
-                    [indeterminate]="selection.hasValue() && !isAllSelected()"
-                    color="primary"
-                    >
-                  </mat-checkbox>
-              
-                  </mat-header-cell>
-                  <mat-cell *matCellDef="let row">
-                    <mat-checkbox 
-                      (click)="$event.stopPropagation()"
-                      (change)="$event ? selection.toggle(row) : null"
-                      [checked]="selection.isSelected(row)"
-                      color="primary">
-                  </mat-checkbox>
-                </mat-cell>
-              </ng-container>
-              
+            >           
               <!-- Full Name Column -->
               <ng-container matColumnDef="fullname">
                 <mat-header-cell *matHeaderCellDef mat-sort-header>
@@ -167,10 +109,10 @@
               <!-- Created Date Column -->
               <ng-container matColumnDef="created_at">
                 <mat-header-cell *matHeaderCellDef mat-sort-header>
-                  Received Date
+                  Last Received Date
                 </mat-header-cell>
                 <mat-cell *matCellDef="let feedback"> 
-                   {{ feedback.created_at | date : "medium" }}
+                   {{ feedback.updated_at | date : "short" }}
                 </mat-cell>
               </ng-container>
     
@@ -178,9 +120,9 @@
               <ng-container matColumnDef="status">
                 <mat-header-cell *matHeaderCellDef> Status </mat-header-cell>
                 <mat-cell *matCellDef="let feedback" >
-                  <div class="status" [ngClass]="{ 'status-active': feedback.responderId }">
+                  <div class="status" [ngClass]="{ 'status-active': feedback.isresponded }">
                     <span class="status-text">
-                        {{ feedback.responderId
+                        {{ feedback.isresponded
                         ? 'Responded' : 'UnAnswered' }}
                     </span>
                   </div>
@@ -190,7 +132,7 @@
               <!-- Action Column -->
               <ng-container matColumnDef="action">
                 <mat-header-cell *matHeaderCellDef> Action </mat-header-cell>
-                <mat-cell *matCellDef="let user">
+                <mat-cell *matCellDef="let feedback">
                   <!-- Add your action buttons/icons here -->
                   <button
                     mat-icon-button
@@ -198,21 +140,18 @@
                     class="mat-button mat-horizontal-menu" 
                   >
                     <mat-icon style="color: #323259">
-                      <img
-                        src="assets/images/metro-more-horiz.svg"
-                        class="searchIcon"
-                    /></mat-icon>
+                      <svg style="color: #323259" xmlns="http://www.w3.org/2000/svg" width="24.51" height="6.128" viewBox="0 0 24.51 6.128">
+                        <path id="Icon_metro-more-horiz" data-name="Icon metro-more-horiz" d="M10.776,15.424a3.064,3.064,0,1,0,3.064,3.064A3.063,3.063,0,0,0,10.776,15.424Zm18.383,0a3.064,3.064,0,1,0,3.064,3.064A3.063,3.063,0,0,0,29.159,15.424Zm-9.191,0a3.064,3.064,0,1,0,3.064,3.064,3.063,3.063,0,0,0-3.064-3.064Z" transform="translate(-7.712 -15.424)" fill="#1f6a45"/>
+                      </svg>
+                  </mat-icon>
                   </button>
     
                   <mat-menu #actionMenu="matMenu" class="mat-horizontal-menu">
-                    <button mat-menu-item (click)="navigateToEditUser(user)">
+                    <button mat-menu-item (click)="navigateToViewFeedback(feedback.feedbackId)">
                       <mat-icon>visibility</mat-icon> View
                     </button>
-                    <!-- <button mat-menu-item (click)="toggleUser(user)">
-                      <mat-icon>visibility</mat-icon> View
-                    </button> -->
-                    <button mat-menu-item (click)="deleteUser(user)">
-                      <mat-icon style="color: red">delete</mat-icon> Archive
+                    <button mat-menu-item (click)="deleteFeedback(feedback.feedbackId)">
+                      <mat-icon style="color: red">delete</mat-icon> Delete
                     </button>
                   </mat-menu>
                 </mat-cell>
@@ -231,8 +170,8 @@
 
             <tr class="mat-row" *matNoDataRow>
               <td class="mat-cell" colspan="4">
-               No data matching the filter "{{dataSource.filter}}"
-                </td>
+                {{ dataSource.filter ? 'No data matching the filter ' + dataSource.filter : 'loading data...'}}
+              </td>
             </tr>
           </mat-table>
           <mat-paginator
@@ -271,4 +210,5 @@
       </style>
     </div>
   </section>
+
  

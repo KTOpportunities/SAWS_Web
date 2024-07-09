@@ -1,7 +1,8 @@
 import { FeedbackMessage } from "./FeedbackMessage";
 
 export interface Feedback {
-    feebackId: number;
+    feedbackId: number;
+    title: string;
     fullname: string;
     senderId: string;
     senderEmail: string;
@@ -11,6 +12,7 @@ export interface Feedback {
     updated_at: string;
     isdeleted: boolean;
     deleted_at: any;
+    isresponded: boolean;
     FeedbackMessages: FeedbackMessage[];
 }
   

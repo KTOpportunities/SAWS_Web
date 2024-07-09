@@ -5,7 +5,10 @@ import { AdvertisementComponent } from "src/app/pages/advertisement/advertisemen
 import { EditAdvertisementComponent } from "src/app/pages/advertisement/edit-advertisement/edit-advertisement.component";
 import { ViewAdvertisementComponent } from "src/app/pages/advertisement/view-advertisement/view-advertisement.component";
 import { DashboardComponent } from "src/app/pages/dashboard/dashboard.component";
-import { AddResponseComponent } from "src/app/pages/feedback/add-response/add-response.component";
+import { AddBroadcastComponent } from "src/app/pages/feedback/broadcast/add-broadcast/add-broadcast.component";
+import { BroadcastComponent } from "src/app/pages/feedback/broadcast/broadcast.component";
+import { ListBroadcastComponent } from "src/app/pages/feedback/broadcast/list-broadcast/list-broadcast.component";
+import { ViewBroadcastComponent } from "src/app/pages/feedback/broadcast/view-broadcast/view-broadcast.component";
 import { FeedbackComponent } from "src/app/pages/feedback/feedback.component";
 import { ViewFeedbackComponent } from "src/app/pages/feedback/view-feedback/view-feedback.component";
 import { AddUserComponent } from "src/app/pages/user-management/add-user/add-user.component";
@@ -21,15 +24,21 @@ const routes: Routes = [
   { path: "dashboard", component: DashboardComponent },
   { path: "feedback", component: FeedbackComponent },
   { path: "advertisement", component: AdvertisementComponent },
-  { path: "addUser", component: AddUserComponent },
-  { path: "editUser", component: EditUserComponent },
-  { path: "addAdvert", component: AddAdvertisementComponent },
-  { path: "editAdvert", component: EditAdvertisementComponent },
+  { path: "adminUser/addUser", component: AddUserComponent },
+  { path: "adminUser/editUser", component: EditUserComponent },
+  { path: "subscriberUser/addUser", component: AddUserComponent },
+  { path: "subscriberUser/editUser", component: EditUserComponent },
+  { path: "advertisement/addAdvert", component: AddAdvertisementComponent },
+  { path: "advertisement/editAdvert", component: EditAdvertisementComponent },
   { path: "adminUser", component: AdminUserComponent },
   { path: "subscriberUser", component: SubscriberUserComponent },
-  { path: "addResponse", component: AddResponseComponent },
-  { path: "viewFeeback", component: ViewFeedbackComponent },
-  { path: "viewAdvert", component: ViewAdvertisementComponent },
+  { path: "feedback/broadcast/addBroadcast", component: AddBroadcastComponent},
+  // { path: "feedback/viewBroadcast", component: AddResponseComponent },
+  { path: "feedback/viewFeedback", component: ViewFeedbackComponent },
+  { path: "feedback/broadcast", component: BroadcastComponent },
+  { path: "feedback/broadcast/viewBroadcast", component: ViewBroadcastComponent },
+  { path: "feedback/broadcast/listBroadcasts", component: ListBroadcastComponent },
+  { path: "advertisement/viewAdvert", component: ViewAdvertisementComponent },
   // {
   //   path: "user",
   //   component: UserManagementComponent,

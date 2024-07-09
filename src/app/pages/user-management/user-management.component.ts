@@ -94,13 +94,8 @@ export class UserManagementComponent implements OnInit {
         // Call the soft delete API
         this.apiService.deleteUserProfileById(userId, aspuId).subscribe(
           () => {
-            // Update the status for soft delete
-            user.status = 'deleted'; // Update the status value accordingly
-  
-            // Optionally: Provide user feedback (toast, alert, etc.)
-            console.log('User soft deleted successfully.');
-  
-            // Hide spinner after soft deletion
+            
+            user.status = 'deleted';
             this.spinner.hide();
             this.getPagedAllSubscribers();
           },

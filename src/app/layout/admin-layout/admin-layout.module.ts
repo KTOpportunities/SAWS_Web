@@ -16,12 +16,19 @@ import { FlexLayoutModule } from "@angular/flex-layout";
 import { SubscriberUserComponent } from "src/app/pages/user-management/subscriber-user/subscriber-user.component";
 import { AdminUserComponent } from "src/app/pages/user-management/admin-user/admin-user.component";
 import { FeedbackComponent } from "src/app/pages/feedback/feedback.component";
-import { AddResponseComponent } from "src/app/pages/feedback/add-response/add-response.component";
 import { ViewFeedbackComponent } from "src/app/pages/feedback/view-feedback/view-feedback.component";
 import { AdvertisementComponent } from "src/app/pages/advertisement/advertisement.component";
 import { AddAdvertisementComponent } from "src/app/pages/advertisement/add-advertisement/add-advertisement.component";
 import { EditAdvertisementComponent } from "src/app/pages/advertisement/edit-advertisement/edit-advertisement.component";
 import { ViewAdvertisementComponent } from "src/app/pages/advertisement/view-advertisement/view-advertisement.component";
+import { BroadcastComponent } from "src/app/pages/feedback/broadcast/broadcast.component";
+import { AddBroadcastComponent } from "src/app/pages/feedback/broadcast/add-broadcast/add-broadcast.component";
+import { ViewBroadcastComponent } from "src/app/pages/feedback/broadcast/view-broadcast/view-broadcast.component";
+import { ListBroadcastComponent } from "src/app/pages/feedback/broadcast/list-broadcast/list-broadcast.component";
+import { ViewAdvertImageComponent } from "src/app/pages/advertisement/view-advert-image/view-advert-image.component";
+import { AttachmentFileComponent } from "src/app/pages/feedback/attachment-file/attachment-file.component";
+import { RegistrationCountComponent } from "src/app/pages/dashboard/registration-count/registration-count.component";
+import { ClickCountComponent } from "src/app/pages/dashboard/click-count/click-count.component";
 @NgModule({
   declarations: [
     UserManagementComponent,
@@ -31,12 +38,19 @@ import { ViewAdvertisementComponent } from "src/app/pages/advertisement/view-adv
     EditUserComponent,
     AdminUserComponent,
     FeedbackComponent,
-    AddResponseComponent,
     ViewFeedbackComponent,
     AdvertisementComponent,
     AddAdvertisementComponent,
     EditAdvertisementComponent,
-    ViewAdvertisementComponent
+    ViewAdvertisementComponent,
+    BroadcastComponent,
+    AddBroadcastComponent,
+    ViewBroadcastComponent,
+    ListBroadcastComponent,
+    ViewAdvertImageComponent,
+    AttachmentFileComponent,
+    RegistrationCountComponent,
+    ClickCountComponent
   ],
   imports: [
     CommonModule,
