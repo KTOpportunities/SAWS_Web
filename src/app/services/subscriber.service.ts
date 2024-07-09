@@ -167,4 +167,9 @@ export class SubscriberService {
       environment.serverAPI + `v1/Lookup/GetRegistrationsPerUserType`
     );
   }
+  GetAdvertsClickPerMonth() {
+    return this.http.get<any>(
+      environment.serverAPI + `v1/Lookup/GetAdvertsClickPerMonth`
+    );
+  }
 }
