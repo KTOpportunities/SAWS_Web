@@ -15,15 +15,15 @@ interface ClickData {
   styleUrls: ['./click-count.component.css']
 })
 export class ClickCountComponent {
-  registrations: ClickData[] = [];
+  clicks: ClickData[] = [];
   barChart: any;
 
   constructor(private subscriberService: SubscriberService) {}
 
   ngOnInit(): void {
     this.subscriberService.GetAdvertsClickPerMonth().subscribe((data) => {
-      this.registrations = data;
-      console.log("test:", this.registrations);
+      this.clicks = data;
+      console.log("test:", this.clicks);
       this.renderBarChart();
     });
   }
@@ -49,7 +49,7 @@ export class ClickCountComponent {
     const monthCounts = new Array(12).fill(0);
 
     // Sum the counts for each month
-    this.registrations.forEach((entry) => {
+    this.clicks.forEach((entry) => {
       const monthIndex = months.indexOf(entry.MonthString);
       if (monthIndex !== -1) {
         monthCounts[monthIndex] += entry.Count;
