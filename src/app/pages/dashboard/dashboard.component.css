@@ -35,6 +35,10 @@
     grid-area: 1 / 1 / 2 / 2;
     display: table;
   }
+  .scroll{
+    overflow-y: auto;
+    height:100em;
+  }
   
   .w-checkbox-input {
     float: left;

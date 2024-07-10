@@ -29,6 +29,8 @@ import { ViewAdvertImageComponent } from "src/app/pages/advertisement/view-adver
 import { AttachmentFileComponent } from "src/app/pages/feedback/attachment-file/attachment-file.component";
 import { RegistrationCountComponent } from "src/app/pages/dashboard/registration-count/registration-count.component";
 import { ClickCountComponent } from "src/app/pages/dashboard/click-count/click-count.component";
+import { UserTypeComponent } from "src/app/pages/dashboard/user-type/user-type.component";
+
 @NgModule({
   declarations: [
     UserManagementComponent,
@@ -50,7 +52,8 @@ import { ClickCountComponent } from "src/app/pages/dashboard/click-count/click-c
     ViewAdvertImageComponent,
     AttachmentFileComponent,
     RegistrationCountComponent,
-    ClickCountComponent
+    ClickCountComponent,
+    UserTypeComponent
   ],
   imports: [
     CommonModule,

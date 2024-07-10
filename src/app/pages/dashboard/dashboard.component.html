@@ -1,27 +1,40 @@
 <section class="section-3">
-  <div class="container">
-    <div class="column">
-      <div class="regist">
-        <app-registration-count></app-registration-count>
+  <div class="scroll" style="overflow-y: auto; height:81vh !important;">
+    <div class="container">
+      <div class="column">
+        <div class="regist">
+          <app-registration-count></app-registration-count>
+        </div>
       </div>
-    </div>
-    <div class="column">
-      <div class="regist">
-        <app-click-count></app-click-count>
+      <div class="column">
+        <div class="regist">
+          <app-click-count></app-click-count>
+        </div>
       </div>
-    </div>
+  
 
-  </div>
-  <div class="container">
-    <div class="regist">
-      <h1>Total number of users per user type (Free, Premium, Regulated & Admins)</h1>
-      <canvas id="pieChart"></canvas>
     </div>
+    
+    <div class="container">
+   
+      <div class="column">
+        <div class="regist">
+        
+          <app-user-type></app-user-type>
+         
+        </div>
+      </div>
+
+      
+      <div class="column">
+      
+      </div>
+    </div>
+  
   </div>
+ 
 </section>
 
-<<<<<<< Updated upstream
-=======
 <!-- <section class="section-3">
   <div class="container">
     <div class="regist">
@@ -30,4 +43,3 @@
     </div>
   </div>
 </section> -->
->>>>>>> Stashed changes

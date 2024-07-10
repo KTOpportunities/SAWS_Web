@@ -28,6 +28,7 @@ import { NgChartsModule } from "ng2-charts";
 import { RegistrationCountComponent } from "./pages/dashboard/registration-count/registration-count.component";
 import { ClickCountComponent } from "./pages/dashboard/click-count/click-count.component";
 import { DashboardComponent } from "./pages/dashboard/dashboard.component";
+// import { UserTypeComponent } from './pages/dashboard/user-type/user-type.component';
 
 @NgModule({
   declarations: [
@@ -35,6 +36,7 @@ import { DashboardComponent } from "./pages/dashboard/dashboard.component";
     AuthLayoutComponent,
     AdminLayoutComponent,
     SuccessComponent,
+
   
   ],
   imports: [
