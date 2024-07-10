@@ -4,15 +4,14 @@ import { Chart } from "chart.js";
 import { SubscriberService } from "src/app/services/subscriber.service";
 
 interface ClickData {
-
   MonthString: string;
   Clicks: number;
 }
 
 @Component({
-  selector: 'app-click-count',
-  templateUrl: './click-count.component.html',
-  styleUrls: ['./click-count.component.css']
+  selector: "app-click-count",
+  templateUrl: "./click-count.component.html",
+  styleUrls: ["./click-count.component.css"],
 })
 export class ClickCountComponent {
   clicks: ClickData[] = [];
@@ -64,32 +63,34 @@ export class ClickCountComponent {
           {
             data: monthCounts,
             backgroundColor: [
-              "rgba(255, 0, 0, 0.8)", // Red
-              "rgba(0, 128, 0, 0.8)", // Green
-              "rgba(0, 0, 255, 0.8)", // Blue
-              "rgba(255, 165, 0, 0.8)", // Orange
-              "rgba(255, 255, 0, 0.8)", // Yellow
-              "rgba(128, 0, 128, 0.8)", // Purple
-              "rgba(0, 255, 255, 0.8)", // Cyan
-              "rgba(128, 0, 0, 0.8)", // Maroon
-              "rgba(255, 0, 255, 0.8)", // Magenta
-              "rgba(0, 255, 0, 0.8)", // Lime Green
-              "rgba(0, 0, 128, 0.8)", // Navy Blue
-              "rgba(255, 218, 185, 0.8)", // Peach
+              "#00386c",
+              "#008c1d",
+              "rgba(0, 0, 255, 0.8)",
+              "rgba(255, 165, 0, 0.8)",
+              "rgba(255, 255, 0, 0.8)",
+              "rgba(128, 0, 128, 0.8)",
+              "  #00386c",
+              "#008c1d",
+              "rgba(128, 0, 0, 0.8)",
+              "rgba(255, 0, 255, 0.8)",
+              "rgba(0, 255, 0, 0.8)",
+              "rgba(0, 0, 128, 0.8)",
+              "rgba(255, 218, 185, 0.8)",
             ],
             borderColor: [
-              "rgba(255, 0, 0, 1)", // Red
-              "rgba(0, 128, 0, 1)", // Green
-              "rgba(0, 0, 255, 1)", // Blue
-              "rgba(255, 165, 0, 1)", // Orange
-              "rgba(255, 255, 0, 1)", // Yellow
-              "rgba(128, 0, 128, 1)", // Purple
-              "rgba(0, 255, 255, 1)", // Cyan
-              "rgba(128, 0, 0, 1)", // Maroon
-              "rgba(255, 0, 255, 1)", // Magenta
-              "rgba(0, 255, 0, 1)", // Lime Green
-              "rgba(0, 0, 128, 1)", // Navy Blue
-              "rgba(255, 218, 185, 1)", // Peach
+              "#00386c",
+              "#008c1d",
+              "rgba(0, 0, 255, 0.8)",
+              "rgba(255, 165, 0, 0.8)",
+              "rgba(255, 255, 0, 0.8)",
+              "rgba(128, 0, 128, 0.8)",
+              "  #00386c",
+              "#008c1d",
+              "rgba(128, 0, 0, 0.8)",
+              "rgba(255, 0, 255, 0.8)",
+              "rgba(0, 255, 0, 0.8)",
+              "rgba(0, 0, 128, 0.8)",
+              "rgba(255, 218, 185, 0.8)",
             ],
             borderWidth: 1,
           },
