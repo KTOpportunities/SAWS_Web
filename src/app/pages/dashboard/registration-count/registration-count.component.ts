@@ -6,7 +6,7 @@ import { SubscriberService } from "src/app/services/subscriber.service";
 interface RegistrationData {
   UserRole: string;
   MonthString: string;
-  Count: number;
+  Subscriptions: number;
 }
 
 @Component({
@@ -43,16 +43,16 @@ export class RegistrationCountComponent implements OnInit {
       "November",
       "December",
     ];
-  
+
     const monthCounts = new Array(12).fill(0);
-  
+
     this.registrations.forEach((entry) => {
       const monthIndex = months.indexOf(entry.MonthString);
       if (monthIndex !== -1) {
-        monthCounts[monthIndex] += entry.Count;
+        monthCounts[monthIndex] += entry.Subscriptions;
       }
     });
-  
+
     this.barChart = new Chart("barChart", {
       type: "bar",
       data: {
@@ -122,5 +122,4 @@ export class RegistrationCountComponent implements OnInit {
       },
     });
   }
-  
 }

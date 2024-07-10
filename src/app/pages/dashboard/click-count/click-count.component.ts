@@ -6,7 +6,7 @@ import { SubscriberService } from "src/app/services/subscriber.service";
 interface ClickData {
 
   MonthString: string;
-  Count: number;
+  Clicks: number;
 }
 
 @Component({
@@ -52,7 +52,7 @@ export class ClickCountComponent {
     this.clicks.forEach((entry) => {
       const monthIndex = months.indexOf(entry.MonthString);
       if (monthIndex !== -1) {
-        monthCounts[monthIndex] += entry.Count;
+        monthCounts[monthIndex] += entry.Clicks;
       }
     });
 
