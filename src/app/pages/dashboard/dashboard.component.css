@@ -14,6 +14,7 @@
     width: 100%;
     background-color: #fff;
     margin-top:5% ;
+   height: 400px;
   }  
 
   .w-checkbox {
@@ -33,6 +34,10 @@
     clear: both;
     grid-area: 1 / 1 / 2 / 2;
     display: table;
+  }
+  .scroll{
+    overflow-y: auto;
+    height:100em;
   }
   
   .w-checkbox-input {

@@ -19,6 +19,7 @@ const httpOptions = {
   providedIn: "root",
 })
 export class SubscriberService {
+  
   User: any;
   token: any;
   constructor(private http: HttpClient) {
@@ -167,13 +168,11 @@ export class SubscriberService {
       environment.serverAPI + `v1/Lookup/GetRegistrationsPerUserType`
     );
   }
-<<<<<<< Updated upstream
   GetAdvertsClickPerMonth() {
     return this.http.get<any>(
       environment.serverAPI + `v1/Lookup/GetAdvertsClickPerMonth`
     );
   }
-=======
   GetSubscriptionsPerPackageType() {
     return this.http.get<any>(
       environment.serverAPI + `v1/Lookup/GetSubscriptionsPerPackageType`
@@ -182,5 +181,4 @@ export class SubscriberService {
 
 
 
->>>>>>> Stashed changes
 }
