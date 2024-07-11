@@ -6,7 +6,7 @@ import { SubscriberService } from "src/app/services/subscriber.service";
 interface RegistrationData {
   UserRole: string;
   MonthString: string;
-  Count: number;
+  Subscriptions: number;
 }
 
 @Component({
@@ -43,16 +43,16 @@ export class RegistrationCountComponent implements OnInit {
       "November",
       "December",
     ];
-  
+
     const monthCounts = new Array(12).fill(0);
-  
+
     this.registrations.forEach((entry) => {
       const monthIndex = months.indexOf(entry.MonthString);
       if (monthIndex !== -1) {
-        monthCounts[monthIndex] += entry.Count;
+        monthCounts[monthIndex] += entry.Subscriptions;
       }
     });
-  
+
     this.barChart = new Chart("barChart", {
       type: "bar",
       data: {
@@ -61,13 +61,14 @@ export class RegistrationCountComponent implements OnInit {
           {
             data: monthCounts,
             backgroundColor: [
-              "rgba(255, 0, 0, 0.8)",
-              "rgba(0, 128, 0, 0.8)",
+              "#00386c",
+              "#008c1d",
               "rgba(0, 0, 255, 0.8)",
               "rgba(255, 165, 0, 0.8)",
               "rgba(255, 255, 0, 0.8)",
               "rgba(128, 0, 128, 0.8)",
-              "rgba(0, 255, 255, 0.8)",
+              "  #00386c",
+              "#008c1d",
               "rgba(128, 0, 0, 0.8)",
               "rgba(255, 0, 255, 0.8)",
               "rgba(0, 255, 0, 0.8)",
@@ -75,18 +76,19 @@ export class RegistrationCountComponent implements OnInit {
               "rgba(255, 218, 185, 0.8)",
             ],
             borderColor: [
-              "rgba(255, 0, 0, 1)",
-              "rgba(0, 128, 0, 1)",
-              "rgba(0, 0, 255, 1)",
-              "rgba(255, 165, 0, 1)",
-              "rgba(255, 255, 0, 1)",
-              "rgba(128, 0, 128, 1)",
-              "rgba(0, 255, 255, 1)",
-              "rgba(128, 0, 0, 1)",
-              "rgba(255, 0, 255, 1)",
-              "rgba(0, 255, 0, 1)",
-              "rgba(0, 0, 128, 1)",
-              "rgba(255, 218, 185, 1)",
+              "#00386c",
+              "#008c1d",
+              "rgba(0, 0, 255, 0.8)",
+              "rgba(255, 165, 0, 0.8)",
+              "rgba(255, 255, 0, 0.8)",
+              "rgba(128, 0, 128, 0.8)",
+              "  #00386c",
+              "#008c1d",
+              "rgba(128, 0, 0, 0.8)",
+              "rgba(255, 0, 255, 0.8)",
+              "rgba(0, 255, 0, 0.8)",
+              "rgba(0, 0, 128, 0.8)",
+              "rgba(255, 218, 185, 0.8)",
             ],
             borderWidth: 1,
           },
@@ -122,5 +124,4 @@ export class RegistrationCountComponent implements OnInit {
       },
     });
   }
-  
 }

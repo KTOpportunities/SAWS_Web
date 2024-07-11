@@ -7,7 +7,7 @@ import { SubscriberService } from "src/app/services/subscriber.service";
 
 interface UserData {
   package_name: string;
-  Count: number;
+  Users: number;
 }
 @Component({
   selector: 'app-user-type',
@@ -34,7 +34,7 @@ export class UserTypeComponent {
   }
   renderPieChart(): void {
     const userTypes = this.users.map((user) => user.package_name);
-    const userCounts = this.users.map((user) => user.Count);
+    const userCounts = this.users.map((user) => user.Users);
 
     const total = userCounts.reduce((acc, count) => acc + count, 0); // Calculate total count
 
