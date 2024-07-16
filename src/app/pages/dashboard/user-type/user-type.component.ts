@@ -4,10 +4,10 @@ import { Chart } from "chart.js";
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 import { SubscriberService } from "src/app/services/subscriber.service";
 
-
-interface UserData {
-  package_name: string;
-  Users: number;
+interface SubscriptionData {
+  UserRole: string;
+  SubscriptionType: string;
+  Subscriptions: number;
 }
 @Component({
   selector: 'app-user-type',
@@ -15,28 +15,25 @@ interface UserData {
   styleUrls: ['./user-type.component.css']
 })
 export class UserTypeComponent {
-  users: UserData[] = [];
+  userTypes: SubscriptionData[] = [];
+  totalSubscriptions: number = 0;
   pieChart: any;
-
 
   constructor(private subscriberService: SubscriberService) {}
 
-
-
-  ngOnInit(): void {
-   
+  ngOnInit(): void {   
 
     this.subscriberService.GetSubscriptionsPerPackageType().subscribe((data) => {
-      this.users = data.UserSubscriptionCounts;
-      console.log("User subscription data:", this.users);
+      this.userTypes = data.UserSubscriptionCounts;
+      this.totalSubscriptions = data.TotalCount;
       this.renderPieChart();
     });
   }
   renderPieChart(): void {
-    const userTypes = this.users.map((user) => user.package_name);
-    const userCounts = this.users.map((user) => user.Users);
+    const userTypes = this.userTypes.map((user) => user.SubscriptionType);
+    const userData = this.userTypes.map((user) => user.Subscriptions);
 
-    const total = userCounts.reduce((acc, count) => acc + count, 0); // Calculate total count
+    const colors = ["#016c17", "#00386c", "#f7b11d", "#98301d"];
 
     this.pieChart = new Chart("pieChart", {
       type: "pie",
@@ -45,15 +42,9 @@ export class UserTypeComponent {
         datasets: [
           {
             label: "User Types",
-            data: userCounts,
-            backgroundColor: [
-              "rgba(255, 99, 132, 0.8)", "rgba(54, 162, 235, 0.8)", "rgba(255, 206, 86, 0.8)",
-              "rgba(75, 192, 192, 0.8)"
-            ],
-            borderColor: [
-              "rgba(255, 99, 132, 1)", "rgba(54, 162, 235, 1)", "rgba(255, 206, 86, 1)",
-              "rgba(75, 192, 192, 1)"
-            ],
+            data: userData,
+            backgroundColor: colors,
+            borderColor: ["black"],
             borderWidth: 1,
           },
         ],
@@ -73,7 +64,7 @@ export class UserTypeComponent {
           },
           datalabels: {
             formatter: (value) => {
-              const percentage = ((value / total) * 100).toFixed(2);
+              const percentage = ((value / this.totalSubscriptions) * 100).toFixed(2);
               return `${value} (${percentage}%)`;
             },
             color: '#fff',
@@ -83,7 +74,7 @@ export class UserTypeComponent {
           },
         },
       },
-      plugins: [ChartDataLabels], // Add the plugin here
+      plugins: [ChartDataLabels],
     });
   }
 }

@@ -16,6 +16,7 @@ interface RegistrationData {
   UserTypes: UserType[];
 }
 
+
 @Component({
   selector: "app-registration-count",
   templateUrl: "./registration-count.component.html",
@@ -53,7 +54,8 @@ export class RegistrationCountComponent implements OnInit {
     const userRoles = Array.from(
       new Set(
         this.registrations.flatMap((reg) =>
-          reg.UserTypes.map((user) => user.userrole)
+          // reg.UserTypes.map((user) => user.userrole)
+        reg.UserTypes.map((user) => user.SubscriptionType)
         )
       )
     );
@@ -62,14 +64,14 @@ export class RegistrationCountComponent implements OnInit {
     this.registrations.forEach((entry) => {
       const monthIndex = entry.Month - 1; // Month is 1-based in data
       entry.UserTypes.forEach((userType) => {
-        const roleIndex = userRoles.indexOf(userType.userrole);
+        const roleIndex = userRoles.indexOf(userType.SubscriptionType);
         if (roleIndex !== -1) {
           monthRoleCounts[roleIndex][monthIndex] += userType.Registrations;
         }
       });
     });
 
-    const colors = ["#00386c", "#008c1d"]; // Blue and Gold
+    const colors = ["#00386c", "#008c1d", "#8295c2"];
 
     this.barChart = new Chart("barChart", {
       type: "bar",
@@ -106,7 +108,7 @@ export class RegistrationCountComponent implements OnInit {
             },
             title: {
               display: true,
-              text: "Number Of Registrations",
+              text: "# of Registrations",
             },
           },
         },

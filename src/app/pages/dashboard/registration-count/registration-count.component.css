@@ -1,5 +1,12 @@
-.section-3{width: 100%; text-align: center;}
- .container{width: 100%; max-width: 1200px}
+.chart {
+    min-width: 600px;
+    max-width: 800px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
 
-
-
+#barChart {
+    height: 300px;
+}

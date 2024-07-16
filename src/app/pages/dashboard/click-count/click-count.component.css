@@ -1,3 +1,17 @@
-.section-3{width: 100%; text-align: center;}
+/* .section-3{width: 100%; text-align: center;}
  .container{width: 100%; max-width: 1200px}
- .regist{width: 100%; text-align:center}
+ .regist{width: 100%; text-align:center} */
+
+
+.chart {
+    min-width: 400px;
+    max-width: 600px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
+    
+#barClickChart {
+    height: 600px;
+}

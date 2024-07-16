@@ -22,7 +22,6 @@ export class ClickCountComponent {
   ngOnInit(): void {
     this.subscriberService.GetAdvertsClickPerMonth().subscribe((data) => {
       this.clicks = data;
-      console.log("test:", this.clicks);
       this.renderBarChart();
     });
   }
@@ -116,7 +115,7 @@ export class ClickCountComponent {
             },
             title: {
               display: true,
-              text: "Number of Clicks",
+              text: "# of Clicks",
             },
           },
         },

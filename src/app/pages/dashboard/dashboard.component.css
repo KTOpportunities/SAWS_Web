@@ -566,11 +566,28 @@
   }
   
   .group-hero {
-    grid-column-gap: 50px;
+    /* grid-column-gap: 50px;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 10px;
     display: flex;
+    flex-wrap: wrap;
+    
+
+    overflow-y: scroll;
+    max-height: 70vh; */
+    grid-column-gap: 100px;
+    grid-row-gap: 50px;
+    justify-content: center;
+    align-items: flex-start;
+    margin-bottom: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    overflow-y: scroll;
+    max-height: 70vh;
+    flex-direction: row;
+    align-content: flex-start;
+
   }
   
   .group {

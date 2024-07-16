@@ -5,10 +5,6 @@ import ChartDataLabels from 'chartjs-plugin-datalabels';
 
 import { SubscriberService } from "src/app/services/subscriber.service";
 
-
-
-
-
 @Component({
   selector: "app-dashboard",
   templateUrl: "./dashboard.component.html",
@@ -16,18 +12,9 @@ import { SubscriberService } from "src/app/services/subscriber.service";
 })
 export class DashboardComponent implements OnInit {   
 
-
-
-
   constructor(private subscriberService: SubscriberService) {}
 
-
-
   ngOnInit(): void {
-  
-
- 
   }
-
 
 }

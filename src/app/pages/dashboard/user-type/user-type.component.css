@@ -1,13 +1,24 @@
-.section-3{width: 100%; text-align: center;}
+/* .section-3{width: 100%; text-align: center;}
  .container{width: 100%; max-width: 1200px}
  .regist{width: 100%; text-align:center}
 
 #pie{
     height: 31vh !important;
-    /* margin-left: 72px;
-    padding-left: 22%; */
     position: relative !important;
     top: -11px !important;
     display: flex !important;
     justify-content: center !important;
+} */
+
+.chart {
+    height: 300px;
+    width: 500px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
+
+#pieChart {
+    height: 300px;
 }
