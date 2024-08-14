@@ -1397,12 +1397,13 @@
       padding-bottom: 40px;
     }
   
-    .user-managemnt-group {
+    .user-managemnt-group{
       box-shadow: none;
       border: 1px #000;
       border-radius: 0;
       padding-top: 10px;
       padding-bottom: 10px;
+      margin-top: -132px;
     }
   }
   
@@ -1443,9 +1444,25 @@
     .add-label {
       font-size: 18px;
     }
+    .user-managemnt-group{
+      box-shadow: none;
+      border: 1px #000;
+      border-radius: 0;
+      padding-top: 10px;
+      padding-bottom: 10px;
+      margin-top: 53px;
+    }
   }
   
   @media screen and (min-width: 1920px) {
+    .user-managemnt-group{
+      box-shadow: none;
+      border: 1px #000;
+      border-radius: 0;
+      padding-top: 10px;
+      padding-bottom: 10px;
+      margin-top: -154px;
+    }
     .heading {
       font-size: 30px;
     }
