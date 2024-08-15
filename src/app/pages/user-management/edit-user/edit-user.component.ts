@@ -95,6 +95,8 @@ export class EditUserComponent {
       created_at: formValues.created_at,
       UserSubscriptionStatus: formValues.UserSubscriptionStatus,
     };
+
+    console.log("body", body)
   
     if (this.userEmail === body.Email) {
       this.updateUserForm(body);
@@ -118,6 +120,8 @@ export class EditUserComponent {
   updateUserForm(body: any) {
     this.api.InsertUpdateUserProfile(body).subscribe(
       (data: any) => {
+
+        console.log("update data", data)
        
         var user: any = this.apiData.getCurrentUser();
 
