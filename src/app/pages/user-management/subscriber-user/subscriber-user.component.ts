@@ -40,12 +40,11 @@ export class SubscriberUserComponent implements OnInit {
 
   dataSource = new MatTableDataSource<Subscriber>();
 
-  subscriptions: any[] = [
-    { id: 1, subscription: true },
-    { id: 2, subscription: false }
+  statuses: any[] = [
+    { id: 1, isactive: true },
+    { id: 2, isactive: false },
   ];
 
-  selectedSubscription: number | undefined;
   subsciberList: Subscriber[] = [];
 
   pageSize = 5;
@@ -56,7 +55,7 @@ export class SubscriberUserComponent implements OnInit {
   TotalRecords: any = 0;
 
   selectedDateString: any;
-  selectedSubscriptionName: any = '';
+  selectedIsActiveString: string = "";
   date: Date;
 
   constructor(
@@ -98,18 +97,18 @@ export class SubscriberUserComponent implements OnInit {
 
 
     this.apiService.getPagedAllSubscribers(this.currentPage + page, this.pageSize).subscribe({
-      next: (data: any) => {
+      next: (response: any) => {
           this.spinner.hide();
-          this.subsciberList = data.Data;
+          this.subsciberList = response.data;
 
           sessionStorage.removeItem('currentPage');
           sessionStorage.removeItem('pageSize');
 
-          this.TotalRecords = data.TotalRecords;
+          this.TotalRecords = response.totalRecords;
 
           setTimeout(() => {
             this.paginator.pageIndex = this.currentPage;
-            this.paginator.length = data.TotalRecords;
+            this.paginator.length = response.totalRecords;
           });
         
           this.dataSource = new MatTableDataSource(this.subsciberList);
@@ -122,9 +121,9 @@ export class SubscriberUserComponent implements OnInit {
     });
  }
 
- selectSubscription(status: any) {
-  this.selectedSubscription = status;
-  this.filterSubscription();
+ selectIsActive(status: any) {
+  this.selectedIsActiveString = status;
+  this.filterIsActive();
 }
 
  filterData() {
@@ -133,27 +132,20 @@ export class SubscriberUserComponent implements OnInit {
   });
  }
 
- filterSubscription() {
-  this.selectedSubscriptionName = '';
-  this.selectedDateString = '';
+ filterIsActive() {
+  this.selectedDateString = "";
 
-  this.dataSource.filterPredicate = (data, filter: string) =>
-    !filter || data.subscription.toString().includes(filter);
+  this.dataSource.filterPredicate = (data, filter: string) => {
+    return !filter || data.isactive.toString() === filter;
+  };
 
-  this.dataSource.filter = this.selectedSubscription!.toString().trim();
+  this.dataSource.filter = this.selectedIsActiveString!.toString().trim();
 
-  // Update the button text based on the selected subscription status
-  const selectedSubscription = this.subscriptions.find(
-    (subscription) => subscription.subscription === this.selectedSubscription
-  );
-
-  if (selectedSubscription) {
-    this.selectedSubscriptionName = selectedSubscription.subscription;
-  }
+  this.selectedIsActiveString = this.selectedIsActiveString ? "Active" : "Inactive";
 }
 
 clearFilter() {
-  this.selectedSubscriptionName = '';
+  this.selectedIsActiveString = "";
   this.selectedDateString = '';
 
   this.dataSource.filter = '';

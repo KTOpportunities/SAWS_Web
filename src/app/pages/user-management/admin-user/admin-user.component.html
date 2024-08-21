@@ -12,9 +12,8 @@
                   </div>
                 </div>
                 <div data-hover="false" data-delay="0" class="w-dropdown">
-
                 </div>
-                <div 
+                <div
                   data-hover="false" 
                   data-delay="0" 
                   class="w-dropdown">
@@ -25,18 +24,18 @@
                       >
                       <div class="icon w-icon-dropdown-toggle"></div>
                       <div class="text-block">
-                        {{ selectedSubscriptionName !== '' ?  "Subscribed: " + selectedSubscriptionName : "Subscribed" }}
+                        {{ selectedIsActiveString ? selectedIsActiveString : "Status" }}
                       </div>
                     </div>
                     <mat-menu
                       #subscribedMenu="matMenu">
                         <button
                           mat-menu-item
-                          *ngFor="let subscription of subscriptions"
-                          (click)="selectSubscription(subscription.subscription)"
+                          *ngFor="let status of statuses"
+                          (click)="selectIsActive(status.isactive)"
                         >
                           <span class="w-dropdown-link-2">
-                            {{ subscription.subscription }}
+                            {{ status.isactive }}
                           </span>
                         </button>
                     </mat-menu>
@@ -169,9 +168,9 @@
               <ng-container matColumnDef="status">
                 <mat-header-cell *matHeaderCellDef> Status </mat-header-cell>
                 <mat-cell *matCellDef="let user" >
-                  <div class="status" [ngClass]="{ 'status-active': user.subscription }">
+                  <div class="status" [ngClass]="{ 'status-active': user.isactive }">
                     <span class="status-text">
-                        {{ user.subscription ? 'Active' : 'InActive' }}
+                        {{ user.isactive ? 'Active' : 'InActive' }}
                     </span>
                   </div>
                 </mat-cell>

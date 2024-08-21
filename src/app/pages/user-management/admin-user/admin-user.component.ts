@@ -3,7 +3,7 @@ import { MatTableDataSource } from "@angular/material/table";
 import { MatSortModule } from "@angular/material/sort";
 import { MatPaginatorModule } from "@angular/material/paginator";
 import { MatIconModule } from "@angular/material/icon";
-import { MatPaginator, PageEvent } from '@angular/material/paginator';
+import { MatPaginator, PageEvent } from "@angular/material/paginator";
 import { MatSort } from "@angular/material/sort";
 import { AdminService } from "src/app/services/admin.service";
 import { MatDialog } from "@angular/material/dialog";
@@ -15,17 +15,18 @@ import { Admin } from "src/app/Models/admin.model";
 import Swal from "sweetalert2";
 import { SubscriberService } from "src/app/services/subscriber.service";
 import { Dataservice } from "src/app/services/data.service";
-import { MatDatepicker, MatDatepickerInputEvent } from "@angular/material/datepicker";
+import {
+  MatDatepicker,
+  MatDatepickerInputEvent,
+} from "@angular/material/datepicker";
 import { DatePipe } from "@angular/common";
 
 @Component({
   selector: "app-admin-user",
   templateUrl: "./admin-user.component.html",
-  styleUrls: ["./admin-user.component.css"]
+  styleUrls: ["./admin-user.component.css"],
 })
-
 export class AdminUserComponent implements OnInit {
-
   // Define the displayed columns
   displayedColumns: string[] = [
     "fullname",
@@ -38,14 +39,19 @@ export class AdminUserComponent implements OnInit {
 
   @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
   // @ViewChild(MatPaginator) paginator!: MatPaginator;
-  @ViewChild('picker', { static: false }) picker!: MatDatepicker<Date>;
+  @ViewChild("picker", { static: false }) picker!: MatDatepicker<Date>;
   @ViewChild(MatSort, { static: true }) sort!: MatSort;
 
   dataSource = new MatTableDataSource<Admin>();
 
-  subscriptions: any[] = [
-    { id: 1, subscription: true },
-    { id: 2, subscription: false }
+  // subscriptions: any[] = [
+  //   { id: 1, subscription: true },
+  //   { id: 2, subscription: false }
+  // ];
+
+  statuses: any[] = [
+    { id: 1, isactive: true },
+    { id: 2, isactive: false },
   ];
 
   selectedSubscription: number | undefined;
@@ -55,12 +61,13 @@ export class AdminUserComponent implements OnInit {
   pageSizeStore = 5;
   currentPage = 0;
   currentPageStore = 0;
-  
+
   TotalRecords: any = 0;
-  filteredData: any = '';
+  filteredData: any = "";
 
   selectedDateString: any;
-  selectedSubscriptionName: any = '';
+  selectedIsActiveString: string = "";
+  selectedSubscriptionName: any = "";
   date: Date;
 
   isCurrentUser: boolean = false;
@@ -74,9 +81,8 @@ export class AdminUserComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private spinner: NgxSpinnerService,
-    public datePipe: DatePipe,
+    public datePipe: DatePipe
   ) {
-    
     this.dataSource.filterPredicate = (data, filter: string) =>
       !filter || data.created_at.includes(filter);
 
@@ -84,87 +90,96 @@ export class AdminUserComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.getAllAdmins(); 
+    this.getAllAdmins();
     this.filterData();
 
     this.currentUser = this.apiData.getCurrentUser();
   }
-    
-  getAllAdmins(page: number = 1){
 
-    var currentPage: number = Number(sessionStorage.getItem('currentPage'));
-    var pageSize: number = Number(sessionStorage.getItem('pageSize'));
+  getAllAdmins(page: number = 1) {
+    var currentPage: number = Number(sessionStorage.getItem("currentPage"));
+    var pageSize: number = Number(sessionStorage.getItem("pageSize"));
 
     if (currentPage == 0) {
       currentPage = this.currentPage;
     } else {
-      this.currentPage = currentPage
+      this.currentPage = currentPage;
     }
-    
+
     if (pageSize == 0) {
       pageSize = this.pageSize;
     } else {
       this.pageSize = pageSize;
     }
 
-
-    this.apiAdmin.GetPagedAllAdmins(this.currentPage + page, this.pageSize).subscribe({
-      next: (data: any) => {
+    this.apiAdmin
+      .GetPagedAllAdmins(this.currentPage + page, this.pageSize)
+      .subscribe({
+        next: (result: any) => {
           this.spinner.hide();
-          this.adminList = data.Data;
+          this.adminList = result.data;
 
-          this.adminList.forEach(element => {
-            element.subscription = true;
-          });          
+          sessionStorage.removeItem("currentPage");
+          sessionStorage.removeItem("pageSize");
 
-          sessionStorage.removeItem('currentPage');
-          sessionStorage.removeItem('pageSize');
+          this.TotalRecords = result.totalRecords;
 
-          this.TotalRecords = data.TotalRecords;
-     
           setTimeout(() => {
             this.paginator.pageIndex = this.currentPage;
-            this.paginator.length = data.TotalRecords;
+            this.paginator.length = result.totalRecords;
           });
-        
+
           this.dataSource = new MatTableDataSource(this.adminList);
           this.dataSource.paginator = this.paginator;
-      },
-      error: (error) => {
+        },
+        error: (error) => {
           console.error("Error fetching data from API:", error);
-      },
-    });
- }
-
- selectSubscription(status: any) {
-    this.selectedSubscription = status;
-    this.filterSubscription();
+        },
+      });
   }
 
- filterData() {
+  selectIsActive(status: any) {
+    this.selectedIsActiveString = status;
+    this.filterIsActive();
+  }
+
+  filterData() {
     this.apiData.filterObservable$.subscribe((filter: string) => {
       this.dataSource.filter = filter.trim().toLowerCase();
     });
- }
+  }
 
- filterSubscription() {
-    this.selectedSubscriptionName = '';
-    this.selectedDateString = '';
+  filterIsActive() {
+    // this.selectedIsActiveString = "";
+    this.selectedDateString = "";
 
-    this.dataSource.filterPredicate = (data, filter: string) =>
-      !filter || data.subscription.toString().includes(filter);
+    this.dataSource.filterPredicate = (data, filter: string) => {
+      return !filter || data.isactive.toString() === filter;
+    };
 
-    this.dataSource.filter = this.selectedSubscription!.toString().trim();
+    this.dataSource.filter = this.selectedIsActiveString!.toString().trim();
 
-    // Update the button text based on the selected subscription status
-    const selectedSubscription = this.subscriptions.find(
-      (subscription) => subscription.subscription === this.selectedSubscription
-    );
+    this.selectedIsActiveString = this.selectedIsActiveString ? "Active" : "Inactive";
+  }
 
-    if (selectedSubscription) {
-      this.selectedSubscriptionName = selectedSubscription.subscription;
-    }
-}
+  //  filterSubscription() {
+  //     this.selectedSubscriptionName = '';
+  //     this.selectedDateString = '';
+
+  //     this.dataSource.filterPredicate = (data, filter: string) =>
+  //       !filter || data.subscription.toString().includes(filter);
+
+  //     this.dataSource.filter = this.selectedSubscription!.toString().trim();
+
+  //     // Update the button text based on the selected subscription status
+  //     const selectedSubscription = this.subscriptions.find(
+  //       (subscription) => subscription.subscription === this.selectedSubscription
+  //     );
+
+  //     if (selectedSubscription) {
+  //       this.selectedSubscriptionName = selectedSubscription.subscription;
+  //     }
+  // }
 
   pageChanged(event: PageEvent) {
     this.pageSize = event.pageSize;
@@ -190,9 +205,9 @@ export class AdminUserComponent implements OnInit {
   }
 
   filterDate() {
-    this.selectedSubscriptionName = '';
+    this.selectedIsActiveString = "";
 
-    let newDate = this.datePipe.transform(this.date, 'yyyy-MM-dd');
+    let newDate = this.datePipe.transform(this.date, "yyyy-MM-dd");
 
     this.dataSource.filterPredicate = (data, filter: string) =>
       !filter || data.created_at.includes(filter);
@@ -200,7 +215,7 @@ export class AdminUserComponent implements OnInit {
     this.dataSource.filter = newDate!.toString().trim();
 
     // Update the button text based on the selected date
-    const selectedDate = this.datePipe.transform(this.date, 'MMM dd, yyyy');
+    const selectedDate = this.datePipe.transform(this.date, "MMM dd, yyyy");
 
     if (selectedDate) {
       this.selectedDateString = selectedDate;
@@ -208,10 +223,11 @@ export class AdminUserComponent implements OnInit {
   }
 
   clearFilter() {
-    this.selectedSubscriptionName = '';
-    this.selectedDateString = '';
+    // this.selectedSubscriptionName = '';
+    this.selectedIsActiveString = "";
+    this.selectedDateString = "";
 
-    this.dataSource.filter = '';
+    this.dataSource.filter = "";
 
     this.getAllAdmins();
 
@@ -220,38 +236,37 @@ export class AdminUserComponent implements OnInit {
   }
 
   isFilterActive(): boolean {
-    return this.dataSource.filter.trim() !== '';
+    return this.dataSource.filter.trim() !== "";
   }
 
   checkCurrentUser(user: any) {
-      if (this.currentUser) {
-          const userLoginDetails =  JSON.parse(this.currentUser);
-          if(userLoginDetails?.userID == user.aspuid) {
-            this.isCurrentUser = true;
-            
-          } else {
-            this.isCurrentUser = false;
-          }
+    if (this.currentUser) {
+      const userLoginDetails = JSON.parse(this.currentUser);
+      if (userLoginDetails?.userID == user.aspuid) {
+        this.isCurrentUser = true;
+      } else {
+        this.isCurrentUser = false;
       }
+    }
   }
 
   deleteUser(user: any) {
-    const userId = user.userprofileid; 
-    const aspuId = user.aspuid; 
-  
+    const userId = user.userprofileid;
+    const aspuId = user.aspuid;
+
     Swal.fire({
-      title: 'Are you sure you want to delete?',
-      icon: 'warning',
+      title: "Are you sure you want to delete?",
+      icon: "warning",
       showCancelButton: true,
-      confirmButtonText: 'Yes',
-      cancelButtonText: 'No',
+      confirmButtonText: "Yes",
+      cancelButtonText: "No",
     }).then((result) => {
       if (result.isConfirmed) {
-        this.spinner.show(); 
-  
-            this.apiService.deleteUserProfileById(userId, aspuId).subscribe(
+        this.spinner.show();
+
+        this.apiService.deleteUserProfileById(userId, aspuId).subscribe(
           () => {
-            user.status = 'deleted';
+            user.status = "deleted";
             this.spinner.hide();
             this.getAllAdmins();
           },
@@ -263,18 +278,18 @@ export class AdminUserComponent implements OnInit {
       }
     });
   }
-  
+
   navigateToAddUser() {
-    this.apiData.saveUserUrl('/admin/adminUser');
+    this.apiData.saveUserUrl("/admin/adminUser");
     this.router.navigate(["/admin/adminUser/addUser"]);
   }
 
   navigateToEditUser(user: Admin) {
-    sessionStorage.setItem('currentPage', `${this.currentPage}`);
-    sessionStorage.setItem('pageSize', `${this.pageSize}`);
+    sessionStorage.setItem("currentPage", `${this.currentPage}`);
+    sessionStorage.setItem("pageSize", `${this.pageSize}`);
 
     this.apiData.saveUser(user);
-    this.apiData.saveUserUrl('/admin/adminUser');
+    this.apiData.saveUserUrl("/admin/adminUser");
     this.router.navigate(["/admin/adminUser/editUser"]);
   }
 }

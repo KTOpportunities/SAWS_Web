@@ -1,13 +1,13 @@
 export interface Admin {
   userprofileid: number;
-  Fullname: string;
-  Username: string;
-  Email: string;
-  Password: string;
-  UserRole: string;
+  fullname: string;
+  username: string;
+  email: string;
+  userrole: string;
+  isactive: boolean;
   created_at: string;
   updated_at: string;
-  deleted: boolean;
+  isdeleted: boolean;
   deleted_at: any;
-  subscription: boolean;
+  // subscription: boolean;
 }

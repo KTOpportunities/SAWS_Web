@@ -12,15 +12,6 @@
                   </div>
                 </div>
                 <div data-hover="false" data-delay="0" class="w-dropdown">
-                  <!-- <div class="dropdown-toggle w-dropdown-toggle">
-                    <div class="icon w-icon-dropdown-toggle"></div>
-                    <div class="text-block">Name</div>
-                  </div> -->
-                  <!-- <nav class="w-dropdown-list">
-                    <a href="#" class="w-dropdown-link">Link 1</a>
-                    <a href="#" class="w-dropdown-link">Link 2</a>
-                    <a href="#" class="w-dropdown-link">Link 3</a>
-                  </nav> -->
                 </div>
                 <div 
                 data-hover="false" 
@@ -33,18 +24,18 @@
                     >
                       <div class="icon w-icon-dropdown-toggle"></div>
                       <div class="text-block">
-                        {{ selectedSubscriptionName !== '' ?  "Subscribed: " + selectedSubscriptionName : "Subscribed" }}
+                        {{ selectedIsActiveString ? selectedIsActiveString : "Status" }}
                       </div>
                     </div>
                     <mat-menu
                       #subscribedMenu="matMenu">
                         <button
                           mat-menu-item
-                          *ngFor="let subscription of subscriptions"
-                          (click)="selectSubscription(subscription.subscription)"
+                          *ngFor="let status of statuses"
+                          (click)="selectIsActive(status.isactive)"
                         >
                           <span class="w-dropdown-link-2">
-                            {{ subscription.subscription }}
+                            {{ status.isactive }}
                           </span>
                         </button>
                     </mat-menu>
@@ -59,11 +50,6 @@
                         {{ selectedDateString ? selectedDateString : "Date" }}
                       </div>
                     </div>
-                    <nav class="w-dropdown-list">
-                      <a href="#" class="w-dropdown-link">Link 1</a>
-                      <a href="#" class="w-dropdown-link">Link 2</a>
-                      <a href="#" class="w-dropdown-link">Link 3</a>
-                    </nav>
                   </div>
                 <div>
                   <input
@@ -88,41 +74,6 @@
                 (click)="addUser()"
                 class="button w-inline-block">
                   <div class="embed-icon w-embed">
-                    <!-- <svg
-                      width="16"
-                      height="16"
-                      viewbox="0 0 16 16"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <g clip-path="url(#clip0_1695_120)">
-                        <path
-                          d="M8.00021 14.9623C11.8453 14.9623 14.9623 11.8453 14.9623 8.00021C14.9623 4.15514 11.8453 1.03809 8.00021 1.03809C4.15514 1.03809 1.03809 4.15514 1.03809 8.00021C1.03809 11.8453 4.15514 14.9623 8.00021 14.9623Z"
-                          stroke="currentColor"
-                          stroke-width="1.5"
-                          stroke-miterlimit="10"
-                        ></path>
-                        <path
-                          d="M5.09961 8H10.9014"
-                          stroke="currentColor"
-                          stroke-width="1.5"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                        ></path>
-                        <path
-                          d="M8 5.09961V10.9014"
-                          stroke="currentColor"
-                          stroke-width="1.5"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                        ></path>
-                      </g>
-                      <defs>
-                        <clippath id="clip0_1695_120">
-                          <rect width="16" height="16" fill="white"></rect>
-                        </clippath>
-                      </defs>
-                    </svg> -->
                     <mat-icon>person_add</mat-icon>
                   </div>
                 <div class="button-text">New User</div>
@@ -181,9 +132,9 @@
             <ng-container matColumnDef="status">
               <mat-header-cell *matHeaderCellDef> Status </mat-header-cell>
               <mat-cell *matCellDef="let user">
-                <div class="status" [ngClass]="{ 'status-active': user.subscription }">
+                <div class="status" [ngClass]="{ 'status-active': user.isactive}">
                   <span class="status-text">
-                      {{ user.subscription ? 'Active' : 'InActive' }}
+                      {{ user.isactive ? 'Active' : 'InActive' }}
                   </span>
                 </div>
               </mat-cell>

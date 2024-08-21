@@ -40,7 +40,7 @@ export class SubscriberService {
   getPagedAllSubscribers(pageNumber: any, pageSize: any) {
     return this.http.get<any>(
       environment.serverAPI +
-        `v1/Subscriber/GetPagedAllSubscribers?pageNumber=${pageNumber}&pageSize=${pageSize}`
+        `v1/Subscribers/GetPagedAllSubscribers?pageNumber=${pageNumber}&pageSize=${pageSize}`
       // {
       //   headers: new HttpHeaders().append(
       //     'Authorization',
@@ -74,14 +74,14 @@ export class SubscriberService {
 
   deleteAdvertById(Id: any) {
     return this.http.delete<any>(
-      environment.serverAPI + `v1/Advert/DeleteAdvertById?id=${Id}`
+      environment.serverAPI + `v1/Adverts/DeleteAdvertById?id=${Id}`
       // this.httpOptions
     );
   }
 
   deleteFeedbackById(Id: any) {
     return this.http.delete<any>(
-      environment.serverAPI + `v1/Feedback/DeleteFeedbackById?id=${Id}`
+      environment.serverAPI + `v1/Feedbacks/DeleteFeedbackById?id=${Id}`
       // this.httpOptions
     );
   }
@@ -89,14 +89,14 @@ export class SubscriberService {
   DeleteBroadcastByBatchId(batchId: any) {
     return this.http.delete<any>(
       environment.serverAPI +
-        `v1/Feedback/DeleteBroadcastByBatchId?batchId=${batchId}`
+        `v1/Feedbacks/DeleteBroadcastByBatchId?batchId=${batchId}`
       // this.httpOptions
     );
   }
 
   postInsertNewAdvert(body: {}) {
     return this.http.post<any>(
-      environment.serverAPI + "v1/Advert/PostInsertNewAdvert",
+      environment.serverAPI + "v1/Adverts/PostInsertNewAdvert",
       body
       // this.httpOptions
       // {
@@ -110,7 +110,7 @@ export class SubscriberService {
 
   postInsertNewFeedback(body: {}) {
     return this.http.post<any>(
-      environment.serverAPI + "v1/Feedback/PostInsertNewFeedback",
+      environment.serverAPI + "v1/Feedbacks/PostInsertNewFeedback",
       body
       // this.httpOptions
       // {
@@ -124,7 +124,7 @@ export class SubscriberService {
 
   postInsertBroadcastMessages(feedbackList: any[]) {
     return this.http.post<any>(
-      environment.serverAPI + "v1/Feedback/PostInsertBroadcastMessages",
+      environment.serverAPI + "v1/Feedbacks/PostInsertBroadcastMessages",
       feedbackList
     );
   }

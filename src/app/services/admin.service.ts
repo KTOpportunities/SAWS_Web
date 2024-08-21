@@ -38,37 +38,37 @@ export class AdminService {
 
   GetPagedAllAdmins(pageNumber: any, pageSize: any) {
     return this.http.get<any>(
-      environment.serverAPI + `v1/Admin/GetPagedAllAdmins?pageNumber=${pageNumber}&pageSize=${pageSize}`,
+      environment.serverAPI + `v1/Admins/GetPagedAllAdmins?pageNumber=${pageNumber}&pageSize=${pageSize}`,
     );
   }
 
   GetPagedAllFeedbacks(pageNumber: any, pageSize: any) {
     return this.http.get<any>(
-      environment.serverAPI + `v1/Feedback/GetPagedAllFeedbacks?pageNumber=${pageNumber}&pageSize=${pageSize}`,
+      environment.serverAPI + `v1/Feedbacks/GetPagedAllFeedbacks?pageNumber=${pageNumber}&pageSize=${pageSize}`,
     );
   }
 
   GetPagedAllBroadcasts(pageNumber: any, pageSize: any) {
     return this.http.get<any>(
-      environment.serverAPI + `v1/Feedback/GetPagedAllBroadcasts?pageNumber=${pageNumber}&pageSize=${pageSize}`,
+      environment.serverAPI + `v1/Feedbacks/GetPagedAllBroadcasts?pageNumber=${pageNumber}&pageSize=${pageSize}`,
     );
   }
 
   getPagedAllFeedbacksByUniqueEmail(pageNumber: any, pageSize: any) {
     return this.http.get<any>(
-      environment.serverAPI + `v1/Feedback/GetPagedAllFeedbacksByUniqueEmail?pageNumber=${pageNumber}&pageSize=${pageSize}`,
+      environment.serverAPI + `v1/Feedbacks/GetPagedAllFeedbacksByUniqueEmail?pageNumber=${pageNumber}&pageSize=${pageSize}`,
     );
   }
 
   getBroadcastMessages() {
     return this.http.get<any>(
-      environment.serverAPI + `v1/Feedback/GetBroadcastMessages`,
+      environment.serverAPI + `v1/Feedbacks/GetBroadcastMessages`,
     );
   }
 
   GetPagedAllAdverts(pageNumber: any, pageSize: any) {
     return this.http.get<any>(
-      environment.serverAPI + `v1/Advert/GetPagedAllAdverts?pageNumber=${pageNumber}&pageSize=${pageSize}`,
+      environment.serverAPI + `v1/Adverts/GetPagedAllAdverts?pageNumber=${pageNumber}&pageSize=${pageSize}`,
     );
   }
 
@@ -81,14 +81,14 @@ export class AdminService {
 
   getAdvertByAdvertId(Id: any) {
     return this.http.get<any>(
-      environment.serverAPI + `v1/Advert/GetAdvertByAdvertId?Id=${Id}`,
+      environment.serverAPI + `v1/Adverts/GetAdvertByAdvertId?Id=${Id}`,
       
     );
   }
 
   getFeedbackById(Id: any) {
     return this.http.get<any>(
-      environment.serverAPI + `v1/Feedback/GetFeedbackById?Id=${Id}`,
+      environment.serverAPI + `v1/Feedbacks/GetFeedbackById?Id=${Id}`,
       
     );
   }

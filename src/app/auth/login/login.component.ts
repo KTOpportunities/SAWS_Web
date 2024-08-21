@@ -6,12 +6,12 @@ import { NgxSpinnerService } from "ngx-spinner";
 import { TokeStorageService } from "src/app/services/token-storage.service";
 import { Dataservice } from "src/app/services/data.service";
 import Swal from "sweetalert2";
-import { ElementRef } from '@angular/core';
+import { ElementRef } from "@angular/core";
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css'],
+  selector: "app-login",
+  templateUrl: "./login.component.html",
+  styleUrls: ["./login.component.css"],
 })
 export class loginComponent implements OnInit {
   userData: any = null;
@@ -30,30 +30,24 @@ export class loginComponent implements OnInit {
     private tokenStorage: TokeStorageService,
     private apiData: Dataservice,
     private el: ElementRef
-    
-
   ) {
-
     this.loginform = this.formBuilder.group({
       Username: [null, Validators.required, this.emailValidator],
       Password: [null, [Validators.required]],
-      RememberMe: [false]
-      // Username:["", Validators.required],
-      // Password: ["", Validators.required],
+      RememberMe: [false],
     });
 
-    var username: any = sessionStorage.getItem('email');
+    var username: any = sessionStorage.getItem("email");
 
-    if(username){
+    if (username) {
       this.loginform.patchValue({
         Username: username,
       });
-      
-      sessionStorage.removeItem('email')
+
+      sessionStorage.removeItem("email");
     }
   }
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   togglePasswordVisibility() {
     this.passwordVisibility = !this.passwordVisibility;
@@ -62,11 +56,11 @@ export class loginComponent implements OnInit {
   onPasswordInput(event: any) {
     this.isPasswordNotEmpty = event.target.value.trim().length > 0;
 
-    if(!this.isPasswordNotEmpty){
+    if (!this.isPasswordNotEmpty) {
       this.passwordVisibility = false;
     }
   }
-  
+
   async emailValidator(control: any) {
     if (control.value) {
       const matches = control.value.match(
@@ -78,68 +72,53 @@ export class loginComponent implements OnInit {
     }
   }
 
-  login()
-   {
-      this.submitted = true;
-      var body = {
-        Username: this.loginform.controls['Username'].value,
-        Password: this.loginform.controls['Password'].value
-      }
-      
+  login() {
+    this.submitted = true;
+    var body = {
+      Username: this.loginform.controls["Username"].value,
+      Password: this.loginform.controls["Password"].value,
+    };
 
     if (this.loginform.status == "VALID") {
       this.spinner.show();
       this.authApi.login(this.loginform.value).subscribe(
         (data: any) => {
-
-          if(data.rolesList == 'Admin'){
-
+          if (data.isAdmin) {
             this.tokenStorage.saveToken(data.token);
-
-            this.getLoggedInUser(data.aspUserID);
-
+            this.getLoggedInUser(data.aspUserId);
             this.userData = data;
             this.spinner.hide();
           } else {
             this.spinner.hide();
-            this.errMessage = "Subcriber not allowed to log in";
+            this.errMessage = "Account not allowed to access portal";
             setTimeout(() => {
               this.errMessage = "";
-            }, 3000);
+            }, 4000);
           }
         },
-        (err) => {
-          console.log(err);
-          if (
-            err.error.Status == "401" &&
-            err.error.Message == "Please check your password and username"
-          ) {
-            this.errMessage = err.error.Message;
-          } else {
-            this.errMessage = "Please check your password and username";
-          }
+        (err) => { 
+          this.errMessage = err.error.errorMessages;
           this.spinner.hide();
         }
       );
-      // this.spinner.hide();
     } else {
       this.errMessage = "Please enter your password and username";
       setTimeout(() => {
         this.errMessage = "";
-      }, 3000);
+      }, 4000);
     }
   }
 
-  getLoggedInUser(Id: string){
+  getLoggedInUser(Id: string) {
     this.authApi.getLoggedInUser(Id).subscribe(
       (data: any) => {
-       this.apiData.saveCurrentUser(data);
-       this.router.navigate(['/admin']);
+        this.apiData.saveCurrentUser(data);
+        this.router.navigate(["/admin"]);
       },
       (err) => {
-        console.log(err);
+        // console.log(err);
       }
-    )
+    );
   }
 
   showErrorAlert() {
@@ -160,8 +139,7 @@ export class loginComponent implements OnInit {
     this.isChecked = !this.isChecked;
 
     if (this.loginform) {
-      this.loginform.get('RememberMe')?.setValue(this.isChecked); 
+      this.loginform.get("RememberMe")?.setValue(this.isChecked);
     }
   }
- 
 }
