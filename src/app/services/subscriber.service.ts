@@ -50,6 +50,13 @@ export class SubscriberService {
     );
   }
 
+  registerAdmin(body: {}) {
+    return this.http.post<any>(
+      environment.serverAPI + "v1/Authenticate/RegisterAdmin",
+      body
+    );
+  }
+
   registerSubscriber(body: {}) {
     return this.http.post<any>(
       environment.serverAPI + "v1/Authenticate/RegisterSubscriber",
@@ -64,10 +71,10 @@ export class SubscriberService {
     );
   }
 
-  deleteUserProfileById(Id: any, aspuId: any) {
+  deleteUserProfileById(Id: any) {
     return this.http.delete<any>(
       environment.serverAPI +
-        `v1/Authenticate/DeleteUserProfileById?id=${Id}&aspuid=${aspuId}`,
+        `v1/Authenticate/DeleteUserProfileById?id=${Id}`,
       this.httpOptions
     );
   }
@@ -149,17 +156,11 @@ export class SubscriberService {
   //   return this.http.delete<any>(url, { params });
   // }
 
-  InsertUpdateUserProfile(body: {}) {
+  UpdateUserProfile(body: {}) {
     return this.http.post<any>(
-      environment.serverAPI + "v1/Authenticate/InsertUpdateUserProfile",
+      environment.serverAPI + "v1/Authenticate/UpdateUserProfile",
       body,
       this.httpOptions
-      // {
-      //   headers: new HttpHeaders().append(
-      //     "Authorization",
-      //     `Bearer ${this.token}`
-      //   ),
-      // }
     );
   }
 

@@ -47,17 +47,20 @@ export class EditUserComponent {
     var SubscriberDetails: any = this.apiData.getUser();
     const subscriberObject = JSON.parse(SubscriberDetails);
 
+    console.log("subscriberObject", subscriberObject)
+
     this.userForm = this.formBuilder.group({
-      userprofileid: [subscriberObject?.userprofileid ?? ''],
       aspuid: [subscriberObject?.aspuid ?? ''],
-      deleted_at: [subscriberObject?.deleted_at ?? ''],
-      updated_at: [subscriberObject?.updated_at ?? ''],
-      isdeleted: [subscriberObject?.isdeleted ?? false],
       created_at: [subscriberObject?.created_at ?? ''],
-      Fullname: [subscriberObject?.fullname || '', Validators.required],
-      Email: [subscriberObject?.email || '', [Validators.required, Validators.email]],
-      UserRole: [subscriberObject?.userrole || '', Validators.required],
-      UserSubscriptionStatus: [subscriberObject?.subscription ?? false, Validators.required],
+      deleted_at: [subscriberObject?.deleted_at ?? ''],
+      email: [subscriberObject?.email || '', [Validators.required, Validators.email]],
+      fullname: [subscriberObject?.fullname || '', Validators.required],
+      isactive: [subscriberObject?.isactive ?? false, Validators.required],
+      isdeleted: [subscriberObject?.isdeleted ?? false],
+      updated_at: [subscriberObject?.updated_at ?? ''],
+      username: [subscriberObject?.username || ''],
+      userrole: [subscriberObject?.userrole || '', Validators.required],
+      userprofileid: [subscriberObject?.userprofileid ?? ''],
     });
 
     this.userRole = subscriberObject?.userrole || '';
@@ -79,7 +82,7 @@ export class EditUserComponent {
  
   onSubmit() {
     this.submitted = true;
-    
+   
     if (!this.userForm.valid) {
       this.userForm.markAllAsTouched();
       return;
@@ -88,24 +91,24 @@ export class EditUserComponent {
     const formValues = this.userForm.value;
     const body = {
       userprofileid: formValues.userprofileid,
+      fullname: formValues.fullname,
+      username: formValues.email,
+      email: formValues.email,
+      userrole: formValues.userrole,
       aspuid: formValues.aspuid,
-      Fullname: formValues.Fullname,
-      Email: formValues.Email,
-      UserRole: formValues.UserRole,
-      created_at: formValues.created_at,
-      UserSubscriptionStatus: formValues.UserSubscriptionStatus,
+      isactive : formValues.isactive,
+      created_at: formValues.created_at
     };
 
-    console.log("body", body)
-  
-    if (this.userEmail === body.Email) {
+    if (this.userEmail === body.email) {
       this.updateUserForm(body);
     } else {
-      this.api.loginEmailExist(body.Email).subscribe(
-        (data) => {
-          if (!data) {
+      this.api.loginEmailExist(body.email).subscribe(
+        (data: any) => {
+
+          if (!data.emailExist) {
             this.updateUserForm(body);
-          } else {
+          } else if (data.emailExist){
             this.showExistingEmailAlert();
           }
         },
@@ -118,7 +121,7 @@ export class EditUserComponent {
   
 
   updateUserForm(body: any) {
-    this.api.InsertUpdateUserProfile(body).subscribe(
+    this.api.UpdateUserProfile(body).subscribe(
       (data: any) => {
 
         console.log("update data", data)
@@ -148,8 +151,8 @@ export class EditUserComponent {
   }
 
   toggleSubscriptionStatus() {
-    const currentValue = this.userForm.controls["UserSubscriptionStatus"].value;
-    this.userForm.controls["UserSubscriptionStatus"].setValue(!currentValue);
+    const currentValue = this.userForm.controls["isactive"].value;
+    this.userForm.controls["isactive"].setValue(!currentValue);
   }
 
   getLoggedInUser(Id: string){

@@ -197,36 +197,58 @@ isFilterActive(): boolean {
         this.selectedDateString = selectedDate;
       }
   }
-
  
-  deleteUser(user: any) {
-   
+  deleteUser(user: any) {   
     const userId = user.userprofileid; 
-    const aspuId = user.aspuid;
 
     Swal.fire({
-      title: 'Are you sure you want to delete?',
+      title: 'Are you sure you want to delete user?',
       icon: 'warning',
       showCancelButton: true,
       confirmButtonText: 'Yes',
       cancelButtonText: 'No',
     }).then((result) => {
       if (result.isConfirmed) {
-        this.spinner.show(); // Show spinner while deleting
-  
+        this.spinner.show(); 
+
         // Call the soft delete API
-        this.apiService.deleteUserProfileById(userId, aspuId).subscribe(
-          () => {
-            user.status = 'deleted';
+        this.apiService.deleteUserProfileById(userId).subscribe(
+          (response: any) => {
+            if(response.success){
+              this.showSuccessAlert();
+              this.getAllSubscribers();
+            } else {
+              this.showFailedAlert();
+            }
             this.spinner.hide();
-            this.getAllSubscribers();
           },
           (error) => {
-            console.error("Error soft deleting user:", error);
+            console.error("Error deleting user:", error);
             this.spinner.hide();
+            this.showFailedAlert();
           }
         );
       }
+    });
+  }
+
+  showSuccessAlert() {
+    Swal.fire({
+      icon: "success",
+      title: "Deleted!",
+      text: "You have successfully deleted the user",
+      showConfirmButton: false,
+      timer: 1500,
+    });
+  }
+
+  showFailedAlert() {
+    Swal.fire({
+      icon: "success",
+      title: "Failed!",
+      text: "Deletion of user not successful",
+      showConfirmButton: false,
+      timer: 1500,
     });
   }
 

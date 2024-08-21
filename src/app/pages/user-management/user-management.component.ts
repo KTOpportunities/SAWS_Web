@@ -79,8 +79,7 @@ export class UserManagementComponent implements OnInit {
 
   deleteUser(user: any) {
     const userId = user.userprofileid; 
-    const aspuId = user.aspuid; 
-
+    
     Swal.fire({
       title: 'Are you sure you want to delete?',
       icon: 'warning',
@@ -92,7 +91,7 @@ export class UserManagementComponent implements OnInit {
         this.spinner.show(); // Show spinner while deleting
   
         // Call the soft delete API
-        this.apiService.deleteUserProfileById(userId, aspuId).subscribe(
+        this.apiService.deleteUserProfileById(userId).subscribe(
           () => {
             
             user.status = 'deleted';

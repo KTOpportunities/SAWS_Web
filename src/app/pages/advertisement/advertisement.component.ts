@@ -105,8 +105,6 @@ constructor(
           this.spinner.hide();
           this.advertList = data.Data;
 
-          // debugger;
-
           sessionStorage.removeItem('currentPage');
           sessionStorage.removeItem('pageSize');
 

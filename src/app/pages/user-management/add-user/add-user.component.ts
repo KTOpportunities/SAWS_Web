@@ -22,7 +22,6 @@ import { Dataservice } from "src/app/services/data.service";
   styleUrls: ["./add-user.component.css"],
 })
 export class AddUserComponent implements OnInit {
-  
   userForm: FormGroup;
   submitted = false;
   userRole: any;
@@ -34,8 +33,7 @@ export class AddUserComponent implements OnInit {
     private formBuilder: FormBuilder,
     private api: SubscriberService,
     private apiData: Dataservice,
-    private router: Router,
-
+    private router: Router
   ) {
     this.userForm = this.formBuilder.group({
       Fullname: ["", Validators.required],
@@ -50,14 +48,14 @@ export class AddUserComponent implements OnInit {
     var currentUrl: any = this.apiData.getUserUrl();
     const currentUrlObj = JSON.parse(currentUrl);
 
-    if(currentUrlObj){
+    if (currentUrlObj) {
       if (currentUrlObj === "/admin/adminUser") {
         this.userForm.patchValue({
-          UserRole: 'Admin',
+          UserRole: "Admin",
         });
       } else {
         this.userForm.patchValue({
-          UserRole: 'Subscriber',
+          UserRole: "Subscriber",
         });
       }
     }
@@ -77,7 +75,7 @@ export class AddUserComponent implements OnInit {
       }
     } else {
       return null;
-    }     
+    }
   }
 
   togglePasswordVisibility() {
@@ -105,9 +103,9 @@ export class AddUserComponent implements OnInit {
   //   const username = control.value;
   //   // Check for spaces in the username
   //   const isInvalid = /\s/.test(username);
-  //   // Check if the username contains only letters, numbers, underscores, or hyphens 
+  //   // Check if the username contains only letters, numbers, underscores, or hyphens
   //   const isValid = !isInvalid && /^[a-zA-Z0-9_-]+$/.test(username);
-  
+
   //   return isValid ? null : { 'invalidUsername': { value: username } };
   // }
 
@@ -118,48 +116,53 @@ export class AddUserComponent implements OnInit {
       Email: this.userForm.controls["Email"].value,
       Username: this.userForm.controls["Email"].value,
       Password: this.userForm.controls["Password"].value,
-      UserRole: this.userForm.controls["UserRole"].value,
     };
 
-    this.userRole = body.UserRole;
+    this.userRole = this.userForm.controls["UserRole"].value;
+
     if (this.userForm.invalid) {
       return;
     } else {
-      
       this.api.loginEmailExist(body.Email).subscribe(
-        (data) => {
-
-          if(!data) {
-            this.saveUserForm(body);
-
+        (data: any) => {
+          if (!data.emailExist) {
+            this.saveUserForm(body, this.userRole);
           } else {
-            this.showExistingEmailAlert()
+            this.showExistingEmailAlert();
           }
         },
         (error) => {
           console.error(error);
         }
-      );    
-
+      );
     }
   }
 
-  saveUserForm(body: any){
-    this.api.registerSubscriber(body)
-      .subscribe((data: any) => {
+  saveUserForm(body: any, role: any) {
+    debugger;
+    if (role == "Admin") {
+      this.api.registerAdmin(body).subscribe(
+        (data: any) => {
+          this.showSuccessAlert();
 
-        this.showSuccessAlert();
-
-        if(this.userRole == 'Admin'){
-          this.router.navigate(['/admin/adminUser']);
-        } else {
-          this.router.navigate(['/admin/subscriberUser']);
-        }
-
-        this.apiData.removeUserUrl();
-      }, 
-      (err) => console.log("error", err)
+          this.router.navigate(["/admin/adminUser"]);
+          this.apiData.removeUserUrl();
+        },
+        (err) => console.log("error", err)
       );
+    } else if (role == "Subscriber") {
+      this.api.registerSubscriber(body).subscribe(
+        (data: any) => {
+          this.showSuccessAlert();
+
+          this.router.navigate(["/admin/subscriberUser"]);
+          this.apiData.removeUserUrl();
+        },
+        (err) => console.log("error", err)
+      );
+    } else {
+      return;
+    }
   }
 
   onCancel() {
@@ -192,10 +195,9 @@ export class AddUserComponent implements OnInit {
       text: "Email already exist!",
       showConfirmButton: false,
       timer: 2500,
-
     });
   }
-  
+
   onReset() {
     this.submitted = false;
     this.userForm.reset();
