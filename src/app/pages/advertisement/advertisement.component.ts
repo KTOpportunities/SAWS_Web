@@ -25,9 +25,9 @@ export class AdvertisementComponent implements OnInit {
 
   displayedColumns: string[] = [
     "uploaded_by",
-    "uploaded_date",
     "advert_caption",
     "advert",
+    "uploaded_date",
     "publish",
     "action",
   ];
@@ -101,18 +101,18 @@ constructor(
 
 
     this.apiAdmin.GetPagedAllAdverts(this.currentPage + page, this.pageSize).subscribe({
-      next: (data: any) => {
+      next: (response: any) => {
           this.spinner.hide();
-          this.advertList = data.Data;
+          this.advertList = response.data;
 
           sessionStorage.removeItem('currentPage');
           sessionStorage.removeItem('pageSize');
 
-          this.TotalRecords = data.TotalRecords;
+          this.TotalRecords = response.totalRecords;
      
           setTimeout(() => {
             this.paginator.pageIndex = this.currentPage;
-            this.paginator.length = data.TotalRecords;
+            this.paginator.length = response.totalRecords;
           });
         
           this.dataSource = new MatTableDataSource(this.advertList);
@@ -243,9 +243,9 @@ filterStatus() {
     sessionStorage.setItem('pageSize', `${this.pageSize}`);
 
     this.apiAdmin.getAdvertByAdvertId(advertId).subscribe(
-      (data) => {
+      (response: any) => {
         // this.apiData.saveAdvert(data.Value.DetailDescription);
-        this.apiData.setAdvertData(data.Value.DetailDescription);
+        this.apiData.setAdvertData(response.detailDescription);
         this.router.navigate(["/admin/advertisement/viewAdvert"]);
       },
       (error) => {

@@ -57,9 +57,8 @@ export class AddAdvertisementComponent implements OnInit {
     this.advertForm = this.formBuilder.group({
       advertId: [0],
       advert_caption: ["", Validators.required],
-      advert_url: ["", Validators.required],
       uploaded_by: [this.userEmail],
-      isdeleted: [false],
+      advert_url: ["", Validators.required],
       ispublished: [false],
       advertFile: ["", Validators.required]
     });
@@ -75,7 +74,6 @@ export class AddAdvertisementComponent implements OnInit {
       advert_caption: this.advertForm.controls["advert_caption"].value,
       advert_url: this.advertForm.controls["advert_url"].value,
       uploaded_by: this.advertForm.controls["uploaded_by"].value,
-      isdeleted: this.advertForm.controls["isdeleted"].value,
       ispublished: this.advertForm.controls["ispublished"].value
     };
    
@@ -88,12 +86,9 @@ export class AddAdvertisementComponent implements OnInit {
 
   saveAdvertForm(body: any){
     this.api.postInsertNewAdvert(body)
-      .subscribe((data: any) => {        
-
+      .subscribe((response: any) => {        
         this.showSuccessAlert();
-
-        this.onUpload(data.DetailDescription.advertId);
-
+        this.onUpload(response.newId);
         this.router.navigate(['/admin/advertisement']);
       }, 
       (err) => console.log("error", err)
@@ -101,8 +96,9 @@ export class AddAdvertisementComponent implements OnInit {
   }
 
   onUpload(id: number) {
+    
     if (this.files.length > 0) {
-
+    
       this.files[0].Id = 0;
       this.files[0].advertId = id;
 
@@ -120,6 +116,7 @@ export class AddAdvertisementComponent implements OnInit {
 
       this.api.PostDocsForAdvert(formData).subscribe(
         (event: any) => {
+          console.log("event", event)
           this.resetFilesInp();
         },
         (err) => {

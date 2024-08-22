@@ -105,13 +105,6 @@ export class SubscriberService {
     return this.http.post<any>(
       environment.serverAPI + "v1/Adverts/PostInsertNewAdvert",
       body
-      // this.httpOptions
-      // {
-      //   headers: new HttpHeaders().append(
-      //     "Authorization",
-      //     `Bearer ${this.token}`
-      //   ),
-      // }
     );
   }
 
@@ -137,6 +130,7 @@ export class SubscriberService {
   }
 
   PostDocsForAdvert(formData: any) {
+    debugger
     return this.http.post<any>(
       environment.serverAPI + "v1/FileManager/PostDocsForAdvert",
       formData

@@ -36,7 +36,7 @@ export class ViewAdvertImageComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: any
     )  {
       const currentDate = new Date();
-      
+      debugger
       this.baseUrl =
       this.sanitizer.bypassSecurityTrustResourceUrl(
         data.url

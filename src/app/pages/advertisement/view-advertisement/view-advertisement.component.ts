@@ -6,15 +6,19 @@ import { Admin } from "src/app/Models/admin.model";
 import { AuthService } from "src/app/services/auth.service";
 import { Dataservice } from "src/app/services/data.service";
 import { SubscriberService } from "src/app/services/subscriber.service";
-import { MatDialog, MatDialogRef, MatDialogConfig } from '@angular/material/dialog';
-import { DomSanitizer } from '@angular/platform-browser';
+import {
+  MatDialog,
+  MatDialogRef,
+  MatDialogConfig,
+} from "@angular/material/dialog";
+import { DomSanitizer } from "@angular/platform-browser";
 import Swal from "sweetalert2";
 import { ViewAdvertImageComponent } from "../view-advert-image/view-advert-image.component";
 
 @Component({
-  selector: 'app-view-advertisement',
-  templateUrl: './view-advertisement.component.html',
-  styleUrls: ['./view-advertisement.component.css']
+  selector: "app-view-advertisement",
+  templateUrl: "./view-advertisement.component.html",
+  styleUrls: ["./view-advertisement.component.css"],
 })
 export class ViewAdvertisementComponent {
   advertForm: FormGroup;
@@ -22,23 +26,21 @@ export class ViewAdvertisementComponent {
   subscriberObject: any;
   dialogRef: any;
   adminUser: Admin[] = [];
-  userRole: any = '';
-  userEmail: any = '';
-  url: any = '';
-  fileType: any = '';
+  userRole: any = "";
+  userEmail: any = "";
+  url: any = "";
+  fileType: any = "";
   files: AdvertDocument[] = [];
 
-  
-  constructor (
+  constructor(
     private formBuilder: FormBuilder,
     private authApi: AuthService,
     private api: SubscriberService,
     private apiData: Dataservice,
     private router: Router,
     private sanitizer: DomSanitizer,
-    public dialog: MatDialog,
-    ) {
-
+    public dialog: MatDialog
+  ) {
     this.advertForm = this.formBuilder.group({
       advertId: [],
       advert_caption: [],
@@ -48,22 +50,28 @@ export class ViewAdvertisementComponent {
       created_at: [],
       uploaded_by: [],
       advert_url: [],
-      DocAdverts: [[]]
+      docAdverts: [[]],
     });
   }
-  
+
   ngOnInit() {
-    this.apiData.getFeedbackData().subscribe(data => {
-      this.advertForm.patchValue(data.Advert);
-      
-      this.url = data.FileUrl;
-      this.fileType = this.apiData.getFileType(data.Advert.DocAdverts[0].file_mimetype);
+    this.apiData.getFeedbackData().subscribe((data) => {
+      debugger;
+      this.advertForm.patchValue(data.advert);
 
+      this.url = data.fileUrl;
+      this.fileType = this.apiData.getFileType(
+        data.advert.docAdverts[0].file_mimetype
+      );
     });
   }
 
-  openViewImageDialog(element: any, enterAnimationDuration: string, exitAnimationDuration: string) {
-
+  openViewImageDialog(
+    element: any,
+    enterAnimationDuration: string,
+    exitAnimationDuration: string
+  ) {
+    
     const dialogConfig = new MatDialogConfig();
 
     dialogConfig.autoFocus = true;
@@ -76,23 +84,22 @@ export class ViewAdvertisementComponent {
     const dialogRef = this.dialog.open(ViewAdvertImageComponent, {
       data: {
         url: this.url,
-        fileType: this.fileType
+        fileType: this.fileType,
       },
       enterAnimationDuration,
       exitAnimationDuration,
-      width:'auto',
+      width: "auto",
     });
 
-    dialogRef.afterClosed().subscribe((result: any) => {
-    });  
+    dialogRef.afterClosed().subscribe((result: any) => {});
   }
 
-    onCancel() {
-      Swal.close();
-      this.router.navigate(['/admin/advertisement']);
+  onCancel() {
+    Swal.close();
+    this.router.navigate(["/admin/advertisement"]);
   }
 
   convertBytesToMegabytes(bytes: number): number {
-     return bytes / (1024 * 1024);
+    return bytes / (1024 * 1024);
   }
 }

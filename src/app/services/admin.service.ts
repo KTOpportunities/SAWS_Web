@@ -82,7 +82,6 @@ export class AdminService {
   getAdvertByAdvertId(Id: any) {
     return this.http.get<any>(
       environment.serverAPI + `v1/Adverts/GetAdvertByAdvertId?Id=${Id}`,
-      
     );
   }
 
