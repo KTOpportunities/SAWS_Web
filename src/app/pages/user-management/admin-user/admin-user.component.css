@@ -89,9 +89,18 @@
     margin-top: 10px;
   }
 
-  .mat-column-action {
-    max-width: 150px;
-    min-width: 140px;
+  .mat-column-action, 
+  .mat-column-status,
+  .mat-column-userrole,
+  .mat-column-package,
+  .mat-column-created_at{
+    max-width: 100px;
+    min-width: 50px;
+  }
+
+  .mat-column-created_at{
+    max-width: 140px;
+    min-width: 100px;
   }
 
   /* .mat-mdc-row:hover .mat-mdc-cell {

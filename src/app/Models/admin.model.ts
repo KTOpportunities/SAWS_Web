@@ -9,5 +9,5 @@ export interface Admin {
   updated_at: string;
   isdeleted: boolean;
   deleted_at: any;
-  // subscription: boolean;
+  subscription: any[];
 }

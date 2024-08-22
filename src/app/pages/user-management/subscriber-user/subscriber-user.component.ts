@@ -28,9 +28,10 @@ export class SubscriberUserComponent implements OnInit {
   displayedColumns: string[] = [
     "fullname",
     "email",
-    "userrole",
     "created_at",
+    "userrole",
     "status",
+    "package",
     "action",
   ];
 

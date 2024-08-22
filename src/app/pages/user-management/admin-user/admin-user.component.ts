@@ -31,8 +31,9 @@ export class AdminUserComponent implements OnInit {
   displayedColumns: string[] = [
     "fullname",
     "email",
-    "userrole",
     "created_at",
+    "userrole",
+    "package",
     "status",
     "action",
   ];
