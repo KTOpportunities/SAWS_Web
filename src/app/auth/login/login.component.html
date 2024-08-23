@@ -78,7 +78,11 @@
                                     Password is required
                                 </span>
                             </div>
-                            <div class="form-flex">
+                            <div class="form-forgot">
+                                <a (click)="forgotPassword()"
+                                class="forgot-password">Forgot password</a>
+                            </div>
+                            <!-- <div class="form-flex">
                                 <label class="w-checkbox checkbox-wrap" (click)="toggleCheckbox()">
                                     <div class="w-checkbox-input w-checkbox-input--inputType-custom remember" [style.background-color]="isChecked ? '#008c1d' : '#fff'"></div>
                                     <input
@@ -94,7 +98,7 @@
                                   </label>
                                 <a (click)="forgotPassword()"
                                     class="forgot-password">Forgot password</a>
-                            </div>
+                            </div> -->
                         <a (click)="login()"
                             class="loginbutton w-button">Login</a>
                         <!-- <h5 class="heading-2">Need an account? Create account</h5> -->

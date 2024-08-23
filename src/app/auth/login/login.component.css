@@ -264,7 +264,7 @@
     padding-right: 0;
     display: flex;
   }
-  
+ 
   .field-input {
     width: 328px;
     height: 35px;
@@ -394,21 +394,29 @@
     background-color: #1f6a45;
     border-color: #1f6a45;
   }
+
+  .form-forgot {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end
+  }
   
   .forgot-password {
     /* color: #0256f7; */
     color: #00386c;
     border-bottom: 1px solid rgba(127, 86, 218, 0);
     justify-content: center;
-    margin-top: 0;
-    margin-left: 87px;
-    padding-left: 0;
+    /* margin-top: 0; */
+    /* margin-left: 87px; */
+    padding: 0;
     font-family: Montserrat, sans-serif;
     font-weight: 500;
     font-size: 14px;
     text-decoration: none;
     display: flex;
     cursor: pointer;
+    margin: 0 0 10px 0;
   }
   
   .forgot-password:hover {
