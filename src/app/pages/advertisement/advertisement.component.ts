@@ -266,8 +266,8 @@ filterStatus() {
     sessionStorage.setItem('pageSize', `${this.pageSize}`);
 
     this.apiAdmin.getAdvertByAdvertId(advertId).subscribe(
-      (data) => {
-         this.apiData.setAdvertData(data.Value.DetailDescription);
+      (response: any) => {
+         this.apiData.setAdvertData(response.detailDescription);
         this.router.navigate(["/admin/advertisement/editAdvert"]);
       },
       (error) => {

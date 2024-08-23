@@ -63,22 +63,23 @@ export class EditAdvertisementComponent implements OnInit {
       created_at: [],
       uploaded_by: [],
       advert_url: ['', Validators.required],
-      DocAdverts: [[], Validators.required],
+      docAdverts: [[], Validators.required],
       advertFile: ['']
     });
   }
 
   ngOnInit() {
     this.apiData.getFeedbackData().subscribe(data => {
-      this.advertForm.patchValue(data.Advert);
+      this.advertForm.patchValue(data.advert);
       
       this.url = data.FileUrl;
-      this.fileType = this.apiData.getFileType(data.Advert.DocAdverts[0].file_mimetype)
-      // this.files = data.Advert.DocAdverts[0];
+      this.fileType = this.apiData.getFileType(data.advert.docAdverts[0].file_mimetype)
+      // this.files = data.advert.docAdverts[0];
 
-      this.fileId = data.Advert.DocAdverts[0].Id;
-      this.advertId = data.Advert.advertId;
-      this.createdAt = data.Advert.DocAdverts[0].created_at;
+      this.fileId = data.advert.docAdverts[0].id;
+      this.advertId = data.advert.advertId;
+      this.createdAt = data.advert.docAdverts[0].created_at;
+      debugger
     });
   }
 
@@ -112,6 +113,8 @@ export class EditAdvertisementComponent implements OnInit {
       created_at: formValues.created_at,
     };
 
+    debugger
+
     this.updateAdvertForm(body);
 
   }  
@@ -121,9 +124,10 @@ export class EditAdvertisementComponent implements OnInit {
     this.api.postInsertNewAdvert(body).subscribe(
       (data: any) => {
        
+        debugger
         // this.onUpload();
 
-        this.onUpload(data.DetailDescription.advertId);
+        this.onUpload(data.oldId);
         
         this.router.navigate(['/admin/advertisement']);
 
@@ -137,6 +141,8 @@ export class EditAdvertisementComponent implements OnInit {
   }
 
   onUpload(id: number) {
+
+    debugger
 
     if (this.files.length > 0) {
 
@@ -156,11 +162,16 @@ export class EditAdvertisementComponent implements OnInit {
         formData.append(`files[${i}].file`, this.files[i].file);
       }
 
+      debugger
+
       this.api.PostDocsForAdvert(formData).subscribe(
         (event: any) => {
+          debugger
+          console.log("event", event)
           this.resetFilesInp();
         },
         (err) => {
+          debugger
           console.log('file upload failed: ', err);
         }
       );

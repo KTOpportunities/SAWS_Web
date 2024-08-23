@@ -22,7 +22,6 @@ export class ViewAdvertImageComponent implements OnInit {
   isVideo: boolean = false;
   isAudio: boolean = false;
   isApplication: boolean = false;
-
   
   constructor (
     private formBuilder: FormBuilder,
