@@ -11,6 +11,6 @@ export interface Advert {
     isdeleted: boolean
     ispublished: boolean
     deleted_at: any
-    DocAdverts: AdvertDocument[]
+    docAdverts: AdvertDocument[]
 }
   
