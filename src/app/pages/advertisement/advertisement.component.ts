@@ -220,14 +220,16 @@ filterStatus() {
     }).then((result) => {
       if (result.isConfirmed) {
         this.spinner.show();
+        debugger
         this.apiService.deleteAdvertById(advertId).subscribe(
           () => {
             this.spinner.hide();
             this.getAllAdverts();
           },
-          (error) => {
+          (error: any) => {
             console.error("Error soft deleting advertisement:", error);
             this.spinner.hide();
+            this.showUnsuccessfulAlert();
           }
         );
       }
