@@ -1,24 +1,24 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup,  Validators } from '@angular/forms';
-import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
-import { Router } from '@angular/router';
-import { NgxSpinnerService } from 'ngx-spinner';
-import { AdminService } from 'src/app/services/admin.service';
-import { AuthService } from 'src/app/services/auth.service';
-import { Dataservice } from 'src/app/services/data.service';
-import { SubscriberService } from 'src/app/services/subscriber.service';
-import Swal from 'sweetalert2';
-import { AttachmentFileComponent } from '../attachment-file/attachment-file.component';
-import { fileDataFeedback } from 'src/app/Models/File';
-import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
-
+import { Component, ElementRef, OnInit, ViewChild } from "@angular/core";
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { MatDialog, MatDialogConfig } from "@angular/material/dialog";
+import { Router } from "@angular/router";
+import { NgxSpinnerService } from "ngx-spinner";
+import { AdminService } from "src/app/services/admin.service";
+import { AuthService } from "src/app/services/auth.service";
+import { Dataservice } from "src/app/services/data.service";
+import { SubscriberService } from "src/app/services/subscriber.service";
+import Swal from "sweetalert2";
+import { AttachmentFileComponent } from "../attachment-file/attachment-file.component";
+import { fileDataFeedback } from "src/app/Models/File";
+import { DomSanitizer, SafeResourceUrl } from "@angular/platform-browser";
+import { coerceCssPixelValue } from "@angular/cdk/coercion";
 
 @Component({
-  selector: 'app-view-feedback',
-  templateUrl: './view-feedback.component.html',
-  styleUrls: ['./view-feedback.component.css']
+  selector: "app-view-feedback",
+  templateUrl: "./view-feedback.component.html",
+  styleUrls: ["./view-feedback.component.css"],
 })
-export class ViewFeedbackComponent implements OnInit{
+export class ViewFeedbackComponent implements OnInit {
   feedbackData: any;
   feedbackForm: FormGroup;
   userEmail: any;
@@ -38,15 +38,15 @@ export class ViewFeedbackComponent implements OnInit{
   selectedFileSrc: string | ArrayBuffer | null = null;
   selectedFileType: string | undefined;
 
-  @ViewChild('myFileInput') myFileInputVariable!: ElementRef;
-  @ViewChild('content') content!: ElementRef;
+  @ViewChild("myFileInput") myFileInputVariable!: ElementRef;
+  @ViewChild("content") content!: ElementRef;
 
   fileFeedback: any = {};
-  fileType: any = '';
+  fileType: any = "";
 
   files: fileDataFeedback[] = [];
 
-  constructor (
+  constructor(
     private formBuilder: FormBuilder,
     private apiAdmin: AdminService,
     private authApi: AuthService,
@@ -56,8 +56,7 @@ export class ViewFeedbackComponent implements OnInit{
     private spinner: NgxSpinnerService,
     public dialog: MatDialog,
     private sanitizer: DomSanitizer
-  )  {
-    
+  ) {
     this.feedbackForm = this.formBuilder.group({
       feedbackId: [],
       title: [],
@@ -71,15 +70,14 @@ export class ViewFeedbackComponent implements OnInit{
       isdeleted: [],
       deleted_at: [],
       isresponded: [],
-      feedbackFile: [''],
-      responseMessage: ['', Validators.required],
-      FeedbackMessages: [[]],
+      feedbackFile: [""],
+      responseMessage: ["", Validators.required],
+      feedbackMessages: [[]],
     });
-    
   }
 
   ngOnInit() {
-    this.apiData.getFeedbackData().subscribe(data => {
+    this.apiData.getFeedbackData().subscribe((data) => {
       this.feedbackData = data;
       this.feedbackForm.patchValue(data);
 
@@ -89,22 +87,20 @@ export class ViewFeedbackComponent implements OnInit{
     var user: any = this.apiData.getCurrentUser();
 
     if (user) {
-      const userLoginDetails =  JSON.parse(user);
+      const userLoginDetails = JSON.parse(user);
       this.userEmail = userLoginDetails.userEmail;
       this.userId = userLoginDetails.userID;
     }
-
   }
 
   ngAfterViewChecked() {
     this.scrollToBottom();
   }
 
-  onSubmit() {   
+  onSubmit() {
     if (this.isResponseMessageValid() && this.feedbackForm.valid) {
-  
       const formValues = this.feedbackForm.value;
-  
+
       const body = {
         feedbackId: formValues.feedbackId,
         fullname: formValues.fullname,
@@ -115,31 +111,28 @@ export class ViewFeedbackComponent implements OnInit{
         created_at: formValues.created_at,
         title: formValues.title,
         isresponded: true,
-        FeedbackMessages: [
+        feedbackMessages: [
           {
             senderId: formValues.senderId,
             senderEmail: formValues.senderEmail,
             responderId: this.userId,
             responderEmail: this.userEmail,
-            feedback: '',
+            feedback: "",
             response: formValues.responseMessage,
           },
-        ]
+        ],
       };
-  
-      this.updateFeedbackForm(body);
 
+      this.updateFeedbackForm(body);
     } else {
       return;
     }
-
   }
 
-  onSubmitAttachment() {   
-    if ( this.selectedFile ) {
-  
+  onSubmitAttachment() {
+    if (this.selectedFile) {
       const formValues = this.feedbackForm.value;
-  
+
       const body = {
         feedbackId: formValues.feedbackId,
         fullname: formValues.fullname,
@@ -150,31 +143,29 @@ export class ViewFeedbackComponent implements OnInit{
         created_at: formValues.created_at,
         title: formValues.title,
         isresponded: true,
-        FeedbackMessages: [
+        feedbackMessages: [
           {
             senderId: formValues.senderId,
             senderEmail: formValues.senderEmail,
             responderId: this.userId,
             responderEmail: this.userEmail,
-            feedback: '',
-            response: '',
-            feedbackAttachment: '',
-            feedbackAttachmentFileName: '',
+            feedback: "",
+            response: "",
+            feedbackAttachment: "",
+            feedbackAttachmentFileName: "",
             responseAttachment: formValues.responseMessage,
             responseAttachmentFileName: this.selectedFileName,
           },
-        ]
+        ],
       };
       this.updateFeedbackFormWithAttachment(body);
     } else {
       return;
     }
-
   }
 
   onUpload(id: number) {
     if (this.files.length > 0) {
-
       this.files[0].Id = 0;
       this.files[0].feedbackMessageId = id;
 
@@ -193,11 +184,10 @@ export class ViewFeedbackComponent implements OnInit{
       this.api.PostDocsForFeedback(formData).subscribe(
         (event: any) => {
           this.resetFilesInp();
-
           this.getFeedback(this.feedbackData.feedbackId);
         },
         (err) => {
-          console.log('file upload failed: ', err);
+          console.log("file upload failed: ", err);
         }
       );
     }
@@ -225,11 +215,13 @@ export class ViewFeedbackComponent implements OnInit{
   }
 
   updateFeedbackForm(body: any) {
-
     this.api.postInsertNewFeedback(body).subscribe(
       (data: any) => {
         this.feedbackForm.reset();
-        this.getFeedback(this.feedbackData.feedbackId)
+
+        // this.getFeedback(this.feedbackData.feedbackId)
+        // this.getFeedback(data.oldId);
+        this.getFeedback(data.detailDescription.feedbackId);
       },
       (err) => {
         console.log("Error:", err);
@@ -239,11 +231,12 @@ export class ViewFeedbackComponent implements OnInit{
   }
 
   updateFeedbackFormWithAttachment(body: any) {
-
     this.api.postInsertNewFeedback(body).subscribe(
       (data: any) => {
         this.feedbackForm.reset();
-        this.onUpload(data.DetailDescription.FeedbackMessages[0].feedbackMessageId);
+        this.onUpload(
+          data.detailDescription.feedbackMessages[0].feedbackMessageId
+        );
       },
       (err) => {
         console.log("Error:", err);
@@ -255,13 +248,12 @@ export class ViewFeedbackComponent implements OnInit{
   getFeedback(feedbackId: number) {
     this.apiAdmin.getFeedbackById(feedbackId).subscribe(
       (data) => {
-        this.apiData.setFeedbackData(data);
+        this.apiData.setFeedbackData(data.detailDescription);
       },
       (error) => {
         console.error("Error in fetching data:", error);
         this.spinner.hide();
       }
-
     );
   }
 
@@ -269,9 +261,14 @@ export class ViewFeedbackComponent implements OnInit{
     return this.sanitizer.bypassSecurityTrustResourceUrl(url);
   }
 
-  openAttachmentDialog(element: any, enterAnimationDuration: string, exitAnimationDuration: string) {
-
-    this.fileType = this.apiData.getFileType(element.file_mimetype || this.selectedFileType);
+  openAttachmentDialog(
+    element: any,
+    enterAnimationDuration: string,
+    exitAnimationDuration: string
+  ) {
+    this.fileType = this.apiData.getFileType(
+      element.file_mimetype || this.selectedFileType
+    );
 
     this.shouldScrollToBottom = false;
 
@@ -286,59 +283,58 @@ export class ViewFeedbackComponent implements OnInit{
       data: {
         feedbackData: element,
         imageSRC: this.selectedFileSrc || element.file_url,
-        message: formValues.responseMessage || '',
+        message: formValues.responseMessage || "",
         responderEmail: this.userEmail,
         resonderId: this.userId,
         addFile: this.addFile,
-        fileType: this.fileType
+        fileType: this.fileType,
       },
       enterAnimationDuration,
       exitAnimationDuration,
-      width:'65%',
+      width: "65%",
       // height:'80%',
     });
 
-    
     dialogRef.afterClosed().subscribe((result: any) => {
-      if(result == 'submit'){
+      if (result == "submit") {
         this.onSubmitAttachment();
         this.shouldScrollToBottom = true;
       }
-      
+
       this.selectedFile = undefined;
       this.selectedFileSrc = null;
       this.selectedFileType = undefined;
       this.addFile = false;
       // this.feedbackForm.reset();
-    });  
+    });
   }
 
   scrollToBottom() {
     if (this.shouldScrollToBottom) {
       try {
-        this.content.nativeElement.scrollTop = this.content.nativeElement.scrollHeight;
+        this.content.nativeElement.scrollTop =
+          this.content.nativeElement.scrollHeight;
       } catch (err) {}
     }
   }
 
   isResponseMessageValid(): boolean {
-    const responseMessage = this.feedbackForm.get('responseMessage')?.value;
-    return responseMessage && responseMessage.trim() !== '';
+    const responseMessage = this.feedbackForm.get("responseMessage")?.value;
+    return responseMessage && responseMessage.trim() !== "";
   }
 
   onFileSelected(event: any) {
-
     const file = event.target.files[0];
     this.selectedFile = file;
     this.selectedFileName = file.name;
     this.selectedFileType = file.type;
 
-    if ( file.size <= 26214400 ) {
+    if (file.size <= 26214400) {
       const reader = new FileReader();
       reader.onload = () => {
         this.selectedFileSrc = reader.result;
         this.addFile = true;
-        this.openAttachmentDialog(this.feedbackData, '500ms', '500ms');
+        this.openAttachmentDialog(this.feedbackData, "500ms", "500ms");
       };
 
       reader.onerror = (error) => {
@@ -346,22 +342,17 @@ export class ViewFeedbackComponent implements OnInit{
       };
       reader.readAsDataURL(file);
 
-      this.updateFileData(
-          this.fileFeedback,
-          event.target.files[0],
-          "Feedback"
-         );
-    }
-      else {
-        this.alertFileMessage("Feedback",`${file.type}`)
-        this.resetFilesInp();
+      this.updateFileData(this.fileFeedback, event.target.files[0], "Feedback");
+    } else {
+      this.alertFileMessage("Feedback", `${file.type}`);
+      this.resetFilesInp();
     }
 
     event.target.value = null;
   }
 
   onCancel() {
-    this.router.navigate(['/admin/feedback']);
+    this.router.navigate(["/admin/feedback"]);
   }
 
   showUnsuccessfulAlert() {
@@ -373,17 +364,18 @@ export class ViewFeedbackComponent implements OnInit{
   }
 
   resetFilesInp() {
-    this.myFileInputVariable.nativeElement.value = '';
+    this.myFileInputVariable.nativeElement.value = "";
   }
 
   alertFileMessage(message: string, text: string) {
     Swal.fire({
       icon: "warning",
       title: message,
-      text: text.toUpperCase() + " file exceeds 25Mb, please upload a smaller size file",
+      text:
+        text.toUpperCase() +
+        " file exceeds 25Mb, please upload a smaller size file",
       showConfirmButton: false,
       timer: 2000,
     });
   }
-
 }

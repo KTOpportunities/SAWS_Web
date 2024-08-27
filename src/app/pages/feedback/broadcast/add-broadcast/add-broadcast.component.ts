@@ -51,7 +51,7 @@ export class AddBroadcastComponent implements OnInit{
       deleted_at: [],
       isresponded: [],
       broadcastMessage: ['', Validators.required],
-      FeedbackMessages: [[]]
+      feedbackMessages: [[]]
     });
 
   }
@@ -95,7 +95,7 @@ export class AddBroadcastComponent implements OnInit{
           isresponded: true,
           broadcasterId: this.userId,
           broadcasterEmail: this.userEmail,
-          FeedbackMessages: [
+          feedbackMessages: [
             {
               senderId: formValues.senderId,
               senderEmail: formValues.senderEmail,
@@ -120,7 +120,6 @@ export class AddBroadcastComponent implements OnInit{
   }
 
   addBroadcastMessageForm(broadcastData: any[]) {
-
     this.api.postInsertBroadcastMessages(broadcastData).subscribe(
       (data: any) => {
         this.broadcastForm.reset();

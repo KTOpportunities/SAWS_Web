@@ -79,7 +79,6 @@ export class EditAdvertisementComponent implements OnInit {
       this.fileId = data.advert.docAdverts[0].id;
       this.advertId = data.advert.advertId;
       this.createdAt = data.advert.docAdverts[0].created_at;
-      debugger
     });
   }
 
@@ -113,8 +112,6 @@ export class EditAdvertisementComponent implements OnInit {
       created_at: formValues.created_at,
     };
 
-    debugger
-
     this.updateAdvertForm(body);
 
   }  
@@ -124,7 +121,6 @@ export class EditAdvertisementComponent implements OnInit {
     this.api.postInsertNewAdvert(body).subscribe(
       (data: any) => {
        
-        debugger
         // this.onUpload();
 
         this.onUpload(data.oldId);
@@ -141,8 +137,6 @@ export class EditAdvertisementComponent implements OnInit {
   }
 
   onUpload(id: number) {
-
-    debugger
 
     if (this.files.length > 0) {
 
@@ -162,16 +156,12 @@ export class EditAdvertisementComponent implements OnInit {
         formData.append(`files[${i}].file`, this.files[i].file);
       }
 
-      debugger
-
       this.api.PostDocsForAdvert(formData).subscribe(
         (event: any) => {
-          debugger
           console.log("event", event)
           this.resetFilesInp();
         },
         (err) => {
-          debugger
           console.log('file upload failed: ', err);
         }
       );

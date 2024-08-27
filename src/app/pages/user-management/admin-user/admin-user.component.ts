@@ -263,7 +263,6 @@ export class AdminUserComponent implements OnInit {
     }).then((result) => {
       if (result.isConfirmed) {
         this.spinner.show();
-        debugger
 
         this.apiService.deleteUserProfileById(userId).subscribe(
           (response: any) => {

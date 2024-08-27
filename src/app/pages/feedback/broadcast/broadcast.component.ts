@@ -101,17 +101,17 @@ export class BroadcastComponent implements OnInit{
 
 
     this.apiAdmin.getPagedAllFeedbacksByUniqueEmail(this.currentPage + page, this.pageSize).subscribe({
-      next: (data: any) => {
-          this.feedbackList = data.Data;
+      next: (response: any) => {
+          this.feedbackList = response.data;
 
           sessionStorage.removeItem('currentPage_1');
           sessionStorage.removeItem('pageSize_1');
 
-          this.TotalRecords = data.TotalRecords;
+          this.TotalRecords = response.totalRecords;
      
           setTimeout(() => {
             this.paginator.pageIndex = this.currentPage;
-            this.paginator.length = data.TotalRecords;
+            this.paginator.length = response.totalRecords;
           });
         
           this.dataSource = new MatTableDataSource(this.feedbackList);

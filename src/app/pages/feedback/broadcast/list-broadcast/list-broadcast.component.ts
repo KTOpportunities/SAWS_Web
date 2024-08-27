@@ -100,17 +100,17 @@ export class ListBroadcastComponent implements OnInit{
 
 
     this.apiAdmin.GetPagedAllBroadcasts(this.currentPage + page, this.pageSize).subscribe({
-      next: (data: any) => {
-          this.broadcastList = data.Data;
+      next: (response: any) => {
+          this.broadcastList = response.data;
 
           sessionStorage.removeItem('currentPage_2');
           sessionStorage.removeItem('pageSize_2');
 
-          this.TotalRecords = data.TotalRecords;
+          this.TotalRecords = response.totalRecords;
      
           setTimeout(() => {
             this.paginator.pageIndex = this.currentPage;
-            this.paginator.length = data.TotalRecords;
+            this.paginator.length = response.totalRecords;
           });
         
           this.dataSource = new MatTableDataSource(this.broadcastList);
@@ -255,8 +255,7 @@ deleteBroadcast(batchId: any) {
     
     this.apiAdmin.getFeedbackById(feedbackId).subscribe(
       (data) => {
-        
-        this.apiData.setFeedbackData(data);
+        this.apiData.setFeedbackData(data.detailDescription);
         this.router.navigate(["/admin/feedback/broadcast/viewBroadcast"]);
       },
       (error) => {

@@ -13,6 +13,6 @@ export interface Feedback {
     isdeleted: boolean;
     deleted_at: any;
     isresponded: boolean;
-    FeedbackMessages: FeedbackMessage[];
+    feedbackMessages: FeedbackMessage[];
 }
   

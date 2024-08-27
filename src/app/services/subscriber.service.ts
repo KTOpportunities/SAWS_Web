@@ -130,7 +130,6 @@ export class SubscriberService {
   }
 
   PostDocsForAdvert(formData: any) {
-    debugger
     return this.http.post<any>(
       environment.serverAPI + "v1/FileManager/PostDocsForAdvert",
       formData

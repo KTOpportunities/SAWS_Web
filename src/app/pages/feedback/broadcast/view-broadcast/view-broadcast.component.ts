@@ -46,7 +46,7 @@ export class ViewBroadcastComponent implements OnInit{
         deleted_at: [],
         isresponded: [],
         responseMessage: ['', Validators.required],
-        FeedbackMessages: [[]]
+        feedbackMessages: [[]]
       });
       
   }
@@ -86,7 +86,7 @@ export class ViewBroadcastComponent implements OnInit{
           created_at: formValues.created_at,
           title: formValues.title,
           isresponded: true,
-          FeedbackMessages: [
+          feedbackMessages: [
             {
               senderId: formValues.senderId,
               senderEmail: formValues.senderEmail,

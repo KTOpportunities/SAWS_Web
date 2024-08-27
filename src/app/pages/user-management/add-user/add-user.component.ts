@@ -139,7 +139,6 @@ export class AddUserComponent implements OnInit {
   }
 
   saveUserForm(body: any, role: any) {
-    debugger;
     if (role == "Admin") {
       this.api.registerAdmin(body).subscribe(
         (data: any) => {

@@ -56,7 +56,6 @@ export class ViewAdvertisementComponent {
 
   ngOnInit() {
     this.apiData.getFeedbackData().subscribe((data) => {
-      debugger;
       this.advertForm.patchValue(data.advert);
 
       this.url = data.fileUrl;

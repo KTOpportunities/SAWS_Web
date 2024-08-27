@@ -212,7 +212,7 @@ filterStatus() {
 
   deleteAdvertisement(advertId: any) {
     Swal.fire({
-      title: 'Are you sure you want to delete?',
+      title: 'Are you sure you want to delete advert?',
       icon: 'warning',
       showCancelButton: true,
       confirmButtonText: 'Yes',
@@ -220,7 +220,6 @@ filterStatus() {
     }).then((result) => {
       if (result.isConfirmed) {
         this.spinner.show();
-        debugger
         this.apiService.deleteAdvertById(advertId).subscribe(
           () => {
             this.spinner.hide();
