@@ -1,141 +1,170 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import Swal from 'sweetalert2';
-import { AuthService } from './../../services/auth.service';
-import { FormBuilder, Validators, FormGroup } from '@angular/forms';
+import { Component, OnInit } from "@angular/core";
+import { Router } from "@angular/router";
+import Swal from "sweetalert2";
+import { AuthService } from "./../../services/auth.service";
+import { FormBuilder, Validators, FormGroup } from "@angular/forms";
 // import { ResetConfirmPassword } from 'src/app/models/resetPassword';
 
-
-
-
-interface ResetPassword{
+interface ResetPassword {
   email: string;
   token: string;
   newPassword: string;
   confirmPassword: string;
 }
 
-
-import { ResetConfirmPassword } from 'src/app/Models/resetPassword';
-
-
-// interface ResetPassword{
-//   email: string;
-//   token: string;
-//   newPassword: string;
-//   confirmPassword: string;
-// }
+import { ResetConfirmPassword } from "src/app/Models/resetPassword";
 
 @Component({
-    selector: 'app-reset-password',
-    templateUrl: './reset-password.component.html',
-    styleUrls: ['./reset-password.component.css'],
-  })
-
+  selector: "app-reset-password",
+  templateUrl: "./reset-password.component.html",
+  styleUrls: ["./reset-password.component.css"],
+})
 export class resetPasswordComponent implements OnInit {
   errorMessage: string | null = null;
   successMessage: string | null = null;
   loading = false;
-  resetPasswordForm :FormGroup;
+  resetPasswordForm: FormGroup;
   email: string | null = null;
-  token: string| null = null;
+  token: string | null = null;
   sharedObject: any;
   submitted: boolean = false;
+  passwordVisibility: boolean = false;
+  confirmPasswordVisibility: boolean = false;
+  isPasswordNotEmpty: boolean = false;
+  isConfirmPasswordNotEmpty: boolean = false;
 
-  resetPassword : ResetConfirmPassword = {
-    email: '',
-    token: '',
-    newPassword: '',
-    confirmPassword: '',
+  resetPassword: ResetConfirmPassword = {
+    email: "",
+    token: "",
+    newPassword: "",
+    confirmPassword: "",
   };
-  
-    constructor(private router:Router,
-      private api: AuthService,
-      private formBuilder: FormBuilder,
-    ){
-      this.resetPasswordForm = this.formBuilder.group({
-        email: ['', Validators.required],
-        newPassword: ['', Validators.required],
-        confirmPassword:['', Validators.required],
-      });
-    }
 
-    ngOnInit(): void {
+  constructor(
+    private router: Router,
+    private api: AuthService,
+    private formBuilder: FormBuilder
+  ) {
+    this.resetPasswordForm = this.formBuilder.group({
+      email: ["", Validators.required],
+      newPassword: ["", Validators.required],
+      confirmPassword: ["", Validators.required],
+    });
+  }
 
-      const urlSegments = this.router.url.split('=');
+  ngOnInit(): void {
+    const urlSegments = this.router.url.split("=");
 
-      if (urlSegments.length >= 2) {
-        this.email = urlSegments[1].split('&')[0];
-        sessionStorage.setItem('email', `${this.email}`);
-        this.resetPasswordForm.patchValue({
-          email: this.email,
-        });
-      }
-    }
-
-    onResetPasswordSubmit() {
-      this.submitted = true;
-
-      if(this.resetPasswordForm.valid){
-        
-        this.resetPassword = {
-          email: this.resetPasswordForm?.value.email,
-          token: this.router.url.split('token=')[1],
-          newPassword: this.resetPasswordForm?.value.newPassword,
-          confirmPassword: this.resetPasswordForm?.value.confirmPassword,
-        }
-
-        this.api.resetPassword(this.resetPassword).subscribe({
-          next:(response) => {
-          this.showSuccessAlert();
-
-          setTimeout(() => {
-            this.navigateto('/Login');
-          }, 2000);
-
-        },
-          error:(err) => {
-            console.log(err)
-            this.alertMessage("Error with provided credentials")
-          },
-        })
-      } else {
-          this.showFormErrorsAlert()
-      }
-    }
-
-    navigateto(page: string) {
-      this.router.navigate([page]);
-    }
-
-    back() {
-      this.router.navigate(['/forgot-password']);
-    }
-
-    alertMessage(message: string) {
-      Swal.fire({
-        icon: "error",
-        title: message,
-        showConfirmButton: false,
-        timer: 2000,
-      });
-    }
-
-    showSuccessAlert() {
-      Swal.fire({
-        icon: 'success',
-        title: 'Password Reset!',
-        text: "Password reset successful",
-        showConfirmButton: false,
-        timer: 2000,
-      });
-    }
-
-    showFormErrorsAlert() {
-      Swal.fire({
-        icon: 'error',
-        title: 'Validation errors!',
-        text: 'Form has errors!',
+    if (urlSegments.length >= 2) {
+      this.email = urlSegments[1].split("&")[0];
+      sessionStorage.setItem("email", `${this.email}`);
+      this.resetPasswordForm.patchValue({
+        email: this.email,
       });
     }
   }
+
+  togglePasswordVisibility() {
+    this.passwordVisibility = !this.passwordVisibility;
+  }
+
+  toggleConfirmPasswordVisibility() {
+    this.confirmPasswordVisibility = !this.confirmPasswordVisibility;
+  }
+
+  onPasswordInput(event: any) {
+    this.isPasswordNotEmpty = event.target.value.trim().length > 0;
+
+    if (!this.isPasswordNotEmpty) {
+      this.passwordVisibility = false;
+    }
+  }
+
+  onConfirmPasswordInput(event: any) {
+    this.isConfirmPasswordNotEmpty = event.target.value.trim().length > 0;
+
+    if (!this.isConfirmPasswordNotEmpty) {
+      this.confirmPasswordVisibility = false;
+    }
+  }
+
+  onResetPasswordSubmit() {
+    this.submitted = true;
+debugger
+    const password = this.resetPasswordForm?.value.password;
+    const confirmPassword = this.resetPasswordForm?.value.confirmPassword;
+
+    if (this.resetPasswordForm.valid) {
+      if (password != confirmPassword) {
+        this.showFormPasswordMismatch();
+        return;
+      }
+
+      this.resetPassword = {
+        email: this.resetPasswordForm?.value.email,
+        token: this.router.url.split("token=")[1],
+        newPassword: this.resetPasswordForm?.value.newPassword,
+        confirmPassword: this.resetPasswordForm?.value.confirmPassword,
+      };
+
+      this.api.resetPassword(this.resetPassword).subscribe({
+        next: (response) => {
+          this.showSuccessAlert();
+
+          setTimeout(() => {
+            this.navigateto("/Login");
+          }, 2000);
+        },
+        error: (err) => {
+          console.log(err);
+          this.alertMessage("Error with provided credentials");
+        },
+      });
+    } else {
+      this.showFormErrorsAlert();
+    }
+  }
+
+  navigateto(page: string) {
+    this.router.navigate([page]);
+  }
+
+  back() {
+    this.router.navigate(["/forgot-password"]);
+  }
+
+  alertMessage(message: string) {
+    Swal.fire({
+      icon: "error",
+      title: message,
+      showConfirmButton: false,
+      timer: 2000,
+    });
+  }
+
+  showSuccessAlert() {
+    Swal.fire({
+      icon: "success",
+      title: "Password Reset!",
+      text: "Password reset successful",
+      showConfirmButton: false,
+      timer: 2000,
+    });
+  }
+
+  showFormErrorsAlert() {
+    Swal.fire({
+      icon: "error",
+      title: "Validation errors!",
+      text: "Form has errors!",
+    });
+  }
+
+  showFormPasswordMismatch() {
+    Swal.fire({
+      icon: "error",
+      title: "Password Mismatch!",
+      text: "The password and confirm password are not the same!",
+    });
+  }
+}
