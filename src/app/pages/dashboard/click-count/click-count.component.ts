@@ -4,8 +4,8 @@ import { Chart } from "chart.js";
 import { SubscriberService } from "src/app/services/subscriber.service";
 
 interface ClickData {
-  MonthString: string;
-  Clicks: number;
+  monthString: string;
+  clicks: number;
 }
 
 @Component({
@@ -48,9 +48,9 @@ export class ClickCountComponent {
 
     // Sum the counts for each month
     this.clicks.forEach((entry) => {
-      const monthIndex = months.indexOf(entry.MonthString);
+      const monthIndex = months.indexOf(entry.monthString);
       if (monthIndex !== -1) {
-        monthCounts[monthIndex] += entry.Clicks;
+        monthCounts[monthIndex] += entry.clicks;
       }
     });
 

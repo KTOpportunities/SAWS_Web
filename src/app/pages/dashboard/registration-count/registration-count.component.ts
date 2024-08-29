@@ -4,18 +4,17 @@ import { Chart } from "chart.js";
 import { SubscriberService } from "src/app/services/subscriber.service";
 
 interface UserType {
-  userrole: string;
-  SubscriptionType: string;
-  Registrations: number;
+  userRole: string;
+  subscriptionType: string;
+  registrations: number;
 }
 
 interface RegistrationData {
-  MonthString: string;
-  Month: number;
-  Year: number;
-  UserTypes: UserType[];
+  monthString: string;
+  month: number;
+  year: number;
+  userTypes: UserType[];
 }
-
 
 @Component({
   selector: "app-registration-count",
@@ -29,10 +28,12 @@ export class RegistrationCountComponent implements OnInit {
   constructor(private subscriberService: SubscriberService) {}
 
   ngOnInit(): void {
-    this.subscriberService.GetRegistrationsPerUserType().subscribe((data) => {
-      this.registrations = data;
-      this.renderBarChart();
-    });
+    this.subscriberService
+      .GetRegistrationsPerUserType()
+      .subscribe((data: any) => {
+        this.registrations = data;
+        this.renderBarChart();
+      });
   }
 
   renderBarChart(): void {
@@ -55,18 +56,18 @@ export class RegistrationCountComponent implements OnInit {
       new Set(
         this.registrations.flatMap((reg) =>
           // reg.UserTypes.map((user) => user.userrole)
-        reg.UserTypes.map((user) => user.SubscriptionType)
+          reg.userTypes.map((user) => user.subscriptionType)
         )
       )
     );
     const monthRoleCounts = userRoles.map((role) => new Array(12).fill(0));
 
     this.registrations.forEach((entry) => {
-      const monthIndex = entry.Month - 1; // Month is 1-based in data
-      entry.UserTypes.forEach((userType) => {
-        const roleIndex = userRoles.indexOf(userType.SubscriptionType);
+      const monthIndex = entry.month - 1; // Month is 1-based in data
+      entry.userTypes.forEach((userType) => {
+        const roleIndex = userRoles.indexOf(userType.subscriptionType);
         if (roleIndex !== -1) {
-          monthRoleCounts[roleIndex][monthIndex] += userType.Registrations;
+          monthRoleCounts[roleIndex][monthIndex] += userType.registrations;
         }
       });
     });

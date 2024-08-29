@@ -5,9 +5,9 @@ import ChartDataLabels from 'chartjs-plugin-datalabels';
 import { SubscriberService } from "src/app/services/subscriber.service";
 
 interface SubscriptionData {
-  UserRole: string;
-  SubscriptionType: string;
-  Subscriptions: number;
+  userRole: string;
+  subscriptionType: string;
+  subscriptions: number;
 }
 @Component({
   selector: 'app-user-type',
@@ -24,14 +24,14 @@ export class UserTypeComponent {
   ngOnInit(): void {   
 
     this.subscriberService.GetSubscriptionsPerPackageType().subscribe((data) => {
-      this.userTypes = data.UserSubscriptionCounts;
-      this.totalSubscriptions = data.TotalCount;
+      this.userTypes = data.userSubscriptionCounts;
+      this.totalSubscriptions = data.totalCount;
       this.renderPieChart();
     });
   }
   renderPieChart(): void {
-    const userTypes = this.userTypes.map((user) => user.SubscriptionType);
-    const userData = this.userTypes.map((user) => user.Subscriptions);
+    const userTypes = this.userTypes.map((user) => user.subscriptionType);
+    const userData = this.userTypes.map((user) => user.subscriptions);
 
     const colors = ["#016c17", "#00386c", "#f7b11d", "#98301d"];
 
