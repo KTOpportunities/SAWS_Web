@@ -10,3 +10,8 @@ export interface ResetConfirmPassword {
     newPassword: string;
     confirmPassword: string;
 }
+
+export interface CredentialsDetails {
+    username: string;
+    password: string;
+}

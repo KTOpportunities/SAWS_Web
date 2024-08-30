@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders, HttpResponse } from "@angular/common/http";
 import { environment } from "../../../environment";
 import { from } from "rxjs";
 import { Dataservice } from "./data.service";
+import { CredentialsDetails } from "../Models/resetPassword";
 
 interface loginform {
   Username: string;
@@ -60,6 +61,13 @@ export class SubscriberService {
   registerSubscriber(body: {}) {
     return this.http.post<any>(
       environment.serverAPI + "v1/Authenticate/RegisterSubscriber",
+      body
+    );
+  }
+
+  sendCredentials(body: CredentialsDetails) {
+    return this.http.post<any>(
+      environment.serverAPI + "v1/Authenticate/SendCredentials,",
       body
     );
   }
@@ -172,7 +180,4 @@ export class SubscriberService {
       environment.serverAPI + `v1/Lookup/GetSubscriptionsPerPackageType`
     );
   }
-
-
-
 }

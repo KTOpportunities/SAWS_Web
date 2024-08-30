@@ -43,8 +43,6 @@ export class AddUserComponent implements OnInit {
       UserRole: ["", Validators.required],
     });
 
-    // var username: any = sessionStorage.getItem('email');
-
     var currentUrl: any = this.apiData.getUserUrl();
     const currentUrlObj = JSON.parse(currentUrl);
 
@@ -99,16 +97,6 @@ export class AddUserComponent implements OnInit {
     return containsLetter && containsNumber ? null : { invalidPassword: true };
   }
 
-  // usernameValidator(control: AbstractControl) {
-  //   const username = control.value;
-  //   // Check for spaces in the username
-  //   const isInvalid = /\s/.test(username);
-  //   // Check if the username contains only letters, numbers, underscores, or hyphens
-  //   const isValid = !isInvalid && /^[a-zA-Z0-9_-]+$/.test(username);
-
-  //   return isValid ? null : { 'invalidUsername': { value: username } };
-  // }
-
   onSubmit() {
     this.submitted = true;
     var body = {
@@ -121,10 +109,13 @@ export class AddUserComponent implements OnInit {
     this.userRole = this.userForm.controls["UserRole"].value;
 
     if (this.userForm.invalid) {
+      // console.log("invalid form")
       return;
     } else {
+      // console.log("valid form")
       this.api.loginEmailExist(body.Email).subscribe(
         (data: any) => {
+          // console.log("Check if email exist", data)
           if (!data.emailExist) {
             this.saveUserForm(body, this.userRole);
           } else {
@@ -132,20 +123,25 @@ export class AddUserComponent implements OnInit {
           }
         },
         (error) => {
-          console.error(error);
+          console.error("Check if email exist - error", error);
         }
       );
     }
   }
 
   saveUserForm(body: any, role: any) {
+    var emailbody = {
+      username: body.Username,
+      password: body.Password
+    };
+
     if (role == "Admin") {
       this.api.registerAdmin(body).subscribe(
         (data: any) => {
           this.showSuccessAlert();
-
           this.router.navigate(["/admin/adminUser"]);
           this.apiData.removeUserUrl();
+          this.sendEmail(emailbody);
         },
         (err) => console.log("error", err)
       );
@@ -153,15 +149,25 @@ export class AddUserComponent implements OnInit {
       this.api.registerSubscriber(body).subscribe(
         (data: any) => {
           this.showSuccessAlert();
-
           this.router.navigate(["/admin/subscriberUser"]);
           this.apiData.removeUserUrl();
+          this.sendEmail(emailbody);
         },
         (err) => console.log("error", err)
       );
     } else {
+      this.showUnsuccessfulAlert();
       return;
     }
+  }
+
+  sendEmail(body: any){
+    this.api.sendCredentials(body).subscribe(
+      (data: any) => {
+        
+      },
+      (err) => console.log("error", err)
+    );
   }
 
   onCancel() {
