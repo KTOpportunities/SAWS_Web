@@ -67,7 +67,7 @@ export class SubscriberService {
 
   sendCredentials(body: CredentialsDetails) {
     return this.http.post<any>(
-      environment.serverAPI + "v1/Authenticate/SendCredentials,",
+      environment.serverAPI + "v1/Authenticate/SendCredentials",
       body
     );
   }

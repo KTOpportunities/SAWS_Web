@@ -162,12 +162,14 @@ export class AddUserComponent implements OnInit {
   }
 
   sendEmail(body: any){
+    debugger
     this.api.sendCredentials(body).subscribe(
       (data: any) => {
-        
+    debugger
       },
       (err) => console.log("error", err)
     );
+    debugger
   }
 
   onCancel() {
