@@ -141,7 +141,7 @@
                                   'image'
                                 )
                               " [src]="
-                                getSafeUrl(feedbacks.docFeedbacks[0].file_url)
+                              getSafeUrl(feedbacks.docFeedbacks[0].file_url,feedbacks.docFeedbacks[0].file_mimetype)
                               " loading="lazy" width="327" sizes="(max-width: 479px) 69vw, 327px"
                               [alt]="feedbacks.responseAttachmentFileName" class="image-10" />
 
@@ -150,7 +150,7 @@
                                   'audio'
                                 )
                               " [src]="
-                                getSafeUrl(feedbacks.docFeedbacks[0].file_url)
+                              getSafeUrl(feedbacks.docFeedbacks[0].file_url,feedbacks.docFeedbacks[0].file_mimetype)
                               " autoplay controls class="image-10">
                               <!-- <source [src]="fileBaseUrl"> -->
                             </audio>
@@ -160,7 +160,7 @@
                                   'video'
                                 )
                               " [src]="
-                                getSafeUrl(feedbacks.docFeedbacks[0].file_url)
+                              getSafeUrl(feedbacks.docFeedbacks[0].file_url,feedbacks.docFeedbacks[0].file_mimetype)
                               " width="327" sizes="(max-width: 479px) 69vw, 327px" class="image-10"></video>
 
                             <iframe *ngIf="
@@ -168,7 +168,7 @@
                                   'application'
                                 )
                               " [src]="
-                                getSafeUrl(feedbacks.docFeedbacks[0].file_url)
+                                getSafeUrl(feedbacks.docFeedbacks[0].file_url,feedbacks.docFeedbacks[0].file_mimetype)
                               " width="327" sizes="(max-width: 479px) 69vw, 327px" class="image-10"
                               style="border: none">
                             </iframe>
@@ -252,7 +252,7 @@
                                   'image'
                                 )
                               " [src]="
-                                getSafeUrl(feedbacks.docFeedbacks[0].file_url)
+                              getSafeUrl(feedbacks.docFeedbacks[0].file_url,feedbacks.docFeedbacks[0].file_mimetype)
                               " loading="lazy" width="327" sizes="(max-width: 479px) 69vw, 327px"
                               [alt]="feedbacks.responseAttachmentFileName" class="image-10" />
 
@@ -261,7 +261,7 @@
                                   'audio'
                                 )
                               " [src]="
-                                getSafeUrl(feedbacks.docFeedbacks[0].file_url)
+                              getSafeUrl(feedbacks.docFeedbacks[0].file_url,feedbacks.docFeedbacks[0].file_mimetype)
                               " autoplay controls class="image-10">
                               <!-- <source [src]="fileBaseUrl"> -->
                             </audio>
@@ -271,7 +271,7 @@
                                   'video'
                                 )
                               " [src]="
-                                getSafeUrl(feedbacks.docFeedbacks[0].file_url)
+                              getSafeUrl(feedbacks.docFeedbacks[0].file_url,feedbacks.docFeedbacks[0].file_mimetype)
                               " width="327" sizes="(max-width: 479px) 69vw, 327px" class="image-10"></video>
 
                             <iframe *ngIf="
@@ -279,7 +279,7 @@
                                   'application'
                                 )
                               " [src]="
-                                getSafeUrl(feedbacks.docFeedbacks[0].file_url)
+                              getSafeUrl(feedbacks.docFeedbacks[0].file_url,feedbacks.docFeedbacks[0].file_mimetype)
                               " width="327" sizes="(max-width: 479px) 69vw, 327px" class="image-10"
                               style="border: none">
                             </iframe>

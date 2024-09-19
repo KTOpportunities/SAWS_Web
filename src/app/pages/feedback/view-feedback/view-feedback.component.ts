@@ -257,8 +257,13 @@ export class ViewFeedbackComponent implements OnInit {
     );
   }
 
-  getSafeUrl(url: string): SafeResourceUrl {
-    return this.sanitizer.bypassSecurityTrustResourceUrl(url);
+  getSafeUrl(url: string,type: string): SafeResourceUrl {
+    if(type.includes("application")){
+      return this.sanitizer.bypassSecurityTrustResourceUrl('data:application/pdf;base64,' + url);
+    }else{
+      return this.sanitizer.bypassSecurityTrustResourceUrl(url);
+    }
+    
   }
 
   openAttachmentDialog(

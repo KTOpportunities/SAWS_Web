@@ -49,7 +49,11 @@ export class AttachmentFileComponent implements OnInit {
       }
       
       ngOnInit() {
-  
+        if(this.isApplication){
+          this.fileBaseUrl = this.sanitizer.bypassSecurityTrustResourceUrl(
+            'data:application/pdf;base64,' + this.data.imageSRC
+          ); 
+        }
       }
 
       closeImageDialog() {
