@@ -6,6 +6,7 @@ import { NgxSpinnerModule } from 'ngx-spinner';
 import { BrowserModule } from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';
 import { SuccessComponent } from './pages/subscription/success/success.component';
+import { AuthGuardService as AuthGuard } from './services/auth-guard.service';
 // Available options
 interface NgxSpinnerConfig {
   type?: string;
@@ -36,7 +37,7 @@ const routes: Routes = [ {
       loadChildren: () => import('./layout/admin-layout/admin-layout.module').then(m => m.AdminLayoutModule)
     }
   ],
-  // canActivate: [AuthGuard]
+  canActivate: [AuthGuard]
 },
 {
   path: 'subscription/success', 

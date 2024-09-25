@@ -29,6 +29,9 @@ import { RegistrationCountComponent } from "./pages/dashboard/registration-count
 import { ClickCountComponent } from "./pages/dashboard/click-count/click-count.component";
 import { DashboardComponent } from "./pages/dashboard/dashboard.component";
 // import { UserTypeComponent } from './pages/dashboard/user-type/user-type.component';
+import { AuthGuardService } from "./services/auth-guard.service";
+import { AuthGuardHelperService } from "./services/auth-guard-helper.service";
+import { JwtHelperService, JwtModule, JWT_OPTIONS } from "@auth0/angular-jwt";
 
 @NgModule({
   declarations: [
@@ -53,11 +56,13 @@ import { DashboardComponent } from "./pages/dashboard/dashboard.component";
     MatIconModule,
     CanvasJSAngularChartsModule,
     NgChartsModule,
-   
     
   ],
   providers: [
+    AuthGuardService,
     AuthService,
+    AuthGuardHelperService,
+    { provide: JWT_OPTIONS, useValue: JWT_OPTIONS },
     {
       provide: HTTP_INTERCEPTORS,
       useClass: TokeninterceptorService,
@@ -68,8 +73,9 @@ import { DashboardComponent } from "./pages/dashboard/dashboard.component";
     Dataservice,
     AuthService,
     DatePipe,
+    JwtHelperService,
   ],
   bootstrap: [AppComponent],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  // schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class AppModule {}

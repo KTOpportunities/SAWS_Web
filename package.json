@@ -21,6 +21,7 @@
     "@angular/platform-browser": "^16.0.0",
     "@angular/platform-browser-dynamic": "^16.0.0",
     "@angular/router": "^16.0.0",
+    "@auth0/angular-jwt": "^5.2.0",
     "@canvasjs/angular-charts": "^1.2.0",
     "canvasjs": "^1.8.3",
     "chart.js": "^4.4.3",
