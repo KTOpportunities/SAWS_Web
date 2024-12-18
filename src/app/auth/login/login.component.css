@@ -2153,5 +2153,9 @@
     transform: translateY(-50%);
     cursor: pointer;
 }
-
+.form-forgot {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px; /* Adjust as needed */
+}
 
