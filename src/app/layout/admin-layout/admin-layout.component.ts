@@ -20,7 +20,7 @@ export class AdminLayoutComponent implements OnInit {
 
   ngOnInit() {
     let currentPath = sessionStorage.getItem("currentPath");
-    debugger;
+
     if(currentPath != "undefined"){
       this.router.navigate(['/admin/'+currentPath]);
     }

@@ -90,11 +90,10 @@ export class resetPasswordComponent implements OnInit {
 
   onResetPasswordSubmit() {
     this.submitted = true;
-debugger
+
     const password = this.resetPasswordForm?.value.newPassword;
     const confirmPassword = this.resetPasswordForm?.value.confirmPassword;
 
-    debugger
 
     if (this.resetPasswordForm.valid) {
       if (password != confirmPassword) {

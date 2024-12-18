@@ -75,7 +75,7 @@ export class forgotPasswordComponent implements OnInit {
           }, 2000);
         },
         error: (err) => {
-          debugger
+     
           console.log(err);
           this.alertMessage(err.error.errorMessage || "An error occured!");
         },
