@@ -7,8 +7,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';
 import { SuccessComponent } from './pages/subscription/success/success.component';
 import { AuthGuardService as AuthGuard } from './services/auth-guard.service';
-import { PayfastRedirectComponent } from './payfast-redirect/payfast-redirect.component';
-
 // Available options
 interface NgxSpinnerConfig {
   type?: string;
@@ -16,10 +14,6 @@ interface NgxSpinnerConfig {
 const routes: Routes = [ {
   path: '', pathMatch :'full', redirectTo: 'login'
 },
-  // These are used as PayFast return_url / cancel_url targets.
-  // Keep them top-level so they work without authentication.
-  { path: 'subscription-successful', component: PayfastRedirectComponent },
-  { path: 'subscription-package', component: PayfastRedirectComponent },
 {
   path:'',
   component:AuthLayoutComponent,
