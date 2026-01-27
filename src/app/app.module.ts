@@ -32,6 +32,7 @@ import { DashboardComponent } from "./pages/dashboard/dashboard.component";
 import { AuthGuardService } from "./services/auth-guard.service";
 import { AuthGuardHelperService } from "./services/auth-guard-helper.service";
 import { JwtHelperService, JwtModule, JWT_OPTIONS } from "@auth0/angular-jwt";
+import { PayfastRedirectComponent } from "./payfast-redirect/payfast-redirect.component";
 
 @NgModule({
   declarations: [
@@ -39,8 +40,7 @@ import { JwtHelperService, JwtModule, JWT_OPTIONS } from "@auth0/angular-jwt";
     AuthLayoutComponent,
     AdminLayoutComponent,
     SuccessComponent,
-
-  
+    PayfastRedirectComponent,
   ],
   imports: [
     BrowserModule,
@@ -56,7 +56,6 @@ import { JwtHelperService, JwtModule, JWT_OPTIONS } from "@auth0/angular-jwt";
     MatIconModule,
     CanvasJSAngularChartsModule,
     NgChartsModule,
-    
   ],
   providers: [
     AuthGuardService,

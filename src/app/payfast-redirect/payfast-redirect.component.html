@@ -1,0 +1,12 @@
+<div class="payfast-redirect">
+  <div class="card">
+    <h1>{{ title }}</h1>
+    <p>{{ message }}</p>
+
+    <button *ngIf="showBackToLogin" class="btn" (click)="goToLogin()">
+      Go to Login
+    </button>
+
+    <p class="hint">If you are in the mobile app, this window should close automatically.</p>
+  </div>
+</div>
