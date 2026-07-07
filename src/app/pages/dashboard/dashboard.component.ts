@@ -13,7 +13,7 @@ import { SubscriberService } from "src/app/services/subscriber.service";
 export class DashboardComponent implements OnInit {   
 
   constructor(private subscriberService: SubscriberService) {}
-
+  showGraphs: boolean = false;
   ngOnInit(): void {
   }
 

@@ -101,7 +101,7 @@ export class SubscriberUserComponent implements OnInit {
       next: (response: any) => {
           this.spinner.hide();
           this.subsciberList = response.data;
-
+          console.log("Data fetched from API:", response);
           sessionStorage.removeItem('currentPage');
           sessionStorage.removeItem('pageSize');
 

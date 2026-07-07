@@ -44,7 +44,9 @@ export class SideBarComponent {
   navigateToSubscriberUser() {
     this.router.navigate(["/admin/subscriberUser"]);
   }
-  
+   navigateToActivityLogs() {
+    this.router.navigate(["/activityLogs"]);
+  }
   toggleDropdown() {
     this.isDropdownOpen = !this.isDropdownOpen;
     this.updateUserManagementActive();

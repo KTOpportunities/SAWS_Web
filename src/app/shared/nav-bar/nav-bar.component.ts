@@ -101,7 +101,7 @@ export class NavBarComponent implements OnInit {
     // Check the current route
     const currentRoute = this.router.url; 
     
-    const excludedRoutes: string[] = ['/admin/subscriberUser', '/admin/adminUser', '/admin/feedback', '/admin/advertisement', '/admin/feedback/broadcast', '/admin/feedback/broadcast/listBroadcasts'];
+    const excludedRoutes: string[] = ['/admin/activityLogs','/admin/subscriberUser', '/admin/adminUser', '/admin/feedback', '/admin/advertisement', '/admin/feedback/broadcast', '/admin/feedback/broadcast/listBroadcasts'];
 
     if (!excludedRoutes.includes(currentRoute)) 
     {

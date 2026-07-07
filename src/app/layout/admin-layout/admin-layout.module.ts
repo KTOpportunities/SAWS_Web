@@ -30,6 +30,7 @@ import { AttachmentFileComponent } from "src/app/pages/feedback/attachment-file/
 import { RegistrationCountComponent } from "src/app/pages/dashboard/registration-count/registration-count.component";
 import { ClickCountComponent } from "src/app/pages/dashboard/click-count/click-count.component";
 import { UserTypeComponent } from "src/app/pages/dashboard/user-type/user-type.component";
+import { ActivityLogsComponent } from "src/app/pages/activity-logs/activity-logs.component";
 
 @NgModule({
   declarations: [
@@ -53,7 +54,8 @@ import { UserTypeComponent } from "src/app/pages/dashboard/user-type/user-type.c
     AttachmentFileComponent,
     RegistrationCountComponent,
     ClickCountComponent,
-    UserTypeComponent
+    UserTypeComponent,
+    ActivityLogsComponent
   ],
   imports: [
     CommonModule,

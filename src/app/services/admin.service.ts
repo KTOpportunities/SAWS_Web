@@ -111,4 +111,10 @@ export class AdminService {
   //     // }
   //   );
   // }
+  GetPagedAllActivityLogs(pageNumber: any, pageSize: any) {
+  return this.http.get<any>(
+    environment.serverAPI +
+      `v1/Admins/GetPagedAllActivityLogs?pageNumber=${pageNumber}&pageSize=${pageSize}`
+  );
+}
 }
