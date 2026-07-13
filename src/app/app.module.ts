@@ -39,6 +39,7 @@ import { JwtHelperService, JwtModule, JWT_OPTIONS } from "@auth0/angular-jwt";
     AuthLayoutComponent,
     AdminLayoutComponent,
     SuccessComponent,
+   
 
   
   ],

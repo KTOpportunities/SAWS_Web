@@ -119,7 +119,7 @@ export class AdminUserComponent implements OnInit {
         next: (result: any) => {
           this.spinner.hide();
           this.adminList = result.data;
-
+console.log("Data fetched from API:", result);
           sessionStorage.removeItem("currentPage");
           sessionStorage.removeItem("pageSize");
 

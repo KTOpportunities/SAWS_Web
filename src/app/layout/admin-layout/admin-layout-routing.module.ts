@@ -1,5 +1,6 @@
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
+import { ActivityLogsComponent } from "src/app/pages/activity-logs/activity-logs.component";
 import { AddAdvertisementComponent } from "src/app/pages/advertisement/add-advertisement/add-advertisement.component";
 import { AdvertisementComponent } from "src/app/pages/advertisement/advertisement.component";
 import { EditAdvertisementComponent } from "src/app/pages/advertisement/edit-advertisement/edit-advertisement.component";
@@ -39,6 +40,7 @@ const routes: Routes = [
   { path: "feedback/broadcast/viewBroadcast", component: ViewBroadcastComponent },
   { path: "feedback/broadcast/listBroadcasts", component: ListBroadcastComponent },
   { path: "advertisement/viewAdvert", component: ViewAdvertisementComponent },
+  { path: "activityLogs", component: ActivityLogsComponent }
   // {
   //   path: "user",
   //   component: UserManagementComponent,

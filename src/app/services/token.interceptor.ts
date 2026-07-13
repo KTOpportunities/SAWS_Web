@@ -11,22 +11,19 @@ import { Dataservice } from "./data.service";
 import { TokeStorageService } from "./token-storage.service";
 
 @Injectable()
-
 export class TokeninterceptorService implements HttpInterceptor {
   constructor(
     public data: Dataservice,
     private authorize: TokeStorageService
   ) {}
-  intercept(
-    request: HttpRequest<any>,
-    next: HttpHandler
-  ): Observable<HttpEvent<any>> {
+
+  intercept(request: HttpRequest<any>, next: HttpHandler) {
     request = request.clone({
       setHeaders: {
         Authorization: `Bearer ${this.authorize.getToken()}`,
       },
-      withCredentials: true,
     });
+
     return next.handle(request);
   }
 }
